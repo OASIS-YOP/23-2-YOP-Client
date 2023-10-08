@@ -1,8 +1,42 @@
 import React from 'react';
+import { useState } from 'react';
 import * as s from './style';
+import Modal from 'react-modal';
 import Logo from '../../assets/logo.svg';
+import { Login } from '../../components/LoginModal';
 
 const LandingPage = () => {
+  const [isClickedLogin, setIsClickedLogin] = useState(false);
+
+  const onClickLogin = () => {
+    setIsClickedLogin((prev) => !prev);
+  };
+  // 모달 스타일
+  const LoginModalStyle = {
+    overlay: {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: 'rgba(0,0,0, 0.7)',
+      zIndex: 10,
+    },
+    content: {
+      display: 'flex',
+      justifyContent: 'center',
+      background: 'white',
+      overflow: 'auto',
+      width: '360px',
+      height: '360px',
+      margin: 'auto auto',
+      WebkitOverflowScrolling: 'touch',
+      borderRadius: '15px',
+      outline: 'none',
+      zIndex: 10,
+    },
+  };
+
   return (
     <s.Wrapper>
       <s.LeftContainer>
@@ -32,7 +66,15 @@ const LandingPage = () => {
             </h1>
             <p>함께 즐기는 덕질 생활 ‘온폴’</p>
             <s.ButtonContainer>
-              <s.Button>로그인</s.Button>
+              <s.Button onClick={onClickLogin}>로그인</s.Button>
+              <Modal
+                isOpen={isClickedLogin}
+                style={LoginModalStyle}
+                onRequestClose={onClickLogin} // 오버레이나 esc를 누르면 핸들러 동작
+                ariaHideApp={false}
+              >
+                <Login />
+              </Modal>
               <s.Button>회원가입</s.Button>
               <s.Button
                 style={{
