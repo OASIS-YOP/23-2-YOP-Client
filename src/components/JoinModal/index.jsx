@@ -39,7 +39,7 @@ export const Join = () => {
             // onChange={}
           />
         </form>
-        <s.Button>회원가입</s.Button>
+        <s.Button>가입하기</s.Button>
       </s.ContentContainer>
     </s.Wrapper>
   );
