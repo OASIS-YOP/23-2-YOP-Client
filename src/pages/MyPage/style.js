@@ -184,14 +184,19 @@ export const TabMenuWrapper = styled.div`
       font-weight: bold;
       font-size: 18px;
 
-      border: none;
-      // border-bottom: 1px boldsolid black;
-      // border-top: none;
-      // border-left: none;
-      // border-right: none;
+      border-bottom: 2px solid white;
+      border-top: none;
+      border-left: none;
+      border-right: none;  
 
       cursor: pointer;
 
+      &:active{ 
+        border-bottom: 2px solid black;
+        border-top: none;
+        border-left: none;
+        border-right: none; 
+      }
   `;
 
 export const ContentsWrapper = styled.div`
