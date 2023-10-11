@@ -4,12 +4,17 @@ import * as s from './style';
 import Modal from 'react-modal';
 import Logo from '../../assets/logo.svg';
 import { Login } from '../../components/LoginModal';
+import { Join } from '../../components/JoinModal';
 
 const LandingPage = () => {
   const [isClickedLogin, setIsClickedLogin] = useState(false);
+  const [isClickedJoin, setIsClickedJoin] = useState(false);
 
   const onClickLogin = () => {
     setIsClickedLogin((prev) => !prev);
+  };
+  const onClickJoin = () => {
+    setIsClickedJoin((prev) => !prev);
   };
   // 모달 스타일
   const LoginModalStyle = {
@@ -27,8 +32,8 @@ const LandingPage = () => {
       justifyContent: 'center',
       background: 'white',
       overflow: 'auto',
-      width: '360px',
-      height: '360px',
+      width: 'fit-content',
+      height: 'fit-content',
       margin: 'auto auto',
       WebkitOverflowScrolling: 'touch',
       borderRadius: '15px',
@@ -75,7 +80,16 @@ const LandingPage = () => {
               >
                 <Login />
               </Modal>
-              <s.Button>회원가입</s.Button>
+              <s.Button onClick={onClickJoin}>회원가입</s.Button>
+              <Modal
+                isOpen={isClickedJoin}
+                style={LoginModalStyle}
+                onRequestClose={onClickJoin} // 오버레이나 esc를 누르면 핸들러 동작
+                ariaHideApp={false}
+              >
+                <Join />
+              </Modal>
+
               <s.Button
                 style={{
                   width: 150,
