@@ -1,8 +1,6 @@
 import styled from "styled-components";
 
-export const Logo = styled.img`
-  cursor: pointer;
-`;
+
 export const Icon = styled.img``;
 export const Profile = styled.img`
   width: 100%;
@@ -77,6 +75,8 @@ export const Header = styled.div`
       cursor: pointer;
 
       font-weight: bold;
+
+      background-color: transparent;
 
     `;
 
@@ -169,6 +169,8 @@ export const TabMenuWrapper = styled.div`
   width: auto;
   height: 70px;
 
+  margin: 0 15px;
+
   //드래그 방지
   -webkit-user-select:none;
   -moz-user-select:none;
@@ -179,20 +181,23 @@ export const TabMenuWrapper = styled.div`
 `;
 
   export const TabMenu = styled.button`
-      margin: 0 10px;
+      margin: 0 13px;
+      padding: 7px 4px;
       
       font-weight: bold;
       font-size: 18px;
 
-      border-bottom: 2px solid white;
+      border-bottom: 3px solid white;
       border-top: none;
       border-left: none;
       border-right: none;  
 
       cursor: pointer;
 
-      &:active{ 
-        border-bottom: 2px solid black;
+      background-color: transparent;
+
+      &.active { 
+        border-bottom: 3px solid black;
         border-top: none;
         border-left: none;
         border-right: none; 

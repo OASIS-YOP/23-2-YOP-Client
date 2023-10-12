@@ -1,5 +1,5 @@
-// import { useState, useEffect } from "react";
-// import * as s from "./style";
+import { useState, useEffect } from "react";
+import * as s from "./style";
 
 const Posts = () => {
   
@@ -8,8 +8,7 @@ const Posts = () => {
 
   return (
     <>
-    
-    
+      <s.Wrapper> 포스트 </s.Wrapper>
     
     </>
   )
