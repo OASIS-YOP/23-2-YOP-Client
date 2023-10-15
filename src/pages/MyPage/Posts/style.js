@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -140,7 +141,7 @@ export const postInfoWrapper = styled.div`
   height: fit-content;
 
   padding-left: 10%;
-  padding-top: 13%;
+  padding-top: 15%;
 `
 
 export const nicknameWrapper = styled.div`
@@ -188,12 +189,25 @@ export const likeWrapper = styled.div`
   font-size: 200%;
   font-weight: 700;
 
-  & .icon:hover {
-    cursor: pointer;
-  }
 
   // border: 1px solid black;
 `;
+
+export const likeCount = styled.div`
+  width: 50%;
+`;
+
+export const likeIcon = styled.img`
+
+  width: 50%;
+  padding-top: 5%;
+  padding-right: 10%;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+`
 
 export const moreIconWrapper = styled.div`
   display: flex;
@@ -213,3 +227,20 @@ export const moreIcon = styled.img`
   cursor: pointer;
 
 `
+
+export const contextBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  width: fit-content;
+  height: fit-content;
+
+  margin-top: 5%;
+
+  font-size: 100%;
+  font-weight: 700;
+
+  // border: 1px solid black;
+`;
