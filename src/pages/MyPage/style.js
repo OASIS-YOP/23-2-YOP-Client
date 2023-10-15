@@ -131,5 +131,5 @@ export const ContentsWrapper = styled.div`
   width: auto;
   height: fit-content;
 
-  border: 1px solid black;
+  // border: 1px solid black;
 `;

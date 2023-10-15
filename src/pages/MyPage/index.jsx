@@ -8,7 +8,7 @@ import Likes from './Likes';
 import Header from '../../components/Header';
 
 
-const MyPage = () => {
+const MyPage = ( ) => {
 
   const [ isPostsTab, setIsPostsTab ] = useState(true);
   const [ isCollectionsTab, setIsCollectionsTab ] = useState(false);
