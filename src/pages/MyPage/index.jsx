@@ -8,43 +8,40 @@ import Likes from './Likes';
 import Header from '../../components/Header';
 
 
-const MyPage = () => {
+const MyPage = ( ) => {
 
   const [ isPostsTab, setIsPostsTab ] = useState(true);
   const [ isCollectionsTab, setIsCollectionsTab ] = useState(false);
   const [ isMyDesignsTab, setIsMyDesignsTab ] = useState(false);
   const [ isLikesTab, setIsLikesTab ] = useState(false);
 
-  const onClickPostsTab = () => {
-    setIsPostsTab(true);
-    setIsCollectionsTab(false);
-    setIsMyDesignsTab(false);
-    setIsLikesTab(false);
+  const onClickTab = (e) => {
+    if( e.target.tabIndex === 0 ) {
+      setIsPostsTab(true);
+      setIsCollectionsTab(false);
+      setIsMyDesignsTab(false);
+      setIsLikesTab(false);
+    } else if ( e.target.tabIndex === 1 ) {
+      setIsPostsTab(false);
+      setIsCollectionsTab(true);
+      setIsMyDesignsTab(false);
+      setIsLikesTab(false);
+    } else if ( e.target.tabIndex === 2 ) {
+      setIsPostsTab(false);
+      setIsCollectionsTab(false);
+      setIsMyDesignsTab(true);
+      setIsLikesTab(false);
+    } else if ( e.target.tabIndex === 3 ) {
+      setIsPostsTab(false);
+      setIsCollectionsTab(false);
+      setIsMyDesignsTab(false);
+      setIsLikesTab(true);
+    }
   }
-
-  const onClickCollectionsTab = () => {
-    setIsPostsTab(false);
-    setIsCollectionsTab(true);
-    setIsMyDesignsTab(false);
-    setIsLikesTab(false);
-  }
-
-  const onClickMyDesignsTab = () => {
-    setIsPostsTab(false);
-    setIsCollectionsTab(false);
-    setIsMyDesignsTab(true);
-    setIsLikesTab(false);
-  }
-
-  const onClickLikesTab = () => {
-    setIsPostsTab(false);
-    setIsCollectionsTab(false);
-    setIsMyDesignsTab(false);
-    setIsLikesTab(true);
-  }
+  
 
   useEffect(() => {
-    const effect = () => {
+    const tabMenuToggle = () => {
       if (isPostsTab) {
         return <Posts />;
       } else if (isCollectionsTab) {
@@ -56,7 +53,7 @@ const MyPage = () => {
       }
     };
     return () => {
-      effect();
+      tabMenuToggle();
     };
   }, [isPostsTab, isCollectionsTab, isMyDesignsTab, isLikesTab]);
 
@@ -76,20 +73,24 @@ const MyPage = () => {
       </s.ProfileSpace>
       <s.TabMenuWrapper>
         <s.TabMenu 
-          onClick={onClickPostsTab}
+          onClick={onClickTab}
           className={isPostsTab ? 'active' : ''}
+          tabIndex={0}
         >포스트</s.TabMenu>
         <s.TabMenu 
-          onClick={onClickCollectionsTab}
+          onClick={onClickTab}
           className={isCollectionsTab ? 'active' : ''}
+          tabIndex={1}
         >컬렉션</s.TabMenu>
         <s.TabMenu
-          onClick={onClickMyDesignsTab}
-          className={isMyDesignsTab ? 'active' : ''}  
+          onClick={onClickTab}
+          className={isMyDesignsTab ? 'active' : ''}
+          tabIndex={2}  
         >내 도안</s.TabMenu>
         <s.TabMenu 
-          onClick={onClickLikesTab}
+          onClick={onClickTab}
           className={isLikesTab ? 'active' : ''}
+          tabIndex={3}
         >좋아요</s.TabMenu>
       </s.TabMenuWrapper>
       <s.ContentsWrapper>
