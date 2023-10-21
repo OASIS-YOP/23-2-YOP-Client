@@ -203,9 +203,9 @@ export const likeIcon = styled.img`
   padding-top: 5%;
   padding-right: 10%;
 
-  &:hover {
-    cursor: pointer;
-  }
+  // &:hover {
+  //   cursor: pointer;
+  // }
 
 `
 

@@ -2,15 +2,15 @@ import { useState, useEffect } from "react";
 import * as s from "./style";
 import dotdotdot from "../../../assets/dotdotdot.svg";
 import UnLikedIcon from "../../../assets/UnLikedIcon.svg";
-import LikedIcon from "../../../assets/LikedIcon.svg";
+// import LikedIcon from "../../../assets/LikedIcon.svg";
 
 const Posts = () => {
   // const [ isClicked, setIsClicked ] = useState(false);
   const [ postLikes, setPostLikes ] = useState([
-    { id: 1, liked: false, likeCount: 0 },
-    { id: 2, liked: false, likeCount: 0 },
-    { id: 3, liked: false, likeCount: 0 },
-    { id: 4, liked: false, likeCount: 0 },
+    { id: 1, liked: false, likeCount: 1004 },
+    { id: 2, liked: false, likeCount: 86 },
+    { id: 3, liked: false, likeCount: 55 },
+    { id: 4, liked: false, likeCount: 35 },
   ])
 
   const artistslist = ['뉴진스', '르세라핌', '방탄소년단'];
@@ -21,25 +21,25 @@ const Posts = () => {
         // onClick={onClickArtist}
         // isClicked={isClicked}
         // className={isClicked ? 'active' : ''}
-        key={index}
+        key={artist + index}
       >{artist}</s.ArtistsTab>
     )
   })
 
-  const handleClickLike = (postId) => {
-    setPostLikes((prevLikes) => {
-      return prevLikes.map((post) => {
-        if(post.id === postId) {
-          return {
-            ...post,
-            liked: !post.liked,
-            likeCount: post.liked ? post.likeCount - 1 : post.likeCount + 1}
-        } else {
-          return post;
-        }
-      })
-    })
-  };
+  // const handleClickLike = (postId) => {
+  //   setPostLikes((prevLikes) => {
+  //     return prevLikes.map((post) => {
+  //       if(post.id === postId) {
+  //         return {
+  //           ...post,
+  //           liked: !post.liked,
+  //           likeCount: post.liked ? post.likeCount - 1 : post.likeCount + 1}
+  //       } else {
+  //         return post;
+  //       }
+  //     })
+  //   })
+  // };
 
   const createPost = (post) => {
     return (
@@ -61,8 +61,9 @@ const Posts = () => {
               </s.dateWrapper>
               <s.likeWrapper>
                 <s.likeIcon
-                  src={post.liked ? LikedIcon : UnLikedIcon }
-                  onClick={() => handleClickLike(post.id)}
+                  src={ UnLikedIcon }
+                  // {post.liked ? LikedIcon : UnLikedIcon }
+                  // onClick={() => handleClickLike(post.id)}
                 />
                 <s.likeCount>
                   {post.likeCount}
