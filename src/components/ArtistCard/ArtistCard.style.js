@@ -34,6 +34,7 @@ export const ArtistName = styled.div`
   height: fit-content;
   margin-top: 10px;
   margin-left: 25px;
+  font-weight: 600;
   text-align: center;
 `;
 

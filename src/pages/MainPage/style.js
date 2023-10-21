@@ -14,7 +14,7 @@ export const BannerWrapper = styled.div`
   flex-direction: center;
   align-items: center;
   width: 100%;
-  height: 50vh;
+  height: 60vh;
 
   background-color: #3f70ff;
 `;
@@ -31,7 +31,7 @@ export const BannerContent = styled.div`
 export const PageLabel = styled.div`
   width: fit-content;
   height: fit-content;
-  margin: 20px;
+  margin: 40px 20px 40px 20px;
   padding: 15px;
   font-size: 25px;
   font-weight: bold;
@@ -39,13 +39,23 @@ export const PageLabel = styled.div`
 
 export const RealTimeDesignWrapper = styled.div`
   display: flex;
+  justify-content: row;
   flex-direction: center;
   align-items: center;
+  margin: 0 auto;
+
   width: 95%;
   height: 300px;
-  margin: 0 auto;
+
   border-radius: 15px;
   background-color: #d7d7d7;
+`;
+
+export const DesignCardContainer = styled.div`
+  display: flex;
+  width: fit-content;
+  height: fit-content;
+  margin: 0 auto;
 `;
 
 export const ContentRowBox = styled.div`
@@ -113,4 +123,9 @@ export const AllArtistBox = styled.div`
   height: fit-content;
   display: flex;
   flex-direction: column;
+`;
+export const EnterCompanyLabel = styled.div`
+  margin: 0 20px 20px 30px;
+  font-size: 20px;
+  font-weight: bold;
 `;

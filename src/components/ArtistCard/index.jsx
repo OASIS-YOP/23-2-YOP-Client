@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import * as s from './MyArtistCard.style';
+import * as s from './ArtistCard.style';
 
-const MyArtistCard = ({ fileUrl, artistName }) => {
+const ArtistCard = ({ fileUrl, artistName }) => {
   // const handleCardClick = (e) => {
   //   e.stopPropagation();
   // };
@@ -19,4 +19,4 @@ const MyArtistCard = ({ fileUrl, artistName }) => {
   );
 };
 
-export default MyArtistCard;
+export default ArtistCard;
