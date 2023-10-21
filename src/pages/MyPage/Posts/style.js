@@ -193,7 +193,7 @@ export const likeIcon = styled.img`
   //   cursor: pointer;
   // }
 
-`
+`;
 
 export const moreIconWrapper = styled.div`
   display: flex;
