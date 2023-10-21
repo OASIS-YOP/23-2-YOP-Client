@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import * as s from './MyArtistCard.style';
 
-const MyArtistCard = () => {
+const MyArtistCard = ({ fileUrl, artistName }) => {
   // const handleCardClick = (e) => {
   //   e.stopPropagation();
   // };
@@ -10,8 +10,10 @@ const MyArtistCard = () => {
     <>
       <s.Wrapper>
         {/** 해당 부분 이미지 추가 필요 * */}
-        <s.ImageContainer></s.ImageContainer>
-        <s.ArtistName>방탄소년단</s.ArtistName>
+        <s.ImageContainer>
+          <img src={fileUrl} alt='artist' />
+        </s.ImageContainer>
+        <s.ArtistName>{artistName}</s.ArtistName>
       </s.Wrapper>
     </>
   );

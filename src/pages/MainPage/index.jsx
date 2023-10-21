@@ -5,8 +5,10 @@ import CardsSlider from '../../components/CardSlider';
 import DesignCard from '../../components/DesignCard';
 import MyArtistCard from '../../components/MyArtistCard';
 import FireIcon from '../../assets/FireIcon.svg';
+import Top10 from '../../Temp/Top10'; //더미데이터
+import MyArtist from '../../Temp/MyArtist';
+
 const MainPage = () => {
-  const Top10Index = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   return (
     <s.Wrapper>
       <Header />
@@ -16,17 +18,16 @@ const MainPage = () => {
       <s.PageLabel>나의 최애 아티스트</s.PageLabel>
 
       <CardsSlider>
-        <MyArtistCard />
-        <MyArtistCard />
-        <MyArtistCard />
-        <MyArtistCard />
+        {MyArtist.map((item) => (
+          <MyArtistCard fileUrl={item.fileUrl} artistName={item.artistName} />
+        ))}
       </CardsSlider>
 
       <s.PageLabel>폴꾸 TOP 10</s.PageLabel>
 
       <CardsSlider>
-        {Top10Index.map((item, index) => (
-          <DesignCard item={item} index={index + 1} />
+        {Top10.map((item) => (
+          <DesignCard photoCard={item} />
         ))}
       </CardsSlider>
 
@@ -38,7 +39,9 @@ const MainPage = () => {
           <s.PageLabel>뜨는 컬렉션</s.PageLabel>
           <s.CollectionRowContainer>
             <s.IndexNumber>1</s.IndexNumber>
-            <s.AlbumImage src={`${process.env.PUBLIC_URL}/images/getup.png`} />
+            <s.AlbumImage
+              src={`${process.env.PUBLIC_URL}/images/album/getup.png`}
+            />
             <s.CollectionTextBox>
               <s.CollectionText>Get up(The 2nd EP)</s.CollectionText>
               <s.CollectionText>#ADOR #뉴진스</s.CollectionText>
@@ -51,7 +54,9 @@ const MainPage = () => {
           </s.CollectionRowContainer>
           <s.CollectionRowContainer>
             <s.IndexNumber>1</s.IndexNumber>
-            <s.AlbumImage src={`${process.env.PUBLIC_URL}/images/butter.png`} />
+            <s.AlbumImage
+              src={`${process.env.PUBLIC_URL}/images/album/butter.png`}
+            />
             <s.CollectionTextBox>
               <s.CollectionText>Butter(single)</s.CollectionText>
               <s.CollectionText>#BIGHITMUSIC #방탄소년단</s.CollectionText>
@@ -65,6 +70,7 @@ const MainPage = () => {
         </s.CollectionBox>
         <s.AllArtistBox>
           <s.PageLabel>모든 아티스트</s.PageLabel>
+
           <CardsSlider>
             <MyArtistCard />
             <MyArtistCard />
