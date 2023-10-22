@@ -59,6 +59,16 @@ export const Menu = styled.button`
   font-weight: bold;
 
   background-color: transparent;
+  &:after {
+    display: block;
+    content: '';
+    border-bottom: 2px solid black;
+    transform: scaleX(0);
+    transition: transform 250ms ease-in-out;
+  }
+  &:hover:after {
+    transform: scaleX(1);
+  }
 `;
 
 export const UserWrapper = styled.div`
@@ -67,18 +77,29 @@ export const UserWrapper = styled.div`
   justify-content: space-around;
   align-items: center;
 
+  width: auto;
   height: auto;
 
   padding: 5px;
   margin-left: 15px;
 
-  // border: 1px solid black;
+  cursor: pointer;
 `;
 
 export const NicknameWrapper = styled.div`
   height: auto;
-
+  padding: 4px;
   margin-left: 8px;
 
   font-weight: bold;
+  &:after {
+    display: block;
+    content: '';
+    border-bottom: 2px solid black;
+    transform: scaleX(0);
+    transition: transform 250ms ease-in-out;
+  }
+  &:hover:after {
+    transform: scaleX(1);
+  }
 `;
