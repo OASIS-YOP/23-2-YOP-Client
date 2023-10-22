@@ -43,6 +43,10 @@ export const ArtistsTab = styled.button`
 
   cursor: pointer;
 
+  &:hover {
+    color: #3F70FF;
+  }
+
   &.active {
     color: black;
   }
@@ -132,6 +136,7 @@ export const postInfoWrapper = styled.div`
 
   padding-left: 10%;
   padding-top: 15%;
+
 `;
 
 export const nicknameWrapper = styled.div`
@@ -169,7 +174,7 @@ export const likeWrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
 
-  width: fit-content;
+  width: 50%;
   height: fit-content;
 
   margin-top: 50%;
@@ -185,9 +190,9 @@ export const likeCount = styled.div`
 `;
 
 export const likeIcon = styled.img`
-  width: 50%;
-  padding-top: 5%;
-  padding-right: 10%;
+  width: 23%;
+  padding-top: 2%;
+  margin-right: 5%;
 
   // &:hover {
   //   cursor: pointer;

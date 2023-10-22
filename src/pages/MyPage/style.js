@@ -115,11 +115,16 @@ export const TabMenuWrapper = styled.div`
 
       background-color: transparent;
 
+      &:hover {
+        color: #3F70FF;
+      }
+
       &.active { 
         border-bottom: 3px solid black;
         border-top: none;
         border-left: none;
         border-right: none; 
+        color: black;
       }
   `;
 
