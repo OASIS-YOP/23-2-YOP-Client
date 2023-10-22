@@ -4,7 +4,7 @@ import * as s from './style';
 const Collections = () => {
   const [isActivated, setIsActivated] = useState(false);
 
-  const artistslist = ['뉴진스', '르세라핌', '방탄소년단'];
+  const artistslist = ['뉴진스', '방탄소년단', '에스파',];
 
   const artists = artistslist.map((artist, index) => (
     <s.ArtistsTab key={artist + index}>{artist}</s.ArtistsTab>
