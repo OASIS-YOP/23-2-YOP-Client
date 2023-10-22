@@ -189,13 +189,11 @@ export const likeIcon = styled.img`
   padding-top: 5%;
   padding-right: 10%;
 
-
   // &:hover {
   //   cursor: pointer;
   // }
 
-`
-
+`;
 
 export const moreIconWrapper = styled.div`
   display: flex;

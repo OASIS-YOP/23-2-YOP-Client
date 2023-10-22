@@ -6,7 +6,10 @@ import Avatar from '../../assets/Avatar.svg';
 const Header = () => {
   const onClickMenu = (e) => {
     const menuIndex = e.target.dataset.menuIndex;
-    if (menuIndex === '3') {
+    if (menuIndex === '0') {
+      window.location.href = '/mainpage';
+    }
+    else if (menuIndex === '3') {
       window.location.href = '/mypage';
     } else if (menuIndex === '4') {
       window.location.href = '/';
@@ -17,7 +20,7 @@ const Header = () => {
     <>
       <s.Header>
         <s.LogoWrapper>
-          <s.Logo src={Blogo} />
+          <s.Logo src={Blogo} onClick={onClickMenu} data-menu-index='0'/>
         </s.LogoWrapper>
         <s.MenuWrapper>
           <s.Menu>편집기</s.Menu>
