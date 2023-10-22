@@ -3,7 +3,6 @@ import styled from 'styled-components';
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-
   width: 100%;
   min-width: 1000px;
   height: 100%;
@@ -15,7 +14,7 @@ export const BannerWrapper = styled.div`
   align-items: center;
   width: 100%;
   height: 60vh;
-
+  position: relative;
   background-color: #3f70ff;
 `;
 

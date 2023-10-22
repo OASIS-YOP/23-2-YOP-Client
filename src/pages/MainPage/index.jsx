@@ -11,6 +11,8 @@ import FireIcon from '../../assets/FireIcon.svg';
 import Top10 from '../../Temp/Top10';
 import MyArtist from '../../Temp/MyArtist';
 import RealTimeDesignCard from '../../Temp/RealTimeDesignCard';
+import Banner from '../../components/Banner';
+import BannerSlider from '../../components/BannerSlider';
 
 const MainPage = () => {
   return (
@@ -20,7 +22,14 @@ const MainPage = () => {
 
       {/* 배너 */}
       <s.BannerWrapper>
-        <s.BannerContent>프로모션 및 이벤트 배너 슬라이드 공간</s.BannerContent>
+        {/* <s.BannerContent>프로모션 및 이벤트 배너 슬라이드 공간</s.BannerContent> */}
+        <BannerSlider>
+          <Banner
+            src={`${process.env.PUBLIC_URL}/images/artist/NewJeans.jpeg`}
+          />
+          <Banner src={`${process.env.PUBLIC_URL}/images/artist/bts.jpeg`} />
+          <Banner src={`${process.env.PUBLIC_URL}/images/artist/aespa.jpeg`} />
+        </BannerSlider>
       </s.BannerWrapper>
 
       {/* 나의 최애 아티스트 */}
