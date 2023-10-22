@@ -8,9 +8,9 @@ import ArtistCard from '../../components/ArtistCard';
 import FireIcon from '../../assets/FireIcon.svg';
 
 //더미데이터
-import Top10 from '../../Temp/Top10';
-import MyArtist from '../../Temp/MyArtist';
-import RealTimeDesignCard from '../../Temp/RealTimeDesignCard';
+import Top10 from '../../Temp/mainpage/Top10';
+import MyArtist from '../../Temp/mainpage/MyArtist';
+import RealTimeDesignCard from '../../Temp/mainpage/RealTimeDesignCard';
 import Banner from '../../components/Banner';
 import BannerSlider from '../../components/BannerSlider';
 
