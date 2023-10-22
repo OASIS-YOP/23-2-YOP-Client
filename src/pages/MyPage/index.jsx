@@ -6,6 +6,7 @@ import Collections from './Collections';
 import MyDesigns from './MyDesigns';
 import Likes from './Likes';
 import Header from '../../components/Header';
+// import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 
 const MyPage = ( ) => {
@@ -72,7 +73,7 @@ const MyPage = ( ) => {
         </s.ProfileWrapper>
       </s.ProfileSpace>
       <s.TabMenuWrapper>
-        <s.TabMenu 
+        <s.TabMenu
           onClick={onClickTab}
           className={isPostsTab ? 'active' : ''}
           tabIndex={0}

@@ -14,23 +14,27 @@ const Likes = () => {
     { id: 4, liked: true, likeCount: 89 },
   ])
 
-  const userlist = [ 'User1', ];
+  const userName = [ 'OnPol1004', 'User1', 'User2', 'User3', 'User4', 'User5', 'User6', 'User7', 'User8', 'User9', 'User10'];
 
-  const users = userlist.map((user, index) => {
+  const users = userName.map((user, index) => {
     return (
       <s.nicknameWrapper
-        key={index}
-      >
-       {user} 
-      </s.nicknameWrapper>
+        key={user + index}
+      >{user}</s.nicknameWrapper>
     )
-  })
+  });
 
 
 
 
-
+  
   const createPost = (post) => {
+    if (!post.liked) {
+       ; // 좋아요가 false인 포스트는 렌더링하지 않음
+    }
+
+    const user = users[post.id - 1];
+
     return (
       <>
       <s.PostFrame key={post.id}>
@@ -39,9 +43,9 @@ const Likes = () => {
         </s.leftContainer>
           <s.rightContainer>
             <s.postInfoWrapper>
-              {users}
+              <>{user}</>
               <s.tagsWrapper>
-                #태그1 #태그2 #태그3 #태그4 #태그5
+                #소속사 #아티스트 <br/> #멤버이름 #컬렉션명
               </s.tagsWrapper>
               <s.dateWrapper>
                 2023.10.13
@@ -69,17 +73,19 @@ const Likes = () => {
 
   const handleClickLike = (postId) => {
     setPostLikes((prevLikes) => {
-      return prevLikes.map((post) => {
+      const updatedLikes = prevLikes.map((post) => {
         if(post.id === postId) {
           return {
             ...post,
             liked: !post.liked,
-            likeCount: post.liked ? post.likeCount - 1 : post.likeCount + 1}
-        } else {
-          return post;
+            likeCount: post.liked ? post.likeCount - 1 : post.likeCount + 1,
+          };
         }
-      })
-    })
+        return post;
+      });
+      const updatedPosts = updatedLikes.filter((post) => post.liked);
+      return updatedPosts;
+    });
   };
 
   const posts = postLikes.map((post) => createPost(post));
@@ -88,7 +94,7 @@ const Likes = () => {
     <>
       <s.Wrapper> 
         <s.PostsWrapper>
-          {posts}
+          {posts.length === 0 ? <s.NoLikes>마음에 드는 도안에 좋아요를 눌러보세요!</s.NoLikes> : posts }
         </s.PostsWrapper>
       </s.Wrapper>
     </>

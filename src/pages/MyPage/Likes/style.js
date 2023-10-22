@@ -25,6 +25,20 @@ export const PostsWrapper = styled.div`
 
 `;
 
+export const NoLikes = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height:  200px;
+
+  color: gray;
+  font-weight: bold;
+
+`;
+
 export const PostFrame = styled.div`
   display: flex;
   flex-direction: row;
@@ -141,7 +155,7 @@ export const likeWrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
 
-  width: fit-content;
+  width: 50%;
   height: fit-content;
 
   margin-top: 50%;
@@ -159,9 +173,9 @@ export const likeCount = styled.div`
 
 export const likeIcon = styled.img`
 
-  width: 50%;
-  padding-top: 5%;
-  padding-right: 10%;
+  width: 23%;
+  padding-top: 2%;
+  margin-right: 5%;
 
   &:hover {
     cursor: pointer;
