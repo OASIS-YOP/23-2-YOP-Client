@@ -81,8 +81,18 @@ export const CollectionCardWrapper = styled.div`
   }
 `;
 
+export const ActivatedCollectionCardWrapper = styled.div`
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.1);
+    transition: all linear 200ms;
+  }
+`;
+
 export const CollectionCardImage = styled.img`
   position: relative;
+  display: table;
   padding: 0;
   width: 100%;
   height: 100%;
@@ -90,6 +100,8 @@ export const CollectionCardImage = styled.img`
 `;
 
 export const CollectionInfoWrapper = styled.div`
+  display: table-cell;
+  vertical-align: middle;
   position: absolute;
   bottom: 0;
   width: 100%;
@@ -134,6 +146,7 @@ export const InActivatedLockWrapper = styled.div`
   background-color: #6a7db4;
   z-index: 999;
   cursor: pointer;
+
   &img {
     width: auto;
     height: auto;

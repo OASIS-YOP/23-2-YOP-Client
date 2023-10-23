@@ -18,7 +18,7 @@ const router = createBrowserRouter([
   {
     path: '/mypage',
     element: <MyPage />,
-  }
+  },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
