@@ -12,7 +12,7 @@ const Posts = () => {
     { id: 4, liked: false, likeCount: 35 },
   ];
 
-  const artistslist = ['뉴진스', '르세라핌', '방탄소년단'];
+  const artistslist = ['뉴진스', '방탄소년단', '에스파',];
 
   const [selectedArtist, setSelectedArtist] = useState(artistslist[0]);
 
