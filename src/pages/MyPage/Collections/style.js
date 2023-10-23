@@ -82,10 +82,37 @@ export const CollectionCardWrapper = styled.div`
 `;
 
 export const CollectionCardImage = styled.img`
+  position: relative;
   padding: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+`;
+
+export const CollectionInfoWrapper = styled.div`
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 30%;
+  box-sizing: border-box;
+  background-color: white;
+  z-index: 999;
+`;
+export const CollectionInfoContainer = styled.div`
+  width: 85%;
+  height: 90%;
+  margin: 10px auto;
+`;
+
+export const CollectionInfo = styled.p`
+  margin: 3px;
+  font-size: 10px;
+  font-weight: bold;
+  line-height: 10px;
+  &:first-child {
+    font-size: 16px;
+    line-height: 25px;
+  }
 `;
 
 export const InActivatedCollectionCardImage = styled.img`
@@ -129,5 +156,8 @@ export const InputCodeButton = styled.button`
   cursor: pointer;
   &:hover {
     filter: brightness(90%);
+  }
+  &:active {
+    filter: brightness(50%);
   }
 `;

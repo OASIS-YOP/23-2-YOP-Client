@@ -37,7 +37,24 @@ const CollectionCard = ({ collection }) => {
   return (
     <s.CollectionCardWrapper>
       {collection.isActivated ? (
-        <s.CollectionCardImage src={collection.fileUrl} alt='collection' />
+        <>
+          <s.CollectionCardImage src={collection.fileUrl} alt='collection' />
+          <s.CollectionInfoWrapper>
+            <s.CollectionInfoContainer>
+              <s.CollectionInfo>{collection.albumName}</s.CollectionInfo>
+              <s.CollectionInfo>
+                활성일 : {collection.activatedDate}
+              </s.CollectionInfo>
+              <s.CollectionInfo>
+                수집률 :{' '}
+                {(collection.myQuant / collection.photoCardQuant) * 100}%
+              </s.CollectionInfo>
+              <s.CollectionInfo>
+                포카수 : {collection.myQuant}/{collection.photoCardQuant}장
+              </s.CollectionInfo>
+            </s.CollectionInfoContainer>
+          </s.CollectionInfoWrapper>
+        </>
       ) : (
         <>
           <s.InActivatedCollectionCardImage
@@ -46,7 +63,9 @@ const CollectionCard = ({ collection }) => {
             onMouseOut={onHandleMouseOut}
           />
           {ismouseOver ? (
-            <s.InputCodeButton>코드 입력</s.InputCodeButton>
+            <s.InputCodeButton onMouseOver={onHandleMouseOver}>
+              코드 입력
+            </s.InputCodeButton>
           ) : (
             <s.InActivatedLockWrapper>
               <img src={Lock} alt='lock' onMouseOver={onHandleMouseOver} />

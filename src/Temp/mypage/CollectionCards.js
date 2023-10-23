@@ -2,7 +2,8 @@ const CollectionCards = [
   {
     fileUrl: `${process.env.PUBLIC_URL}/images/album/getup.png`,
     isActivated: true,
-    albumName: 'NEWJEANS',
+    activatedDate: '2022.11.25',
+    albumName: 'Get Up(The 2nd EP)',
     myQuant: '2',
     photoCardQuant: '10',
   },
