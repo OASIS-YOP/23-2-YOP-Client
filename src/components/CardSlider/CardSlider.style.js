@@ -11,4 +11,7 @@ export const Wrapper = styled.div`
   flex-wrap: nowrap;
   -webkit-overflow-scrolling: touch;
   scroll-snap-type: x mandatory;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
