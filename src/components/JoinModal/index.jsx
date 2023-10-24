@@ -1,4 +1,4 @@
-import * as s from '../LoginModal/modal.style';
+import * as s from '../LoginModal/modal.style'; //LoginModal의 style을 함께 씀
 
 export const Join = () => {
   return (

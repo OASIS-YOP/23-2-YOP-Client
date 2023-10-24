@@ -1,12 +1,51 @@
 import * as s from './style';
+import { useEffect, useState, } from 'react';
+// import MyCollectionCard from '../../../components/MyCollectionCard';
 
 
-const MyDesigns = () => {
+import MyCollections from '../../../Temp/mypage/mydesign/MyCollections';
+import ArtistContents from './ArtistContents';
+
+
+const MyDesigns = ( ) => {
+  const artistslist = ['뉴진스', '방탄소년단', '에스파',];
+  const [selectedArtist, setSelectedArtist] = useState(artistslist[0]);
+  const onClickArtist = (artistName) => {
+    setSelectedArtist(artistName);
+    console.log(artistName);
+  };
+
+  // const [isHovered, setIsHovered] = useState(false);
+
+
+  const artists = artistslist.map((artist, index) => {
+    return (
+      <s.ArtistsTab
+          key={artist + index}
+          onClick={() => onClickArtist(artist)}
+          className={artist === selectedArtist ? 'active' : ''}
+        >{artist}
+      </s.ArtistsTab>
+    )
+  });
+
 
   return (
     <>
-      <s.Wrapper> 내 도안 </s.Wrapper>
-    </>
+      <s.Wrapper>
+        { MyCollections.length === 0 ? (
+        <s.EmptyMessage>
+          컬렉션을 활성화하고 나만의 도안을 저장해보세요!
+        </s.EmptyMessage>):(
+          <>
+            <s.ArtistsTabWrapper>
+                {artists}
+            </s.ArtistsTabWrapper>
+            <ArtistContents selectedArtist={selectedArtist} />
+          </>
+        )}
+      </s.Wrapper>
+    </> 
   )
 
 }
