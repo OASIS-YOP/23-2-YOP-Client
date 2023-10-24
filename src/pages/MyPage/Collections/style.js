@@ -113,11 +113,11 @@ export const CollectionInfoWrapper = styled.div`
 export const CollectionInfoContainer = styled.div`
   width: 85%;
   height: 90%;
-  margin: 10px auto;
+  margin: 15px auto;
 `;
 
 export const CollectionInfo = styled.p`
-  margin: 3px;
+  margin: 5px;
   font-size: 10px;
   font-weight: bold;
   line-height: 10px;
