@@ -6,6 +6,12 @@ export const Wrapper = styled.div`
   width: 100%;
   min-width: 1000px;
   height: 100%;
+
+  //드래그 방지
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
 `;
 
 export const BannerWrapper = styled.div`

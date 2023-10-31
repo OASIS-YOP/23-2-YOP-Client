@@ -27,7 +27,7 @@ const MainPage = () => {
           <Banner
             src={`${process.env.PUBLIC_URL}/images/artist/NewJeans.jpeg`}
           />
-          <Banner src={`${process.env.PUBLIC_URL}/images/artist/bts.jpeg`} />
+          <Banner src={`${process.env.PUBLIC_URL}/images/artist/bts.jpg`} />
           <Banner src={`${process.env.PUBLIC_URL}/images/artist/aespa.jpeg`} />
         </BannerSlider>
       </s.BannerWrapper>

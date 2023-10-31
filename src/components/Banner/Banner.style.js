@@ -6,6 +6,7 @@ export const BannerWrapper = styled.div`
   width: 100vw;
   background-color: black;
   margin-bottom: 0;
+  padding-top: 400px;
   scroll-snap-align: center;
 `;
 

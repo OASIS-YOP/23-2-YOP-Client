@@ -8,6 +8,12 @@ export const Wrapper = styled.div`
   height: 100%;
 
   min-width: 1000px;
+
+  //드래그 방지
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
 `;
 
 export const ArtistsTabWrapper = styled.div`

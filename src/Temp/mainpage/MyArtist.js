@@ -5,7 +5,7 @@ const MyArtist = [
   },
   {
     artistName: '방탄소년단',
-    fileUrl: `${process.env.PUBLIC_URL}/images/artist/bts.jpeg`,
+    fileUrl: `${process.env.PUBLIC_URL}/images/artist/bts.jpg`,
   },
   {
     artistName: '아이유',
