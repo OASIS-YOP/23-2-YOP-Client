@@ -23,7 +23,7 @@ export const CollectionListWrapper = styled.div`
 
   background-color: white;
 
-  width: 80%;
+  width: 90%;
   height: fit-content;
 
   margin: 20px 40px;
@@ -37,7 +37,7 @@ export const MyCollectionWrapper = styled.div`
   justify-content: center;
   align-items: center;
 
-  @media (max-width: 768px) {
+  /* @media (max-width: 768px) {
     width: 150px;
     height: 150px;
   }
@@ -50,14 +50,16 @@ export const MyCollectionWrapper = styled.div`
   @media (min-width: 1618px) {
     width: 350px;
     height: 350px;
-  }
+  } */
 
+  width: 30%;
+  box-sizing: border-box;
 
   padding: none;
   margin: 15px 20px;
 
   border: 8px solid #82a2ff;
-  border-radius: 20px;
+  border-radius: 35px;
 
   box-shadow: 11px 13px 20px rgba(0, 0, 0, 0.25);
 
@@ -74,50 +76,5 @@ export const EmptyMessage = styled.div`
 
   color: gray;
 
-`
-
-export const CollectionCardOverlay = styled.div`
-    position: absolute;
-    top: 0;
-    left: 0;
-    bacground-color: rgba(0, 0, 0, 0.7);
-
-    @media (max-width: 768px) {
-      width: 150px;
-      height: 150px;
-    };
-  
-    @media (min-width: 769px) and (max-width: 1617px) {
-      width: 250px;
-      height: 250px;
-    };
-  
-    @media (min-width: 1618px) {
-      width: 350px;
-      height: 350px;
-    };
-
-    display: ${({ isHovered }) => (isHovered ? 'block' : 'none')};
-
-    z-index: 1;
-  `
-
-  export const CollectionCardInfo = styled.div`
-    display: absolute;
-    top: 0;
-    left: 0;
-
-    
-
-    background-color: white;
-
-  `;
-
-  export const InfoWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    
-  `;
+`;
 

@@ -185,6 +185,11 @@ export const likeIcon = styled.img`
 
   &:hover {
     cursor: pointer;
+    filter: brightness(90%);
+  };
+
+  &:active {
+    scale: 0.9;
   }
 
 `

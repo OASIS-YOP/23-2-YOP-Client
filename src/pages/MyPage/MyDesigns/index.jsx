@@ -1,13 +1,12 @@
 import * as s from './style';
 import { useEffect, useState, } from 'react';
-// import MyCollectionCard from '../../../components/MyCollectionCard';
 
 
 import MyCollections from '../../../Temp/mypage/mydesign/MyCollections';
 import ArtistContents from './ArtistContents';
 
 
-const MyDesigns = ( ) => {
+const MyDesigns = ({ onHandleClick }) => {
   const artistslist = ['뉴진스', '방탄소년단', '에스파',];
   const [selectedArtist, setSelectedArtist] = useState(artistslist[0]);
   const onClickArtist = (artistName) => {
@@ -29,8 +28,12 @@ const MyDesigns = ( ) => {
     )
   });
 
+  const selectedArtistInfo = MyCollections.find(
+    (artist) => artist.artistName === selectedArtist
+  );
 
   return (
+
     <>
       <s.Wrapper>
         { MyCollections.length === 0 ? (
@@ -41,7 +44,7 @@ const MyDesigns = ( ) => {
             <s.ArtistsTabWrapper>
                 {artists}
             </s.ArtistsTabWrapper>
-            <ArtistContents selectedArtist={selectedArtist} />
+            <ArtistContents selectedArtistInfo={selectedArtistInfo} />
           </>
         )}
       </s.Wrapper>
