@@ -4,7 +4,7 @@ import MyDesignCollection from '../../../../components/MyDesignCollection';
 import MyCollections from '../../../../Temp/mypage/mydesign/MyCollections';
 
 
-const ArtistContents = ({ selectedArtistInfo }) => {
+const ArtistContents = ({ selectedArtistInfo, selectedCollection, setSelectedCollection }) => {
   const artistCollections = selectedArtistInfo ? selectedArtistInfo.myCollections : [];
 
   // const onHandleMouseOver = (e) => {
@@ -15,6 +15,14 @@ const ArtistContents = ({ selectedArtistInfo }) => {
   //   e.preventDefault();
   //   setIsMouseOver(false);
   // };
+
+  // 컬렉션 클릭 시 선택한 컬렉션 업데이트
+  const handleCollectionClick = (collectionName) => {
+    setSelectedCollection(collectionName);
+  };
+
+  // 선택한 컬렉션에 따라 도안 목록 필터링
+  // const filteredDesigns = artistCollections.filter(item => item.collectionName === selectedCollection);
 
   
 
@@ -27,7 +35,12 @@ const ArtistContents = ({ selectedArtistInfo }) => {
           ) : (
           artistCollections.map((item, index) => (
             <s.MyCollectionWrapper key={index}>
-              <MyDesignCollection fileUrl={item.fileUrl} artistId={selectedArtistInfo.artistId} collectionId={item.collectionId} />
+              <MyDesignCollection
+                onClick={() => handleCollectionClick(item.collectionName)}
+                fileUrl={item.fileUrl}
+                artistId={selectedArtistInfo.artistId}
+                collectionId={item.collectionId}
+              />
             </s.MyCollectionWrapper>
           ))
         )}

@@ -14,6 +14,8 @@ const MyDesigns = ({ onHandleClick }) => {
     console.log(artistName);
   };
 
+  const [selectedCollection, setSelectedCollection] = useState('');
+
   // const [isHovered, setIsHovered] = useState(false);
 
 
@@ -44,7 +46,12 @@ const MyDesigns = ({ onHandleClick }) => {
             <s.ArtistsTabWrapper>
                 {artists}
             </s.ArtistsTabWrapper>
-            <ArtistContents selectedArtistInfo={selectedArtistInfo} />
+            <ArtistContents
+              selectedArtistInfo={selectedArtistInfo} 
+              selectedCollection={selectedCollection} // 선택한 컬렉션 전달
+              setSelectedCollection={setSelectedCollection} // setSelectedCollection 함수 전달
+            />
+          
           </>
         )}
       </s.Wrapper>
