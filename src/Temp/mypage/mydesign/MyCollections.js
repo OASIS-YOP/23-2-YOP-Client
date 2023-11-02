@@ -54,7 +54,7 @@ const MyCollections = [
       {
         collectionId: '1',
         collectionName: 'BUTTER',
-        designQuant: '',
+        designQuant: '10',
         totalSlot: '30',
         fileUrl: `${process.env.PUBLIC_URL}/images/album/butter.png`,
       },

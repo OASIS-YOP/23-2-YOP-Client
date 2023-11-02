@@ -9,6 +9,12 @@ width: 100%;
 height: 100%;
 
 min-width: 1000px;
+
+//드래그 방지
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
 `
 
 export const PostsWrapper = styled.div`
@@ -179,6 +185,11 @@ export const likeIcon = styled.img`
 
   &:hover {
     cursor: pointer;
+    filter: brightness(90%);
+  };
+
+  &:active {
+    scale: 0.9;
   }
 
 `
