@@ -107,7 +107,7 @@ export const leftContainer = styled.div`
   border-radius: 30px 0 0 30px;
 `;
 
-export const PostImage = styled.div`
+export const PostImageFrame = styled.div`
   min-width: 205px;
   min-height: 300px;
   max-width: 280px;
@@ -115,11 +115,18 @@ export const PostImage = styled.div`
   width: 60%;
   height: 27vw;
 
+  overflow: hidden;
+
   border-radius: 20px;
 
   background-color: lightgray;
 
   box-shadow: 11px 13px 25px rgba(0, 0, 0, 0.15);
+`;
+
+export const PostImage = styled.img`
+  width: 100%;
+
 `;
 
 export const rightContainer = styled.div`

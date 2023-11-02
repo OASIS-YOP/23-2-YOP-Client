@@ -17,7 +17,7 @@ const Top10 = [
     enterComp: 'SM',
     groupName: '에스파',
     memberName: '카리나',
-    albumName: 'IM_UNHAPPY',
+    albumName: 'MY_WORLD',
     version: '',
     likeCount: '1002',
   },

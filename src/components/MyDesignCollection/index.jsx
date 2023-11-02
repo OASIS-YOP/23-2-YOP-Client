@@ -38,7 +38,7 @@ const MyDesignCollection = ({ fileUrl, artistId, collectionId }) => {
             <s.CollectionCardInfo>
               { collection.collectionName }
               <br/>
-              { collection.designQuant }/{ collection.totalSlot }
+              { collection.myDesigns.length }/{ collection.totalSlot }
             </s.CollectionCardInfo>
           </s.CollectionInfoWrapper>}
       </s.ImageContainer>

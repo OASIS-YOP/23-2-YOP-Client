@@ -2,15 +2,10 @@ import { useState, } from "react";
 import * as s from "./style";
 import dotdotdot from "../../../assets/dotdotdot.svg";
 import UnLikedIcon from "../../../assets/UnLikedIcon.svg";
+import MyPosts from "../../../Temp/mypage/mypost/MyPosts";
 // import LikedIcon from "../../../assets/LikedIcon.svg";
 
 const Posts = () => {  
-  const postLikes = [
-    { id: 1, liked: false, likeCount: 1004 },
-    { id: 2, liked: false, likeCount: 86 },
-    { id: 3, liked: false, likeCount: 55 },
-    { id: 4, liked: false, likeCount: 35 },
-  ];
 
   const artistslist = ['뉴진스', '방탄소년단', '에스파',];
 
@@ -30,34 +25,22 @@ const Posts = () => {
     )
   })
 
-  
-  const userName = [ 'OnPol1004', 'User1', 'User2', 'User3', 'User4', 'User5', 'User6', 'User7', 'User8', 'User9', 'User10'];
-
-  const users = userName.map((user, index) => {
-    return (
-      <s.nicknameWrapper
-        key={user + index}
-      >{user}</s.nicknameWrapper>
-    )
-  });
-
-
-  const createPost = (post) => {
-
-    const user = users[post.id - 1];
+  const createPost = MyPosts[0].posts.map((post) => {
 
     return (
       <>
       <s.PostFrame
       >
         <s.leftContainer>
-          <s.PostImage />
+          <s.PostImageFrame>
+            <s.PostImage src={post.fileUrl} />
+          </s.PostImageFrame>  
         </s.leftContainer>
           <s.rightContainer>
             <s.postInfoWrapper
               key={post.id}
             >
-              <>{user}</>
+              <s.nicknameWrapper>OnPol1004</s.nicknameWrapper>
               <s.tagsWrapper>
                 #소속사 #아티스트 <br/> #멤버이름 #컬렉션명
               </s.tagsWrapper>
@@ -84,9 +67,9 @@ const Posts = () => {
         </s.PostFrame>
       </>
     )
-  }
+  });
 
-  const posts = postLikes.map((post) => createPost(post));
+  // const posts = createPost.map((post) => []);
 
   return (
     <>
@@ -97,12 +80,13 @@ const Posts = () => {
           {artists}
         </s.ArtistsTabWrapper>
         <s.PostsWrapper>
-          {posts}
+          {createPost}
           {/* {posts.filter(post => post.artist === selectedArtist)} */}
         </s.PostsWrapper>
       </s.Wrapper>
     </>
   )
 }
+
 
 export default Posts;

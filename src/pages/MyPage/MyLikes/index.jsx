@@ -58,9 +58,6 @@ const MyLikes = () => {
                 <s.likeCount>{post.likeCount}</s.likeCount>
               </s.likeWrapper>
             </s.postInfoWrapper>
-            <s.moreIconWrapper>
-              <s.moreIcon src={dotdotdot} />
-            </s.moreIconWrapper>
           </s.rightContainer>
         </s.PostFrame>
       </>
