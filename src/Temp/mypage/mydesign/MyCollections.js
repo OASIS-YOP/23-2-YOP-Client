@@ -62,48 +62,6 @@ const MyCollections = [
         collectionId: '3',
         collectionName: 'sameple1',
         myDesigns: [
-          {
-            designId: '1',
-            designCardName: '하니V1',
-            saveDate: '2023-09-01',
-            fileUrl: `${process.env.PUBLIC_URL}/images/design/하니V1.jpeg`,
-          },
-          {
-            designId: '2',
-            designCardName: '하니V2',
-            saveDate: '2023-09-05',
-            fileUrl: `${process.env.PUBLIC_URL}/images/design/하니V1.jpeg`,
-          },
-          {
-            designId: '3',
-            designCardName: '하니V1',
-            saveDate: '2023-09-01',
-            fileUrl: `${process.env.PUBLIC_URL}/images/design/하니V1.jpeg`,
-          },
-          {
-            designId: '4',
-            designCardName: '하니V2',
-            saveDate: '2023-09-05',
-            fileUrl: `${process.env.PUBLIC_URL}/images/design/하니V1.jpeg`,
-          },
-          {
-            designId: '5',
-            designCardName: '하니V1',
-            saveDate: '2023-09-01',
-            fileUrl: `${process.env.PUBLIC_URL}/images/design/하니V1.jpeg`,
-          },
-          {
-            designId: '6',
-            designCardName: '하니V2',
-            saveDate: '2023-09-05',
-            fileUrl: `${process.env.PUBLIC_URL}/images/design/하니V1.jpeg`,
-          },
-          {
-            designId: '7',
-            designCardName: '하니V1',
-            saveDate: '2023-09-01',
-            fileUrl: `${process.env.PUBLIC_URL}/images/design/하니V1.jpeg`,
-          },
         ],
         totalSlot: '30',
         fileUrl: `${process.env.PUBLIC_URL}/images/album/empty.png`,
@@ -112,18 +70,6 @@ const MyCollections = [
         collectionId: '4',
         collectionName: 'sameple2',
         myDesigns: [
-          {
-            designId: '1',
-            designCardName: '하니V1',
-            saveDate: '2023-09-01',
-            fileUrl: `${process.env.PUBLIC_URL}/images/design/하니V1.jpeg`,
-          },
-          {
-            designId: '2',
-            designCardName: '하니V2',
-            saveDate: '2023-09-05',
-            fileUrl: `${process.env.PUBLIC_URL}/images/design/하니V1.jpeg`,
-          },
         ],
         totalSlot: '30',
         fileUrl: `${process.env.PUBLIC_URL}/images/album/empty.png`,
@@ -132,18 +78,6 @@ const MyCollections = [
         collectionId: '5',
         collectionName: 'sample3',
         myDesigns: [
-          {
-            designId: '1',
-            designCardName: '하니V1',
-            saveDate: '2023-09-01',
-            fileUrl: `${process.env.PUBLIC_URL}/images/design/하니V1.jpeg`,
-          },
-          {
-            designId: '2',
-            designCardName: '하니V2',
-            saveDate: '2023-09-05',
-            fileUrl: `${process.env.PUBLIC_URL}/images/design/하니V1.jpeg`,
-          },
         ],
         totalSlot: '30',
         fileUrl: `${process.env.PUBLIC_URL}/images/album/empty.png`,
