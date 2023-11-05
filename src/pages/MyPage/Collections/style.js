@@ -70,7 +70,7 @@ export const CollectionCardWrapper = styled.div`
   margin: 30px 5px;
   box-sizing: border-box;
   border-radius: 35px;
-  border: 5px solid #82a2ff;
+  border: 8px solid #82a2ff;
 
   overflow: hidden;
 

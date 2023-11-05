@@ -8,7 +8,7 @@ const MyCollections = [
     myCollections: [
       {
         collectionId: '1',
-        collectionName: 'GET_UP(The 2nd EP)',
+        collectionName: 'GET_UP',
         myDesigns: [
           {
             designId: '1',
@@ -54,12 +54,6 @@ const MyCollections = [
             saveDate: '2023-09-01',
             fileUrl: `${process.env.PUBLIC_URL}/images/design/하니V1.jpeg`,
           },
-          {
-            designId: '2',
-            designCardName: '하니V2',
-            saveDate: '2023-09-05',
-            fileUrl: `${process.env.PUBLIC_URL}/images/design/하니V1.jpeg`,
-          }
         ],
         totalSlot: '30',
         fileUrl: `${process.env.PUBLIC_URL}/images/album/OMG.png`,
@@ -192,24 +186,6 @@ const MyCollections = [
             saveDate: '2023-09-05',
             fileUrl: `${process.env.PUBLIC_URL}/images/design/정국V1.jpeg`,
           },
-          {
-            designId: '5',
-            designCardName: '정국V1',
-            saveDate: '2023-09-01',
-            fileUrl: `${process.env.PUBLIC_URL}/images/design/정국V1.jpeg`,
-          },
-          {
-            designId: '6',
-            designCardName: '정국V2',
-            saveDate: '2023-09-05',
-            fileUrl: `${process.env.PUBLIC_URL}/images/design/정국V1.jpeg`,
-          },
-          {
-            designId: '7',
-            designCardName: '정국V1',
-            saveDate: '2023-09-01',
-            fileUrl: `${process.env.PUBLIC_URL}/images/design/정국V1.jpeg`,
-          },
         ],
         totalSlot: '30',
         fileUrl: `${process.env.PUBLIC_URL}/images/album/butter.png`,
@@ -218,18 +194,6 @@ const MyCollections = [
         collectionId: '2',
         collectionName: 'sameple1',
         myDesigns: [
-          {
-            designId: '1',
-            designCardName: '정국V1',
-            saveDate: '2023-09-01',
-            fileUrl: `${process.env.PUBLIC_URL}/images/design/정국V1.jpeg`,
-          },
-          {
-            designId: '2',
-            designCardName: '정국V2',
-            saveDate: '2023-09-05',
-            fileUrl: `${process.env.PUBLIC_URL}/images/design/정국V1.jpeg`,
-          },
         ],
         totalSlot: '30',
         fileUrl: `${process.env.PUBLIC_URL}/images/album/empty.png`,
@@ -238,18 +202,6 @@ const MyCollections = [
         collectionId: '3',
         collectionName: 'sameple2',
         myDesigns: [
-          {
-            designId: '1',
-            designCardName: '정국V1',
-            saveDate: '2023-09-01',
-            fileUrl: `${process.env.PUBLIC_URL}/images/design/정국V1.jpeg`,
-          },
-          {
-            designId: '2',
-            designCardName: '정국V2',
-            saveDate: '2023-09-05',
-            fileUrl: `${process.env.PUBLIC_URL}/images/design/정국V1.jpeg`,
-          },
         ],
         totalSlot: '30',
         fileUrl: `${process.env.PUBLIC_URL}/images/album/empty.png`,
@@ -284,6 +236,18 @@ const MyCollections = [
         collectionId: '1',
         collectionName: 'My World',
         myDesigns: [
+          {
+            designId: '1',
+            designCardName: '카리나V1',
+            saveDate: '2023-09-01',
+            fileUrl: `${process.env.PUBLIC_URL}/images/design/카리나V1.jpeg`,
+          },
+          {
+            designId: '2',
+            designCardName: '카리나V2',
+            saveDate: '2023-09-05',
+            fileUrl: `${process.env.PUBLIC_URL}/images/design/카리나V1.jpeg`,
+          },
         ],
         totalSlot: '30',
         fileUrl: `${process.env.PUBLIC_URL}/images/album/myworld.png`,
