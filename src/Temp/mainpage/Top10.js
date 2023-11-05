@@ -36,7 +36,7 @@ const Top10 = [
     index: 4,
     fileUrl: `${process.env.PUBLIC_URL}/images/artist/RM.jpeg`, //${}안에있는 표현은 public안에있는 경로를 절대경로로 불러오는 표현
     userName: 'tnwjd7890',
-    enterComp: 'BIGHITMUSIC',
+    enterComp: 'BIGHIT',
     groupName: '방탄소년단',
     memberName: 'RM',
     albumName: 'BUTTER',

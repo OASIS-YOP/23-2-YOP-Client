@@ -6,7 +6,7 @@ import MyCollections from '../../../Temp/mypage/mydesign/MyCollections';
 import ArtistContents from './ArtistContents';
 
 
-const MyDesigns = ({ onHandleClick }) => {
+const MyDesigns = ({  }) => {
   const artistslist = ['뉴진스', '방탄소년단', '에스파',];
   const [selectedArtist, setSelectedArtist] = useState(artistslist[0]);
   const onClickArtist = (artistName) => {

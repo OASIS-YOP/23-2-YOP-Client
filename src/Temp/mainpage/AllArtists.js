@@ -10,7 +10,7 @@ const AllArtists = [
   },
   {
     artistId: '2',
-    enterComp: 'BIGHITMUSIC',
+    enterComp: 'BIGHIT',
     artistName: '방탄소년단',
     memberNum: '7',
     fileUrl: `${process.env.PUBLIC_URL}/images/artist/bts.jpg`,

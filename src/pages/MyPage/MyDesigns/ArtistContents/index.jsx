@@ -4,7 +4,7 @@ import MyDesignCollection from '../../../../components/MyDesignCollection';
 import MyCollections from '../../../../Temp/mypage/mydesign/MyCollections';
 
 
-const ArtistContents = ({ selectedArtistInfo, selectedCollection, setSelectedCollection }) => {
+const ArtistContents = ({ selectedArtistInfo, setSelectedCollection }) => {
   const artistCollections = selectedArtistInfo ? selectedArtistInfo.myCollections : [];
 
   // const onHandleMouseOver = (e) => {
