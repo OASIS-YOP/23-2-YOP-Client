@@ -1,16 +1,12 @@
 import { useState, } from "react";
 import * as s from "./style";
-import dotdotdot from "../../../assets/dotdotdot.svg";
-import UnLikedIcon from "../../../assets/UnLikedIcon.svg";
+// import dotdotdot from "../../../assets/dotdotdot.svg";
+// import UnLikedIcon from "../../../assets/UnLikedIcon.svg";
+import MyPosts from "../../../Temp/mypage/mypost/MyPosts";
+import CreatePost from "./ArtistPosts";
 // import LikedIcon from "../../../assets/LikedIcon.svg";
 
 const Posts = () => {  
-  const postLikes = [
-    { id: 1, liked: false, likeCount: 1004 },
-    { id: 2, liked: false, likeCount: 86 },
-    { id: 3, liked: false, likeCount: 55 },
-    { id: 4, liked: false, likeCount: 35 },
-  ];
 
   const artistslist = ['뉴진스', '방탄소년단', '에스파',];
 
@@ -30,63 +26,13 @@ const Posts = () => {
     )
   })
 
+  const selectedArtistInfo = MyPosts.find(
+    (artist) => artist.artistName === selectedArtist
+  );
+
   
-  const userName = [ 'OnPol1004', 'User1', 'User2', 'User3', 'User4', 'User5', 'User6', 'User7', 'User8', 'User9', 'User10'];
 
-  const users = userName.map((user, index) => {
-    return (
-      <s.nicknameWrapper
-        key={user + index}
-      >{user}</s.nicknameWrapper>
-    )
-  });
-
-
-  const createPost = (post) => {
-
-    const user = users[post.id - 1];
-
-    return (
-      <>
-      <s.PostFrame
-      >
-        <s.leftContainer>
-          <s.PostImage />
-        </s.leftContainer>
-          <s.rightContainer>
-            <s.postInfoWrapper
-              key={post.id}
-            >
-              <>{user}</>
-              <s.tagsWrapper>
-                #소속사 #아티스트 <br/> #멤버이름 #컬렉션명
-              </s.tagsWrapper>
-              <s.dateWrapper>
-                2023.10.13
-              </s.dateWrapper>
-              <s.likeWrapper>
-                <s.likeIcon
-                  src={ UnLikedIcon }
-                />
-                <s.likeCount
-                  key={post.id}
-                >
-                  {post.likeCount}
-                </s.likeCount>
-              </s.likeWrapper>
-            </s.postInfoWrapper>
-            <s.moreIconWrapper>
-              <s.moreIcon
-                src={dotdotdot}
-              />
-            </s.moreIconWrapper>
-          </s.rightContainer>
-        </s.PostFrame>
-      </>
-    )
-  }
-
-  const posts = postLikes.map((post) => createPost(post));
+  // const posts = createPost.map((post) => []);
 
   return (
     <>
@@ -97,12 +43,70 @@ const Posts = () => {
           {artists}
         </s.ArtistsTabWrapper>
         <s.PostsWrapper>
-          {posts}
+          <CreatePost
+            selectedArtistInfo={selectedArtistInfo} 
+            selectedArtist={selectedArtist}
+            // setCurrentArtist={setCurrentArtist}
+          />
           {/* {posts.filter(post => post.artist === selectedArtist)} */}
         </s.PostsWrapper>
       </s.Wrapper>
     </>
   )
 }
+
+// const CreatePost = ({ selectedArtistInfo, setCurrentArtist, post }) => {
+
+//   const artistPosts = selectedArtistInfo ? selectedArtistInfo.posts : [];
+
+//   return (
+//     <>
+//     <s.PostFrame>
+//       {artistPosts.length === 0 ? ( 
+//         <div>아티스트의 도안을 꾸미고 포스트해보세요!</div>
+//       ) : (
+//         artistPosts.map((item, index) => ( 
+//           <>
+//           <s.leftContainer>
+//             <s.PostImageFrame >
+//               <s.PostImage src={item.fileUrl} />
+//             </s.PostImageFrame>  
+//           </s.leftContainer>
+//             <s.rightContainer>
+//               <s.postInfoWrapper
+//                 key={item.id}
+//               >
+//                 <s.nicknameWrapper>OnPol1004</s.nicknameWrapper>
+//                 <s.tagsWrapper>
+//                   #소속사 #아티스트 <br/> #멤버이름 #컬렉션명
+//                 </s.tagsWrapper>
+//                 <s.dateWrapper>
+//                   2023.10.13
+//                 </s.dateWrapper>
+//                 <s.likeWrapper>
+//                   <s.likeIcon
+//                     src={ UnLikedIcon }
+//                   />
+//                   <s.likeCount
+//                     key={item.id}
+//                   >
+//                     {item.likeCount}
+//                   </s.likeCount>
+//                 </s.likeWrapper>
+//               </s.postInfoWrapper>
+//               <s.moreIconWrapper>
+//                 <s.moreIcon
+//                   src={dotdotdot}
+//                 />
+//               </s.moreIconWrapper>
+//             </s.rightContainer>
+//             </>
+//           ))
+//         )}
+//       </s.PostFrame>
+//     </>
+//   )
+// };
+
 
 export default Posts;

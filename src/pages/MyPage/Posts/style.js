@@ -71,158 +71,165 @@ export const PostsWrapper = styled.div`
   margin: 0 40px;
 `;
 
-export const PostFrame = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+// export const PostFrame = styled.div`
+//   display: flex;
+//   flex-direction: row;
+//   justify-content: center;
+//   align-items: center;
 
-  border-radius: 48px;
+//   border-radius: 48px;
 
-  min-width: 650px;
-  min-height: 450px;
-  max-width: 900px;
-  max-height: 600px;
-  width: 65%;
-  height: 40vw;
+//   min-width: 650px;
+//   min-height: 450px;
+//   max-width: 900px;
+//   max-height: 600px;
+//   width: 65%;
+//   height: 40vw;
 
-  margin: 20px 0;
+//   margin: 20px 0;
 
-  box-shadow: 11px 13px 20px rgba(0, 0, 0, 0.25);
+//   box-shadow: 11px 13px 20px rgba(0, 0, 0, 0.25);
 
-  // border: 9px solid #3F70FF;
-`;
+//   // border: 9px solid #3F70FF;
+// `;
 
-export const leftContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+// export const leftContainer = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
 
-  width: 55%;
-  height: 100%;
+//   width: 55%;
+//   height: 100%;
 
-  background-color: #3f70ff;
+//   background-color: #3f70ff;
 
-  border-radius: 30px 0 0 30px;
-`;
+//   border-radius: 30px 0 0 30px;
+// `;
 
-export const PostImage = styled.div`
-  min-width: 205px;
-  min-height: 300px;
-  max-width: 280px;
-  max-height: 400px;
-  width: 60%;
-  height: 27vw;
+// export const PostImageFrame = styled.div`
+//   min-width: 205px;
+//   min-height: 300px;
+//   max-width: 280px;
+//   max-height: 400px;
+//   width: 60%;
+//   height: 27vw;
 
-  border-radius: 20px;
+//   overflow: hidden;
 
-  background-color: lightgray;
+//   border-radius: 20px;
 
-  box-shadow: 11px 13px 25px rgba(0, 0, 0, 0.15);
-`;
+//   background-color: lightgray;
 
-export const rightContainer = styled.div`
-  width: 45%;
-  height: 100%;
+//   box-shadow: 11px 13px 25px rgba(0, 0, 0, 0.15);
+// `;
 
-  background-color: transparent;
+// export const PostImage = styled.img`
+//   width: 100%;
 
-  border-radius: 0 30px 30px 0;
-`;
+// `;
 
-export const postInfoWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
+// export const rightContainer = styled.div`
+//   width: 45%;
+//   height: 100%;
 
-  width: 100%;
-  height: fit-content;
+//   background-color: transparent;
 
-  padding-left: 10%;
-  padding-top: 15%;
+//   border-radius: 0 30px 30px 0;
+// `;
 
-`;
+// export const postInfoWrapper = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: flex-start;
+//   align-items: flex-start;
 
-export const nicknameWrapper = styled.div`
-  font-size: 30px;
-  font-weight: 700;
-`;
+//   width: 100%;
+//   height: fit-content;
 
-export const tagsWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+//   padding-left: 10%;
+//   padding-top: 15%;
 
-  min-width: 160px;
-  max-width: 100px;
-  width: 20%;
+// `;
 
-  margin: 10px 0;
+// export const nicknameWrapper = styled.div`
+//   font-size: 30px;
+//   font-weight: 700;
+// `;
 
-  color: #3f70ff;
+// export const tagsWrapper = styled.div`
+//   display: flex;
+//   flex-direction: row;
+//   flex-wrap: wrap;
 
-  font-size: 95%;
-  font-weight: 700;
+//   min-width: 160px;
+//   max-width: 100px;
+//   width: 20%;
 
-  //한줄에 태그 두개씩만 들어가게 하기 추후 기능 필요
-`;
+//   margin: 10px 0;
 
-export const dateWrapper = styled.div`
-  color: #3f70ff;
-  font-size: 90%;
-`;
+//   color: #3f70ff;
 
-export const likeWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
+//   font-size: 95%;
+//   font-weight: 700;
 
-  width: 50%;
-  height: fit-content;
+//   //한줄에 태그 두개씩만 들어가게 하기 추후 기능 필요
+// `;
 
-  margin-top: 50%;
+// export const dateWrapper = styled.div`
+//   color: #3f70ff;
+//   font-size: 90%;
+// `;
 
-  font-size: 200%;
-  font-weight: 700;
+// export const likeWrapper = styled.div`
+//   display: flex;
+//   flex-direction: row;
+//   justify-content: flex-start;
+//   align-items: center;
 
-  // border: 1px solid black;
-`;
+//   width: 50%;
+//   height: fit-content;
 
-export const likeCount = styled.div`
-  width: 50%;
-`;
+//   margin-top: 50%;
 
-export const likeIcon = styled.img`
-  width: 23%;
-  padding-top: 2%;
-  margin-right: 5%;
+//   font-size: 200%;
+//   font-weight: 700;
 
-  // &:hover {
-  //   cursor: pointer;
-  // }
+//   // border: 1px solid black;
+// `;
 
-`;
+// export const likeCount = styled.div`
+//   width: 50%;
+// `;
 
-export const moreIconWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
+// export const likeIcon = styled.img`
+//   width: 23%;
+//   padding-top: 2%;
+//   margin-right: 5%;
 
-  width: 90%;
-  height: fit-content;
+//   // &:hover {
+//   //   cursor: pointer;
+//   // }
 
-  margin-top: 6%;
-`;
+// `;
 
-export const moreIcon = styled.img`
-  width: 10%;
+// export const moreIconWrapper = styled.div`
+//   display: flex;
+//   flex-direction: row;
+//   justify-content: flex-end;
+//   align-items: center;
 
-  cursor: pointer;
-`;
+//   width: 90%;
+//   height: fit-content;
+
+//   margin-top: 6%;
+// `;
+
+// export const moreIcon = styled.img`
+//   width: 10%;
+
+//   cursor: pointer;
+// `;
 
 export const contextBox = styled.div`
   display: flex;

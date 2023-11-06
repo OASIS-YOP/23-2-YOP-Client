@@ -8,36 +8,77 @@ const MyCollections = [
     myCollections: [
       {
         collectionId: '1',
-        collectionName: 'GET_UP(The 2nd EP)',
-        designQuant: '5',
+        collectionName: 'GET_UP',
+        myDesigns: [
+          {
+            designId: '1',
+            designCardName: '하니V1',
+            saveDate: '2023-09-01',
+            fileUrl: `${process.env.PUBLIC_URL}/images/design/하니V1.jpeg`,
+          },
+          {
+            designId: '2',
+            designCardName: '하니V2',
+            saveDate: '2023-09-05',
+            fileUrl: `${process.env.PUBLIC_URL}/images/design/하니V1.jpeg`,
+          },
+          {
+            designId: '3',
+            designCardName: '하니V1',
+            saveDate: '2023-09-01',
+            fileUrl: `${process.env.PUBLIC_URL}/images/design/하니V1.jpeg`,
+          },
+          {
+            designId: '4',
+            designCardName: '하니V2',
+            saveDate: '2023-09-05',
+            fileUrl: `${process.env.PUBLIC_URL}/images/design/하니V1.jpeg`,
+          },
+          {
+            designId: '5',
+            designCardName: '하니V1',
+            saveDate: '2023-09-01',
+            fileUrl: `${process.env.PUBLIC_URL}/images/design/하니V1.jpeg`,
+          },
+        ],
         totalSlot: '30',
         fileUrl: `${process.env.PUBLIC_URL}/images/album/getup.png`,
       },
       {
         collectionId: '2',
         collectionName: 'OMG',
-        designQuant: '2',
+        myDesigns: [
+          {
+            designId: '1',
+            designCardName: '하니V1',
+            saveDate: '2023-09-01',
+            fileUrl: `${process.env.PUBLIC_URL}/images/design/하니V1.jpeg`,
+          },
+        ],
         totalSlot: '30',
         fileUrl: `${process.env.PUBLIC_URL}/images/album/OMG.png`,
       },
       {
         collectionId: '3',
         collectionName: 'sameple1',
-        designQuant: '7',
+        myDesigns: [
+        ],
         totalSlot: '30',
         fileUrl: `${process.env.PUBLIC_URL}/images/album/empty.png`,
       },
       {
         collectionId: '4',
         collectionName: 'sameple2',
-        designQuant: '2',
+        myDesigns: [
+        ],
         totalSlot: '30',
         fileUrl: `${process.env.PUBLIC_URL}/images/album/empty.png`,
       },
       {
         collectionId: '5',
-        collectionName: 'OMG',
-        designQuant: '2',
+        collectionName: 'sample3',
+        myDesigns: [
+        ],
         totalSlot: '30',
         fileUrl: `${process.env.PUBLIC_URL}/images/album/empty.png`,
       }
@@ -54,35 +95,64 @@ const MyCollections = [
       {
         collectionId: '1',
         collectionName: 'BUTTER',
-        designQuant: '10',
+        myDesigns: [
+          {
+            designId: '1',
+            designCardName: '정국V1',
+            saveDate: '2023-09-01',
+            fileUrl: `${process.env.PUBLIC_URL}/images/design/정국V1.jpeg`,
+          },
+          {
+            designId: '2',
+            designCardName: '정국V2',
+            saveDate: '2023-09-05',
+            fileUrl: `${process.env.PUBLIC_URL}/images/design/정국V1.jpeg`,
+          },
+          {
+            designId: '3',
+            designCardName: '정국V1',
+            saveDate: '2023-09-01',
+            fileUrl: `${process.env.PUBLIC_URL}/images/design/정국V1.jpeg`,
+          },
+          {
+            designId: '4',
+            designCardName: '정국V2',
+            saveDate: '2023-09-05',
+            fileUrl: `${process.env.PUBLIC_URL}/images/design/정국V1.jpeg`,
+          },
+        ],
         totalSlot: '30',
         fileUrl: `${process.env.PUBLIC_URL}/images/album/butter.png`,
       },
       {
         collectionId: '2',
         collectionName: 'sameple1',
-        designQuant: '7',
+        myDesigns: [
+        ],
         totalSlot: '30',
         fileUrl: `${process.env.PUBLIC_URL}/images/album/empty.png`,
       },
       {
         collectionId: '3',
         collectionName: 'sameple2',
-        designQuant: '2',
+        myDesigns: [
+        ],
         totalSlot: '30',
         fileUrl: `${process.env.PUBLIC_URL}/images/album/empty.png`,
       },
       {
         collectionId: '4',
         collectionName: 'sameple2',
-        designQuant: '2',
+        myDesigns: [
+        ],
         totalSlot: '30',
         fileUrl: `${process.env.PUBLIC_URL}/images/album/empty.png`,
       },
       {
         collectionId: '5',
-        collectionName: 'OMG',
-        designQuant: '2',
+        collectionName: 'sample3',
+        myDesigns: [
+        ],
         totalSlot: '30',
         fileUrl: `${process.env.PUBLIC_URL}/images/album/empty.png`,
       }
@@ -99,35 +169,52 @@ const MyCollections = [
       {
         collectionId: '1',
         collectionName: 'My World',
-        designQuant: '6',
+        myDesigns: [
+          {
+            designId: '1',
+            designCardName: '카리나V1',
+            saveDate: '2023-09-01',
+            fileUrl: `${process.env.PUBLIC_URL}/images/design/카리나V1.jpeg`,
+          },
+          {
+            designId: '2',
+            designCardName: '카리나V2',
+            saveDate: '2023-09-05',
+            fileUrl: `${process.env.PUBLIC_URL}/images/design/카리나V1.jpeg`,
+          },
+        ],
         totalSlot: '30',
         fileUrl: `${process.env.PUBLIC_URL}/images/album/myworld.png`,
       },
       {
         collectionId: '2',
         collectionName: 'sameple1',
-        designQuant: '7',
+        myDesigns: [
+        ],
         totalSlot: '30',
         fileUrl: `${process.env.PUBLIC_URL}/images/album/empty.png`,
       },
       {
         collectionId: '3',
         collectionName: 'sameple2',
-        designQuant: '2',
+        myDesigns: [
+        ],
         totalSlot: '30',
         fileUrl: `${process.env.PUBLIC_URL}/images/album/empty.png`,
       },
       {
         collectionId: '4',
         collectionName: 'sameple2',
-        designQuant: '2',
+        myDesigns: [
+        ],
         totalSlot: '30',
         fileUrl: `${process.env.PUBLIC_URL}/images/album/empty.png`,
       },
       {
         collectionId: '5',
-        collectionName: 'OMG',
-        designQuant: '2',
+        collectionName: 'sample3',
+        myDesigns: [
+        ],
         totalSlot: '30',
         fileUrl: `${process.env.PUBLIC_URL}/images/album/empty.png`,
       }

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+
 export const ImageContainer = styled.div`
   position: relative;
   display: flex;
@@ -15,6 +16,13 @@ export const ImageContainer = styled.div`
     > img {
       filter: brightness(30%);
     }
+  };
+
+  &:active{
+    > img {
+      filter: brightness(50%);
+    }
+
   };
 
   /* @media (max-width: 768px) {
