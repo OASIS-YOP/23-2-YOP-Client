@@ -27,6 +27,7 @@ const BannerSlider = ({ children }) => {
       <s.DotsWrapper>
         {React.Children.toArray(children).map((_, index) => (
           <s.Dot
+            key={index}
             className={index === dotActive ? 'active' : ''}
             onClick={() => onClickDot(index)}
           />
