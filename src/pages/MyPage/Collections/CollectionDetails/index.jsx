@@ -1,4 +1,8 @@
 import { useState } from 'react';
 import * as s from './style';
 
-const CollectionDetails = () => {};
+const CollectionDetails = () => {
+  return <div></div>;
+};
+
+export default CollectionDetails;

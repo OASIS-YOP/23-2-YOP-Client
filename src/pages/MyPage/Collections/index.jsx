@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import * as s from './style';
 import CollectionCards from '../../../Temp/mypage/CollectionCards';
+import CollectionDetails from './CollectionDetails';
 import Lock from '../../../assets/Lock.svg';
 
 const Collections = () => {
+  const [isClickedCollection, setIsClickedCollections] = useState(false);
 
-  const [isActivated, setIsActivated] = useState(false);
-
-  const artistslist = ['뉴진스', '방탄소년단', '에스파',];
+  const artistslist = ['뉴진스', '방탄소년단', '에스파'];
 
   const artists = artistslist.map((artist, index) => (
     <s.ArtistsTab key={artist + index}>{artist}</s.ArtistsTab>
@@ -17,11 +17,15 @@ const Collections = () => {
     <>
       <s.Wrapper>
         <s.ArtistsTabWrapper>{artists}</s.ArtistsTabWrapper>
-        <s.CollectionCardsContainer>
-          {CollectionCards.map((item) => (
-            <CollectionCard collection={item} />
-          ))}
-        </s.CollectionCardsContainer>
+        {isClickedCollection ? (
+          <CollectionDetails />
+        ) : (
+          <s.CollectionCardsContainer>
+            {CollectionCards.map((item) => (
+              <CollectionCard collection={item} />
+            ))}
+          </s.CollectionCardsContainer>
+        )}
       </s.Wrapper>
     </>
   );

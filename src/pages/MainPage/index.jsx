@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import * as s from './style';
 import Header from '../../components/Header';
 import CardsSlider from '../../components/CardSlider';
@@ -13,8 +13,42 @@ import MyArtist from '../../Temp/mainpage/MyArtist';
 import RealTimeDesignCard from '../../Temp/mainpage/RealTimeDesignCard';
 import Banner from '../../components/Banner';
 import BannerSlider from '../../components/BannerSlider';
+import axios from '../../api/AxiosC';
 
 const MainPage = () => {
+  const [randomArtist, setRandomArtist] = useState({
+    enterComp: '',
+    groupName: '',
+    photo: '',
+  });
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_BASE_URL}/mainpage/artist`)
+      .then((response) => {
+        if (response.status === 200) {
+          console.log(200);
+          return response.data;
+        }
+        if (response.status === 400) {
+          console.log(400);
+          const responseData = response.data;
+          const errorMessages = Object.values(responseData.error).join('\n');
+          alert(errorMessages);
+          throw new Error();
+        }
+      })
+      .then((data) => {
+        console.log(data);
+        setRandomArtist({
+          enterComp: data[0].enterComp,
+          groupName: data[0].groupName,
+          photo: data[0].photo,
+        });
+
+        console.log(randomArtist);
+      });
+  }, []);
   return (
     <s.Wrapper>
       {/* 헤더 */}
@@ -35,16 +69,20 @@ const MainPage = () => {
       {/* 나의 최애 아티스트 */}
       <s.PageLabel>나의 최애 아티스트</s.PageLabel>
       <CardsSlider>
-        {MyArtist.map((item) => (
-          <ArtistCard fileUrl={item.fileUrl} artistName={item.artistName} />
+        {MyArtist.map((item, index) => (
+          <ArtistCard
+            key={index}
+            fileUrl={item.fileUrl}
+            artistName={item.artistName}
+          />
         ))}
       </CardsSlider>
 
       {/* 폴꾸 Top10 */}
       <s.PageLabel>폴꾸 TOP 10</s.PageLabel>
       <CardsSlider>
-        {Top10.map((item) => (
-          <Top10DesignCard photoCard={item} />
+        {Top10.map((item, index) => (
+          <Top10DesignCard key={index} photoCard={item} />
         ))}
       </CardsSlider>
 
@@ -52,8 +90,8 @@ const MainPage = () => {
       <s.PageLabel>실시간 도안</s.PageLabel>
       <s.RealTimeDesignWrapper>
         <s.DesignCardContainer>
-          {RealTimeDesignCard.map((item) => (
-            <DesignCard photoCard={item} />
+          {RealTimeDesignCard.map((item, index) => (
+            <DesignCard key={index} photoCard={item} />
           ))}
         </s.DesignCardContainer>
       </s.RealTimeDesignWrapper>
@@ -94,15 +132,15 @@ const MainPage = () => {
           </s.CollectionRowContainer>
         </s.CollectionBox>
 
-        {/* 모든 아티스트 */}
+        {/* 모든 아티스트 랜덤 */}
         <s.AllArtistBox>
           <s.PageLabel>모든 아티스트</s.PageLabel>
 
-          <s.EnterCompanyLabel>SM Entertainment</s.EnterCompanyLabel>
+          <s.EnterCompanyLabel>{randomArtist.enterComp}</s.EnterCompanyLabel>
 
           <ArtistCard
             fileUrl={`${process.env.PUBLIC_URL}/images/artist/aespa.jpeg`}
-            artistName={'에스파'}
+            artistName={randomArtist.groupName}
           />
         </s.AllArtistBox>
       </s.ContentRowBox>
