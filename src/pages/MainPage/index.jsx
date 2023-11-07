@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as s from './style';
 import Header from '../../components/Header';
 import CardsSlider from '../../components/CardSlider';
@@ -13,6 +14,8 @@ import MyArtist from '../../Temp/mainpage/MyArtist';
 import RealTimeDesignCard from '../../Temp/mainpage/RealTimeDesignCard';
 import Banner from '../../components/Banner';
 import BannerSlider from '../../components/BannerSlider';
+import AllArtists from '../../Temp/mainpage/AllArtists';
+
 import axios from '../../api/AxiosC';
 
 const MainPage = () => {
@@ -21,34 +24,35 @@ const MainPage = () => {
     groupName: '',
     photo: '',
   });
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_BASE_URL}/mainpage/artist`)
-      .then((response) => {
-        if (response.status === 200) {
-          console.log(200);
-          return response.data;
-        }
-        if (response.status === 400) {
-          console.log(400);
-          const responseData = response.data;
-          const errorMessages = Object.values(responseData.error).join('\n');
-          alert(errorMessages);
-          throw new Error();
-        }
-      })
-      .then((data) => {
-        console.log(data);
-        setRandomArtist({
-          enterComp: data[0].enterComp,
-          groupName: data[0].groupName,
-          photo: data[0].photo,
-        });
+  // useEffect(() => {
+  //   axios
+  //     .get(`${process.env.REACT_APP_BASE_URL}/mainpage/artist`)
+  //     .then((response) => {
+  //       if (response.status === 200) {
+  //         console.log(200);
+  //         return response.data;
+  //       }
+  //       if (response.status === 400) {
+  //         console.log(400);
+  //         const responseData = response.data;
+  //         const errorMessages = Object.values(responseData.error).join('\n');
+  //         alert(errorMessages);
+  //         throw new Error();
+  //       }
+  //     })
+  //     .then((data) => {
+  //       console.log(data);
+  //       setRandomArtist({
+  //         enterComp: data[0].enterComp,
+  //         groupName: data[0].groupName,
+  //         photo: data[0].photo,
+  //       });
 
-        console.log(randomArtist);
-      });
-  }, []);
+  //       console.log(randomArtist);
+  //     });
+  // }, []);
   return (
     <s.Wrapper>
       {/* 헤더 */}
@@ -134,14 +138,19 @@ const MainPage = () => {
 
         {/* 모든 아티스트 랜덤 */}
         <s.AllArtistBox>
-          <s.PageLabel>모든 아티스트</s.PageLabel>
+          <s.PageLabel>
+            모든 아티스트
+            <span onClick={() => navigate('/allartist')}>전체보기</span>
+          </s.PageLabel>
 
-          <s.EnterCompanyLabel>{randomArtist.enterComp}</s.EnterCompanyLabel>
+          {/* api 받아서 수정해야함 */}
+          <s.EnterCompanyLabel>{AllArtists[0].enterComp}</s.EnterCompanyLabel>
 
-          <ArtistCard
-            fileUrl={`${process.env.PUBLIC_URL}/images/artist/aespa.jpeg`}
-            artistName={randomArtist.groupName}
-          />
+          <CardsSlider>
+            {AllArtists[0].artistList.map((item) => (
+              <ArtistCard fileUrl={item.fileUrl} artistName={item.artistName} />
+            ))}
+          </CardsSlider>
         </s.AllArtistBox>
       </s.ContentRowBox>
     </s.Wrapper>

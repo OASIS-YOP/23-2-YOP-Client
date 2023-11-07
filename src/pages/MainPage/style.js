@@ -8,10 +8,10 @@ export const Wrapper = styled.div`
   height: 100%;
 
   //드래그 방지
-    -webkit-user-select:none;
-    -moz-user-select:none;
-    -ms-user-select:none;
-    user-select:none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 `;
 
 export const BannerWrapper = styled.div`
@@ -33,13 +33,20 @@ export const BannerContent = styled.div`
   font-weight: 800;
 `;
 
-export const PageLabel = styled.div`
-  width: fit-content;
+export const PageLabel = styled.p`
   height: fit-content;
   margin: 40px 20px 40px 20px;
   padding: 15px;
   font-size: 25px;
   font-weight: bold;
+
+  & span {
+    float: right;
+    margin-right: 50px;
+    font-size: 15px;
+    color: gray;
+    cursor: pointer;
+  }
 `;
 
 export const RealTimeDesignWrapper = styled.div`
@@ -65,6 +72,7 @@ export const DesignCardContainer = styled.div`
 
 export const ContentRowBox = styled.div`
   display: flex;
+  justify-content: space-between;
   width: 100%;
   height: 100%;
 `;
@@ -124,9 +132,10 @@ export const FireIcon = styled.img`
   height: 20px;
 `;
 export const AllArtistBox = styled.div`
-  width: 60%;
-  height: fit-content;
   display: flex;
+  width: 50%;
+  height: fit-content;
+  /* margin-left: 14vw; */
   flex-direction: column;
 `;
 export const EnterCompanyLabel = styled.div`

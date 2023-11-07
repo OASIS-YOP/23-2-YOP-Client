@@ -11,13 +11,18 @@ const AllArtist = () => {
   return (
     <>
       <Header />
-
-      <s.PageLabel>{AllArtists[0].enterComp}</s.PageLabel>
-      <CardsSlider>
-        {AllArtists.map((item) => (
-          <ArtistCard fileUrl={item.fileUrl} artistName={item.artistName} />
-        ))}
-      </CardsSlider>
+      <s.HeaderBox></s.HeaderBox>
+      <s.PageLabel>모든 아티스트</s.PageLabel>
+      {AllArtists.map((item) => (
+        <>
+          <s.EnterCompLabel>{item.enterComp}</s.EnterCompLabel>
+          <CardsSlider>
+            {item.artistList.map((item) => (
+              <ArtistCard fileUrl={item.fileUrl} artistName={item.artistName} />
+            ))}
+          </CardsSlider>
+        </>
+      ))}
     </>
   );
 };
