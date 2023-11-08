@@ -141,10 +141,10 @@ export const CollectionInfo = styled.p`
 export const InActivatedCollectionCardImage = styled.img`
   position: absolute;
   padding: 0;
-  width: 100%;
-  height: 100%;
+  width: 110%;
+  height: 110%;
   object-fit: cover;
-  filter: blur(5px);
+  filter: blur(5px) brightness(50%);
 `;
 
 export const InActivatedLockWrapper = styled.div`
