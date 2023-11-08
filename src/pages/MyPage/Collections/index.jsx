@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import * as s from './style';
 import CollectionCards from '../../../Temp/mypage/CollectionCards';
-import Lock from '../../../assets/Lock.svg';
 import CollectionDetails from './CollectionDetails';
+import Lock from '../../../assets/Lock.svg';
 
 const Collections = () => {
   const artistslist = ['뉴진스', '방탄소년단', '에스파',];

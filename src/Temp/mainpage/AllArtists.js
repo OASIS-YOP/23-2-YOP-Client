@@ -1,39 +1,103 @@
 const AllArtists = [
   {
-    artistId: '1',
     enterComp: 'ADOR',
-    artistName: '뉴진스',
-    memberNum: '5',
-    fileUrl: `${process.env.PUBLIC_URL}/images/artist/NewJeans.jpeg`,
-    members: [],
-    collectionQuant: '',
+    artistList: [
+      {
+        artistId: '1',
+        artistName: '뉴진스',
+        fileUrl: `${process.env.PUBLIC_URL}/images/artist/NewJeans.jpeg`,
+      },
+      {
+        artistId: '1',
+        artistName: '그룹명1',
+        fileUrl: `${process.env.PUBLIC_URL}/images/album/empty.png`,
+      },
+      {
+        artistId: '1',
+        artistName: '그룹명2',
+        fileUrl: `${process.env.PUBLIC_URL}/images/album/empty.png`,
+      },
+      {
+        artistId: '1',
+        artistName: '그룹명3',
+        fileUrl: `${process.env.PUBLIC_URL}/images/album/empty.png`,
+      },
+      {
+        artistId: '1',
+        artistName: '그룹명4',
+        fileUrl: `${process.env.PUBLIC_URL}/images/album/empty.png`,
+      },
+    ],
   },
   {
-    artistId: '2',
-    enterComp: 'BIGHIT',
-    artistName: '방탄소년단',
-    memberNum: '7',
-    fileUrl: `${process.env.PUBLIC_URL}/images/artist/bts.jpg`,
-    members: [],
-    collectionQuant: '',
+    enterComp: 'BIGHITMUSIC',
+    artistList: [
+      {
+        artistId: '1',
+        artistName: '방탄소년단',
+        fileUrl: `${process.env.PUBLIC_URL}/images/artist/bts.jpg`,
+      },
+      {
+        artistId: '1',
+        artistName: '그룹명1',
+        fileUrl: `${process.env.PUBLIC_URL}/images/album/empty.png`,
+      },
+      {
+        artistId: '1',
+        artistName: '그룹명2',
+        fileUrl: `${process.env.PUBLIC_URL}/images/album/empty.png`,
+      },
+      {
+        artistId: '1',
+        artistName: '그룹명3',
+        fileUrl: `${process.env.PUBLIC_URL}/images/album/empty.png`,
+      },
+      {
+        artistId: '1',
+        artistName: '그룹명4',
+        fileUrl: `${process.env.PUBLIC_URL}/images/album/empty.png`,
+      },
+    ],
   },
   {
-    artistId: '3',
     enterComp: 'EDAM',
-    artistName: '아이유',
-    memberNum: '1',
-    fileUrl: `${process.env.PUBLIC_URL}/images/artist/_IU.png`,
-    members: [],
-    collectionQuant: '',
+    artistList: [
+      {
+        artistId: '1',
+        artistName: '아이유',
+        fileUrl: `${process.env.PUBLIC_URL}/images/artist/_IU.png`,
+      },
+    ],
   },
   {
-    artistId: '4',
-    enterComp: 'SM',
-    artistName: '에스파',
-    memberNum: '4',
-    fileUrl: `${process.env.PUBLIC_URL}/images/artist/aespa.jpeg`,
-    members: [],
-    collectionQuant: '',
+    enterComp: 'SM ENTERTAINMENT',
+    artistList: [
+      {
+        artistId: '1',
+        artistName: '에스파',
+        fileUrl: `${process.env.PUBLIC_URL}/images/artist/aespa.jpeg`,
+      },
+      {
+        artistId: '1',
+        artistName: '에스파',
+        fileUrl: `${process.env.PUBLIC_URL}/images/album/empty.png`,
+      },
+      {
+        artistId: '1',
+        artistName: '에스파',
+        fileUrl: `${process.env.PUBLIC_URL}/images/album/empty.png`,
+      },
+      {
+        artistId: '1',
+        artistName: '에스파',
+        fileUrl: `${process.env.PUBLIC_URL}/images/album/empty.png`,
+      },
+      {
+        artistId: '1',
+        artistName: '에스파',
+        fileUrl: `${process.env.PUBLIC_URL}/images/album/empty.png`,
+      },
+    ],
   },
 ];
 
