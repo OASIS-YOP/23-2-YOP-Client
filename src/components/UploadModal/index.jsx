@@ -37,7 +37,7 @@ const UploadModal = () => {
       // onRequestClose={}
       ariaHideApp={false}
     >
-      <s.Wrapper>{/* 여기에 작업 */}</s.Wrapper>
+      <s.Wrapper>{<s.Button>컬렉션 선택</s.Button>}</s.Wrapper>
     </Modal>
   );
 };
