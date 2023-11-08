@@ -9,12 +9,6 @@ const MyDesignCollection = ({
   const [ ismouseOver, setIsMouseOver] = useState(false);
 
 
-  const onClickCollection = () => {
-    setIsCollectionClicked(true);
-    setSelectedCollection(collection.collectionName);
-    setIsCollectionClicked(true);
-    console.log(collection.collectionName);
-  };
 
   const onHandleMouseOver = (e) => {
     e.preventDefault();
@@ -33,6 +27,12 @@ const MyDesignCollection = ({
   if (!artist) {
     return null; // Handle the case when artist is not found
   }
+
+  const onClickCollection = () => {
+    setIsCollectionClicked(true);
+    setSelectedCollection(collection.collectionName);
+    console.log(collection.collectionName);
+  };
 
   console.log(artist);
 

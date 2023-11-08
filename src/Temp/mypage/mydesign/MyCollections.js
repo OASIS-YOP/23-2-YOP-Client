@@ -8,7 +8,7 @@ const MyCollections = [
     myCollections: [
       {
         collectionId: '1',
-        collectionName: 'GET_UP',
+        collectionName: 'Get Up(The 2nd EP)',
         myDesigns: [
           {
             designId: '1',
@@ -94,7 +94,7 @@ const MyCollections = [
     myCollections: [
       {
         collectionId: '1',
-        collectionName: 'BUTTER',
+        collectionName: 'Butter',
         myDesigns: [
           {
             designId: '1',

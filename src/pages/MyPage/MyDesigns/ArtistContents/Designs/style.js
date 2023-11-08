@@ -11,8 +11,6 @@ export const ContentsWrapper = styled.div`
   width: 90%;
   height: fit-content;
 
-  margin: 0 40px;
-
 `;
 
 
@@ -47,7 +45,7 @@ export const DesignImageFrame = styled.div`
   width: 20%;
   height: 27vw;
 
-  margin: 10px 15px;
+  margin: 20px 20px;
 
   overflow: hidden;
 
@@ -90,7 +88,7 @@ export const DesignInfoWrapper = styled.div`
     width: fit-content;
     height: fit-content;
 
-    z-index: 999;
+    z-index: 998;
   `;
 
   export const DesignCardInfo = styled.div`
@@ -113,11 +111,12 @@ export const DesignInfoWrapper = styled.div`
 
     &:hover {
       cursor: pointer;
+      background-color: lightgray;
     }
 
     &:active {
       /* transform: translateY(4px); */
-      background-color: lightgray;
+      background-color: gray;
     }
 
   `

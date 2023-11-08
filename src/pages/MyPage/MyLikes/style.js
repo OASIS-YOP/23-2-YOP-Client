@@ -27,7 +27,7 @@ export const PostsWrapper = styled.div`
   width: auto;
   height: fit-content;
 
-  margin: 0 40px; 
+  margin: 20px 40px; 
 
 `;
 
@@ -60,7 +60,7 @@ export const PostFrame = styled.div`
   width: 65%;
   height: 40vw;
 
-  margin: 20px 0;
+  margin: 30px 0;
 
   box-shadow: 11px 13px 20px rgba(0, 0, 0, 0.25);
 

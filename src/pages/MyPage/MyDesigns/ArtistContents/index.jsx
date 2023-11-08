@@ -28,10 +28,10 @@ const ArtistContents = () => {
   if (!artist) {
     return null; // Handle the case when artist is not found
   }
-  const collection = artist.myCollections.find((collection) => collection.collectionId);
-  if (!artist) {
-    return null; // Handle the case when artist is not found
-  }
+  // const collection = artist.myCollections.find((collection) => collection.collectionId);
+  // if (!artist) {
+  //   return null; // Handle the case when artist is not found
+  // }
 
   const onClickArtist = (artistName) => {
     setSelectedArtist(artistName);
@@ -52,28 +52,6 @@ const ArtistContents = () => {
   });
 
 
-  // const onClickCollection = () => {
-  //   setIsCollectionVisible(!isCollectionVisible);
-  //   setCollectionClicked()
-  //   setSelectedCollection(collection.collectionName);
-  //   setCollectionClicked(true);
-  // };
-
-
-  // const onHandleMouseOver = (e) => {
-  //   e.preventDefault();
-  //   setIsMouseOver(true);
-  // };
-  // const onHandleMouseOut = (e) => {
-  //   e.preventDefault();
-  //   setIsMouseOver(false);
-  // };
-
-
-  // 선택한 컬렉션에 따라 도안 목록 필터링
-  // const filteredDesigns = artistCollections.filter(item => item.collectionName === selectedCollection);
-
-  
 
   return (
     <>

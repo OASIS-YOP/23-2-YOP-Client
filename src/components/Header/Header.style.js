@@ -10,7 +10,12 @@ export const Header = styled.div`
   flex-direction: row;
   align-items: center;
 
-  width: auto;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  
+  
+  width: 100%;
   height: 35px;
   padding: 20px;
 
@@ -33,7 +38,8 @@ export const LogoWrapper = styled.div`
   height: 100%;
 
   padding: none;
-  margin-right: 300px;
+  margin-left: 20px;
+  margin-right: 390px;
 `;
 
 export const MenuWrapper = styled.div`
@@ -45,6 +51,7 @@ export const MenuWrapper = styled.div`
   height: 100%;
 
   padding: none;
+  margin-right: 15px;
 
   // border: 1px solid black;
 `;
