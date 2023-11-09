@@ -12,6 +12,7 @@ export const Profile = styled.img`
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   
   width: 100%;
   min-width: 1000px;
@@ -25,7 +26,7 @@ export const ProfileSpace = styled.div`
   display: flex;
   flex-direction: row;
 
-  width: auto;
+  width: 100%;
   height: 200px;
 
   background-color: #3F70FF;
@@ -85,10 +86,11 @@ export const TabMenuWrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
 
-  width: auto;
+  width: 98%;
   height: 70px;
+  
 
-  margin: 0 15px;
+  margin-bottom: 3px;
 
   //드래그 방지
   -webkit-user-select:none;
@@ -133,7 +135,7 @@ export const ContentsWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   
-  width: auto;
+  width: 100%;
   height: fit-content;
 
   // border: 1px solid black;

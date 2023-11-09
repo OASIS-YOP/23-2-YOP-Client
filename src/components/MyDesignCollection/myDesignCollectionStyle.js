@@ -10,6 +10,8 @@ export const ImageContainer = styled.div`
   width: 100%;
   height: 100%;
 
+  margin: 0 25px;
+
   &:hover {
     cursor: pointer;
 
@@ -39,8 +41,6 @@ export const ImageContainer = styled.div`
     width: 350px;
     height: 350px;
   }; */
-
-  margin: 0 20px;
 
 `;
 
@@ -83,13 +83,13 @@ export const CollectionInfoWrapper = styled.div`
     width: fit-content;
     height: fit-content;
 
-    z-index: 999;
+    z-index: 998;
   `;
 
   export const CollectionCardInfo = styled.div`
     display: absolute;
     text-align: center;
-    font-size: 20px;
+    font-size: 25px;
     font-weight: bold;
     color: white;
   
