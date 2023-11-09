@@ -19,40 +19,106 @@ import AllArtists from '../../Temp/mainpage/AllArtists';
 import axios from '../../api/AxiosC';
 
 const MainPage = () => {
-  const [randomArtist, setRandomArtist] = useState({
-    enterComp: '',
-    groupName: '',
-    photo: '',
-  });
+  const [favArtist, setFavArtist] = useState([]);
+  const [randomArtist, setRandomArtist] = useState([]);
+  const [hot10, setHot10] = useState([]);
+  const [now5, setNow5] = useState([]);
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   axios
-  //     .get(`${process.env.REACT_APP_BASE_URL}/mainpage/artist`)
-  //     .then((response) => {
-  //       if (response.status === 200) {
-  //         console.log(200);
-  //         return response.data;
-  //       }
-  //       if (response.status === 400) {
-  //         console.log(400);
-  //         const responseData = response.data;
-  //         const errorMessages = Object.values(responseData.error).join('\n');
-  //         alert(errorMessages);
-  //         throw new Error();
-  //       }
-  //     })
-  //     .then((data) => {
-  //       console.log(data);
-  //       setRandomArtist({
-  //         enterComp: data[0].enterComp,
-  //         groupName: data[0].groupName,
-  //         photo: data[0].photo,
-  //       });
+  const getFavArtist = () => {
+    axios
+      .get(`${process.env.REACT_APP_BASE_URL}/mainpage/1`)
+      .then((response) => {
+        if (response.status === 200) {
+          console.log(200);
+          return response.data;
+        }
+        if (response.status === 400) {
+          console.log(400);
+          const responseData = response.data;
+          const errorMessages = Object.values(responseData.error).join('\n');
+          alert(errorMessages);
+          throw new Error();
+        }
+      })
+      .then((data) => {
+        console.log(data);
+        setFavArtist(data.favArtist);
+      });
+  };
 
-  //       console.log(randomArtist);
-  //     });
-  // }, []);
+  const getRandomArtist = () => {
+    axios
+      .get(`${process.env.REACT_APP_BASE_URL}/mainpage/1/artist`)
+      .then((response) => {
+        if (response.status === 200) {
+          console.log(200);
+          return response.data;
+        }
+        if (response.status === 400) {
+          console.log(400);
+          const responseData = response.data;
+          const errorMessages = Object.values(responseData.error).join('\n');
+          alert(errorMessages);
+          throw new Error();
+        }
+      })
+      .then((data) => {
+        console.log(data);
+        setRandomArtist(data.randomArtistList);
+      });
+  };
+
+  const getHot10 = () => {
+    axios
+      .get(`${process.env.REACT_APP_BASE_URL}/mainpage/1/hot10`)
+      .then((response) => {
+        if (response.status === 200) {
+          console.log(200);
+          return response.data;
+        }
+        if (response.status === 400) {
+          console.log(400);
+          const responseData = response.data;
+          const errorMessages = Object.values(responseData.error).join('\n');
+          alert(errorMessages);
+          throw new Error();
+        }
+      })
+      .then((data) => {
+        console.log(data);
+        setHot10(data.hot10List);
+      });
+  };
+
+  const getNow5 = () => {
+    axios
+      .get(`${process.env.REACT_APP_BASE_URL}/mainpage/1/now5`)
+      .then((response) => {
+        if (response.status === 200) {
+          console.log(200);
+          return response.data;
+        }
+        if (response.status === 400) {
+          console.log(400);
+          const responseData = response.data;
+          const errorMessages = Object.values(responseData.error).join('\n');
+          alert(errorMessages);
+          throw new Error();
+        }
+      })
+      .then((data) => {
+        console.log(data);
+        setNow5(data.now5List);
+      });
+  };
+  // const
+  useEffect(() => {
+    getFavArtist();
+    getRandomArtist();
+    getHot10();
+    getNow5();
+  }, []);
   return (
     <s.Wrapper>
       {/* 헤더 */}
@@ -73,11 +139,11 @@ const MainPage = () => {
       {/* 나의 최애 아티스트 */}
       <s.PageLabel>나의 최애 아티스트</s.PageLabel>
       <CardsSlider>
-        {MyArtist.map((item, index) => (
+        {favArtist.map((item, index) => (
           <ArtistCard
             key={index}
-            fileUrl={item.fileUrl}
-            artistName={item.artistName}
+            fileUrl={item.photo}
+            artistName={item.groupName}
           />
         ))}
       </CardsSlider>
@@ -144,13 +210,14 @@ const MainPage = () => {
           </s.PageLabel>
 
           {/* api 받아서 수정해야함 */}
-          <s.EnterCompanyLabel>{AllArtists[0].enterComp}</s.EnterCompanyLabel>
-
-          <CardsSlider>
-            {AllArtists[0].artistList.map((item) => (
-              <ArtistCard fileUrl={item.fileUrl} artistName={item.artistName} />
-            ))}
-          </CardsSlider>
+          {/* <s.EnterCompanyLabel>{randomArtist[0].enterComp}</s.EnterCompanyLabel> */}
+          {randomArtist.map((item) => (
+            <>
+              <CardsSlider>
+                <ArtistCard fileUrl={item.photo} artistName={item.groupName} />
+              </CardsSlider>
+            </>
+          ))}
         </s.AllArtistBox>
       </s.ContentRowBox>
     </s.Wrapper>
