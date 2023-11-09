@@ -1,13 +1,13 @@
 import { createBrowserRouter } from 'react-router-dom';
-import LandingPage from '../pages/LandingPage/index';
-import MainPage from '../pages/MainPage/index';
-import MyPage from '../pages/MyPage/index';
+import LandingPage from '../pages/LandingPage';
+import MainPage from '../pages/MainPage';
+import MyPage from '../pages/MyPage';
 import CommunityPage from '../pages/CommunityPage';
 
 import Posts from '../pages/MyPage/Posts/index';
-import Collections from '../pages/MyPage/Collections/index';
-import MyDesigns from '../pages/MyPage/MyDesigns/index';
-import MyLikes from '../pages/MyPage/MyLikes/index';
+import Collections from '../pages/MyPage/Collections';
+import MyDesigns from '../pages/MyPage/MyDesigns';
+import MyLikes from '../pages/MyPage/MyLikes';
 import AllArtist from '../pages/CommunityPage/AllArtist';
 
 const router = createBrowserRouter([
@@ -20,7 +20,7 @@ const router = createBrowserRouter([
     element: <MainPage />,
   },
   {
-    path: '/communitypage',
+    path: '/communitypage/:artistId',
     element: <CommunityPage />,
   },
   {
