@@ -9,6 +9,7 @@ import Collections from '../pages/MyPage/Collections/index';
 import MyDesigns from '../pages/MyPage/MyDesigns/index';
 import MyLikes from '../pages/MyPage/MyLikes/index';
 import AllArtist from '../pages/CommunityPage/AllArtist';
+import Editor from '../pages/Editor';
 
 const router = createBrowserRouter([
   {
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
         element: <MyLikes />,
       },
     ],
+  },
+  {
+    path: '/editor',
+    element: <Editor />,
   },
 ]);
 

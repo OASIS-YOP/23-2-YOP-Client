@@ -77,7 +77,7 @@ const MyDesigns = [
       [
         {
           id: 1,
-          ent: 'BIGHIT',
+          ent: 'BIGHITMUSIC',
           artist: '방탄소년단',
           member: '정국',
           collection: 'Butter',
@@ -88,7 +88,7 @@ const MyDesigns = [
         },
         {
           id: 2,
-          ent: 'BIGHIT',
+          ent: 'BIGHITMUSIC',
           artist: '방탄소년단',
           member: '정국',
           collection: 'Butter',
@@ -99,7 +99,7 @@ const MyDesigns = [
         },
         {
           id: 3,
-          ent: 'BIGHIT',
+          ent: 'BIGHITMUSIC',
           artist: '방탄소년단',
           member: '정국',
           collection: 'Butter',
@@ -110,7 +110,7 @@ const MyDesigns = [
         },
         {
           id: 4,
-          ent: 'BIGHIT',
+          ent: 'BIGHITMUSIC',
           artist: '방탄소년단',
           member: '정국',
           collection: 'Butter',
