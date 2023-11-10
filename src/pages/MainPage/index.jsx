@@ -7,6 +7,7 @@ import DesignCard from '../../components/DesignCard';
 import Top10DesignCard from '../../components/DesignCard/Top10';
 import ArtistCard from '../../components/ArtistCard';
 import FireIcon from '../../assets/FireIcon.svg';
+import mainpageAPI from '../../api/mainpage/mainpageAPI.js';
 
 //더미데이터
 import Top10 from '../../Temp/mainpage/Top10';
@@ -16,8 +17,6 @@ import Banner from '../../components/Banner';
 import BannerSlider from '../../components/BannerSlider';
 import AllArtists from '../../Temp/mainpage/AllArtists';
 
-import axios from '../../api/AxiosC';
-
 const MainPage = () => {
   const [favArtist, setFavArtist] = useState([]);
   const [randomArtist, setRandomArtist] = useState([]);
@@ -25,92 +24,34 @@ const MainPage = () => {
   const [now5, setNow5] = useState([]);
   const navigate = useNavigate();
 
+  const [userId, setUserId] = useState(1);
+
   const getFavArtist = () => {
-    axios
-      .get(`${process.env.REACT_APP_BASE_URL}/mainpage/1`)
-      .then((response) => {
-        if (response.status === 200) {
-          console.log(200);
-          return response.data;
-        }
-        if (response.status === 400) {
-          console.log(400);
-          const responseData = response.data;
-          const errorMessages = Object.values(responseData.error).join('\n');
-          alert(errorMessages);
-          throw new Error();
-        }
-      })
-      .then((data) => {
-        console.log(data);
-        setFavArtist(data.favArtist);
-      });
+    mainpageAPI.getFavArtist(userId).then((data) => {
+      console.log(data);
+      setFavArtist(data.favArtist);
+    });
   };
 
   const getRandomArtist = () => {
-    axios
-      .get(`${process.env.REACT_APP_BASE_URL}/mainpage/1/artist`)
-      .then((response) => {
-        if (response.status === 200) {
-          console.log(200);
-          return response.data;
-        }
-        if (response.status === 400) {
-          console.log(400);
-          const responseData = response.data;
-          const errorMessages = Object.values(responseData.error).join('\n');
-          alert(errorMessages);
-          throw new Error();
-        }
-      })
-      .then((data) => {
-        console.log(data);
-        setRandomArtist(data.randomArtistList);
-      });
+    // mainpageAPI.getRandomArtist(userId).then((data) => {
+    //   console.log(data);
+    //   setRandomArtist(data.randomArtistList);
+    // });
   };
 
   const getHot10 = () => {
-    axios
-      .get(`${process.env.REACT_APP_BASE_URL}/mainpage/1/hot10`)
-      .then((response) => {
-        if (response.status === 200) {
-          console.log(200);
-          return response.data;
-        }
-        if (response.status === 400) {
-          console.log(400);
-          const responseData = response.data;
-          const errorMessages = Object.values(responseData.error).join('\n');
-          alert(errorMessages);
-          throw new Error();
-        }
-      })
-      .then((data) => {
-        console.log(data);
-        setHot10(data.hot10List);
-      });
+    mainpageAPI.getHot10(userId).then((data) => {
+      console.log(data);
+      setHot10(data.hot10List);
+    });
   };
 
   const getNow5 = () => {
-    axios
-      .get(`${process.env.REACT_APP_BASE_URL}/mainpage/1/now5`)
-      .then((response) => {
-        if (response.status === 200) {
-          console.log(200);
-          return response.data;
-        }
-        if (response.status === 400) {
-          console.log(400);
-          const responseData = response.data;
-          const errorMessages = Object.values(responseData.error).join('\n');
-          alert(errorMessages);
-          throw new Error();
-        }
-      })
-      .then((data) => {
-        console.log(data);
-        setNow5(data.now5List);
-      });
+    mainpageAPI.getNow5(userId).then((data) => {
+      console.log(data);
+      setNow5(data.now5List);
+    });
   };
   // const
   useEffect(() => {
@@ -142,8 +83,9 @@ const MainPage = () => {
         {favArtist.map((item, index) => (
           <ArtistCard
             key={index}
-            fileUrl={item.photo}
-            artistName={item.groupName}
+            photo={item.photo}
+            groupName={item.groupName}
+            artistId={item.artistId}
           />
         ))}
       </CardsSlider>
@@ -214,7 +156,11 @@ const MainPage = () => {
           {randomArtist.map((item) => (
             <>
               <CardsSlider>
-                <ArtistCard fileUrl={item.photo} artistName={item.groupName} />
+                <ArtistCard
+                  photo={item.photo}
+                  groupName={item.groupName}
+                  artistId={item.artistId}
+                />
               </CardsSlider>
             </>
           ))}

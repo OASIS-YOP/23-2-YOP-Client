@@ -1,19 +1,20 @@
 import { useState } from 'react';
 import * as s from './ArtistCard.style';
+import { useNavigate } from 'react-router-dom';
 
-const ArtistCard = ({ fileUrl, artistName }) => {
+const ArtistCard = ({ photo, groupName, artistId }) => {
+  const navigate = useNavigate();
   // const handleCardClick = (e) => {
   //   e.stopPropagation();
   // };
 
   return (
     <>
-      <s.Wrapper>
-        {/** 해당 부분 이미지 추가 필요 * */}
+      <s.Wrapper onClick={() => navigate(`/communitypage/${artistId}`)}>
         <s.ImageContainer>
-          <img src={fileUrl} alt='artist' />
+          <img src={photo} alt='artist' />
         </s.ImageContainer>
-        <s.ArtistName>{artistName}</s.ArtistName>
+        <s.ArtistName>{groupName}</s.ArtistName>
       </s.Wrapper>
     </>
   );
