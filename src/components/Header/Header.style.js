@@ -13,11 +13,10 @@ export const Header = styled.div`
   position: sticky;
   top: 0;
   z-index: 999;
-  
-  
+
   width: 100%;
-  height: 35px;
-  padding: 20px;
+  height: 100px;
+  /* padding: 20px; */
 
   background-color: white;
 
@@ -34,8 +33,7 @@ export const LogoWrapper = styled.div`
   display: flex;
   justify-content: flex-start;
 
-  width: 30%;
-  height: 100%;
+  width: 15%;
 
   padding: none;
   margin-left: 20px;
@@ -88,7 +86,7 @@ export const UserWrapper = styled.div`
   height: auto;
 
   padding: 5px;
-  margin-left: 15px;
+  margin: 0 0 0 15px;
 
   cursor: pointer;
 `;

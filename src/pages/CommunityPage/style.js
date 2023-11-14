@@ -21,7 +21,7 @@ export const ProfileImage = styled.div`
   margin-left: 25px;
   margin-top: 5px;
   border-radius: 140px;
-  outline: #d7d7d7 1px solid;
+
   border-collapse: collapse;
   overflow: hidden;
 
@@ -41,11 +41,99 @@ export const ProfileImage = styled.div`
 export const ProfileInfo = styled.div`
   width: fit-content;
   height: 100%;
-  border: 1px solid black;
+  margin: auto 0;
+  padding: 20px;
+  /* border: 1px solid black; */
 `;
 
 export const ArtistName = styled.p`
-  font-size: 20px;
+  margin-bottom: 0;
+  font-size: 25px;
   color: white;
   font-weight: bold;
+`;
+export const ArtistStars = styled.p`
+  display: flex;
+  width: 130px;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px;
+  color: white;
+  font-weight: bold;
+`;
+export const ArtistInfoText = styled.p`
+  font-size: 16px;
+  font-weight: bold;
+`;
+
+export const BodyContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: fit-content;
+  padding-top: 20px;
+  border: 1px solid black;
+`;
+export const MemberCardsWrapper = styled.div`
+  width: 90%;
+  height: 50vh;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  /* border: 1px solid black; */
+`;
+
+export const MemberCardContainer = styled.div`
+  width: 180px;
+  height: fit-content;
+`;
+
+export const MemberNameLabel = styled.p`
+  text-align: center;
+  font-weight: bold;
+`;
+export const CardImageContainer = styled.div`
+  width: 11vw;
+  height: 35vh;
+  min-width: 120px;
+  margin: 0 15px 0 15px;
+  border-radius: 20px;
+  outline: #d7d7d7 1px solid;
+  border-collapse: collapse;
+  overflow: hidden;
+
+  box-shadow: 11px 13px 20px 3px rgba(0, 0, 0, 0.2);
+
+  overflow: hidden;
+
+  background-color: #d7d7d7;
+
+  img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+  }
+`;
+
+export const photoCardContainer = styled.div`
+  width: 95%;
+  height: 100vh;
+  background-color: #ede5e5;
+  margin-top: 50px;
+  border-radius: 15px;
+  padding: 30px 0 30px 0;
+`;
+
+export const ContentWrapper = styled.div`
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 85%;
+  height: 90%;
 `;

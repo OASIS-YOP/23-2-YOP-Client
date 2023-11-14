@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import * as s from './style';
 import Header from '../../../components/Header';
 import CardsSlider from '../../../components/CardSlider';
+import mainpageAPI from '../../../api/mainpage/mainpageAPI';
+import communitypageAPI from '../../../api/communitypage/communitypageAPI';
 
 import ArtistCard from '../../../components/ArtistCard';
 import { useNavigate } from 'react-router-dom';
@@ -13,48 +15,18 @@ const AllArtist = () => {
   const [favArtist, setFavArtist] = useState([]);
 
   const getFavArtist = () => {
-    axios
-      .get(`${process.env.REACT_APP_BASE_URL}/mainpage/1`)
-      .then((response) => {
-        if (response.status === 200) {
-          console.log(200);
-          return response.data;
-        }
-        if (response.status === 400) {
-          console.log(400);
-          const responseData = response.data;
-          const errorMessages = Object.values(responseData.error).join('\n');
-          alert(errorMessages);
-          throw new Error();
-        }
-      })
-      .then((data) => {
-        console.log(data);
-        setFavArtist(data.favArtist);
-      });
+    mainpageAPI.getFavArtist(1).then((data) => {
+      console.log(data);
+      setFavArtist(data.favArtist);
+    });
   };
 
   const getAllArtist = () => {
-    axios
-      .get(`${process.env.REACT_APP_BASE_URL}/artistpage`)
-      .then((response) => {
-        if (response.status === 200) {
-          console.log(200);
-          return response.data;
-        }
-        if (response.status === 400) {
-          console.log(400);
-          const responseData = response.data;
-          const errorMessages = Object.values(responseData.error).join('\n');
-          alert(errorMessages);
-          throw new Error();
-        }
-      })
-      .then((data) => {
-        console.log(data);
-        setAllArtistList(data.allArtistList);
-        console.log(data.allArtistList[0].enterComp);
-      });
+    communitypageAPI.getAllArtist().then((data) => {
+      console.log(data);
+      setAllArtistList(data.allArtistList);
+      console.log(data.allArtistList[0].enterComp);
+    });
   };
 
   useEffect(() => {
@@ -68,11 +40,11 @@ const AllArtist = () => {
 
       <s.PageLabel>나의 최애 아티스트</s.PageLabel>
       <CardsSlider>
-        {favArtist.map((item, index) => (
+        {favArtist.map((item) => (
           <ArtistCard
-            key={index}
-            fileUrl={item.photo}
-            artistName={item.groupName}
+            key={`favArtist_${item.artistId}`}
+            photo={item.photo}
+            groupName={item.groupName}
           />
         ))}
       </CardsSlider>
@@ -80,12 +52,15 @@ const AllArtist = () => {
       <s.PageLabel>모든 아티스트</s.PageLabel>
       {allArtistList.map((item) => (
         <>
-          <s.EnterCompLabel>{item.enterComp}</s.EnterCompLabel>
+          <s.EnterCompLabel key={item.enterComp}>
+            {item.enterComp}
+          </s.EnterCompLabel>
           <CardsSlider>
             {item.artistList.map((data) => (
               <ArtistCard
-                fileUrl={data.photo}
-                artistName={data.groupName}
+                key={`artist_${data.artistId}`}
+                photo={data.photo}
+                groupName={data.groupName}
                 onClick={() => navigate(`/communitypage/:${data.artistId}`)}
               />
             ))}

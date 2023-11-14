@@ -23,51 +23,55 @@ const MyPage = () => {
   }, []);
 
   return (
-    <s.Wrapper>
+    <>
       <Header />
-      <s.ProfileSpace>
-        <s.ProfileWrapper>
-          <s.ProfileImageWrapper>
-            <s.Profile src={myProfile.avatar} />
-          </s.ProfileImageWrapper>
-          <s.ProfileTextsWrapper>
-            <s.ProfileTexts>{myProfile.nickname}</s.ProfileTexts>
-            <s.ProfileTexts className='sub'>
-              {myProfile.biography}
-            </s.ProfileTexts>
-          </s.ProfileTextsWrapper>
-        </s.ProfileWrapper>
-      </s.ProfileSpace>
-      <s.TabMenuWrapper>
-        <s.TabMenu
-          onClick={() => navigate(`/mypage`)}
-          className={currentPathname === '/mypage' ? 'active' : ''}
-        >
-          포스트
-        </s.TabMenu>
-        <s.TabMenu
-          onClick={() => navigate('/mypage/collections')}
-          className={currentPathname === '/mypage/collections' ? 'active' : ''}
-        >
-          컬렉션
-        </s.TabMenu>
-        <s.TabMenu
-          onClick={() => navigate('/mypage/mydesigns')}
-          className={currentPathname === '/mypage/mydesigns' ? 'active' : ''}
-        >
-          내 도안
-        </s.TabMenu>
-        <s.TabMenu
-          onClick={() => navigate('/mypage/mylikes')}
-          className={currentPathname === '/mypage/mylikes' ? 'active' : ''}
-        >
-          좋아요
-        </s.TabMenu>
-      </s.TabMenuWrapper>
-      <s.ContentsWrapper>
-        <Outlet />
-      </s.ContentsWrapper>
-    </s.Wrapper>
+      <s.Wrapper>
+        <s.ProfileSpace>
+          <s.ProfileWrapper>
+            <s.ProfileImageWrapper>
+              <s.Profile src={myProfile.avatar} />
+            </s.ProfileImageWrapper>
+            <s.ProfileTextsWrapper>
+              <s.ProfileTexts>{myProfile.nickname}</s.ProfileTexts>
+              <s.ProfileTexts className='sub'>
+                {myProfile.biography}
+              </s.ProfileTexts>
+            </s.ProfileTextsWrapper>
+          </s.ProfileWrapper>
+        </s.ProfileSpace>
+        <s.TabMenuWrapper>
+          <s.TabMenu
+            onClick={() => navigate(`/mypage`)}
+            className={currentPathname === '/mypage' ? 'active' : ''}
+          >
+            포스트
+          </s.TabMenu>
+          <s.TabMenu
+            onClick={() => navigate('/mypage/collections')}
+            className={
+              currentPathname === '/mypage/collections' ? 'active' : ''
+            }
+          >
+            컬렉션
+          </s.TabMenu>
+          <s.TabMenu
+            onClick={() => navigate('/mypage/mydesigns')}
+            className={currentPathname === '/mypage/mydesigns' ? 'active' : ''}
+          >
+            내 도안
+          </s.TabMenu>
+          <s.TabMenu
+            onClick={() => navigate('/mypage/mylikes')}
+            className={currentPathname === '/mypage/mylikes' ? 'active' : ''}
+          >
+            좋아요
+          </s.TabMenu>
+        </s.TabMenuWrapper>
+        <s.ContentsWrapper>
+          <Outlet />
+        </s.ContentsWrapper>
+      </s.Wrapper>
+    </>
   );
 };
 
