@@ -12,7 +12,7 @@ const mainpageAPI = {
   },
   getRandomArtist: async (userId) => {
     try {
-      const path = `${process.env.REACT_APP_BASE_URL}/mainpage/${userId}/randomArtists`;
+      const path = `${process.env.REACT_APP_BASE_URL}/mainpage/${userId}/randomArtist`;
       const response = HttpClient.get(path);
       return response;
     } catch (e) {

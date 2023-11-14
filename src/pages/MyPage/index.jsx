@@ -4,10 +4,23 @@ import Profile from '../../assets/Profile.svg';
 
 import Header from '../../components/Header';
 import { Outlet, useNavigate } from 'react-router-dom';
+import mypageAPI from '../../api/mypage/mypageAPI';
 
 const MyPage = () => {
+  const [userId, setUserId] = useState(1);
+  const [myProfile, setMyProfile] = useState({});
   const navigate = useNavigate();
   const currentPathname = window.location.pathname;
+
+  const getMyProfile = () => {
+    mypageAPI
+      .getMyProfile(userId)
+      .then((data) => setMyProfile(data.userProfileInfo));
+  };
+
+  useEffect(() => {
+    getMyProfile();
+  }, []);
 
   return (
     <s.Wrapper>
@@ -15,17 +28,19 @@ const MyPage = () => {
       <s.ProfileSpace>
         <s.ProfileWrapper>
           <s.ProfileImageWrapper>
-            <s.Profile src={Profile} />
+            <s.Profile src={myProfile.avatar} />
           </s.ProfileImageWrapper>
           <s.ProfileTextsWrapper>
-            <s.ProfileTexts>Onpol1004</s.ProfileTexts>
-            <s.ProfileTexts className='sub'>자기소개</s.ProfileTexts>
+            <s.ProfileTexts>{myProfile.nickname}</s.ProfileTexts>
+            <s.ProfileTexts className='sub'>
+              {myProfile.biography}
+            </s.ProfileTexts>
           </s.ProfileTextsWrapper>
         </s.ProfileWrapper>
       </s.ProfileSpace>
       <s.TabMenuWrapper>
         <s.TabMenu
-          onClick={() => navigate('/mypage')}
+          onClick={() => navigate(`/mypage`)}
           className={currentPathname === '/mypage' ? 'active' : ''}
         >
           포스트

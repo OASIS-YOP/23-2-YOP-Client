@@ -34,10 +34,10 @@ const MainPage = () => {
   };
 
   const getRandomArtist = () => {
-    // mainpageAPI.getRandomArtist(userId).then((data) => {
-    //   console.log(data);
-    //   setRandomArtist(data.randomArtistList);
-    // });
+    mainpageAPI.getRandomArtist(userId).then((data) => {
+      console.log(data);
+      setRandomArtist(data.randomArtistList);
+    });
   };
 
   const getHot10 = () => {
@@ -102,8 +102,8 @@ const MainPage = () => {
       <s.PageLabel>실시간 도안</s.PageLabel>
       <s.RealTimeDesignWrapper>
         <s.DesignCardContainer>
-          {RealTimeDesignCard.map((item, index) => (
-            <DesignCard key={index} photoCard={item} />
+          {now5.map((item, index) => (
+            <DesignCard key={index} polaroid={item.polaroid} />
           ))}
         </s.DesignCardContainer>
       </s.RealTimeDesignWrapper>
