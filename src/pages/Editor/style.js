@@ -37,6 +37,7 @@ export const LeftContainer = styled.div`
   background-color: transparent;
 
   width: 70%;
+  height: 100%;
 `;
 
 
@@ -104,41 +105,25 @@ export const TopMenuButton = styled.button`
 
   margin: 0 2.5px;
 
-  background-color: #F5F5F5F5;
+  background-color: ${({ isActive }) => (isActive ? 'white' : '#F5F5F5F5')};
 
 
   &:hover {
-    cursor: pointer;
+    cursor: ${({isActive}) => isActive ? 'cursor' : 'not-allowed'};
 
-  }
-
-  /* > img {
-    fill: #898989
-  }
-
-  > div {
-    color: #898989;
-  }
-
-  & .active {
-    background-color: white;
-
-    > img {
-      fill: black;
-    
-    } 
-    > div {
-      color: black;
-    } */
-
-  /* } */
 
 `;
 
-export const TopMenuButtonIcon = styled.img`
+export const TopMenuButtonIcon = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   margin: 0 3px;
 
   width: 20px;
+
+  fill: ${({ isActive }) => (isActive ? 'black' : '#898989')};
 
   
 `;
@@ -158,6 +143,8 @@ export const TopMenuButtonLabel = styled.div`
 
   margin: 0 3px;
 
+  color: ${({ isActive }) => (isActive ? 'black' : '#898989')};
+
 
 `;
 
@@ -171,7 +158,7 @@ export const CanvasSpaceWrapper = styled.div`
   width: 100%;
   height: 100%;
 
-  padding: 40px;
+  padding: 40px 0;
 
   background-color: #F5F5F5F5;
 

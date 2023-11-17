@@ -1,11 +1,11 @@
 import * as s from './style';
 import HeaderIsLogOffed from '../../components/Header/HeaderIsLogOffed';
 import { useState } from 'react';
-import Load from '../../assets/Load.svg';
-import Delete from '../../assets/Delete.svg';
-import Redo from '../../assets/Redo.svg';
-import Undo from '../../assets/Undo.svg';
-import Save from '../../assets/Save.svg';
+import Load from '../../assets/Load.js';
+import Delete from '../../assets/Delete.js';
+import Redo from '../../assets/Redo.js';
+import Undo from '../../assets/Undo.js';
+import Save from '../../assets/Save.js';
 import ToBack from '../../assets/ToBack.svg';
 import Backward from '../../assets/Backward.svg';
 import Forward from '../../assets/Forward.svg';
@@ -28,13 +28,17 @@ const Editor = () => {
             <s.TopMenuGroupWrapper>
               <s.TopMenuButtonLeft>
                 <s.TopMenuButton>
-                  <s.TopMenuButtonIcon src={Load}  />
+                  <s.TopMenuButtonIcon>
+                    <Load />
+                  </s.TopMenuButtonIcon>
                   <s.TopMenuButtonLabel>
                     불러오기
                   </s.TopMenuButtonLabel>
                 </s.TopMenuButton>
                 <s.TopMenuButton>
-                  <s.TopMenuButtonIcon src={Delete} />
+                  <s.TopMenuButtonIcon>
+                    <Delete />
+                  </s.TopMenuButtonIcon>
                   <s.TopMenuButtonLabel>
                     삭제하기
                   </s.TopMenuButtonLabel>
@@ -44,19 +48,25 @@ const Editor = () => {
             <s.TopMenuGroupWrapper>
               <s.TopMenuButtonRight>
                 <s.TopMenuButton>
-                  <s.TopMenuButtonIcon src={Undo} />
+                  <s.TopMenuButtonIcon>
+                    <Undo />
+                  </s.TopMenuButtonIcon>
                   <s.TopMenuButtonLabel>
                     뒤로
                   </s.TopMenuButtonLabel>
                 </s.TopMenuButton>
                 <s.TopMenuButton>
-                  <s.TopMenuButtonIcon src={Redo} />
+                  <s.TopMenuButtonIcon>
+                    <Redo />
+                  </s.TopMenuButtonIcon>
                   <s.TopMenuButtonLabel>
                     앞으로
                   </s.TopMenuButtonLabel>
                 </s.TopMenuButton> 
                 <s.TopMenuButton>
-                  <s.TopMenuButtonIcon src={Save} />
+                  <s.TopMenuButtonIcon>
+                    <Save />
+                  </s.TopMenuButtonIcon>
                   <s.TopMenuButtonLabel>
                     저장하기
                   </s.TopMenuButtonLabel>
