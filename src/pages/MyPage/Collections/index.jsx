@@ -5,11 +5,11 @@ import CollectionDetails from './CollectionDetails';
 import Lock from '../../../assets/Lock.svg';
 
 const Collections = () => {
-  const artistslist = ['뉴진스', '방탄소년단', '에스파',];
+  const artistslist = ['뉴진스', '방탄소년단', '에스파'];
   const [isActivated, setIsActivated] = useState(false);
-  const [ selectedArtist, setSelectedArtist ] = useState(artistslist[0]);
-  const [ selectedCollection, setSelectedCollection ] = useState('');
-  const [ isCollectionClicked, setIsCollectionClicked ] = useState(false);
+  const [selectedArtist, setSelectedArtist] = useState(artistslist[0]);
+  const [selectedCollection, setSelectedCollection] = useState('');
+  const [isCollectionClicked, setIsCollectionClicked] = useState(false);
 
   const onClickArtist = (artistName) => {
     setSelectedArtist(artistName);
@@ -20,58 +20,58 @@ const Collections = () => {
   const artists = artistslist.map((artist, index) => {
     return (
       <s.ArtistsTab
-          key={artist + index}
-          onClick={() => onClickArtist(artist)}
-          className={artist === selectedArtist ? 'active' : ''}
-        >{artist}
+        key={artist + index}
+        onClick={() => onClickArtist(artist)}
+        className={artist === selectedArtist ? 'active' : ''}
+      >
+        {artist}
       </s.ArtistsTab>
-    )
+    );
   });
 
-
   const selectedArtistContents = CollectionCards.find(
-    ( artist ) => artist.artistName === selectedArtist
+    (artist) => artist.artistName === selectedArtist
   );
-
 
   return (
     <>
       <s.Wrapper>
         <s.ArtistsTabWrapper>{artists}</s.ArtistsTabWrapper>
-          { !isCollectionClicked ? (
-            <s.CollectionCardsContainer>
-              { selectedArtistContents.collections.length !== 0 ? 
-                (selectedArtistContents.collections.map((item) => {
-                  return ( 
-                    <CollectionCard 
-                      selectedCollection={selectedCollection}
-                      setSelectedCollection={setSelectedCollection}
-                      setIsCollectionClicked={setIsCollectionClicked}
-                      collection={item}  />
-                    )
-                  })
-                ) :
-                ( 
-                  <div>컬렉션을 활성화해주세요!</div>
-                )
-              }
-            </s.CollectionCardsContainer>
-          ) : (
-            <CollectionDetails
-              selectedArtist={selectedArtist}
-              selectedCollection={selectedCollection}
-              selectedArtistContents={selectedArtistContents}
-            />
-          )  
-          }         
+        {!isCollectionClicked ? (
+          <s.CollectionCardsContainer>
+            {selectedArtistContents.collections.length !== 0 ? (
+              selectedArtistContents.collections.map((item) => {
+                return (
+                  <CollectionCard
+                    selectedCollection={selectedCollection}
+                    setSelectedCollection={setSelectedCollection}
+                    setIsCollectionClicked={setIsCollectionClicked}
+                    collection={item}
+                  />
+                );
+              })
+            ) : (
+              <div>컬렉션을 활성화해주세요!</div>
+            )}
+          </s.CollectionCardsContainer>
+        ) : (
+          <CollectionDetails
+            selectedArtist={selectedArtist}
+            selectedCollection={selectedCollection}
+            selectedArtistContents={selectedArtistContents}
+          />
+        )}
       </s.Wrapper>
     </>
   );
 };
 
 //컬렉션 카드 컴포넌트
-const CollectionCard = ({ 
-  collection, setIsCollectionClicked, setSelectedCollection, selectedCollection,
+const CollectionCard = ({
+  collection,
+  setIsCollectionClicked,
+  setSelectedCollection,
+  selectedCollection,
 }) => {
   const [ismouseOver, setIsMouseOver] = useState(false);
 
@@ -90,7 +90,6 @@ const CollectionCard = ({
     console.log(collection.albumName);
     console.log(selectedCollection);
   };
-
 
   return (
     <s.CollectionCardWrapper
@@ -119,11 +118,6 @@ const CollectionCard = ({
                 </s.CollectionInfo>
               </s.CollectionInfoContainer>
             </s.CollectionInfoWrapper>
-            {ismouseOver ? (
-            <s.InputCodeButton onMouseOver={onHandleMouseOver}>
-              코드 입력
-            </s.InputCodeButton>
-          ) : ""}
           </s.ActivatedCollectionCardWrapper>
         </>
       ) : (

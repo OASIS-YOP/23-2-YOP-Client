@@ -9,6 +9,7 @@ import mypageAPI from '../../api/mypage/mypageAPI';
 const MyPage = () => {
   const [userId, setUserId] = useState(1);
   const [myProfile, setMyProfile] = useState({});
+
   const navigate = useNavigate();
   const currentPathname = window.location.pathname;
 

@@ -1,49 +1,100 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as s from './style';
 import { useParams } from 'react-router-dom';
 import Header from '../../components/Header';
 import Star from '../../assets/Star.svg';
 import ArtistInfo from '../../Temp/communitypage/ArtistInfo.js';
+import communitypageAPI from '../../api/communitypage/communitypageAPI.js';
 
 const CommunityPage = () => {
   const [artistInfo, setArtistInfo] = useState({});
+  const [artistFavoriteQuant, setArtistFavoriteQuant] = useState();
 
   const params = useParams();
-  const artistId = Number(params.artistId.substring(1));
-  const member = ['RM', '진', 'SUGA', '제이홉', '지민', 'V', '정국'];
+  const artistId = Number(params.artistId);
+  const [memberProfile, setMemberProfile] = useState([]);
+  const [memberPost, setMemberPost] = useState([]);
+  const [isClickedName, setIsClickedName] = useState('');
 
+  const getArtistProfile = () => {
+    artistId &&
+      communitypageAPI.getArtistProfile(artistId).then((data) => {
+        setArtistInfo(data.ArtistProfile);
+        console.log(data.ArtistProfile);
+      });
+  };
+
+  const getMemberProfile = () => {
+    communitypageAPI
+      .getMemberProfile(artistId)
+      .then((data) => setMemberProfile(data.memberPhoto));
+  };
+
+  const getMemberPost = () => {
+    communitypageAPI.getMemberPost().then((data) => console.log(data));
+  };
+
+  const getArtistFavoriteQuant = () => {
+    communitypageAPI.getArtistFavoriteQuant(artistId).then((data) => {
+      console.log(data);
+      setArtistFavoriteQuant(data.favoriteQuant);
+    });
+  };
+
+  const getAllArtistPost = () => {
+    communitypageAPI
+      .getAllArtistPost(artistId)
+      .then((data) => console.log(data));
+  };
+
+  const getPostLikeQuant = () => {
+    communitypageAPI
+      .getPostLikeQuant(artistId, 4)
+      .then((data) => console.log(data));
+  };
+
+  useEffect(() => {
+    getArtistProfile();
+    getMemberProfile();
+    getArtistFavoriteQuant();
+    // getMemberPost();
+    getAllArtistPost();
+    getPostLikeQuant();
+  }, []);
   return (
     <>
       <Header />
+
       <s.ProfileContainer>
         <s.ProfileWrapper>
           <s.ProfileImage>
-            <img src={ArtistInfo.photo} alt='artistPhoto' />
+            {/* artistInfo는 db에있던 데이터, ArtistInfo는 더미데이터 */}
+            {artistInfo && <img src={artistInfo.photo} alt='artistPhoto' />}
           </s.ProfileImage>
           <s.ProfileInfo>
-            <s.ArtistName>{ArtistInfo.groupName}</s.ArtistName>
+            {artistInfo && <s.ArtistName>{artistInfo.groupName}</s.ArtistName>}
             <s.ArtistStars>
               <img src={Star} alt='star' />
-              {ArtistInfo.favoriteQuant}
+              {artistFavoriteQuant}
             </s.ArtistStars>
             <s.ArtistInfoText>
               팬덤명 : {ArtistInfo.fandomName} <br />
-              소속 : {ArtistInfo.enterComp}
+              {artistInfo && `소속 : ${artistInfo.enterComp}`}
             </s.ArtistInfoText>
             <s.ArtistInfoText>
-              내가 가진 컬렉션 : {ArtistInfo.myCollectionQuant}/
-              {ArtistInfo.collectionQuant}
+              내가 가진 컬렉션 : {ArtistInfo.myCollectionQuant}
+              {artistInfo && `/${artistInfo.collectionQuant}`}
             </s.ArtistInfoText>
           </s.ProfileInfo>
         </s.ProfileWrapper>
       </s.ProfileContainer>
       <s.BodyContainer>
         <s.MemberCardsWrapper>
-          {member.map((item) => (
-            <s.MemberCardContainer>
-              <s.MemberNameLabel>{item}</s.MemberNameLabel>
+          {memberProfile.map((item, index) => (
+            <s.MemberCardContainer key={`member_${index + 1}`}>
+              <s.MemberNameLabel>{item.name}</s.MemberNameLabel>
               <s.CardImageContainer>
-                <img />
+                <img src={item.memphoto} alt='memberPhoto' />
               </s.CardImageContainer>
             </s.MemberCardContainer>
           ))}
