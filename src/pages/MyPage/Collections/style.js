@@ -1,13 +1,21 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  display: flex;
+ display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   width: 100%;
   height: 100%;
 
   min-width: 1000px;
+
+  //드래그 방지
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
 `;
 export const ArtistsTabWrapper = styled.div`
   display: flex;
@@ -15,10 +23,10 @@ export const ArtistsTabWrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
 
-  width: auto;
+  width: 100%;
   height: 30px;
 
-  margin: 0 40px;
+  padding-left: 80px; 
 
   // border: 1px solid red;
 `;
@@ -36,12 +44,15 @@ export const ArtistsTab = styled.button`
 
   background-color: transparent;
 
-  font-size: 15px;
+  font-size: 16px;
   font-weight: bold;
   color: gray;
 
-  cursor: pointer;
-
+  &:hover {
+    color: #3F70FF;
+    cursor: pointer;
+  }
+  
   &.active {
     color: black;
   }
@@ -49,7 +60,7 @@ export const ArtistsTab = styled.button`
 
 export const CollectionCardsContainer = styled.div`
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   flex-direction: center;
   flex-wrap: wrap;
   width: 90%;
@@ -66,8 +77,8 @@ export const CollectionCardWrapper = styled.div`
   justify-content: center;
   align-items: center;
 
-  width: 30%;
-  margin: 30px 5px;
+  width: 28%;
+  margin: 28px 24px;
   box-sizing: border-box;
   border-radius: 35px;
   border: 8px solid #82a2ff;
@@ -130,10 +141,10 @@ export const CollectionInfo = styled.p`
 export const InActivatedCollectionCardImage = styled.img`
   position: absolute;
   padding: 0;
-  width: 100%;
-  height: 100%;
+  width: 110%;
+  height: 110%;
   object-fit: cover;
-  filter: blur(5px);
+  filter: blur(5px) brightness(50%);
 `;
 
 export const InActivatedLockWrapper = styled.div`
@@ -144,7 +155,7 @@ export const InActivatedLockWrapper = styled.div`
   height: 70px;
   border-radius: 15px;
   background-color: #6a7db4;
-  z-index: 999;
+  z-index: 998;
   cursor: pointer;
 
   &img {
@@ -165,7 +176,7 @@ export const InputCodeButton = styled.button`
   color: black;
   font-size: 18px;
   font-weight: 600;
-  z-index: 999;
+  z-index: 998;
   cursor: pointer;
   &:hover {
     filter: brightness(90%);

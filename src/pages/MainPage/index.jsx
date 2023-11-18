@@ -7,6 +7,7 @@ import DesignCard from '../../components/DesignCard';
 import Top10DesignCard from '../../components/DesignCard/Top10';
 import ArtistCard from '../../components/ArtistCard';
 import FireIcon from '../../assets/FireIcon.svg';
+import mainpageAPI from '../../api/mainpage/mainpageAPI.js';
 
 //더미데이터
 import Top10 from '../../Temp/mainpage/Top10';
@@ -16,43 +17,49 @@ import Banner from '../../components/Banner';
 import BannerSlider from '../../components/BannerSlider';
 import AllArtists from '../../Temp/mainpage/AllArtists';
 
-import axios from '../../api/AxiosC';
-
 const MainPage = () => {
-  const [randomArtist, setRandomArtist] = useState({
-    enterComp: '',
-    groupName: '',
-    photo: '',
-  });
+  const [favArtist, setFavArtist] = useState([]);
+  const [randomArtist, setRandomArtist] = useState([]);
+  const [hot10, setHot10] = useState([]);
+  const [now5, setNow5] = useState([]);
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   axios
-  //     .get(`${process.env.REACT_APP_BASE_URL}/mainpage/artist`)
-  //     .then((response) => {
-  //       if (response.status === 200) {
-  //         console.log(200);
-  //         return response.data;
-  //       }
-  //       if (response.status === 400) {
-  //         console.log(400);
-  //         const responseData = response.data;
-  //         const errorMessages = Object.values(responseData.error).join('\n');
-  //         alert(errorMessages);
-  //         throw new Error();
-  //       }
-  //     })
-  //     .then((data) => {
-  //       console.log(data);
-  //       setRandomArtist({
-  //         enterComp: data[0].enterComp,
-  //         groupName: data[0].groupName,
-  //         photo: data[0].photo,
-  //       });
+  const [userId, setUserId] = useState(1);
 
-  //       console.log(randomArtist);
-  //     });
-  // }, []);
+  const getFavArtist = () => {
+    mainpageAPI.getFavArtist(userId).then((data) => {
+      console.log(data);
+      setFavArtist(data.favArtist);
+    });
+  };
+
+  const getRandomArtist = () => {
+    mainpageAPI.getRandomArtist(userId).then((data) => {
+      console.log(data);
+      setRandomArtist(data.randomArtistList);
+    });
+  };
+
+  const getHot10 = () => {
+    mainpageAPI.getHot10(userId).then((data) => {
+      console.log(data);
+      setHot10(data.hot10List);
+    });
+  };
+
+  const getNow5 = () => {
+    mainpageAPI.getNow5(userId).then((data) => {
+      console.log(data);
+      setNow5(data.now5List);
+    });
+  };
+  // const
+  useEffect(() => {
+    getFavArtist();
+    getRandomArtist();
+    getHot10();
+    getNow5();
+  }, []);
   return (
     <s.Wrapper>
       {/* 헤더 */}
@@ -73,11 +80,12 @@ const MainPage = () => {
       {/* 나의 최애 아티스트 */}
       <s.PageLabel>나의 최애 아티스트</s.PageLabel>
       <CardsSlider>
-        {MyArtist.map((item, index) => (
+        {favArtist.map((item, index) => (
           <ArtistCard
             key={index}
-            fileUrl={item.fileUrl}
-            artistName={item.artistName}
+            photo={item.photo}
+            groupName={item.groupName}
+            artistId={item.artistId}
           />
         ))}
       </CardsSlider>
@@ -94,8 +102,8 @@ const MainPage = () => {
       <s.PageLabel>실시간 도안</s.PageLabel>
       <s.RealTimeDesignWrapper>
         <s.DesignCardContainer>
-          {RealTimeDesignCard.map((item, index) => (
-            <DesignCard key={index} photoCard={item} />
+          {now5.map((item, index) => (
+            <DesignCard key={index} polaroid={item.polaroid} />
           ))}
         </s.DesignCardContainer>
       </s.RealTimeDesignWrapper>
@@ -144,13 +152,18 @@ const MainPage = () => {
           </s.PageLabel>
 
           {/* api 받아서 수정해야함 */}
-          <s.EnterCompanyLabel>{AllArtists[0].enterComp}</s.EnterCompanyLabel>
-
-          <CardsSlider>
-            {AllArtists[0].artistList.map((item) => (
-              <ArtistCard fileUrl={item.fileUrl} artistName={item.artistName} />
-            ))}
-          </CardsSlider>
+          {/* <s.EnterCompanyLabel>{randomArtist[0].enterComp}</s.EnterCompanyLabel> */}
+          {randomArtist.map((item) => (
+            <>
+              <CardsSlider>
+                <ArtistCard
+                  photo={item.photo}
+                  groupName={item.groupName}
+                  artistId={item.artistId}
+                />
+              </CardsSlider>
+            </>
+          ))}
         </s.AllArtistBox>
       </s.ContentRowBox>
     </s.Wrapper>

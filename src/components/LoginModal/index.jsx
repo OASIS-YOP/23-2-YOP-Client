@@ -1,6 +1,11 @@
 import * as s from './modal.style.js';
 
 export const Login = () => {
+
+  const onClickLogInToMainpage = (e) => {
+    window.location.href = '/mainpage';
+  };
+
   return (
     <s.Wrapper>
       <s.TextContainer>
@@ -32,7 +37,7 @@ export const Login = () => {
             // onChange={}
           />
         </form>
-        <s.Button>로그인</s.Button>
+        <s.Button onClick={onClickLogInToMainpage}>로그인</s.Button>
       </s.ContentContainer>
     </s.Wrapper>
   );

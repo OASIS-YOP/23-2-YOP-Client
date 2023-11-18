@@ -1,14 +1,23 @@
-import { useState, } from "react";
-import * as s from "./style";
+import { useEffect, useState } from 'react';
+import * as s from './style';
 // import dotdotdot from "../../../assets/dotdotdot.svg";
 // import UnLikedIcon from "../../../assets/UnLikedIcon.svg";
-import MyPosts from "../../../Temp/mypage/mypost/MyPosts";
-import CreatePost from "./ArtistPosts";
+import MyPosts from '../../../Temp/mypage/mypost/MyPosts';
+import CreatePost from './ArtistPosts';
+
+import mypageAPI from '../../../api/mypage/mypageAPI';
 // import LikedIcon from "../../../assets/LikedIcon.svg";
 
-const Posts = () => {  
+const Posts = () => {
+  const [userId, setUserId] = useState(1);
 
-  const artistslist = ['뉴진스', '방탄소년단', '에스파',];
+  const getMyPostArtistTab = () => {
+    mypageAPI
+      .getMyPostArtistTab(userId)
+      .then((data) => console.log(data.postArtistList));
+  };
+
+  const artistslist = ['뉴진스', '방탄소년단', '에스파'];
 
   const [selectedArtist, setSelectedArtist] = useState(artistslist[0]);
 
@@ -22,29 +31,28 @@ const Posts = () => {
         key={artist + index}
         onClick={() => onClickArtist(artist)}
         className={artist === selectedArtist ? 'active' : ''}
-      >{artist}</s.ArtistsTab>
-    )
-  })
+      >
+        {artist}
+      </s.ArtistsTab>
+    );
+  });
 
   const selectedArtistInfo = MyPosts.find(
     (artist) => artist.artistName === selectedArtist
   );
 
-  
-
+  useEffect(() => {
+    getMyPostArtistTab();
+  });
   // const posts = createPost.map((post) => []);
 
   return (
     <>
       <s.Wrapper>
-        <s.ArtistsTabWrapper
-          
-        >
-          {artists}
-        </s.ArtistsTabWrapper>
+        <s.ArtistsTabWrapper>{artists}</s.ArtistsTabWrapper>
         <s.PostsWrapper>
           <CreatePost
-            selectedArtistInfo={selectedArtistInfo} 
+            selectedArtistInfo={selectedArtistInfo}
             selectedArtist={selectedArtist}
             // setCurrentArtist={setCurrentArtist}
           />
@@ -52,8 +60,8 @@ const Posts = () => {
         </s.PostsWrapper>
       </s.Wrapper>
     </>
-  )
-}
+  );
+};
 
 // const CreatePost = ({ selectedArtistInfo, setCurrentArtist, post }) => {
 
@@ -62,15 +70,15 @@ const Posts = () => {
 //   return (
 //     <>
 //     <s.PostFrame>
-//       {artistPosts.length === 0 ? ( 
+//       {artistPosts.length === 0 ? (
 //         <div>아티스트의 도안을 꾸미고 포스트해보세요!</div>
 //       ) : (
-//         artistPosts.map((item, index) => ( 
+//         artistPosts.map((item, index) => (
 //           <>
 //           <s.leftContainer>
 //             <s.PostImageFrame >
 //               <s.PostImage src={item.fileUrl} />
-//             </s.PostImageFrame>  
+//             </s.PostImageFrame>
 //           </s.leftContainer>
 //             <s.rightContainer>
 //               <s.postInfoWrapper
@@ -107,6 +115,5 @@ const Posts = () => {
 //     </>
 //   )
 // };
-
 
 export default Posts;

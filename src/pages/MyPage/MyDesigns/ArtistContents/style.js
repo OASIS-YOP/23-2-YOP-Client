@@ -8,16 +8,17 @@ export const ArtistsTabWrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
 
-  width: auto;
+  width: 100%;
   height: 30px;
 
-  margin: 0 40px;
+  padding-left: 80px;
 
   // border: 1px solid red;
 `;
 
 export const ArtistsTab = styled.button`
   display: flex;
+  justify-content: flex-start;
   align-items: center;
 
   width: fit-content;
@@ -29,7 +30,7 @@ export const ArtistsTab = styled.button`
 
   background-color: transparent;
 
-  font-size: 15px;
+  font-size: 16px;
   font-weight: bold;
   color: gray;
 
@@ -50,26 +51,26 @@ export const ContentsWrapper = styled.div`
   align-items: center;
   flex-wrap: nowrap;
 
-  width: 95%;
+  width: 100%;
   height: fit-content;
 
-  margin: 0 40px;
+  margin: 0 13px;
 
 `;
 
 export const CollectionListWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
   flex-wrap: wrap;
 
   background-color: white;
 
-  width: 90%;
+  width: 100%;
   height: fit-content;
 
-  margin: 20px 0;
+  margin: 25px 0;
 
   // border: 1px solid red;
 `;
@@ -95,11 +96,11 @@ export const MyCollectionWrapper = styled.div`
     height: 350px;
   } */
 
-  width: 31%;
+  width: 25.2%;
   box-sizing: border-box;
 
   padding: none;
-  margin: 20px 5px;
+  margin: 23px 24px;
 
   border: 8px solid #82a2ff;
   border-radius: 35px;
@@ -131,6 +132,8 @@ export const ImageContainer = styled.div`
   width: 100%;
   height: 100%;
 
+  margin: 0 30px;
+
   &:hover {
     cursor: pointer;
 
@@ -161,8 +164,6 @@ export const ImageContainer = styled.div`
     height: 350px;
   }; */
 
-  margin: 0 20px;
-
 `;
 
 
@@ -192,41 +193,5 @@ export const CollectionImage = styled.img`
 
 `;
 
-export const CollectionInfoWrapper = styled.div`
-    display: table-cell;
-    vertical-align: middle;
-    align-items: center;
-    position: absolute;
-    box-sizing: border-box;
-    justify-content: center;
-    filter: brightness(100%);
 
-    width: fit-content;
-    height: fit-content;
-
-    z-index: 999;
-  `;
-
-  export const CollectionCardInfo = styled.div`
-    display: absolute;
-    text-align: center;
-    font-size: 20px;
-    font-weight: bold;
-    color: white;
-  
-  `;
-
-    
-
-  //   background-color: white;
-
-  // `;
-
-  // export const InfoWrapper = styled.div`
-  //   display: flex;
-  //   flex-direction: column;
-  //   justify-content: center;
-  //   align-items: flex-start;
-    
-  // `;
 
