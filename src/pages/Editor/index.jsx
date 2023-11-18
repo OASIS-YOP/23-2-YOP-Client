@@ -80,6 +80,10 @@ const Editor = () => {
             newWidth = maxWidth;
             newHeight = newWidth / aspectRatio ;
           }
+          if(imgWidth === imgHeight) {
+            newHeight = maxHeight;
+            newWidth = newHeight * aspectRatio;
+          }
 
           const x = (stageWidth - newWidth) / 2;
           const y = (stageHeight - newHeight) / 2;
@@ -93,7 +97,7 @@ const Editor = () => {
             height: newHeight,
             draggable: true,
             dragBoundFunc: (pos) => {
-              if (img.width > img.height) {
+              if (img.width > img.height || img.width === img.height) {
                 return {
                   x: pos.x, // x 좌표는 변경 가능
                   y: y,     // y 좌표는 변경되지 않음
