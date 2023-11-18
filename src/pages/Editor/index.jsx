@@ -85,6 +85,7 @@ const Editor = () => {
           const y = (stageHeight - newHeight) / 2;
 
           const resizedImage = new Konva.Image({
+            id: 'backgroundImage',
             image: img,
             x: x,
             y: y,
