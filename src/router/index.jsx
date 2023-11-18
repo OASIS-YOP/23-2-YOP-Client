@@ -11,6 +11,7 @@ import MyLikes from '../pages/MyPage/MyLikes';
 import AllArtist from '../pages/CommunityPage/AllArtist';
 import UploadModal from '../components/UploadModal';
 import Editor from '../pages/Editor';
+import Editor2 from '../pages/Editor2';
 
 const router = createBrowserRouter([
   {
@@ -58,6 +59,10 @@ const router = createBrowserRouter([
   {
     path: '/editor',
     element: <Editor />,
+  },
+  {
+    path: '/editor2',
+    element: <Editor2 />,
   },
 ]);
 
