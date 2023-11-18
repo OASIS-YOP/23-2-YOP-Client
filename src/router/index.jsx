@@ -9,6 +9,7 @@ import Collections from '../pages/MyPage/Collections';
 import MyDesigns from '../pages/MyPage/MyDesigns';
 import MyLikes from '../pages/MyPage/MyLikes';
 import AllArtist from '../pages/CommunityPage/AllArtist';
+import UploadModal from '../components/UploadModal';
 import Editor from '../pages/Editor';
 
 const router = createBrowserRouter([
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
   {
     path: '/allartist',
     element: <AllArtist />,
+  },
+  {
+    path: '/upload',
+    element: <UploadModal />,
   },
   {
     path: '/mypage',
