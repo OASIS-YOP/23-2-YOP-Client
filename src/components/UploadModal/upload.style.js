@@ -52,8 +52,4 @@ export const CollectionCard = styled.div`
   border: 1px solid 3F70FF;
   margin: 0 15px 40px 15px;
   overflow: hidden;
-  img {
-    width: 100%;
-    height: 100%;
-  }
 `;

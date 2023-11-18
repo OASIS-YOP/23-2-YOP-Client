@@ -1,8 +1,11 @@
 import styled from 'styled-components';
 
 export const ProfileContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
-  height: 40vh;
+  height: 240px;
   background-color: #3f70ff;
 `;
 
@@ -12,12 +15,11 @@ export const ProfileWrapper = styled.div`
   align-items: center;
   width: 100%;
   height: 100%;
-  margin: 0 auto;
+  margin: auto 0;
 `;
 export const ProfileImage = styled.div`
-  flex: 0 0 auto;
-  width: 250px;
-  height: 200px;
+  width: 25%;
+  height: 88%;
   margin-left: 25px;
   margin-top: 5px;
   border-radius: 140px;
@@ -47,7 +49,7 @@ export const ProfileInfo = styled.div`
 `;
 
 export const ArtistName = styled.p`
-  margin-bottom: 0;
+  margin-top: 10px;
   font-size: 25px;
   color: white;
   font-weight: bold;
@@ -62,6 +64,7 @@ export const ArtistStars = styled.p`
   font-weight: bold;
 `;
 export const ArtistInfoText = styled.p`
+  margin-bottom: 10px;
   font-size: 16px;
   font-weight: bold;
 `;
@@ -76,10 +79,10 @@ export const BodyContainer = styled.div`
   border: 1px solid black;
 `;
 export const MemberCardsWrapper = styled.div`
+  display: flex;
   width: 90%;
   height: 50vh;
-  display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
 
   /* border: 1px solid black; */

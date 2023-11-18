@@ -22,6 +22,7 @@ export const ImageContainer = styled.div`
   overflow: hidden;
 
   background-color: #d7d7d7;
+  cursor: pointer;
 
   img {
     width: 100%;
