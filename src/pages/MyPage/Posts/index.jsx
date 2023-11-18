@@ -10,36 +10,35 @@ import mypageAPI from '../../../api/mypage/mypageAPI';
 
 const Posts = () => {
   const [userId, setUserId] = useState(1);
+  const [postArtistList, setPostArtistList] = useState([]);
 
-  const getMyPostArtistTab = () => {
-    mypageAPI
-      .getMyPostArtistTab(userId)
-      .then((data) => console.log(data.postArtistList));
-  };
+  const [selectedArtist, setSelectedArtist] = useState(postArtistList[0]);
 
-  const artistslist = ['뉴진스', '방탄소년단', '에스파'];
+  // const onClickArtist = (artistName) => {
+  //   setSelectedArtist(artistName);
+  // };
 
-  const [selectedArtist, setSelectedArtist] = useState(artistslist[0]);
-
-  const onClickArtist = (artistName) => {
-    setSelectedArtist(artistName);
-  };
-
-  const artists = artistslist.map((artist, index) => {
+  const artists = postArtistList.map((item) => {
     return (
       <s.ArtistsTab
-        key={artist + index}
-        onClick={() => onClickArtist(artist)}
-        className={artist === selectedArtist ? 'active' : ''}
+        key={`artist_${item.artistId}`}
+        // onClick={() => onClickArtist(item)}
+        // className={item === selectedArtist ? 'active' : ''}
       >
-        {artist}
+        {item.groupName}
       </s.ArtistsTab>
     );
   });
 
-  const selectedArtistInfo = MyPosts.find(
-    (artist) => artist.artistName === selectedArtist
-  );
+  // const selectedArtistInfo = MyPosts.find(
+  //   (artist) => artist.artistName === selectedArtist
+  // );
+
+  const getMyPostArtistTab = () => {
+    mypageAPI
+      .getMyPostArtistTab(userId)
+      .then((data) => setPostArtistList(data.postArtistList));
+  };
 
   useEffect(() => {
     getMyPostArtistTab();
@@ -52,7 +51,7 @@ const Posts = () => {
         <s.ArtistsTabWrapper>{artists}</s.ArtistsTabWrapper>
         <s.PostsWrapper>
           <CreatePost
-            selectedArtistInfo={selectedArtistInfo}
+            // selectedArtistInfo={selectedArtistInfo}
             selectedArtist={selectedArtist}
             // setCurrentArtist={setCurrentArtist}
           />

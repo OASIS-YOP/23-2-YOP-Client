@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
 import * as s from './ArtistCard.style';
 import { useNavigate } from 'react-router-dom';
 
@@ -8,6 +8,9 @@ const ArtistCard = ({ photo, groupName, artistId }) => {
   //   e.stopPropagation();
   // };
 
+  useEffect(() => {
+    console.log(artistId);
+  });
   return (
     <>
       <s.Wrapper onClick={() => navigate(`/communitypage/${artistId}`)}>
