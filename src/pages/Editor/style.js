@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-
+//전체 래퍼
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -12,6 +12,7 @@ export const Wrapper = styled.div`
   
 `;
 
+//헤더 제외 래퍼
 export const EditorWrapper = styled.div`
   display: flex;
   flex-direction: row;
@@ -23,11 +24,12 @@ export const EditorWrapper = styled.div`
   height: 100%;
   overflow: hidden;
 
-  background-color: #F0F0F0;
+  background-color: #F5F5F5;
 
 
 `;
 
+//캔버스 포함 공간
 export const LeftContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -50,7 +52,7 @@ export const TopMenuWrapper = styled.div`
   width: 100%;
   height: 50px;
 
-  background-color: transparent;
+  background-color: #F0F0F0;
 `;
 
 export const TopMenuGroupWrapper = styled.div`
@@ -110,7 +112,7 @@ export const TopMenuButton = styled.button`
 
   &:hover {
     cursor: ${({isActive}) => isActive ? 'cursor' : 'not-allowed'};
-
+  }
 
 `;
 
@@ -160,7 +162,7 @@ export const CanvasSpaceWrapper = styled.div`
 
   padding: 40px 0;
 
-  background-color: #F5F5F5F5;
+  background-color: #F5F5F5;
 
 
 `;
@@ -176,6 +178,9 @@ export const CanvasWrapper = styled.div`
   height: 492px;
 
   border: 4px dashed #CCCCCC;
+
+  overflow: hidden;
+  scroll: none;
 
   margin-bottom: 20px;
 
@@ -210,6 +215,11 @@ export const LayerButton = styled.button`
 
   margin: 0 2px;
 
+  &:hover {
+    cursor: ${({isActive}) => isActive ? 'cursor' : ''};
+  }
+
+
 `;
 
 export const LayerButtonIcon = styled.img`
@@ -235,6 +245,8 @@ export const SelectedObjects = styled.div`
   color: #898989;
 `;
 
+
+//툴박스 공간
 export const RightContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -242,10 +254,11 @@ export const RightContainer = styled.div`
   align-items: center;
 
   width: 30%;
+  height: 100%;
 
-  border: 1px solid blue;
+  /* border: 1px solid blue; */
 
-  background-color: transparent;
+  background-color: #F5F5F5;
 
 `;
 
@@ -255,16 +268,19 @@ export const ToolContainer = styled.div`
   justify-content: flex-start;
   align-items: center;
 
+  width: 100%;
+
 
 `;
 
 export const ToolLabelWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
+  justify-content: center;
+  align-items: flex-end;
 
   width: 100%;
+  height: 75px;
 
 `;
 
@@ -276,8 +292,43 @@ export const ToolLabel = styled.button`
   align-items: center;
 
   width: 20%;
-  height: 50px;
+  height: 90%;
+
+  border: none;
+  border-top-left-radius: 20px;
+  border-top-right-radius:  20px;
+
+  padding: 15px;
+
+  margin: 0 2px;
+
+  background-color: white;
+  /* background-color: ${({ isActive }) => (isActive ? 'white' : '#F0F0F0')}; */
+
 `;
 
+export const ToolLabelIcon = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 20px;
+
+
+  fill : ${({ isActive }) => (isActive ? 'black' : 'rgba(137, 137, 137, 1)')};
+
+`;
+
+export const ToolLabelText = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  color: ${({ isActive }) => (isActive ? 'black' : 'rgba(137, 137, 137, 1)')};
+
+`;
 
 

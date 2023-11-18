@@ -101,6 +101,7 @@ const CollectionCard = ({
         <>
           <s.ActivatedCollectionCardWrapper
             onClick={onClickCollection}
+            onMouseOut={onHandleMouseOut}
           >
             <s.CollectionCardImage src={collection.fileUrl} alt='collection' />
             <s.CollectionInfoWrapper>
@@ -118,6 +119,11 @@ const CollectionCard = ({
                 </s.CollectionInfo>
               </s.CollectionInfoContainer>
             </s.CollectionInfoWrapper>
+            {ismouseOver ? (
+            <s.InputCodeButton onMouseOver={onHandleMouseOver}>
+              코드 입력
+            </s.InputCodeButton>
+          ) : ""}
           </s.ActivatedCollectionCardWrapper>
         </>
       ) : (
