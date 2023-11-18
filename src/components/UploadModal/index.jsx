@@ -1,10 +1,14 @@
-import { useState } from 'react';
-import * as s from './upload.style.js';
+import React, { useState } from 'react';
+import ReactDOM from 'react-dom'; // Import ReactDOM for createPortal
 import Modal from 'react-modal';
+import * as s from './upload.style.js';
 
-const UploadModal = () => {
-  const [isModalOpen, setIsModalOpen] = useState(true);
-  // 모달 스타일
+Modal.setAppElement('#root'); // Set the app element for accessibility
+
+const SelectCollection = () => {
+  const [isModalOpened, setIsModalOpened] = useState(true);
+  const [selectedCard, setSelectedCard] = useState(null);
+
   const UploadModalStyle = {
     overlay: {
       position: 'fixed',
@@ -30,16 +34,45 @@ const UploadModal = () => {
       zIndex: 10,
     },
   };
+  const openModal = (index) => {
+    setSelectedCard(index);
+  };
+
+  const closeModal = () => {
+    setSelectedCard(null);
+  };
+
   return (
     <Modal
-      isOpen={isModalOpen}
+      isOpen={isModalOpened}
       style={UploadModalStyle}
-      // onRequestClose={}
+      onRequestClose={closeModal}
+      // onRequestClose={closeModal}
+      // Handle closing when clicking outside
       ariaHideApp={false}
     >
-      <s.Wrapper>{<s.Button>컬렉션 선택</s.Button>}</s.Wrapper>
+      <s.Wrapper>
+        <s.HeaderLabelWrapper>
+          <s.HeaderLabel>컬렉션 선택</s.HeaderLabel>
+          <span> {'>'} </span>
+          <s.HeaderLabel>도안 선택</s.HeaderLabel>
+          <span> {'>'} </span>
+          <s.HeaderLabel>업로드</s.HeaderLabel>
+        </s.HeaderLabelWrapper>
+        <s.CollectionCardWrapper>
+          {[1, 2, 3, 4, 5, 6].map((index) => (
+            <s.CollectionCard key={index} onClick={() => openModal(index - 1)}>
+              <img width={100} height={100} />
+              <div>
+                <h2>Modal for Collection Card {selectedCard + 1}</h2>
+                <button onClick={closeModal}>Close Modal</button>
+              </div>
+            </s.CollectionCard>
+          ))}
+        </s.CollectionCardWrapper>
+      </s.Wrapper>
     </Modal>
   );
 };
 
-export default UploadModal;
+export default SelectCollection;
