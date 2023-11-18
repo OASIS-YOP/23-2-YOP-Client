@@ -119,11 +119,6 @@ const CollectionCard = ({
                 </s.CollectionInfo>
               </s.CollectionInfoContainer>
             </s.CollectionInfoWrapper>
-            {ismouseOver ? (
-            <s.InputCodeButton onMouseOver={onHandleMouseOver}>
-              코드 입력
-            </s.InputCodeButton>
-          ) : ""}
           </s.ActivatedCollectionCardWrapper>
         </>
       ) : (
