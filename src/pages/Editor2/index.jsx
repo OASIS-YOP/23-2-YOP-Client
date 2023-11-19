@@ -4,7 +4,8 @@ import { useState } from 'react';
 
 //캔버스 라이브러리
 import Konva from 'konva';
-// import { Stage, Layer, Rect, Text } from 'react-konva';
+import useImage from 'use-image';
+import { Stage, Layer, Image, Rect, Text } from 'react-konva';
 import { useEffect, useRef } from 'react';
 // import { createStore } from 'polotno/model/store';
 // import { Workspace } from 'polotno/canvas/workspace';
@@ -24,12 +25,15 @@ import TextIcon from '../../assets/TextIcon';
 import ImageIcon from '../../assets/ImageIcon';
 import DrawIcon from '../../assets/DrawIcon';
 import StickerIcon from '../../assets/StickerIcon';
+import { InActivatedCollectionCardImage } from '../MyPage/Collections/style';
 
 const Editor2 = () => {
   const [isLogedIn, setIsLogedIn] = useState();
+  // const [image] = useImage();
+  const [imageUrl, setImageUrl] = useState('');
 
   const stageRef = useRef(null);
-
+  const fileInputRef = useRef(null);
   // const store = createStore({
   //   width: 340,
   //   height: 492,
@@ -55,32 +59,73 @@ const Editor2 = () => {
   //   text: 'hello',
   // });
 
+  let imageObj = new Image();
+  const handleChangedFile = (e) => {
+    let files;
+    if (e.dataTransfer) {
+      files = e.dataTransfer.files;
+    } else if (e.target) {
+      files = e.target.files;
+    }
+    const reader = new FileReader();
+    reader.readAsDataURL(files[0]);
+    reader.onload = () => {
+      const resultImage = reader.result;
+      setImageUrl(resultImage.toString());
+      console.log(files[0]);
+
+      imageObj.onload = () => {
+        new Konva.Image({
+          image: files[0],
+        });
+      };
+      imageObj.src = imageUrl;
+      // imageObj.src =
+      // Konva.Image.fromURL(resultImage.toString(), (image) => {
+      //   console.log(image);
+      //   layer.add(image);
+      //   layer.draw();
+      // });
+    };
+    // };
+  };
+
   useEffect(() => {
-    // 캔버스 초기화
     const stage = new Konva.Stage({
       container: 'canvas-container', // 캔버스가 그려질 컨테이너의 ID
       width: 340,
       height: 492,
     });
-
     const layer = new Konva.Layer();
     stage.add(layer);
 
+    // const image = new Konva.Image({
+    //   image: imageUrl,
+    // });
+    // layer.add(image);
     // 캔버스에 사각형 추가
-    const rect = new Konva.Rect({
-      width: 100,
-      height: 50,
-      fill: 'red',
-      draggable: true,
-    });
-    layer.add(rect);
-
+    // const rect = new Konva.Rect({
+    //   width: 100,
+    //   height: 50,
+    //   fill: 'red',
+    //   draggable: true,
+    // });
+    // layer.add(rect);
     // 캔버스 업데이트
+    layer.add(imageObj);
     layer.draw();
 
+    // if (imageUrl) {
+    //   layer.add(image);
+    //   layer.draw();
+    // }
     // stageRef에 현재 stage를 저장
     stageRef.current = stage;
+
+    // 캔버스 초기화
   }, []);
+
+  useEffect(() => {}, []);
 
   return (
     <s.Wrapper>
@@ -91,10 +136,18 @@ const Editor2 = () => {
             <s.TopMenuGroupWrapper>
               <s.TopMenuButtonLeft>
                 <s.TopMenuButton>
-                  <s.TopMenuButtonIcon>
-                    <Load />
-                  </s.TopMenuButtonIcon>
-                  <s.TopMenuButtonLabel>불러오기</s.TopMenuButtonLabel>
+                  <s.ImageLoadButtonLabel htmlFor='file'>
+                    <s.TopMenuButtonIcon>
+                      <Load />
+                    </s.TopMenuButtonIcon>
+                    <s.TopMenuButtonLabel>불러오기</s.TopMenuButtonLabel>
+                  </s.ImageLoadButtonLabel>
+                  <s.Input
+                    type='file'
+                    id='file'
+                    onChange={handleChangedFile}
+                    ref={fileInputRef}
+                  />
                 </s.TopMenuButton>
                 <s.TopMenuButton>
                   <s.TopMenuButtonIcon>
@@ -128,7 +181,11 @@ const Editor2 = () => {
             </s.TopMenuGroupWrapper>
           </s.TopMenuWrapper>
           <s.CanvasSpaceWrapper>
-            <s.CanvasWrapper id='canvas-container'></s.CanvasWrapper>
+            <s.CanvasWrapper id='canvas-container'>
+              {/* <Stage width={340} height={492}>
+                <Layer>{imageUrl && <Image image={imageUrl} />}</Layer>
+              </Stage> */}
+            </s.CanvasWrapper>
             <s.LayerButtonWrapper>
               <s.LayerButton>
                 <s.LayerButtonIcon src={ToBack} />
