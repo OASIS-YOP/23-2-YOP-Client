@@ -105,8 +105,10 @@ export const TopMenuButton = styled.button`
   background-color: ${({ isActive }) => (isActive ? 'white' : '#F5F5F5F5')};
 
   &:hover {
-    cursor: ${({ isActive }) => (isActive ? 'cursor' : 'not-allowed')};
-  }
+
+    cursor: ${({isActive}) => isActive ? 'pointer' : 'not-allowed'};
+  };
+
 `;
 
 export const TopMenuButtonIcon = styled.div`
@@ -200,7 +202,9 @@ export const LayerButton = styled.button`
   margin: 0 2px;
 
   &:hover {
-    cursor: ${({ isActive }) => (isActive ? 'cursor' : '')};
+
+    cursor: ${({isActive}) => isActive ? 'pointer' : ''};
+
   }
 `;
 
