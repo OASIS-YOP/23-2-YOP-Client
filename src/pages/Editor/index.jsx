@@ -114,6 +114,7 @@ const Editor = () => {
     };
   };
 
+  //base64 -> File로 변환하는 함수
   const dataURLtoFile = (dataurl, fileName) => {
     var arr = dataurl.split(','),
       mime = arr[0].match(/:(.*?);/)[1],
@@ -136,6 +137,8 @@ const Editor = () => {
     const formData = new FormData();
     console.log('File로 저장됨 : ', convertedImage);
     convertedImage && formData.append('file', convertedImage);
+
+    //formdata에 잘 들어갔는지 확인하는 코드
     for (var pair of formData.entries()) {
       console.log(pair[0] + ', ' + pair[1]);
     }
