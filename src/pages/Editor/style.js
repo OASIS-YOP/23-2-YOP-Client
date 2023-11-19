@@ -7,7 +7,7 @@ export const Wrapper = styled.div`
   align-items: center;
   
   width: 100%;
-  min-width: 1440px;
+  min-width: 1200px;
   height: 100%;
   
 `;
@@ -111,8 +111,8 @@ export const TopMenuButton = styled.button`
 
 
   &:hover {
-    cursor: ${({isActive}) => isActive ? 'cursor' : 'not-allowed'};
-  }
+    cursor: ${({isActive}) => isActive ? 'pointer' : 'not-allowed'};
+  };
 
 `;
 
@@ -216,7 +216,7 @@ export const LayerButton = styled.button`
   margin: 0 2px;
 
   &:hover {
-    cursor: ${({isActive}) => isActive ? 'cursor' : ''};
+    cursor: ${({isActive}) => isActive ? 'pointer' : ''};
   }
 
 
