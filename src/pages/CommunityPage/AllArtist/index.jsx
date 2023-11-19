@@ -6,11 +6,8 @@ import mainpageAPI from '../../../api/mainpage/mainpageAPI';
 import communitypageAPI from '../../../api/communitypage/communitypageAPI';
 
 import ArtistCard from '../../../components/ArtistCard';
-import { useNavigate } from 'react-router-dom';
-import axios from '../../../api/AxiosC';
 
 const AllArtist = () => {
-  const navigate = useNavigate();
   const [allArtistList, setAllArtistList] = useState([]);
   const [favArtist, setFavArtist] = useState([]);
 
@@ -61,7 +58,7 @@ const AllArtist = () => {
                 key={`artist_${data.artistId}`}
                 photo={data.photo}
                 groupName={data.groupName}
-                onClick={() => navigate(`/communitypage/:${data.artistId}`)}
+                artistId={data.artistId}
               />
             ))}
           </CardsSlider>

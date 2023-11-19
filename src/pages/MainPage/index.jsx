@@ -11,11 +11,8 @@ import mainpageAPI from '../../api/mainpage/mainpageAPI.js';
 
 //더미데이터
 import Top10 from '../../Temp/mainpage/Top10';
-import MyArtist from '../../Temp/mainpage/MyArtist';
-import RealTimeDesignCard from '../../Temp/mainpage/RealTimeDesignCard';
 import Banner from '../../components/Banner';
 import BannerSlider from '../../components/BannerSlider';
-import AllArtists from '../../Temp/mainpage/AllArtists';
 
 const MainPage = () => {
   const [favArtist, setFavArtist] = useState([]);
@@ -40,12 +37,12 @@ const MainPage = () => {
     });
   };
 
-  const getHot10 = () => {
-    mainpageAPI.getHot10(userId).then((data) => {
-      console.log(data);
-      setHot10(data.hot10List);
-    });
-  };
+  // const getHot10 = () => {
+  //   mainpageAPI.getHot10(userId).then((data) => {
+  //     console.log(data);
+  //     setHot10(data.hot10List);
+  //   });
+  // };
 
   const getNow5 = () => {
     mainpageAPI.getNow5(userId).then((data) => {
@@ -57,7 +54,7 @@ const MainPage = () => {
   useEffect(() => {
     getFavArtist();
     getRandomArtist();
-    getHot10();
+    // getHot10();
     getNow5();
   }, []);
   return (
