@@ -58,15 +58,29 @@ export const CollectionCard = styled.div`
   }
 `;
 
+export const LabelWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 380px;
+  height: 30px;
+  margin-top: 10px;
+`;
+
 export const Label = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100px;
   height: 100%;
-  background-color: gray;
+  background-color: grey;
   color: white;
   border-radius: 20px;
+
+  &:nth-child(2) {
+    font-weight: bold;
+    color: black;
+  }
 `;
 
 export const PolaroidWrapper = styled.div`
@@ -89,14 +103,14 @@ export const PolaroidWrapper = styled.div`
 `;
 
 export const PolaroidCard = styled.div`
-  width: 160px;
-  height: 160px;
+  width: 120px;
+  height: 200x;
   border-radius: 10px;
   border: 1px solid 3F70FF;
   margin: 0 15px 40px 15px;
   overflow: hidden;
   img {
     width: 120%;
-    height: 160%;
+    height: 200%;
   }
 `;

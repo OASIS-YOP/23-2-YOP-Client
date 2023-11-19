@@ -110,21 +110,16 @@ const SelectCollection = () => {
                   onClick={() => openModal(index - 1)}
                 >
                   <img
-                    src={`https://pbs.twimg.com/media/E65FCZkVEAMw17M?format=jpg&name=large${index}.png`}
-                    alt={`Polaroid Card ${index}`}
+                    src={`https://upload.wikimedia.org/wikipedia/en/thumb/3/33/BTS_-_Butter_CD.png/220px-BTS_-_Butter_CD${index}.png`}
+                    alt={`Collection Card ${index}`}
                     width={120}
-                    height={160}
+                    height={200}
                   />
-                  <div>
-                    <h2>Modal for Collection Card {selectedCard + 1}</h2>
-                    <button onClick={closeModal}>X</button>
-                  </div>
                 </s.PolaroidCard>
               ))}
             </s.PolaroidWrapper>
           </s.Wrapper>
           <div>
-            <h2>도안 선택</h2>
             <button onClick={closeSecondaryModal}>X</button>
           </div>
         </Modal>
