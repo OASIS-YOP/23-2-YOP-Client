@@ -29,8 +29,6 @@ const Editor = () => {
   const [image, setImage] = useState('');
   const stageRef = useRef(null);
 
-  const [imageFile, setImageFile] = useState(null);
-
   // 불러오기 버튼 눌렀을 때 실행되는 함수
   const handleLoadImage = () => {
     const input = document.createElement('input');
@@ -164,10 +162,6 @@ const Editor = () => {
     }
   }, [image]);
 
-  // useEffect(() => {
-  //   dataURLtoFile();
-  // }, [imageFile]);
-
   return (
     <s.Wrapper>
       <HeaderIsLogOffed />
@@ -206,7 +200,7 @@ const Editor = () => {
                   </s.TopMenuButtonIcon>
                   <s.TopMenuButtonLabel>앞으로</s.TopMenuButtonLabel>
                 </s.TopMenuButton>
-                <s.TopMenuButton isActive={true}>
+                <s.TopMenuButton>
                   <s.TopMenuButtonIcon>
                     <Save />
                   </s.TopMenuButtonIcon>
