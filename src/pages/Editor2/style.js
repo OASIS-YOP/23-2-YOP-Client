@@ -105,7 +105,7 @@ export const TopMenuButton = styled.button`
   background-color: ${({ isActive }) => (isActive ? 'white' : '#F5F5F5F5')};
 
   &:hover {
-    cursor: ${({ isActive }) => (isActive ? 'cursor' : 'not-allowed')};
+    /* cursor: ${({ isActive }) => (isActive ? 'cursor' : 'not-allowed')}; */
   }
 `;
 
@@ -137,6 +137,16 @@ export const TopMenuButtonLabel = styled.div`
   margin: 0 3px;
 
   color: ${({ isActive }) => (isActive ? 'black' : '#898989')};
+`;
+
+export const ImageLoadButtonLabel = styled.label`
+  cursor: pointer;
+  width: fit-content;
+  height: fit-content;
+`;
+
+export const Input = styled.input`
+  visibility: hidden;
 `;
 
 export const CanvasSpaceWrapper = styled.div`
