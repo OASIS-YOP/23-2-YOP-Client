@@ -2,9 +2,8 @@ import * as s from './style';
 import HeaderIsLogOffed from '../../components/Header/HeaderIsLogOffed';
 import { useState, useRef, useEffect } from 'react';
 
-
 // //캔버스 라이브러리
-import Konva from 'konva'
+import Konva from 'konva';
 // import { Stage, Layer, Rect, Text, Image } from 'react-konva';
 // import { createStore } from 'polotno/model/store';
 // import { Workspace } from 'polotno/canvas/workspace';
@@ -25,13 +24,12 @@ import ImageIcon from '../../assets/ImageIcon';
 import DrawIcon from '../../assets/DrawIcon';
 import StickerIcon from '../../assets/StickerIcon';
 
-
-
 const Editor = () => {
-
-  const [isLogedIn, setIsLogedIn ] = useState();
+  const [isLogedIn, setIsLogedIn] = useState();
   const [image, setImage] = useState('');
   const stageRef = useRef(null);
+
+  const [imageFile, setImageFile] = useState(null);
 
   // 불러오기 버튼 눌렀을 때 실행되는 함수
   const handleLoadImage = () => {
@@ -49,76 +47,105 @@ const Editor = () => {
     input.click();
   };
 
-
   // 파일을 불러와서 이미지 추가하는 함수
   const handleImageLoad = (file) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        const img = new window.Image();
-        img.src = reader.result;
-        img.onload = () => {
-          const stageWidth = 340;
-          const stageHeight = 492;
-          
-          const imgWidth = img.width;
-          const imgHeight = img.height;
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      const img = new window.Image();
+      img.src = reader.result;
+      img.onload = () => {
+        const stageWidth = 340;
+        const stageHeight = 492;
 
-          const maxWidth = 340;
-          const maxHeight = 492;
+        const imgWidth = img.width;
+        const imgHeight = img.height;
 
-          const aspectRatio = imgWidth / imgHeight;
+        const maxWidth = 340;
+        const maxHeight = 492;
 
-          let newWidth = imgWidth;
-          let newHeight = imgHeight;
-          if (imgWidth > imgHeight) {
-            newHeight = maxHeight;
-            newWidth = newHeight * aspectRatio;
-            // newHeight = newWidth / aspectRatio;
-          }
-          if (imgHeight > imgWidth) {
-            newWidth = maxWidth;
-            newHeight = newWidth / aspectRatio ;
-          }
-          if(imgWidth === imgHeight) {
-            newHeight = maxHeight;
-            newWidth = newHeight * aspectRatio;
-          }
+        const aspectRatio = imgWidth / imgHeight;
 
-          const x = (stageWidth - newWidth) / 2;
-          const y = (stageHeight - newHeight) / 2;
+        let newWidth = imgWidth;
+        let newHeight = imgHeight;
+        if (imgWidth > imgHeight) {
+          newHeight = maxHeight;
+          newWidth = newHeight * aspectRatio;
+          // newHeight = newWidth / aspectRatio;
+        }
+        if (imgHeight > imgWidth) {
+          newWidth = maxWidth;
+          newHeight = newWidth / aspectRatio;
+        }
+        if (imgWidth === imgHeight) {
+          newHeight = maxHeight;
+          newWidth = newHeight * aspectRatio;
+        }
 
-          const resizedImage = new Konva.Image({
-            id: 'backgroundImage',
-            image: img,
-            x: x,
-            y: y,
-            width: newWidth,
-            height: newHeight,
-            draggable: true,
-            dragBoundFunc: (pos) => {
-              if (img.width > img.height || img.width === img.height) {
-                return {
-                  x: pos.x, // x 좌표는 변경 가능
-                  y: y,     // y 좌표는 변경되지 않음
-                };
-              } else {
-                return {
-                  x: x,
-                  y: y,
-                };
-              }
-            },
-          });
+        const x = (stageWidth - newWidth) / 2;
+        const y = (stageHeight - newHeight) / 2;
 
-          setImage(resizedImage);
-        };
-        console.log('이미지 로드됨:', file);
+        const resizedImage = new Konva.Image({
+          id: 'backgroundImage',
+          image: img,
+          x: x,
+          y: y,
+          width: newWidth,
+          height: newHeight,
+          draggable: true,
+          dragBoundFunc: (pos) => {
+            if (img.width > img.height || img.width === img.height) {
+              return {
+                x: pos.x, // x 좌표는 변경 가능
+                y: y, // y 좌표는 변경되지 않음
+              };
+            } else {
+              return {
+                x: x,
+                y: y,
+              };
+            }
+          },
+        });
+
+        setImage(resizedImage);
       };
+      console.log('이미지 로드됨:', file);
+    };
+  };
+
+  //base64 -> File로 변환하는 함수
+  const dataURLtoFile = (dataurl, fileName) => {
+    var arr = dataurl.split(','),
+      mime = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(arr[1]),
+      n = bstr.length,
+      u8arr = new Uint8Array(n);
+
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+
+    return new File([u8arr], fileName, { type: mime });
+  };
+
+  //이미지 저장할 때
+  const handleExport = () => {
+    const uri = stageRef.current.toDataURL();
+    let convertedImage = dataURLtoFile(uri, 'konva');
+
+    const formData = new FormData();
+    console.log('File로 저장됨 : ', convertedImage);
+    convertedImage && formData.append('file', convertedImage);
+
+    //formdata에 잘 들어갔는지 확인하는 코드
+    for (var pair of formData.entries()) {
+      console.log(pair[0] + ', ' + pair[1]);
+    }
   };
 
   // 이미지 캔버스에 추가하는 함수
-   useEffect(() => {
+  useEffect(() => {
     if (image) {
       const stage = new Konva.Stage({
         container: 'canvas', // 캔버스가 그려질 컨테이너의 ID
@@ -132,13 +159,14 @@ const Editor = () => {
       layer.add(image);
 
       layer.draw();
-      
+
       stageRef.current = stage;
     }
-    
   }, [image]);
 
- 
+  // useEffect(() => {
+  //   dataURLtoFile();
+  // }, [imageFile]);
 
   return (
     <s.Wrapper>
@@ -160,10 +188,8 @@ const Editor = () => {
                   <s.TopMenuButtonIcon>
                     <Delete />
                   </s.TopMenuButtonIcon>
-                  <s.TopMenuButtonLabel>
-                    삭제하기
-                  </s.TopMenuButtonLabel>
-                </s.TopMenuButton>    
+                  <s.TopMenuButtonLabel>삭제하기</s.TopMenuButtonLabel>
+                </s.TopMenuButton>
               </s.TopMenuButtonLeft>
             </s.TopMenuGroupWrapper>
             <s.TopMenuGroupWrapper>
@@ -172,57 +198,51 @@ const Editor = () => {
                   <s.TopMenuButtonIcon>
                     <Undo />
                   </s.TopMenuButtonIcon>
-                  <s.TopMenuButtonLabel>
-                    뒤로
-                  </s.TopMenuButtonLabel>
+                  <s.TopMenuButtonLabel>뒤로</s.TopMenuButtonLabel>
                 </s.TopMenuButton>
                 <s.TopMenuButton>
                   <s.TopMenuButtonIcon>
                     <Redo />
                   </s.TopMenuButtonIcon>
-                  <s.TopMenuButtonLabel>
-                    앞으로
-                  </s.TopMenuButtonLabel>
-                </s.TopMenuButton> 
-                <s.TopMenuButton>
+                  <s.TopMenuButtonLabel>앞으로</s.TopMenuButtonLabel>
+                </s.TopMenuButton>
+                <s.TopMenuButton isActive={true}>
                   <s.TopMenuButtonIcon>
                     <Save />
                   </s.TopMenuButtonIcon>
-                  <s.TopMenuButtonLabel>
+                  <s.TopMenuButtonLabel onClick={handleExport}>
                     저장하기
                   </s.TopMenuButtonLabel>
-                </s.TopMenuButton>   
+                </s.TopMenuButton>
               </s.TopMenuButtonRight>
             </s.TopMenuGroupWrapper>
           </s.TopMenuWrapper>
           <s.CanvasSpaceWrapper>
-            <s.CanvasWrapper  id='canvas'/>
+            <s.CanvasWrapper id='canvas' />
             {/* <input type="file" accept="image/*" 
               onChange={() => {
               handleImageLoad();}} 
               style={{display: 'none'}} 
             /> */}
-          <s.LayerButtonWrapper>
-            <s.LayerButton>
-              <s.LayerButtonIcon src={ToBack} />
-              <s.LayerButtonLabel>맨 뒤로</s.LayerButtonLabel>
-            </s.LayerButton>
-            <s.LayerButton>
-              <s.LayerButtonIcon src={Backward} />
-              <s.LayerButtonLabel>뒤로</s.LayerButtonLabel>
-            </s.LayerButton>
-            <s.LayerButton>
-              <s.LayerButtonLabel>앞으로</s.LayerButtonLabel>
-              <s.LayerButtonIcon src={Forward} />  
-            </s.LayerButton>
-            <s.LayerButton>
-              <s.LayerButtonLabel>맨 앞으로</s.LayerButtonLabel>
-              <s.LayerButtonIcon src={ToFront} />
-            </s.LayerButton>
-          </s.LayerButtonWrapper>
-            <s.SelectedObjects>
-              선택된 오브젝트: 0/0
-            </s.SelectedObjects>
+            <s.LayerButtonWrapper>
+              <s.LayerButton>
+                <s.LayerButtonIcon src={ToBack} />
+                <s.LayerButtonLabel>맨 뒤로</s.LayerButtonLabel>
+              </s.LayerButton>
+              <s.LayerButton>
+                <s.LayerButtonIcon src={Backward} />
+                <s.LayerButtonLabel>뒤로</s.LayerButtonLabel>
+              </s.LayerButton>
+              <s.LayerButton>
+                <s.LayerButtonLabel>앞으로</s.LayerButtonLabel>
+                <s.LayerButtonIcon src={Forward} />
+              </s.LayerButton>
+              <s.LayerButton>
+                <s.LayerButtonLabel>맨 앞으로</s.LayerButtonLabel>
+                <s.LayerButtonIcon src={ToFront} />
+              </s.LayerButton>
+            </s.LayerButtonWrapper>
+            <s.SelectedObjects>선택된 오브젝트: 0/0</s.SelectedObjects>
           </s.CanvasSpaceWrapper>
         </s.LeftContainer>
 
@@ -233,59 +253,38 @@ const Editor = () => {
                 <s.ToolLabelIcon>
                   <ImageIcon />
                 </s.ToolLabelIcon>
-                <s.ToolLabelText>
-                  이미지
-                </s.ToolLabelText>
+                <s.ToolLabelText>이미지</s.ToolLabelText>
               </s.ToolLabel>
               <s.ToolLabel>
                 <s.ToolLabelIcon>
                   <DrawIcon />
                 </s.ToolLabelIcon>
-                <s.ToolLabelText>
-                  그리기
-                </s.ToolLabelText>
+                <s.ToolLabelText>그리기</s.ToolLabelText>
               </s.ToolLabel>
               <s.ToolLabel>
                 <s.ToolLabelIcon>
                   <TextIcon />
                 </s.ToolLabelIcon>
-                <s.ToolLabelText>
-                  텍스트
-                </s.ToolLabelText>
+                <s.ToolLabelText>텍스트</s.ToolLabelText>
               </s.ToolLabel>
               <s.ToolLabel>
                 <s.ToolLabelIcon>
                   <StickerIcon />
                 </s.ToolLabelIcon>
-                <s.ToolLabelText>
-                  스티커
-                </s.ToolLabelText>
+                <s.ToolLabelText>스티커</s.ToolLabelText>
               </s.ToolLabel>
               <s.ToolLabel>
                 <s.ToolLabelIcon>
                   <FrameIcon />
                 </s.ToolLabelIcon>
-                <s.ToolLabelText>
-                  프레임
-                </s.ToolLabelText>
+                <s.ToolLabelText>프레임</s.ToolLabelText>
               </s.ToolLabel>
             </s.ToolLabelWrapper>
-
           </s.ToolContainer>
         </s.RightContainer>
       </s.EditorWrapper>
-
     </s.Wrapper>
-
-
-
-
-
-
-  )
-
-
-
-}
+  );
+};
 
 export default Editor;
