@@ -29,6 +29,8 @@ const Editor = () => {
   const [image, setImage] = useState('');
   const stageRef = useRef(null);
 
+  const [imageFile, setImageFile] = useState(null);
+
   // 불러오기 버튼 눌렀을 때 실행되는 함수
   const handleLoadImage = () => {
     const input = document.createElement('input');
