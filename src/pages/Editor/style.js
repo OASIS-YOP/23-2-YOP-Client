@@ -107,6 +107,7 @@ export const TopMenuButton = styled.button`
   &:hover {
     cursor: ${({ isActive }) => (isActive ? 'pointer' : 'not-allowed')};
   }
+
 `;
 
 export const TopMenuButtonIcon = styled.div`
@@ -200,7 +201,9 @@ export const LayerButton = styled.button`
   margin: 0 2px;
 
   &:hover {
+
     cursor: ${({ isActive }) => (isActive ? 'pointer' : '')};
+
   }
 `;
 
