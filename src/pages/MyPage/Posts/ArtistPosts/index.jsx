@@ -22,7 +22,17 @@ const CreatePost = ({ selectedArtistInfo, setCurrentArtist, post }) => {
   return (
     <>
       {artistPosts.length === 0 ? (
-        <div>아티스트의 도안을 꾸미고 포스트해보세요!</div>
+        <div
+          style={{color: 'gray',
+            fontWeight: 'bold',
+            width: '100%',
+            height: '200px',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >아티스트의 도안을 꾸미고 포스트해보세요!</div>
       ) : (
         artistPosts.map((item, index) => (
           <s.PostFrame key={item.id}>

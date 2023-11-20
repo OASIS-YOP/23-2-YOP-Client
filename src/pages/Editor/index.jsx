@@ -23,6 +23,14 @@ import TextIcon from '../../assets/TextIcon';
 import ImageIcon from '../../assets/ImageIcon';
 import DrawIcon from '../../assets/DrawIcon';
 import StickerIcon from '../../assets/StickerIcon';
+import { Ellipse } from 'react-konva';
+
+//툴
+import Image from './Tools/Image';
+import Draw from './Tools/Draw';
+import Text from './Tools/Text';
+import Sticker from './Tools/Sticker';
+import Frame from './Tools/Frame';
 
 const Editor = () => {
   const [isLogedIn, setIsLogedIn] = useState();
@@ -168,6 +176,65 @@ const Editor = () => {
     }
   }, [image]);
 
+
+  const [toolMenus, setToolMenus] = useState([
+    {
+      id: 1,
+      name: '이미지',
+      icon: <ImageIcon />,
+      isActive: true,
+      contents: <Image />,
+    },
+    {
+      id: 2,
+      name: '그리기',
+      icon: <DrawIcon />,
+      isActive: false,
+      contents: <Draw />,
+    },
+    {
+      id: 3,
+      name: '텍스트',
+      icon: <TextIcon />,
+      isActive: false,
+      contents: <Text />,
+    },
+    {
+      id: 4,
+      name: '스티커',
+      icon: <StickerIcon />,
+      isActive: false,
+      contents: <Sticker />,
+    },
+    {
+      id: 5,
+      name: '프레임',
+      icon: <FrameIcon />,
+      isActive: false,
+      contents: <Frame />,
+    },
+  ]);
+
+  const [tool, setTool] = useState(1);
+
+  const handleToolClick = (id) => {
+    setTool(id);
+    setToolMenus((prevMenus) =>
+      prevMenus.map((item) => ({
+        ...item,
+        isActive: item.id === id,
+      }))
+    );
+  };
+
+  useEffect(() => {
+    if (tool) {
+      console.log(tool);
+    }
+  }, [tool]);
+
+    
+
   return (
     <s.Wrapper>
       <HeaderIsLogOffed />
@@ -219,11 +286,6 @@ const Editor = () => {
           </s.TopMenuWrapper>
           <s.CanvasSpaceWrapper>
             <s.CanvasWrapper id='canvas' />
-            {/* <input type="file" accept="image/*" 
-              onChange={() => {
-              handleImageLoad();}} 
-              style={{display: 'none'}} 
-            /> */}
             <s.LayerButtonWrapper>
               <s.LayerButton>
                 <s.LayerButtonIcon src={ToBack} />
@@ -249,37 +311,24 @@ const Editor = () => {
         <s.RightContainer>
           <s.ToolContainer>
             <s.ToolLabelWrapper>
-              <s.ToolLabel>
-                <s.ToolLabelIcon>
-                  <ImageIcon />
-                </s.ToolLabelIcon>
-                <s.ToolLabelText>이미지</s.ToolLabelText>
-              </s.ToolLabel>
-              <s.ToolLabel>
-                <s.ToolLabelIcon>
-                  <DrawIcon />
-                </s.ToolLabelIcon>
-                <s.ToolLabelText>그리기</s.ToolLabelText>
-              </s.ToolLabel>
-              <s.ToolLabel>
-                <s.ToolLabelIcon>
-                  <TextIcon />
-                </s.ToolLabelIcon>
-                <s.ToolLabelText>텍스트</s.ToolLabelText>
-              </s.ToolLabel>
-              <s.ToolLabel>
-                <s.ToolLabelIcon>
-                  <StickerIcon />
-                </s.ToolLabelIcon>
-                <s.ToolLabelText>스티커</s.ToolLabelText>
-              </s.ToolLabel>
-              <s.ToolLabel>
-                <s.ToolLabelIcon>
-                  <FrameIcon />
-                </s.ToolLabelIcon>
-                <s.ToolLabelText>프레임</s.ToolLabelText>
-              </s.ToolLabel>
+              { toolMenus.map((item) => (
+                <s.ToolLabel
+                  key={item.id}
+                  onClick={() => handleToolClick(item.id)}
+                  isActive={item.isActive}
+                >
+                  <s.ToolLabelIcon isActive={item.isActive}>
+                    {item.icon}
+                  </s.ToolLabelIcon>
+                  <s.ToolLabelText isActive={item.isActive} >
+                    {item.name}
+                  </s.ToolLabelText>
+                </s.ToolLabel>
+              ))}
             </s.ToolLabelWrapper>
+            <s.ToolContentsWrapper>
+                {toolMenus.find((item) => item.id === tool)?.contents}
+            </s.ToolContentsWrapper>
           </s.ToolContainer>
         </s.RightContainer>
       </s.EditorWrapper>
