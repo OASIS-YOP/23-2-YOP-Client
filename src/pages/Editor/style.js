@@ -279,10 +279,11 @@ export const ToolLabel = styled.button`
 
   padding: 15px;
 
-  margin: 0 2px;
+  cursor: pointer;
 
-  background-color: white;
-  /* background-color: ${({ isActive }) => (isActive ? 'white' : '#F0F0F0')}; */
+
+  /* background-color: white; */
+  background-color: ${({ isActive }) => (isActive ? 'white' : '#F0F0F0')};
 `;
 
 export const ToolLabelIcon = styled.div`
@@ -305,3 +306,19 @@ export const ToolLabelText = styled.div`
 
   color: ${({ isActive }) => (isActive ? 'black' : 'rgba(137, 137, 137, 1)')};
 `;
+
+export const ToolContentsWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+
+  width: 100%;
+  height: 100%;
+
+  background-color: white;
+
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+
+`
