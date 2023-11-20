@@ -14,7 +14,7 @@ const AllArtist = () => {
   const getFavArtist = () => {
     mainpageAPI.getFavArtist(1).then((data) => {
       console.log(data);
-      setFavArtist(data.favArtist);
+      setFavArtist(data.favArtistList);
     });
   };
 
@@ -37,33 +37,35 @@ const AllArtist = () => {
 
       <s.PageLabel>나의 최애 아티스트</s.PageLabel>
       <CardsSlider>
-        {favArtist.map((item) => (
-          <ArtistCard
-            key={`favArtist_${item.artistId}`}
-            photo={item.photo}
-            groupName={item.groupName}
-          />
-        ))}
+        {favArtist &&
+          favArtist.map((item) => (
+            <ArtistCard
+              key={`favArtist_${item.artistId}`}
+              photo={item.photo}
+              groupName={item.groupName}
+            />
+          ))}
       </CardsSlider>
 
       <s.PageLabel>모든 아티스트</s.PageLabel>
-      {allArtistList.map((item) => (
-        <>
-          <s.EnterCompLabel key={item.enterComp}>
-            {item.enterComp}
-          </s.EnterCompLabel>
-          <CardsSlider>
-            {item.artistList.map((data) => (
-              <ArtistCard
-                key={`artist_${data.artistId}`}
-                photo={data.photo}
-                groupName={data.groupName}
-                artistId={data.artistId}
-              />
-            ))}
-          </CardsSlider>
-        </>
-      ))}
+      {allArtistList &&
+        allArtistList.map((item) => (
+          <>
+            <s.EnterCompLabel key={item.enterComp}>
+              {item.enterComp}
+            </s.EnterCompLabel>
+            <CardsSlider>
+              {item.artistList.map((data) => (
+                <ArtistCard
+                  key={`artist_${data.artistId}`}
+                  photo={data.photo}
+                  groupName={data.groupName}
+                  artistId={data.artistId}
+                />
+              ))}
+            </CardsSlider>
+          </>
+        ))}
     </>
   );
 };

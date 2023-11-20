@@ -30,12 +30,12 @@ const MyPage = () => {
         <s.ProfileSpace>
           <s.ProfileWrapper>
             <s.ProfileImageWrapper>
-              <s.Profile src={myProfile.avatar} />
+              <s.Profile src={myProfile && myProfile.avatar} />
             </s.ProfileImageWrapper>
             <s.ProfileTextsWrapper>
-              <s.ProfileTexts>{myProfile.nickname}</s.ProfileTexts>
+              <s.ProfileTexts>{myProfile && myProfile.nickname}</s.ProfileTexts>
               <s.ProfileTexts className='sub'>
-                {myProfile.biography}
+                {myProfile && myProfile.biography}
               </s.ProfileTexts>
             </s.ProfileTextsWrapper>
           </s.ProfileWrapper>
