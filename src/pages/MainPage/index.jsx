@@ -26,7 +26,7 @@ const MainPage = () => {
   const getFavArtist = () => {
     mainpageAPI.getFavArtist(userId).then((data) => {
       console.log(data);
-      setFavArtist(data.favArtist);
+      setFavArtist(data.favArtistList);
     });
   };
 
@@ -77,31 +77,34 @@ const MainPage = () => {
       {/* 나의 최애 아티스트 */}
       <s.PageLabel>나의 최애 아티스트</s.PageLabel>
       <CardsSlider>
-        {favArtist.map((item, index) => (
-          <ArtistCard
-            key={index}
-            photo={item.photo}
-            groupName={item.groupName}
-            artistId={item.artistId}
-          />
-        ))}
+        {favArtist &&
+          favArtist.map((item) => (
+            <ArtistCard
+              key={`favArtist_${item.artistId}`}
+              photo={item.photo}
+              groupName={item.groupName}
+              artistId={item.artistId}
+            />
+          ))}
       </CardsSlider>
 
       {/* 폴꾸 Top10 */}
       <s.PageLabel>폴꾸 TOP 10</s.PageLabel>
       <CardsSlider>
-        {Top10.map((item, index) => (
-          <Top10DesignCard key={index} photoCard={item} />
-        ))}
+        {Top10 &&
+          Top10.map((item, index) => (
+            <Top10DesignCard key={index} photoCard={item} />
+          ))}
       </CardsSlider>
 
       {/* 실시간 도안 */}
       <s.PageLabel>실시간 도안</s.PageLabel>
       <s.RealTimeDesignWrapper>
         <s.DesignCardContainer>
-          {now5.map((item, index) => (
-            <DesignCard key={index} polaroid={item.polaroid} />
-          ))}
+          {now5 &&
+            now5.map((item, index) => (
+              <DesignCard key={index} polaroid={item.polaroid} />
+            ))}
         </s.DesignCardContainer>
       </s.RealTimeDesignWrapper>
 

@@ -131,16 +131,20 @@ const Editor = () => {
 
   //이미지 저장할 때
   const handleExport = () => {
-    const uri = stageRef.current.toDataURL();
-    let convertedImage = dataURLtoFile(uri, 'konva');
+    const uri = stageRef.current?.toDataURL();
+    if (uri) {
+      let convertedImage = dataURLtoFile(uri, 'konva');
 
-    const formData = new FormData();
-    console.log('File로 저장됨 : ', convertedImage);
-    convertedImage && formData.append('file', convertedImage);
+      const formData = new FormData();
+      console.log('File로 저장됨 : ', convertedImage);
+      convertedImage && formData.append('file', convertedImage);
 
-    //formdata에 잘 들어갔는지 확인하는 코드
-    for (var pair of formData.entries()) {
-      console.log(pair[0] + ', ' + pair[1]);
+      //formdata에 잘 들어갔는지 확인하는 코드
+      for (var pair of formData.entries()) {
+        console.log(pair[0] + ', ' + pair[1]);
+      }
+    } else {
+      window.alert('저장할 이미지가 없습니다.');
     }
   };
 
@@ -163,10 +167,6 @@ const Editor = () => {
       stageRef.current = stage;
     }
   }, [image]);
-
-  // useEffect(() => {
-  //   dataURLtoFile();
-  // }, [imageFile]);
 
   return (
     <s.Wrapper>
@@ -206,11 +206,11 @@ const Editor = () => {
                   </s.TopMenuButtonIcon>
                   <s.TopMenuButtonLabel>앞으로</s.TopMenuButtonLabel>
                 </s.TopMenuButton>
-                <s.TopMenuButton isActive={true}>
-                  <s.TopMenuButtonIcon>
+                <s.TopMenuButton isActive={true} onClick={handleExport}>
+                  <s.TopMenuButtonIcon isActive={true}>
                     <Save />
                   </s.TopMenuButtonIcon>
-                  <s.TopMenuButtonLabel onClick={handleExport}>
+                  <s.TopMenuButtonLabel isActive={true}>
                     저장하기
                   </s.TopMenuButtonLabel>
                 </s.TopMenuButton>
