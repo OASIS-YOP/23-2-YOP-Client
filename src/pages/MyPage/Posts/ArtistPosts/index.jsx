@@ -4,7 +4,7 @@ import UnLikedIcon from '../../../../assets/UnLikedIcon.svg';
 import { useEffect, useState } from 'react';
 import mypageAPI from '../../../../api/mypage/mypageAPI';
 
-const CreatePost = ({ selectedArtistInfo, setCurrentArtist, post }) => {
+const CreatePost = ({ selectedArtistInfo }) => {
   const [userId, setUserId] = useState(1);
   const [artistPost, setArtistPost] = useState([]);
   const [isClickDot, setIsClickDot] = useState(false);
@@ -19,8 +19,8 @@ const CreatePost = ({ selectedArtistInfo, setCurrentArtist, post }) => {
   };
   const getMyPost = () => {
     mypageAPI.getMyPost(1, 3).then((data) => {
-      setArtistPost(data.postOfArtistList);
-      console.log(data.postOfArtistList);
+      setArtistPost(data.myPostList);
+      console.log(data.myPostList);
     });
   };
 
@@ -52,7 +52,7 @@ const CreatePost = ({ selectedArtistInfo, setCurrentArtist, post }) => {
           아티스트의 도안을 꾸미고 포스트해보세요!
         </div>
       ) : (
-        artistPost.map((item, index) => (
+        artistPost?.map((item) => (
           <>
             <s.PostFrame key={`post_${item.postId}`}>
               <s.leftContainer>
@@ -78,7 +78,7 @@ const CreatePost = ({ selectedArtistInfo, setCurrentArtist, post }) => {
                   </s.dateWrapper>
                   <s.likeWrapper>
                     <s.likeIcon src={UnLikedIcon} />
-                    <s.likeCount key={item.id}>{item.likeCount}</s.likeCount>
+                    <s.likeCount key={item.id}>{item.likeQuant}</s.likeCount>
                   </s.likeWrapper>
                 </s.postInfoWrapper>
                 <s.moreIconWrapper>

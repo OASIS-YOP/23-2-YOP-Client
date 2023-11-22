@@ -3,6 +3,7 @@ import * as s from './style';
 import CollectionCards from '../../../Temp/mypage/CollectionCards';
 import CollectionDetails from './CollectionDetails';
 import Lock from '../../../assets/Lock.svg';
+import mypageAPI from '../../../api/mypage/mypageAPI';
 
 const Collections = () => {
   const artistslist = ['뉴진스', '방탄소년단', '에스파'];
@@ -10,11 +11,16 @@ const Collections = () => {
   const [selectedArtist, setSelectedArtist] = useState(artistslist[0]);
   const [selectedCollection, setSelectedCollection] = useState('');
   const [isCollectionClicked, setIsCollectionClicked] = useState(false);
+  const [userId, setUserId] = useState(1);
 
   const onClickArtist = (artistName) => {
     setSelectedArtist(artistName);
     setIsCollectionClicked(false);
     console.log(artistName);
+  };
+
+  const getMyCollectionArtistTab = () => {
+    mypageAPI.getMyCollectionArtistTab(userId).then();
   };
 
   const artists = artistslist.map((artist, index) => {

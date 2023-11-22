@@ -31,7 +31,7 @@ const mypageAPI = {
   },
   deleteMyPost: async (userId, postId) => {
     try {
-      const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myPost/delete/${postId}`;
+      const path = `${process.env.REACT_APP_BASE_URL}/mypage/3/myPost/delete/10`;
       const response = await HttpClient.post(path, {}, {});
       return response;
     } catch (e) {
