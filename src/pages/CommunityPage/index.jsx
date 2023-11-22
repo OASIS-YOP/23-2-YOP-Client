@@ -12,6 +12,7 @@ const CommunityPage = () => {
 
   const params = useParams();
   const artistId = Number(params.artistId);
+
   const [memberProfile, setMemberProfile] = useState([]);
   const [memberPost, setMemberPost] = useState([]);
   const [isClickedName, setIsClickedName] = useState('');
@@ -60,6 +61,7 @@ const CommunityPage = () => {
     // getMemberPost();
     getAllArtistPost();
     getPostLikeQuant();
+    console.log(artistId);
   }, []);
   return (
     <>
@@ -69,7 +71,9 @@ const CommunityPage = () => {
         <s.ProfileWrapper>
           <s.ProfileImage>
             {/* artistInfo는 db에있던 데이터, ArtistInfo는 더미데이터 */}
-            {artistInfo && <img src={artistInfo.photo} alt='artistPhoto' />}
+            {artistInfo.photo && (
+              <img src={artistInfo.photo} alt='artistPhoto' />
+            )}
           </s.ProfileImage>
           <s.ProfileInfo>
             {artistInfo && <s.ArtistName>{artistInfo.groupName}</s.ArtistName>}

@@ -4,7 +4,7 @@ const mypageAPI = {
   getMyProfile: async (userId) => {
     try {
       const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myProfile`;
-      const response = HttpClient.get(path);
+      const response = await HttpClient.get(path);
       return response;
     } catch (e) {
       return null;
@@ -14,7 +14,7 @@ const mypageAPI = {
   getMyPostArtistTab: async (userId) => {
     try {
       const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myPost/artistTab`;
-      const response = HttpClient.get(path);
+      const response = await HttpClient.get(path);
       return response;
     } catch (e) {
       return null;
@@ -23,7 +23,7 @@ const mypageAPI = {
   getMyPost: async (userId, artistId) => {
     try {
       const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myPost/${artistId}/Post`;
-      const response = HttpClient.get(path);
+      const response = await HttpClient.get(path);
       return response;
     } catch (e) {
       return null;
@@ -32,7 +32,7 @@ const mypageAPI = {
   deleteMyPost: async (userId, postId) => {
     try {
       const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myPost/delete/${postId}`;
-      const response = HttpClient.get(path);
+      const response = await HttpClient.get(path);
       return response;
     } catch (e) {
       return null;
