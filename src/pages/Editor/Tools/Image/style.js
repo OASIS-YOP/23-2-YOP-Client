@@ -25,7 +25,7 @@ export const TopButtonsWrapper = styled.div`
 
   padding: 0 10px;
 
-  margin-top: 30px;
+  margin-top: 50px;
   
 
 
@@ -90,7 +90,7 @@ export const FiltersContainer = styled.div`
   height: 100%;
 
   
-  margin-top: 20px;
+  margin-top: 35px;
 
 `;
 
@@ -173,7 +173,7 @@ export const devider = styled.div`
   width: 100%;
   height: 1px;
 
-  margin-top: 20px;
+  margin-top: 35px;
 
 
 `;

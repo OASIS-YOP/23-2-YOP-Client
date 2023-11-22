@@ -149,7 +149,7 @@ export const CanvasSpaceWrapper = styled.div`
   width: 100%;
   height: 100%;
 
-  padding: 10vh 0;
+  padding: 12vh 0;
 
   background-color: #f5f5f5;
 `;
