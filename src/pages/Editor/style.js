@@ -149,7 +149,7 @@ export const CanvasSpaceWrapper = styled.div`
   width: 100%;
   height: 100%;
 
-  padding: 40px 0;
+  padding: 10vh 0;
 
   background-color: #f5f5f5;
 `;
@@ -237,6 +237,7 @@ export const RightContainer = styled.div`
   align-items: center;
 
   width: 30%;
+  min-width: 450px;
   height: 100%;
 
   /* border: 1px solid blue; */
@@ -316,9 +317,8 @@ export const ToolContentsWrapper = styled.div`
   width: 100%;
   height: 100%;
 
-  background-color: white;
-
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
 
+  background-color: white;
 `
