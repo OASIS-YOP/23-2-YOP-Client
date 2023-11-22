@@ -5,25 +5,41 @@ import { useEffect, useState } from 'react';
 import mypageAPI from '../../../../api/mypage/mypageAPI';
 
 const CreatePost = ({ selectedArtistInfo, setCurrentArtist, post }) => {
-  const artistPosts = selectedArtistInfo ? selectedArtistInfo.posts : [];
+  const [userId, setUserId] = useState(1);
+  const [artistPost, setArtistPost] = useState([]);
+  const [isClickDot, setIsClickDot] = useState(false);
 
-  const getMyPost = () => {
-    mypageAPI.getMyPost(1, 1).then((data) => console.log(data));
+  const handleClickdot = () => {
+    setIsClickDot((prev) => !prev);
   };
 
-  const deleteMyPost = () => {
-    mypageAPI.deleteMyPost(1, 1).then((data) => {
+  const handleClickDel = (userId, postId) => {
+    setIsClickDot(false);
+    deleteMyPost(userId, postId);
+  };
+  const getMyPost = () => {
+    mypageAPI.getMyPost(1, 3).then((data) => {
+      setArtistPost(data.postOfArtistList);
+      console.log(data.postOfArtistList);
+    });
+  };
+
+  const deleteMyPost = (userId, postId) => {
+    mypageAPI.deleteMyPost(userId, postId).then((data) => {
       console.log(data);
     });
   };
+
   useEffect(() => {
-    // getMyPost();
+    getMyPost();
   }, []);
+
   return (
     <>
-      {artistPosts.length === 0 ? (
+      {selectedArtistInfo === 0 ? (
         <div
-          style={{color: 'gray',
+          style={{
+            color: 'gray',
             fontWeight: 'bold',
             width: '100%',
             height: '200px',
@@ -32,33 +48,52 @@ const CreatePost = ({ selectedArtistInfo, setCurrentArtist, post }) => {
             justifyContent: 'center',
             alignItems: 'center',
           }}
-        >아티스트의 도안을 꾸미고 포스트해보세요!</div>
+        >
+          아티스트의 도안을 꾸미고 포스트해보세요!
+        </div>
       ) : (
-        artistPosts.map((item, index) => (
-          <s.PostFrame key={item.id}>
-            <s.leftContainer>
-              <s.PostImageFrame>
-                <s.PostImage src={item.fileUrl} />
-              </s.PostImageFrame>
-            </s.leftContainer>
-            <s.rightContainer>
-              <s.postInfoWrapper>
-                <s.nicknameWrapper>OnPol1004</s.nicknameWrapper>
-                <s.tagsWrapper>
-                  #{item.ent} #{item.artist} <br /> #{item.member} #
-                  {item.collection}
-                </s.tagsWrapper>
-                <s.dateWrapper>2023.10.13</s.dateWrapper>
-                <s.likeWrapper>
-                  <s.likeIcon src={UnLikedIcon} />
-                  <s.likeCount key={item.id}>{item.likeCount}</s.likeCount>
-                </s.likeWrapper>
-              </s.postInfoWrapper>
-              <s.moreIconWrapper>
-                <s.moreIcon src={dotdotdot} />
-              </s.moreIconWrapper>
-            </s.rightContainer>
-          </s.PostFrame>
+        artistPost.map((item, index) => (
+          <>
+            <s.PostFrame key={`post_${item.postId}`}>
+              <s.leftContainer>
+                <s.PostImageFrame>
+                  <s.PostImage src={item.polaroid} />
+                </s.PostImageFrame>
+              </s.leftContainer>
+              <s.rightContainer>
+                <s.postInfoWrapper>
+                  <s.nicknameWrapper>{item.nickname}</s.nicknameWrapper>
+                  <s.tagsWrapper>
+                    #{item.enterComp} #{item.groupName} <br />
+                    {item.groupName === item.memberName
+                      ? ''
+                      : `#${item.memberName}`}
+                    #{item.albumName}
+                  </s.tagsWrapper>
+                  <s.dateWrapper>
+                    {item?.postDateTime.slice(
+                      0,
+                      item?.postDateTime.indexOf('T')
+                    )}
+                  </s.dateWrapper>
+                  <s.likeWrapper>
+                    <s.likeIcon src={UnLikedIcon} />
+                    <s.likeCount key={item.id}>{item.likeCount}</s.likeCount>
+                  </s.likeWrapper>
+                </s.postInfoWrapper>
+                <s.moreIconWrapper>
+                  <s.moreIcon src={dotdotdot} onClick={handleClickdot} />
+                </s.moreIconWrapper>
+              </s.rightContainer>
+            </s.PostFrame>
+            {isClickDot && (
+              <s.deleteButton
+                onClick={() => handleClickDel(userId, item.postId)}
+              >
+                삭제
+              </s.deleteButton>
+            )}
+          </>
         ))
       )}
     </>

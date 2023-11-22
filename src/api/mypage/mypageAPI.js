@@ -32,6 +32,15 @@ const mypageAPI = {
   deleteMyPost: async (userId, postId) => {
     try {
       const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myPost/delete/${postId}`;
+      const response = await HttpClient.post(path, {}, {});
+      return response;
+    } catch (e) {
+      return null;
+    }
+  },
+  getMyCollectionArtistTab: async (userId) => {
+    try {
+      const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myCollection/artistTab`;
       const response = await HttpClient.get(path);
       return response;
     } catch (e) {

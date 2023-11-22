@@ -18,17 +18,16 @@ const CommunityPage = () => {
   const [isClickedName, setIsClickedName] = useState('');
 
   const getArtistProfile = () => {
-    artistId &&
-      communitypageAPI.getArtistProfile(artistId).then((data) => {
-        setArtistInfo(data.ArtistProfile);
-        console.log(data.ArtistProfile);
-      });
+    communitypageAPI.getArtistProfile(artistId).then((data) => {
+      setArtistInfo(data?.ArtistProfile);
+      console.log(data);
+    });
   };
 
   const getMemberProfile = () => {
     communitypageAPI
       .getMemberProfile(artistId)
-      .then((data) => setMemberProfile(data.memberPhoto));
+      .then((data) => setMemberProfile(data?.memberPhoto));
   };
 
   const getMemberPost = () => {
@@ -38,7 +37,7 @@ const CommunityPage = () => {
   const getArtistFavoriteQuant = () => {
     communitypageAPI.getArtistFavoriteQuant(artistId).then((data) => {
       console.log(data);
-      setArtistFavoriteQuant(data.favoriteQuant);
+      setArtistFavoriteQuant(data?.favoriteQuant);
     });
   };
 
@@ -61,7 +60,6 @@ const CommunityPage = () => {
     // getMemberPost();
     getAllArtistPost();
     getPostLikeQuant();
-    console.log(artistId);
   }, []);
   return (
     <>
@@ -71,38 +69,42 @@ const CommunityPage = () => {
         <s.ProfileWrapper>
           <s.ProfileImage>
             {/* artistInfo는 db에있던 데이터, ArtistInfo는 더미데이터 */}
-            {artistInfo.photo && (
-              <img src={artistInfo.photo} alt='artistPhoto' />
+            {artistInfo?.photo && (
+              <img src={artistInfo?.photo} alt='artistPhoto' />
             )}
           </s.ProfileImage>
           <s.ProfileInfo>
-            {artistInfo && <s.ArtistName>{artistInfo.groupName}</s.ArtistName>}
+            {artistInfo && <s.ArtistName>{artistInfo?.groupName}</s.ArtistName>}
             <s.ArtistStars>
               <img src={Star} alt='star' />
-              {artistFavoriteQuant}
+              {artistFavoriteQuant && artistFavoriteQuant}
             </s.ArtistStars>
             <s.ArtistInfoText>
               팬덤명 : {ArtistInfo.fandomName} <br />
-              {artistInfo && `소속 : ${artistInfo.enterComp}`}
+              {artistInfo && `소속 : ${artistInfo?.enterComp}`}
             </s.ArtistInfoText>
             <s.ArtistInfoText>
               내가 가진 컬렉션 : {ArtistInfo.myCollectionQuant}
-              {artistInfo && `/${artistInfo.collectionQuant}`}
+              {artistInfo && `/${artistInfo?.collectionQuant}`}
             </s.ArtistInfoText>
           </s.ProfileInfo>
         </s.ProfileWrapper>
       </s.ProfileContainer>
       <s.BodyContainer>
-        <s.MemberCardsWrapper>
-          {memberProfile.map((item, index) => (
-            <s.MemberCardContainer key={`member_${index + 1}`}>
-              <s.MemberNameLabel>{item.name}</s.MemberNameLabel>
-              <s.CardImageContainer>
-                <img src={item.memphoto} alt='memberPhoto' />
-              </s.CardImageContainer>
-            </s.MemberCardContainer>
-          ))}
-        </s.MemberCardsWrapper>
+        {!memberProfile ? (
+          ''
+        ) : (
+          <s.MemberCardsWrapper>
+            {memberProfile.map((item, index) => (
+              <s.MemberCardContainer key={`member_${index + 1}`}>
+                <s.MemberNameLabel>{item?.name}</s.MemberNameLabel>
+                <s.CardImageContainer>
+                  <img src={item?.memphoto} alt='memberPhoto' />
+                </s.CardImageContainer>
+              </s.MemberCardContainer>
+            ))}
+          </s.MemberCardsWrapper>
+        )}
         <s.photoCardContainer>
           <s.ContentWrapper>
             <s.CardImageContainer>

@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-
 export const PostFrame = styled.div`
   display: flex;
   flex-direction: row;
@@ -56,7 +55,6 @@ export const PostImageFrame = styled.div`
 
 export const PostImage = styled.img`
   width: 100%;
-
 `;
 
 export const rightContainer = styled.div`
@@ -79,7 +77,6 @@ export const postInfoWrapper = styled.div`
 
   padding-left: 10%;
   padding-top: 15%;
-
 `;
 
 export const nicknameWrapper = styled.div`
@@ -140,7 +137,6 @@ export const likeIcon = styled.img`
   // &:hover {
   //   cursor: pointer;
   // }
-
 `;
 
 export const moreIconWrapper = styled.div`
@@ -159,4 +155,11 @@ export const moreIcon = styled.img`
   width: 10%;
 
   cursor: pointer;
+`;
+
+export const deleteButton = styled.button`
+  display: inline;
+  width: 100px;
+  height: 30px;
+  z-index: 999;
 `;

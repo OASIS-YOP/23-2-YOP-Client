@@ -11,39 +11,35 @@ import mypageAPI from '../../../api/mypage/mypageAPI';
 const Posts = () => {
   const [userId, setUserId] = useState(1);
   const [postArtistList, setPostArtistList] = useState([]);
+  const [selectedArtist, setSelectedArtist] = useState();
 
-  const [selectedArtist, setSelectedArtist] = useState(postArtistList[0]);
+  const onClickArtist = (artistId) => {
+    setSelectedArtist(artistId);
+    console.log(postArtistList[0]);
+  };
 
-  // const onClickArtist = (artistName) => {
-  //   setSelectedArtist(artistName);
-  // };
+  const getMyPostArtistTab = () => {
+    mypageAPI.getMyPostArtistTab(userId).then((data) => {
+      setPostArtistList(data.postArtistList);
+      return setSelectedArtist(data.postArtistList[0].artistId);
+    });
+  };
 
   const artists = postArtistList.map((item) => {
     return (
       <s.ArtistsTab
         key={`artist_${item.artistId}`}
-        // onClick={() => onClickArtist(item)}
-        // className={item === selectedArtist ? 'active' : ''}
+        onClick={() => onClickArtist(item.artistId)}
+        className={item.artistId === selectedArtist ? 'active' : ''}
       >
         {item.groupName}
       </s.ArtistsTab>
     );
   });
 
-  // const selectedArtistInfo = MyPosts.find(
-  //   (artist) => artist.artistName === selectedArtist
-  // );
-
-  const getMyPostArtistTab = () => {
-    mypageAPI
-      .getMyPostArtistTab(userId)
-      .then((data) => setPostArtistList(data.postArtistList));
-  };
-
   useEffect(() => {
     getMyPostArtistTab();
-  });
-  // const posts = createPost.map((post) => []);
+  }, []);
 
   return (
     <>
@@ -55,7 +51,7 @@ const Posts = () => {
             selectedArtist={selectedArtist}
             // setCurrentArtist={setCurrentArtist}
           />
-          {/* {posts.filter(post => post.artist === selectedArtist)} */}
+          {/* {posts.filter(post => post.groupName === selectedArtist)} */}
         </s.PostsWrapper>
       </s.Wrapper>
     </>

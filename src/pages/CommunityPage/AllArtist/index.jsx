@@ -14,15 +14,15 @@ const AllArtist = () => {
   const getFavArtist = () => {
     mainpageAPI.getFavArtist(1).then((data) => {
       console.log(data);
-      setFavArtist(data.favArtistList);
+      setFavArtist(data?.favArtistList);
     });
   };
 
   const getAllArtist = () => {
     communitypageAPI.getAllArtist().then((data) => {
       console.log(data);
-      setAllArtistList(data.allArtistList);
-      console.log(data.allArtistList[0].enterComp);
+      setAllArtistList(data?.allArtistList);
+      console.log(data?.allArtistList[0]?.enterComp);
     });
   };
 

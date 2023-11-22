@@ -17,13 +17,15 @@ const Top10DesignCard = ({ photo, index }) => {
         <s.ContentLiked>
           <s.likeWrapper>
             <s.likeIcon src={LikedIcon} />
-            <s.likeCount>1000</s.likeCount>
+            <s.likeCount>{photo.likeQuant}</s.likeCount>
           </s.likeWrapper>
         </s.ContentLiked>
         <s.ContentText>{photo.nickname}</s.ContentText>
         <s.ContentText>
           #{photo.enterComp}#{photo.groupName}
-          <br />#{photo.memberName}#{photo.albumName}
+          <br />
+          {photo.groupName === photo.memberName ? '' : photo.memberName}#
+          {photo.albumName}
         </s.ContentText>
       </s.ContentContainer>
     </s.Wrapper>
