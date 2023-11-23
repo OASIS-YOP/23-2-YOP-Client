@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -146,7 +147,7 @@ export const FilterSlider = styled.div`
 
   width: 200px;
 
-  height: 20px;
+  height: 25px;
 
   // 추가된 부분: 가운데 선 스타일링
   position: relative;
@@ -159,7 +160,23 @@ export const FilterSlider = styled.div`
     background-color: #B7C0D8; // 선의 색상
 
     z-index: 998;
+
   }
+
+`;
+
+export const FilterValue = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  width: 30px;
+  
+  font-weight: 500;
+  font-size: 13.4px;
+
+  margin-left: 10px;
 `;
 
 export const devider = styled.div`
@@ -176,6 +193,30 @@ export const devider = styled.div`
   margin-top: 35px;
 
 
+`;
+
+export const ToggleWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 0;
+
+ 
+`;
+
+export const ToggleLabel = styled.label`
+  
+`;
+
+
+
+export const ToggleInput = styled.input`
+  
+`;
+
+export const ToggleSapn = styled.span`
 `;
 
 
