@@ -221,6 +221,13 @@ export const likeIcon = styled.img`
   padding-top: 2%;
   margin-right: 5%;
   cursor: pointer;
+  &:hover {
+    filter: brightness(90%);
+  }
+
+  &:active {
+    scale: 0.9;
+  }
 `;
 
 export const moreIconWrapper = styled.div`

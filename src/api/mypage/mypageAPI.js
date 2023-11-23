@@ -124,6 +124,16 @@ const mypageAPI = {
       return null;
     }
   },
+  //내 좋아요
+  getMyLike: async (userId) => {
+    try {
+      const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myLike`;
+      const response = await HttpClient.get(path);
+      return response;
+    } catch (e) {
+      return null;
+    }
+  },
 };
 
 export default mypageAPI;
