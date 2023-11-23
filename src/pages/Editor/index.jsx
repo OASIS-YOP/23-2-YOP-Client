@@ -36,8 +36,14 @@ const Editor = () => {
   const [isLogedIn, setIsLogedIn] = useState();
   const [image, setImage] = useState('');
   const stageRef = useRef(null);
+  const [ brightness, setBrightness ] = useState(0); 
+  const [ saturation, setSaturation ] = useState(0);
+  const [ contrast, setContrast ] = useState(0);
+
+  const [ resetFiltersValue , setResetFiltersValue] = useState(false);
 
   const [imageFile, setImageFile] = useState(null);
+  const [flipX, setFlipX] = useState(false);
 
   // 불러오기 버튼 눌렀을 때 실행되는 함수
   const handleLoadImage = () => {
@@ -55,6 +61,25 @@ const Editor = () => {
     input.click();
   };
 
+  const initializeStage = () => {
+    const stage = new Konva.Stage({
+      container: 'canvas',
+      width: 340,
+      height: 492,
+    });
+  
+    const layer = new Konva.Layer();
+    stage.add(layer);
+  
+    stageRef.current = stage;
+  };
+  
+  useEffect(() => {
+    initializeStage();
+  }, []);
+
+  
+
   // 파일을 불러와서 이미지 추가하는 함수
   const handleImageLoad = (file) => {
     const reader = new FileReader();
@@ -63,6 +88,16 @@ const Editor = () => {
       const img = new window.Image();
       img.src = reader.result;
       img.onload = () => {
+        if (!stageRef.current) {
+          initializeStage();
+        }
+  
+        const stage = stageRef.current;
+        const layer = new Konva.Layer();
+        if ( stage.find('#backgroundImage') ) {
+        stage.removeChildren('#backgroundImage');} else {
+        stage.add(layer);
+        }
         const stageWidth = 340;
         const stageHeight = 492;
 
@@ -90,7 +125,7 @@ const Editor = () => {
           newWidth = newHeight * aspectRatio;
         }
 
-        const x = (stageWidth - newWidth) / 2;
+        const x = stageWidth/2;
         const y = (stageHeight - newHeight) / 2;
 
         const resizedImage = new Konva.Image({
@@ -115,13 +150,92 @@ const Editor = () => {
             }
           },
         });
+        
+      
+      // 강제로 캐시 업데이트
+      
 
-        setImage(resizedImage);
+      // 캐시 갱신 후 일괄 처리
+
+      layer.add(resizedImage);
+
+      resizedImage.offsetX(resizedImage.width() / 2);
+
+      resizedImage.cache();
+      resizedImage.filters([Konva.Filters.Brighten, Konva.Filters.HSV, Konva.Filters.Contrast]);
+      resizedImage.brightness(brightness);
+      resizedImage.saturation(saturation);
+      resizedImage.contrast(contrast);
+      resizedImage.draw();
+      layer.batchDraw();
+      setImage(resizedImage);
       };
+
+      console.log('Image Object:', image);
       console.log('이미지 로드됨:', file);
+      console.log(stageRef.current)
     };
   };
 
+  useEffect(() => {
+    if (image) {
+      setResetFiltersValue(false);
+      image.brightness(brightness);
+
+      image.hue(0);
+      image.saturation(saturation);
+      image.value(0);
+
+      image.contrast(contrast);
+
+    }
+  }, [image, brightness, saturation, contrast , flipX]);
+
+  useEffect(() => {
+    if (image && flipX) {
+      image.scaleX(-image.scaleX());
+    } else if (image && !flipX) {
+      image.scaleX(image.scaleX());
+    }
+  }, [image, flipX]);
+
+
+
+ 
+  
+  // 이미지 캔버스에 추가하는 함수
+  useEffect((resetFiltersValue) => {
+    if (image && stageRef.current) {
+      const stage = stageRef.current;
+      const layer = new Konva.Layer();
+      stage.add(layer);
+
+      layer.add(image);
+      layer.draw();
+ 
+      setBrightness(0);
+      setSaturation(0);
+      setContrast(0);
+
+      layer.batchDraw();
+
+      console.log(resetFiltersValue);
+      console.log(brightness, saturation, contrast)
+    }
+
+  }, [image]);
+
+  // useEffect(() => {
+  //   if (image) {
+  //     // scaleX 속성을 사용하여 좌우 반전 적용
+  //     image.draw();
+  //     setImage((prevImage) => (prevImage === image ? image.clone() : image));
+  //   }
+  // }, [image, flipX]);
+  
+
+
+ 
   //base64 -> File로 변환하는 함수
   const dataURLtoFile = (dataurl, fileName) => {
     var arr = dataurl.split(','),
@@ -156,34 +270,26 @@ const Editor = () => {
     }
   };
 
-  // 이미지 캔버스에 추가하는 함수
-  useEffect(() => {
-    if (image) {
-      const stage = new Konva.Stage({
-        container: 'canvas', // 캔버스가 그려질 컨테이너의 ID
-        width: 340,
-        height: 492,
-      });
-
-      const layer = new Konva.Layer();
-      stage.add(layer);
-
-      layer.add(image);
-
-      layer.draw();
-
-      stageRef.current = stage;
-    }
-  }, [image]);
-
-
   const [toolMenus, setToolMenus] = useState([
     {
       id: 1,
       name: '이미지',
       icon: <ImageIcon />,
       isActive: true,
-      contents: <Image />,
+      contents: <Image 
+        stageRef={stageRef} 
+        image={image} 
+        setBrightness={setBrightness} 
+        setSaturation={setSaturation}
+        setContrast={setContrast}
+        brightness={brightness}
+        saturation={saturation}
+        contrast={contrast}
+        resetFiltersValue={resetFiltersValue}
+        setResetFiltersValue={setResetFiltersValue}
+        flipX={flipX}
+        setFlipX={setFlipX}
+      />,
     },
     {
       id: 2,
