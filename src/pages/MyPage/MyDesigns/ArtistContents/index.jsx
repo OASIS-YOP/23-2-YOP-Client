@@ -28,14 +28,6 @@ const ArtistContents = () => {
     });
   };
 
-  const selectedArtistInfo = MyCollections.find(
-    (artist) => artist.artistName === selectedArtist
-  );
-
-  const artistCollections = selectedArtistInfo
-    ? selectedArtistInfo.myCollections
-    : [];
-
   // const artist = MyCollections.find((artist) => artist.artistId);
   // if (!artist) {
   //   return; // Handle the case when artist is not found

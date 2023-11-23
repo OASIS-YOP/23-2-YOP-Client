@@ -11,6 +11,7 @@ const mypageAPI = {
     }
   },
 
+  //내 포스트
   getMyPostArtistTab: async (userId) => {
     try {
       const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myPost/artistTab`;
@@ -38,6 +39,8 @@ const mypageAPI = {
       return null;
     }
   },
+
+  //내 컬렉션
   getMyCollectionArtistTab: async (userId) => {
     try {
       const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myCollection/artistTab`;
@@ -74,7 +77,8 @@ const mypageAPI = {
       return null;
     }
   },
-  //내도안
+
+  //내 도안
   getMyPolaroidArtistTab: async (userId) => {
     try {
       const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myPolaroid/artistTab`;
@@ -102,10 +106,19 @@ const mypageAPI = {
       return null;
     }
   },
-  getMyPolaids: async (userId, albumName) => {
+  getMyPolaroids: async (userId, albumName) => {
     try {
       const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myPolaroid/${albumName}/polaroids`;
       const response = await HttpClient.get(path);
+      return response;
+    } catch (e) {
+      return null;
+    }
+  },
+  deleteMyPolaroids: async (userId, polaroidId) => {
+    try {
+      const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myPolaroid/delete/${polaroidId}`;
+      const response = await HttpClient.delete(path);
       return response;
     } catch (e) {
       return null;
