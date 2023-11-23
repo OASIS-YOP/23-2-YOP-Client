@@ -22,7 +22,7 @@ const mypageAPI = {
   },
   getMyPost: async (userId, artistId) => {
     try {
-      const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myPost/3/Post`;
+      const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myPost/${artistId}/Post`;
       const response = await HttpClient.get(path);
       return response;
     } catch (e) {

@@ -76,7 +76,6 @@ export const BodyContainer = styled.div`
   width: 100%;
   height: fit-content;
   padding-top: 20px;
-  border: 1px solid black;
 `;
 export const MemberCardsWrapper = styled.div`
   display: flex;
