@@ -44,6 +44,9 @@ const Editor = () => {
 
   const [imageFile, setImageFile] = useState(null);
   const [flipX, setFlipX] = useState(false);
+  const [flipY, setFlipY] = useState(false);
+
+  const [ blackWhite, setBlackWhite ] = useState(false);
 
   // 불러오기 버튼 눌렀을 때 실행되는 함수
   const handleLoadImage = () => {
@@ -126,7 +129,7 @@ const Editor = () => {
         }
 
         const x = stageWidth/2;
-        const y = (stageHeight - newHeight) / 2;
+        const y = stageHeight/2;
 
         const resizedImage = new Konva.Image({
           id: 'backgroundImage',
@@ -160,9 +163,12 @@ const Editor = () => {
       layer.add(resizedImage);
 
       resizedImage.offsetX(resizedImage.width() / 2);
+      resizedImage.offsetY(resizedImage.height() / 2);
 
       resizedImage.cache();
-      resizedImage.filters([Konva.Filters.Brighten, Konva.Filters.HSV, Konva.Filters.Contrast]);
+      resizedImage.filters([
+        Konva.Filters.Brighten, Konva.Filters.HSV, Konva.Filters.Contrast,
+      ]);
       resizedImage.brightness(brightness);
       resizedImage.saturation(saturation);
       resizedImage.contrast(contrast);
@@ -197,7 +203,29 @@ const Editor = () => {
     } else if (image && !flipX) {
       image.scaleX(image.scaleX());
     }
+
   }, [image, flipX]);
+
+  useEffect(() => {
+    if (image && flipY) {
+      image.scaleY(-image.scaleY());
+    } else if (image && !flipY) {
+      image.scaleY(image.scaleY());
+    }
+
+  }, [image, flipY]);
+
+  useEffect(() => {
+    if (image && blackWhite ) {
+      image.cache();
+      image.filters([Konva.Filters.Grayscale, Konva.Filters.Brighten, Konva.Filters.HSV, Konva.Filters.Contrast,]);
+      image.draw();
+    } else if (image && !blackWhite) {
+      image.cache();
+      image.filters([Konva.Filters.Brighten, Konva.Filters.HSV, Konva.Filters.Contrast,]);
+      image.draw();
+    }
+  }, [image, blackWhite]);
 
 
 
@@ -212,15 +240,16 @@ const Editor = () => {
 
       layer.add(image);
       layer.draw();
- 
+
+      console.log(resetFiltersValue);
+      console.log(brightness, saturation, contrast)
+      
       setBrightness(0);
       setSaturation(0);
       setContrast(0);
 
       layer.batchDraw();
 
-      console.log(resetFiltersValue);
-      console.log(brightness, saturation, contrast)
     }
 
   }, [image]);
@@ -288,7 +317,11 @@ const Editor = () => {
         resetFiltersValue={resetFiltersValue}
         setResetFiltersValue={setResetFiltersValue}
         flipX={flipX}
+        flipY={flipY}
         setFlipX={setFlipX}
+        setFlipY={setFlipY}
+        blackWhite={blackWhite}
+        setBlackWhite={setBlackWhite}
       />,
     },
     {
