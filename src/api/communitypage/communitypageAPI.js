@@ -48,7 +48,9 @@ const communitypageAPI = {
   },
   getMemberPost: async (memberName) => {
     try {
-      const path = `${process.env.REACT_APP_BASE_URL}/community/${memberName}/memberPost`;
+      const path = `${process.env.REACT_APP_BASE_URL}/community/${decodeURI(
+        memberName
+      )}/memberPost`;
       const response = await HttpClient.get(path);
       return response;
     } catch (e) {

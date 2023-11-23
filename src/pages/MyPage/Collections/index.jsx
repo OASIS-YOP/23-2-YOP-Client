@@ -13,8 +13,8 @@ const Collections = () => {
   const [isCollectionClicked, setIsCollectionClicked] = useState(false);
   const [userId, setUserId] = useState(1);
 
-  const onClickArtist = (index) => {
-    // setSelectedArtist(artistName);
+  const onClickArtist = (artistId) => {
+    setSelectedArtist(artistId);
     // setIsCollectionClicked(false);
     // console.log(artistName);
   };
@@ -22,6 +22,7 @@ const Collections = () => {
   const getMyCollectionArtistTab = () => {
     mypageAPI.getMyCollectionArtistTab(userId).then((data) => {
       setArtistList(data.collectionArtistList);
+      setSelectedArtist(data.collectionArtistList[0].artistId);
     });
   };
 
@@ -36,12 +37,12 @@ const Collections = () => {
     });
   };
 
-  const artists = artistList.map((item, index) => {
+  const artists = artistList.map((item) => {
     return (
       <s.ArtistsTab
         key={`collectionArtist_${item?.artistId}`}
-        onClick={() => onClickArtist(index)}
-        className={index === selectedArtist ? 'active' : ''}
+        onClick={() => onClickArtist(item.artistId)}
+        className={item.artistId === selectedArtist ? 'active' : ''}
       >
         {item.groupName}
       </s.ArtistsTab>

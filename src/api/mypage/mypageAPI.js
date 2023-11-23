@@ -84,6 +84,33 @@ const mypageAPI = {
       return null;
     }
   },
+  getMyPolaroidCollection: async (userId, artistId) => {
+    try {
+      const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myPolaroid/${artistId}/collection`;
+      const response = await HttpClient.get(path);
+      return response;
+    } catch (e) {
+      return null;
+    }
+  },
+  getMyPolaroidQuant: async (userId, albumName) => {
+    try {
+      const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myPolaroid/${albumName}/polaroidQuant`;
+      const response = await HttpClient.get(path);
+      return response;
+    } catch (e) {
+      return null;
+    }
+  },
+  getMyPolaids: async (userId, albumName) => {
+    try {
+      const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myPolaroid/${albumName}/polaroids`;
+      const response = await HttpClient.get(path);
+      return response;
+    } catch (e) {
+      return null;
+    }
+  },
 };
 
 export default mypageAPI;

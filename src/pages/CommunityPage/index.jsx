@@ -31,7 +31,7 @@ const CommunityPage = () => {
   };
 
   const getMemberPost = () => {
-    communitypageAPI.getMemberPost().then((data) => console.log(data));
+    communitypageAPI.getMemberPost('민지').then((data) => console.log(data));
   };
 
   const getArtistFavoriteQuant = () => {
@@ -57,7 +57,7 @@ const CommunityPage = () => {
     getArtistProfile();
     getMemberProfile();
     getArtistFavoriteQuant();
-    // getMemberPost();
+    getMemberPost();
     getAllArtistPost();
     getPostLikeQuant();
   }, []);

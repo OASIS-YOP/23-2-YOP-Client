@@ -15,7 +15,6 @@ const Posts = () => {
 
   const onClickArtist = (artistId) => {
     setSelectedArtist(artistId);
-    console.log(postArtistList[0]);
   };
 
   const getMyPostArtistTab = () => {
