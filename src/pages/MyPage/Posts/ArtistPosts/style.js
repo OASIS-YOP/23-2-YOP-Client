@@ -133,10 +133,7 @@ export const likeIcon = styled.img`
   width: 23%;
   padding-top: 2%;
   margin-right: 5%;
-
-  // &:hover {
-  //   cursor: pointer;
-  // }
+  cursor: pointer;
 `;
 
 export const moreIconWrapper = styled.div`

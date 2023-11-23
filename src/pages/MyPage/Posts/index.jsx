@@ -21,14 +21,14 @@ const Posts = () => {
   const getMyPostArtistTab = () => {
     mypageAPI.getMyPostArtistTab(userId).then((data) => {
       setPostArtistList(data.postArtistList);
-      return setSelectedArtist(data.postArtistList[0].artistId);
+      setSelectedArtist(data.postArtistList[0].artistId);
     });
   };
 
   const artists = postArtistList.map((item) => {
     return (
       <s.ArtistsTab
-        key={`artist_${item.artistId}`}
+        key={`postArtist_${item.artistId}`}
         onClick={() => onClickArtist(item.artistId)}
         className={item.artistId === selectedArtist ? 'active' : ''}
       >
@@ -47,7 +47,6 @@ const Posts = () => {
         <s.ArtistsTabWrapper>{artists}</s.ArtistsTabWrapper>
         <s.PostsWrapper>
           <CreatePost
-            // selectedArtistInfo={selectedArtistInfo}
             selectedArtist={selectedArtist}
             // setCurrentArtist={setCurrentArtist}
           />

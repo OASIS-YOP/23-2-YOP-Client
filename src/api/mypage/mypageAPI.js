@@ -22,7 +22,7 @@ const mypageAPI = {
   },
   getMyPost: async (userId, artistId) => {
     try {
-      const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myPost/${artistId}/Post`;
+      const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myPost/3/Post`;
       const response = await HttpClient.get(path);
       return response;
     } catch (e) {
@@ -31,8 +31,8 @@ const mypageAPI = {
   },
   deleteMyPost: async (userId, postId) => {
     try {
-      const path = `${process.env.REACT_APP_BASE_URL}/mypage/3/myPost/delete/10`;
-      const response = await HttpClient.post(path, {}, {});
+      const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myPost/delete/${postId}`;
+      const response = await HttpClient.delete(path, {}, {});
       return response;
     } catch (e) {
       return null;
@@ -41,6 +41,43 @@ const mypageAPI = {
   getMyCollectionArtistTab: async (userId) => {
     try {
       const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myCollection/artistTab`;
+      const response = await HttpClient.get(path);
+      return response;
+    } catch (e) {
+      return null;
+    }
+  },
+  getAllCollection: async (userId, artistId) => {
+    try {
+      const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myCollection/${artistId}/allCollection`;
+      const response = await HttpClient.get(path);
+      return response;
+    } catch (e) {
+      return null;
+    }
+  },
+  getMyActiveCollection: async (userId, artistId) => {
+    try {
+      const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myCollection/${artistId}/active`;
+      const response = await HttpClient.get(path);
+      return response;
+    } catch (e) {
+      return null;
+    }
+  },
+  getCollectionPhotocardList: async (userId, albumName) => {
+    try {
+      const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myCollection/${albumName}/allPhotocard`;
+      const response = await HttpClient.get(path);
+      return response;
+    } catch (e) {
+      return null;
+    }
+  },
+  //내도안
+  getMyPolaroidArtistTab: async (userId) => {
+    try {
+      const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myPolaroid/artistTab`;
       const response = await HttpClient.get(path);
       return response;
     } catch (e) {

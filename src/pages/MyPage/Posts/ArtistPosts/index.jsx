@@ -4,7 +4,7 @@ import UnLikedIcon from '../../../../assets/UnLikedIcon.svg';
 import { useEffect, useState } from 'react';
 import mypageAPI from '../../../../api/mypage/mypageAPI';
 
-const CreatePost = ({ selectedArtistInfo }) => {
+const CreatePost = ({ selectedArtist }) => {
   const [userId, setUserId] = useState(1);
   const [artistPost, setArtistPost] = useState([]);
   const [isClickDot, setIsClickDot] = useState(false);
@@ -16,27 +16,28 @@ const CreatePost = ({ selectedArtistInfo }) => {
   const handleClickDel = (userId, postId) => {
     setIsClickDot(false);
     deleteMyPost(userId, postId);
+    getMyPost(userId, selectedArtist);
   };
   const getMyPost = () => {
-    mypageAPI.getMyPost(1, 3).then((data) => {
+    mypageAPI.getMyPost(userId, selectedArtist).then((data) => {
       setArtistPost(data.myPostList);
       console.log(data.myPostList);
     });
   };
 
-  const deleteMyPost = (userId, postId) => {
+  const deleteMyPost = (postId) => {
     mypageAPI.deleteMyPost(userId, postId).then((data) => {
       console.log(data);
     });
   };
 
   useEffect(() => {
-    getMyPost();
+    getMyPost(userId, selectedArtist);
   }, []);
 
   return (
     <>
-      {selectedArtistInfo === 0 ? (
+      {selectedArtist === 0 ? (
         <div
           style={{
             color: 'gray',
@@ -87,9 +88,7 @@ const CreatePost = ({ selectedArtistInfo }) => {
               </s.rightContainer>
             </s.PostFrame>
             {isClickDot && (
-              <s.deleteButton
-                onClick={() => handleClickDel(userId, item.postId)}
-              >
+              <s.deleteButton onClick={() => handleClickDel(item.postId)}>
                 삭제
               </s.deleteButton>
             )}

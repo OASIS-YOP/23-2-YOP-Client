@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as s from './style';
 import CollectionCards from '../../../Temp/mypage/CollectionCards';
 import CollectionDetails from './CollectionDetails';
@@ -6,31 +6,44 @@ import Lock from '../../../assets/Lock.svg';
 import mypageAPI from '../../../api/mypage/mypageAPI';
 
 const Collections = () => {
-  const artistslist = ['뉴진스', '방탄소년단', '에스파'];
+  const [artistList, setArtistList] = useState([]);
   const [isActivated, setIsActivated] = useState(false);
-  const [selectedArtist, setSelectedArtist] = useState(artistslist[0]);
+  const [selectedArtist, setSelectedArtist] = useState();
   const [selectedCollection, setSelectedCollection] = useState('');
   const [isCollectionClicked, setIsCollectionClicked] = useState(false);
   const [userId, setUserId] = useState(1);
 
-  const onClickArtist = (artistName) => {
-    setSelectedArtist(artistName);
-    setIsCollectionClicked(false);
-    console.log(artistName);
+  const onClickArtist = (index) => {
+    // setSelectedArtist(artistName);
+    // setIsCollectionClicked(false);
+    // console.log(artistName);
   };
 
   const getMyCollectionArtistTab = () => {
-    mypageAPI.getMyCollectionArtistTab(userId).then();
+    mypageAPI.getMyCollectionArtistTab(userId).then((data) => {
+      setArtistList(data.collectionArtistList);
+    });
   };
 
-  const artists = artistslist.map((artist, index) => {
+  const getAllCollection = () => {
+    mypageAPI.getAllCollection(userId, 3).then((data) => {
+      console.log(data.allCollectionList);
+    });
+  };
+  const getMyActiveCollection = () => {
+    mypageAPI.getMyActiveCollection(userId, 3).then((data) => {
+      console.log(data.activeCollectionList);
+    });
+  };
+
+  const artists = artistList.map((item, index) => {
     return (
       <s.ArtistsTab
-        key={artist + index}
-        onClick={() => onClickArtist(artist)}
-        className={artist === selectedArtist ? 'active' : ''}
+        key={`collectionArtist_${item?.artistId}`}
+        onClick={() => onClickArtist(index)}
+        className={index === selectedArtist ? 'active' : ''}
       >
-        {artist}
+        {item.groupName}
       </s.ArtistsTab>
     );
   });
@@ -39,13 +52,18 @@ const Collections = () => {
     (artist) => artist.artistName === selectedArtist
   );
 
+  useEffect(() => {
+    getMyCollectionArtistTab();
+    getAllCollection();
+    getMyActiveCollection();
+  }, []);
   return (
     <>
       <s.Wrapper>
         <s.ArtistsTabWrapper>{artists}</s.ArtistsTabWrapper>
         {!isCollectionClicked ? (
           <s.CollectionCardsContainer>
-            {selectedArtistContents.collections.length !== 0 ? (
+            {/* {selectedArtistContents.collections.length !== 0 ? (
               selectedArtistContents.collections.map((item) => {
                 return (
                   <CollectionCard
@@ -55,9 +73,8 @@ const Collections = () => {
                     collection={item}
                   />
                 );
-              })
-            ) : (
-              <div>컬렉션을 활성화해주세요!</div>
+              }) */}
+            ) : (<div>컬렉션을 활성화해주세요!</div>
             )}
           </s.CollectionCardsContainer>
         ) : (
