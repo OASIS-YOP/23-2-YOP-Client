@@ -12,8 +12,8 @@ import Saturation from '../../../../assets/editorIcons/image/Saturation';
 
 import Rotate from '../../../../assets/editorIcons/image/Rotate';
 import Scale from '../../../../assets/editorIcons/image/Scale';
-import Horizontal from '../../../../assets/editorIcons/image/Horizontal';
-import Vertical from '../../../../assets/editorIcons/image/Vertical';
+// import Horizontal from '../../../../assets/editorIcons/image/Horizontal';
+// import Vertical from '../../../../assets/editorIcons/image/Vertical';
 
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
@@ -28,7 +28,8 @@ const Image = ({
   setBrightness, setSaturation, setContrast,
   brightness, saturation, contrast,
   setResetFiltersValue, resetFiltersValue,
-  image, flipX, setFlipX,
+  image, flipX, setFlipX, flipY, setFlipY,
+  blackWhite, setBlackWhite,
 }) => {
 
   const [brightnessVlaue, setBrightnessValue] = useState(0);
@@ -41,36 +42,54 @@ const Image = ({
   
     // 두 번째 호출
     setTimeout(() => {
-      setFlipX((이전FlipX) => !이전FlipX);
       console.log('flipX', !flipX);
+      setFlipX((이전FlipX) => !이전FlipX);
+  
     }, 0);
   };
 
-  
+  const handleFlipY = () => {
+    setFlipY((이전FlipY) => !이전FlipY);
+    console.log('flipY', !flipY);
+
+    // 두 번째 호출
+    setTimeout(() => {
+      console.log('flipY', !flipY);
+      setFlipY((이전FlipY) => !이전FlipY);
+    
+    }, 0);
+  };
+
+  const handleBlackWhite = () => {
+    setBlackWhite((이전BlackWhite) => !이전BlackWhite);
+    console.log('blackWhite', !blackWhite);
 
   
+  };
+
+
 
 
   const handleBrightnessChange = (value) => {
+    console.log('명도' + value);
+  
     setBrightnessValue(value);
     setBrightness(value/150);
     // setBrightnessValue(brightness);
-    console.log('명도' + value);
-  
   };
 
   const handleSaturationChange = (value) => {
+    console.log('채도' + value);
     setSaturationValue(value);
     setSaturation(value/50);
     // setSaturationValue(value);
-    console.log('채도' + value);
   };
 
   const handleContrastChange = (value) => {
+    console.log('대비' + value);
     setContrastValue(value);
     setContrast(value/5);
     // setContrastValue(value);
-    console.log('대비' + value);
   };
 
   useEffect(() => {
@@ -80,12 +99,11 @@ const Image = ({
 
 
   const valueReset = () => {
+    console.log('리셋', brightness, saturation, contrast);
     setBrightness(0);
     setSaturation(0);
     setContrast(0);
     setResetFiltersValue(false);
-
-    console.log('리셋', brightness, saturation, contrast);
   };
   
 
@@ -140,7 +158,7 @@ const Image = ({
               좌우대칭
             </s.TopButtonLabel>
             </s.TopButton>
-            <s.TopButton>
+            <s.TopButton onClick={handleFlipY}>
             <s.TopButtonIcon>
               <AlignCenterVertical />
             </s.TopButtonIcon>
@@ -148,7 +166,7 @@ const Image = ({
               상하대칭
             </s.TopButtonLabel>
           </s.TopButton>
-          <s.TopButton>
+          <s.TopButton onClick={handleBlackWhite}>
             <s.TopButtonIcon>
               <BlackWhite />
             </s.TopButtonIcon>
