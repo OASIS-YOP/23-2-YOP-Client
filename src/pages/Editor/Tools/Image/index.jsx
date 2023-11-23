@@ -68,27 +68,25 @@ const Image = ({
   };
 
 
-
-
   const handleBrightnessChange = (value) => {
     console.log('명도' + value);
   
     setBrightnessValue(value);
-    setBrightness(value/150);
+    setBrightness(value/160);
     // setBrightnessValue(brightness);
   };
 
   const handleSaturationChange = (value) => {
     console.log('채도' + value);
     setSaturationValue(value);
-    setSaturation(value/50);
+    setSaturation(value/60);
     // setSaturationValue(value);
   };
 
   const handleContrastChange = (value) => {
     console.log('대비' + value);
     setContrastValue(value);
-    setContrast(value/5);
+    setContrast(value/4);
     // setContrastValue(value);
   };
 
@@ -106,10 +104,6 @@ const Image = ({
     setResetFiltersValue(false);
   };
   
-
-
-
-
 
 
   const handleStyle = {

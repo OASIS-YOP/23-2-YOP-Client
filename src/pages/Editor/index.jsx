@@ -1,12 +1,7 @@
+import React, { useState, useRef, useEffect } from 'react';
+import Konva from 'konva';
 import * as s from './style';
 import HeaderIsLogOffed from '../../components/Header/HeaderIsLogOffed';
-import { useState, useRef, useEffect } from 'react';
-
-// //캔버스 라이브러리
-import Konva from 'konva';
-// import { Stage, Layer, Rect, Text, Image } from 'react-konva';
-// import { createStore } from 'polotno/model/store';
-// import { Workspace } from 'polotno/canvas/workspace';
 
 //아이콘
 import Load from '../../assets/Load';
@@ -34,19 +29,46 @@ import Frame from './Tools/Frame';
 
 const Editor = () => {
   const [isLogedIn, setIsLogedIn] = useState();
+  
   const [image, setImage] = useState('');
   const stageRef = useRef(null);
+
   const [ brightness, setBrightness ] = useState(0); 
   const [ saturation, setSaturation ] = useState(0);
   const [ contrast, setContrast ] = useState(0);
 
+  //캔버스 비워졌는지 여부
+  const [ isDestroyed, setIsDestroyed ] = useState(true);
+
+  // 필터 초기화 여부
   const [ resetFiltersValue , setResetFiltersValue] = useState(false);
 
-  const [imageFile, setImageFile] = useState(null);
+  // 좌우반전 여부 
   const [flipX, setFlipX] = useState(false);
   const [flipY, setFlipY] = useState(false);
 
   const [ blackWhite, setBlackWhite ] = useState(false);
+
+  const [imageFile, setImageFile] = useState(null);
+
+  const initializeStage = () => {
+    const stage = new Konva.Stage({
+      container: 'canvas',
+      width: 340,
+      height: 492,
+    });
+
+    const layer = new Konva.Layer();
+    stage.add(layer);
+
+    stageRef.current = stage;
+  };
+
+  // 캔버스 초기화 함수 호출
+  useEffect(() => {
+    initializeStage();
+  }, []);
+
 
   // 불러오기 버튼 눌렀을 때 실행되는 함수
   const handleLoadImage = () => {
@@ -64,25 +86,9 @@ const Editor = () => {
     input.click();
   };
 
-  const initializeStage = () => {
-    const stage = new Konva.Stage({
-      container: 'canvas',
-      width: 340,
-      height: 492,
-    });
   
-    const layer = new Konva.Layer();
-    stage.add(layer);
   
-    stageRef.current = stage;
-  };
   
-  useEffect(() => {
-    initializeStage();
-  }, []);
-
-  
-
   // 파일을 불러와서 이미지 추가하는 함수
   const handleImageLoad = (file) => {
     const reader = new FileReader();
@@ -154,12 +160,6 @@ const Editor = () => {
           },
         });
         
-      
-      // 강제로 캐시 업데이트
-      
-
-      // 캐시 갱신 후 일괄 처리
-
       layer.add(resizedImage);
 
       resizedImage.offsetX(resizedImage.width() / 2);
@@ -176,13 +176,13 @@ const Editor = () => {
       layer.batchDraw();
       setImage(resizedImage);
       };
-
       console.log('Image Object:', image);
       console.log('이미지 로드됨:', file);
       console.log(stageRef.current)
     };
   };
 
+  // 밝기, 채도, 명암 필터 적용 함수
   useEffect(() => {
     if (image) {
       setResetFiltersValue(false);
@@ -197,6 +197,7 @@ const Editor = () => {
     }
   }, [image, brightness, saturation, contrast , flipX]);
 
+  // 좌우반전 적용 함수
   useEffect(() => {
     if (image && flipX) {
       image.scaleX(-image.scaleX());
@@ -215,6 +216,7 @@ const Editor = () => {
 
   }, [image, flipY]);
 
+  // 흑백 필터 적용 함수
   useEffect(() => {
     if (image && blackWhite ) {
       image.cache();
@@ -227,10 +229,6 @@ const Editor = () => {
     }
   }, [image, blackWhite]);
 
-
-
- 
-  
   // 이미지 캔버스에 추가하는 함수
   useEffect((resetFiltersValue) => {
     if (image && stageRef.current) {
@@ -239,6 +237,8 @@ const Editor = () => {
       stage.add(layer);
 
       layer.add(image);
+      setIsDestroyed(false);
+
       layer.draw();
 
       console.log(resetFiltersValue);
@@ -249,21 +249,8 @@ const Editor = () => {
       setContrast(0);
 
       layer.batchDraw();
-
     }
-
   }, [image]);
-
-  // useEffect(() => {
-  //   if (image) {
-  //     // scaleX 속성을 사용하여 좌우 반전 적용
-  //     image.draw();
-  //     setImage((prevImage) => (prevImage === image ? image.clone() : image));
-  //   }
-  // }, [image, flipX]);
-  
-
-
  
   //base64 -> File로 변환하는 함수
   const dataURLtoFile = (dataurl, fileName) => {
@@ -372,6 +359,14 @@ const Editor = () => {
     }
   }, [tool]);
 
+  const removeStage = (stage) => {
+    if (stage) {
+      // Stage 제거
+      stage.destroy();
+    }
+    setIsDestroyed(true);
+  };
+
     
 
   return (
@@ -390,11 +385,21 @@ const Editor = () => {
                     불러오기
                   </s.TopMenuButtonLabel>
                 </s.TopMenuButton>
-                <s.TopMenuButton>
-                  <s.TopMenuButtonIcon>
+                <s.TopMenuButton
+                  onClick={() => {
+                    removeStage(stageRef.current);
+                    initializeStage();
+                  }}
+                  isActive={!isDestroyed}
+                >
+                  <s.TopMenuButtonIcon
+                    isActive={!isDestroyed}
+                  >
                     <Delete />
                   </s.TopMenuButtonIcon>
-                  <s.TopMenuButtonLabel>삭제하기</s.TopMenuButtonLabel>
+                  <s.TopMenuButtonLabel
+                    isActive={!isDestroyed}
+                  >삭제하기</s.TopMenuButtonLabel>
                 </s.TopMenuButton>
               </s.TopMenuButtonLeft>
             </s.TopMenuGroupWrapper>
@@ -412,11 +417,11 @@ const Editor = () => {
                   </s.TopMenuButtonIcon>
                   <s.TopMenuButtonLabel>앞으로</s.TopMenuButtonLabel>
                 </s.TopMenuButton>
-                <s.TopMenuButton isActive={true} onClick={handleExport}>
-                  <s.TopMenuButtonIcon isActive={true}>
+                <s.TopMenuButton isActive={!isDestroyed} onClick={handleExport}>
+                  <s.TopMenuButtonIcon isActive={!isDestroyed}>
                     <Save />
                   </s.TopMenuButtonIcon>
-                  <s.TopMenuButtonLabel isActive={true}>
+                  <s.TopMenuButtonLabel isActive={!isDestroyed}>
                     저장하기
                   </s.TopMenuButtonLabel>
                 </s.TopMenuButton>
