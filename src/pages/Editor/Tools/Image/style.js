@@ -49,11 +49,10 @@ export const TopButton = styled.button`
   background-color: white;
 
   &:hover {  
-    {
       background-color: #CCD0DD;
       cursor: pointer;
     
-    }
+    
     /* background-color: ${({ disabled }) => ( disabled ? 'white' : '#CCD0DD')};
     cursor: ${({ disabled }) => ( disabled ? 'default' : 'pointer')}; */
   };
