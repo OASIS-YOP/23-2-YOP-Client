@@ -31,123 +31,25 @@ const Editor = () => {
   // const [isLogedIn, setIsLogedIn] = useState();
   
   const [image, setImage] = useState('');
+  const stageRef = useRef(null);
 
-  const stageRef = useRef(null); // 캔버스 레퍼런스
-  const backLayerRef = useRef(null); // 백그라운드 이미지용 레이어 레퍼런스
-  // ***********레퍼런스 사용법***********
-  // 현재 사용중인 캔버스/레이어를 불러올 때
-  // -> const canvas = stageRef.current; / const layer = backLayerRef.current; 
-  // 이런 식으로 정의 후 canvas.add 등에 사용
-  // 업데이트는 아마(확실치 않지만) 위와 같이 정의 후 canvas.draw() 등으로 사용하면 될듯
-  // *************** Konva js "draw() 메서드" 설명 : 출처 -> Chat GPT ********************
-  // draw() 메서드는 KonvaJS에서 사용되는 메서드 중 하나로, 레이어의 캐시된 캔버스를 업데이트하는 데 사용됩니다.
-  // 일반적으로 캔버스에 그림을 그릴 때마다 레이어를 다시 그리는 것은 비용이 많이 들기 때문에,
-  // draw() 메서드는 변경 사항이 있을 때만 레이어를 업데이트하도록 도와줍니다.
-  // 부가 설명 : draw 메서드에 draw()와 batchDraw()가 있는데 후자는 여러 객체를 한꺼번에 업데이트 할 때 사용됨
-
-  // 캐시된 캔버스는 cache() 메서드를 사용하여 만들어집니다. 그런 다음 draw()를 호출하면 변경된 부분만 다시 렌더링되고, 전체 캔버스를 다시 그리는 것보다 효율적으로 동작합니다.
-  // 간단하게 말하면 draw()는 레이어를 최신 데이터로 업데이트하는 메서드입니다.
-
-
-  // 필터 값 스테이트
   const [ brightness, setBrightness ] = useState(0); 
   const [ saturation, setSaturation ] = useState(0);
   const [ contrast, setContrast ] = useState(0);
 
   //캔버스 비워졌는지 여부
-  const [ isBackImgLayerEmpty, setIsBackImgLayerEmpty ] = useState(true);
+  const [ isDestroyed, setIsDestroyed ] = useState(true);
 
   // 필터 초기화 여부
   const [ resetFiltersValue , setResetFiltersValue] = useState(false);
 
-  // 대칭 여부 스테이트 
-  const [flipX, setFlipX] = useState(false); // 좌우반전
-  const [flipY, setFlipY] = useState(false); // 상하반전
+  // 좌우반전 여부 
+  const [flipX, setFlipX] = useState(false);
+  const [flipY, setFlipY] = useState(false);
 
-  // 흑백 여부 스테이트
   const [ blackWhite, setBlackWhite ] = useState(false);
 
-  // const [imageFile, setImageFile] = useState(null); (=> 수정님 필요 없음 지워주세요!)
-
-
-  /////// 툴 메뉴 스테이트 ////////
-  const [tool, setTool] = useState(1); // 인덱스
-  const [toolMenus, setToolMenus] = useState([ // 툴 메뉴 목록
-    {
-      id: 1,
-      name: '이미지',
-      icon: <ImageIcon />,
-      isActive: true,
-      contents: <Image 
-        stageRef={stageRef} 
-        backLayerRef={backLayerRef}
-        isBackImgLayerEmpty={isBackImgLayerEmpty}
-        image={image} 
-        setBrightness={setBrightness} 
-        setSaturation={setSaturation}
-        setContrast={setContrast}
-        brightness={brightness}
-        saturation={saturation}
-        contrast={contrast}
-        resetFiltersValue={resetFiltersValue}
-        setResetFiltersValue={setResetFiltersValue}
-        flipX={flipX}
-        flipY={flipY}
-        setFlipX={setFlipX}
-        setFlipY={setFlipY}
-        blackWhite={blackWhite}
-        setBlackWhite={setBlackWhite}
-      />,
-    },
-    {
-      id: 2,
-      name: '그리기',
-      icon: <DrawIcon />,
-      isActive: false,
-      contents: <Draw />,
-    },
-    {
-      id: 3,
-      name: '텍스트',
-      icon: <TextIcon />,
-      isActive: false,
-      contents: <Text />,
-    },
-    {
-      id: 4,
-      name: '스티커',
-      icon: <StickerIcon />,
-      isActive: false,
-      contents: <Sticker />,
-    },
-    {
-      id: 5,
-      name: '프레임',
-      icon: <FrameIcon />,
-      isActive: false,
-      contents: <Frame />,
-    },
-  ]);
-  const handleToolClick = (id) => { // 툴 메뉴 클릭 시 실행되는 함수
-    setTool(id);
-    setToolMenus((prevMenus) =>
-      prevMenus.map((item) => ({
-        ...item,
-        isActive: item.id === id,
-      }))
-    );
-  };
-  useEffect(() => {  // 툴 메뉴 변경 시 실행되는 함수
-    if (tool) {
-      console.log('툴메뉴 :', tool, toolMenus.find((item) => item.id === tool).name);
-    }
-  }, [tool, toolMenus]);
-
-  ///////////////
-
-  
-  // 오브젝트 레이어 배열
-  const objLayers = [{}];
+  // const [imageFile, setImageFile] = useState(null);
 
   // 백그라운드 이미지 필터 목록
   const filters = [
@@ -156,50 +58,35 @@ const Editor = () => {
     Konva.Filters.Contrast,
   ];
 
+  // 오브젝트 레이어 배열
+  const objLayers = [{}];
 
+  // 캔버스 유무 확인 및 최신화
+  const canvas = stageRef.current;
+
+  // 백그라운드 이미지용 레이어 유무 확인
+  const isbackImgLayer = stageRef.current?.find('#backImgLayer');
+
+  // 백그라운드 이미지용 레이어 생성
+  const backImgLayer = new Konva.Layer({
+    id: 'backImgLayer',
+    moveToBottom: true,
+  });
+  
   // 캔버스 생성
   const initStage = () => {
     const canvas = new Konva.Stage({
       container: 'canvas',
       id: 'canvas',
-      ref: stageRef,
       width: 340,
       height: 492,
     });
-    stageRef.current = canvas;
-    console.log('캔버스 생성:', canvas);
-    initBackImgLayer();
-  };
-
-  // 캔버스 제거
-  const removeStage = (stage) => {
-    if (stage) {
-      stage.destroy();
-    }
-    initStage();
-
-    setIsBackImgLayerEmpty(true);
-  };
-
-  useEffect(() => {
-    console.log(isBackImgLayerEmpty);
-  }, [isBackImgLayerEmpty]);
-
-  // 백그라운드 이미지용 레이어 생성(포토카드가 들어가는 레이어)
-  const initBackImgLayer = () => {
-    const canvas = stageRef.current;
-    
-    const backImgLayer = new Konva.Layer({
-      id: 'backImgLayer',
-      moveToBottom: true,
-      ref: backLayerRef,
-    });
-    
-    backLayerRef.current = backImgLayer;
-
     canvas.add(backImgLayer);
+    stageRef.current = canvas;
 
-    console.log('이미지레이어 생성:', canvas.find('#backImgLayer'));
+    console.log('캔버스 초기화됨:', canvas.attrs.id);
+    console.log('이미지레이어 생성:', backImgLayer.attrs.id)
+    console.log(canvas.find('#backImgLayer'));
   };
 
   // 페이지 처음 불러올(혹은 새로고침) 때 캔버스 초기화 함수 호출
@@ -228,11 +115,10 @@ const Editor = () => {
     input.type = 'file';
     input.accept = 'image/*';
     input.onchange = (e) => {
-      const canvas = stageRef.current;
       const file = e.target.files[0];
       console.log('파일 로드 :' + file.name);
 
-      if (file && file.type.includes('image') && canvas) {
+      if (file && file.type.includes('image') && canvas && isbackImgLayer ) {
         // 이미지 로드 함수를 호출하여 이미지 전달
         handleImageLoad(file);
       } else {
@@ -254,23 +140,30 @@ const Editor = () => {
       orgImg.src = reader.result;
 
       orgImg.onload = () => {
-        // 현재 캔버스와 레이어 가져오기
-        const canvas = stageRef.current;
-        const backImgLayer = backLayerRef.current;
+        // 캔버스 없으면 캔버스와 레이어 생성
+        if (!canvas) {
+          initStage();
+        }
 
-        // 기존 이미지 제거
-        backImgLayer.removeChildren();
-        
+        // 기존 이미지가 있으면 삭제
+        if ( canvas.find('#orgImg') ) {
+          backImgLayer.removeChildren('#orgImg');
+          console.log('기존 이미지를 지웠습니다.');
+        } else {
+            console.log('기존 이미지를 지워주세요');
+        }
+
         /////////////// 캔버스에 들어갈 이미지 사이즈 조정
         const canvasWidth = 340;
         const canvasHeight = 492;
+
         const imgWidth = orgImg.width;
         const imgHeight = orgImg.height;
+
         const maxWidth = canvas;
         const maxHeight = canvasHeight;
+
         const aspectRatio = imgWidth / imgHeight;
-        const x = canvasWidth/2;
-        const y = canvasHeight/2;
 
         let newWidth = imgWidth;
         let newHeight = imgHeight;
@@ -290,6 +183,10 @@ const Editor = () => {
           newHeight = maxHeight;
           newWidth = newHeight * aspectRatio;
         }
+
+        const x = canvasWidth/2;
+        const y = canvasHeight/2;
+
         ////////////////////////////////////////
 
         // 사이즈 조정 후 이미지(실제 캔버스에 들어갈 이미지)
@@ -322,64 +219,29 @@ const Editor = () => {
       backImg.offsetX(backImg.width() / 2);
       backImg.offsetY(backImg.height() / 2);
 
-    
       // 이미지를 레이어에 추가
       backImgLayer.add(backImg);
 
-      setIsBackImgLayerEmpty(false);
-
-      
-      // 레이어 상태 업데이트
+      backImg.draw();
       backImgLayer.batchDraw();
 
-      // 이미지 스테이트 업데이트
       setImage(backImg);
       
-      console.log('추가된 이미지 :', backImg);
 
-      // 필터 적용할 때 캐시를 사용하도록 설정
       backImg.cache();
       backImg.filters(filters);
       backImg.brightness(brightness);
       backImg.saturation(saturation);
       backImg.contrast(contrast);
-
-      
   
       };
-      
-      
+      console.log('Image Object:', image);
       console.log('이미지 로드됨:', file);
-
-      // console.log(stageRef.current)
+      console.log(stageRef.current)
     };
   };
 
-  const applyFilters = () => {
-    const canvas = stageRef.current;
-    const backImgLayer = backLayerRef.current;
-    const backImg = backImgLayer.find('#backImg')[0];
 
-  }
-
-// 이미지 캔버스에 추가하는 함수
-useEffect((resetFiltersValue) => {
-  if (image && stageRef.current) {
-    const stage = stageRef.current;
-    const layer = backLayerRef.current;
-
-    layer.draw();
-
-    console.log(resetFiltersValue);
-    console.log(brightness, saturation, contrast)
-    
-    setBrightness(0);
-    setSaturation(0);
-    setContrast(0);
-
-    layer.batchDraw();
-  }
-}, [image]);
 
   // 밝기, 채도, 명암 필터 적용 함수
   useEffect(() => {
@@ -428,7 +290,28 @@ useEffect((resetFiltersValue) => {
     }
   }, [image, blackWhite]);
 
-  
+  // 이미지 캔버스에 추가하는 함수
+  useEffect((resetFiltersValue) => {
+    if (image && stageRef.current) {
+      const stage = stageRef.current;
+      const layer = new Konva.Layer();
+      stage.add(layer);
+
+      layer.add(image);
+      setIsDestroyed(false);
+
+      layer.draw();
+
+      console.log(resetFiltersValue);
+      console.log(brightness, saturation, contrast)
+      
+      setBrightness(0);
+      setSaturation(0);
+      setContrast(0);
+
+      layer.batchDraw();
+    }
+  }, [image]);
  
   //base64 -> File로 변환하는 함수
   const dataURLtoFile = (dataurl, fileName) => {
@@ -463,6 +346,88 @@ useEffect((resetFiltersValue) => {
       window.alert('저장할 이미지가 없습니다.');
     }
   };
+
+  const [toolMenus, setToolMenus] = useState([
+    {
+      id: 1,
+      name: '이미지',
+      icon: <ImageIcon />,
+      isActive: true,
+      contents: <Image 
+        stageRef={stageRef} 
+        image={image} 
+        setBrightness={setBrightness} 
+        setSaturation={setSaturation}
+        setContrast={setContrast}
+        brightness={brightness}
+        saturation={saturation}
+        contrast={contrast}
+        resetFiltersValue={resetFiltersValue}
+        setResetFiltersValue={setResetFiltersValue}
+        flipX={flipX}
+        flipY={flipY}
+        setFlipX={setFlipX}
+        setFlipY={setFlipY}
+        blackWhite={blackWhite}
+        setBlackWhite={setBlackWhite}
+      />,
+    },
+    {
+      id: 2,
+      name: '그리기',
+      icon: <DrawIcon />,
+      isActive: false,
+      contents: <Draw />,
+    },
+    {
+      id: 3,
+      name: '텍스트',
+      icon: <TextIcon />,
+      isActive: false,
+      contents: <Text />,
+    },
+    {
+      id: 4,
+      name: '스티커',
+      icon: <StickerIcon />,
+      isActive: false,
+      contents: <Sticker />,
+    },
+    {
+      id: 5,
+      name: '프레임',
+      icon: <FrameIcon />,
+      isActive: false,
+      contents: <Frame />,
+    },
+  ]);
+
+  const [tool, setTool] = useState(1);
+
+  const handleToolClick = (id) => {
+    setTool(id);
+    setToolMenus((prevMenus) =>
+      prevMenus.map((item) => ({
+        ...item,
+        isActive: item.id === id,
+      }))
+    );
+  };
+
+  useEffect(() => {
+    if (tool) {
+      console.log(tool);
+    }
+  }, [tool]);
+
+  const removeStage = (stage) => {
+    if (stage) {
+      // Stage 제거
+      stage.destroy();
+    }
+    setIsDestroyed(true);
+  };
+
     
 
   return (
@@ -473,35 +438,28 @@ useEffect((resetFiltersValue) => {
           <s.TopMenuWrapper>
             <s.TopMenuGroupWrapper>
               <s.TopMenuButtonLeft>
-                <s.TopMenuButton
-                  isActive={true}
-                  onClick={handleLoadFile} // 파일 불러오기 버튼 눌렀을 때 실행되는 함수
-                >
-                  <s.TopMenuButtonIcon
-                    isActive={true}
-                  >
+                <s.TopMenuButton isActive={true} onClick={handleLoadFile}>
+                  <s.TopMenuButtonIcon isActive={true}>
                     <Load />
                   </s.TopMenuButtonIcon>
-                  <s.TopMenuButtonLabel 
-                    isActive={true}
-                  >
+                  <s.TopMenuButtonLabel isActive={true}>
                     불러오기
                   </s.TopMenuButtonLabel>
                 </s.TopMenuButton>
                 <s.TopMenuButton
                   onClick={() => {
                     removeStage(stageRef.current);
+                    initStage();
                   }}
-                  isActive={!isBackImgLayerEmpty}
-                  disabled={isBackImgLayerEmpty}
+                  isActive={!isDestroyed}
                 >
                   <s.TopMenuButtonIcon
-                    isActive={!isBackImgLayerEmpty}
+                    isActive={!isDestroyed}
                   >
                     <Delete />
                   </s.TopMenuButtonIcon>
                   <s.TopMenuButtonLabel
-                    isActive={!isBackImgLayerEmpty}
+                    isActive={!isDestroyed}
                   >삭제하기</s.TopMenuButtonLabel>
                 </s.TopMenuButton>
               </s.TopMenuButtonLeft>
@@ -520,15 +478,11 @@ useEffect((resetFiltersValue) => {
                   </s.TopMenuButtonIcon>
                   <s.TopMenuButtonLabel>앞으로</s.TopMenuButtonLabel>
                 </s.TopMenuButton>
-                <s.TopMenuButton
-                  onClick={handleExport}
-                  isActive={!isBackImgLayerEmpty}
-                  disabled={isBackImgLayerEmpty}
-                >
-                  <s.TopMenuButtonIcon isActive={!isBackImgLayerEmpty}>
+                <s.TopMenuButton isActive={!isDestroyed} onClick={handleExport}>
+                  <s.TopMenuButtonIcon isActive={!isDestroyed}>
                     <Save />
                   </s.TopMenuButtonIcon>
-                  <s.TopMenuButtonLabel isActive={!isBackImgLayerEmpty}>
+                  <s.TopMenuButtonLabel isActive={!isDestroyed}>
                     저장하기
                   </s.TopMenuButtonLabel>
                 </s.TopMenuButton>

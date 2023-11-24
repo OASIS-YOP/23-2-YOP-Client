@@ -30,11 +30,15 @@ const Image = ({
   setResetFiltersValue, resetFiltersValue,
   image, flipX, setFlipX, flipY, setFlipY,
   blackWhite, setBlackWhite,
+  isBackImgLayerEmpty,
 }) => {
 
   const [brightnessVlaue, setBrightnessValue] = useState(0);
   const [saturationValue, setSaturationValue] = useState(0);
   const [contrastValue, setContrastValue] = useState(0);
+
+  const [ mouseDragStart, setMouseDragStart ] = useState(false);
+  const [ mouseDragEnd, setMouseDragEnd ] = useState(false);
 
   const handleFlipX = () => {
     setFlipX((이전FlipX) => !이전FlipX);
@@ -144,7 +148,10 @@ const Image = ({
     <>
       <s.Wrapper>
         <s.TopButtonsWrapper>
-          <s.TopButton onClick={handleFlipX}>
+          <s.TopButton 
+            onClick={handleFlipX}
+            // disabled={isBackImgLayerEmpty}
+          >
             <s.TopButtonIcon>
               <AlignCenterHorizontal />
             </s.TopButtonIcon>
@@ -152,7 +159,10 @@ const Image = ({
               좌우대칭
             </s.TopButtonLabel>
             </s.TopButton>
-            <s.TopButton onClick={handleFlipY}>
+            <s.TopButton 
+              onClick={handleFlipY}
+              // disabled={ isBackImgLayerEmpty}
+            >
             <s.TopButtonIcon>
               <AlignCenterVertical />
             </s.TopButtonIcon>
@@ -160,7 +170,10 @@ const Image = ({
               상하대칭
             </s.TopButtonLabel>
           </s.TopButton>
-          <s.TopButton onClick={handleBlackWhite}>
+          <s.TopButton
+            onClick={handleBlackWhite}
+            // disabled={ isBackImgLayerEmpty}  
+          >
             <s.TopButtonIcon>
               <BlackWhite />
             </s.TopButtonIcon>
@@ -182,7 +195,7 @@ const Image = ({
                 id='brightness-slider'
                 defaultValue={0}
                 onChange={handleBrightnessChange}
-                disabled={image !== null ? false : true}
+                // disabled={isBackImgLayerEmpty}
                 value={ resetFiltersValue === true ? brightness : brightnessVlaue}
                 handleStyle={handleStyle}
                 trackStyle={trackStyle}
@@ -205,7 +218,7 @@ const Image = ({
                 id='saturation-slider'
                 defaultValue={0}
                 onChange={handleSaturationChange}
-                disabled={image !== null ? false : true}
+                // disabled={isBackImgLayerEmpty}
                 handleStyle={handleStyle}
                 trackStyle={trackStyle}
                 railStyle={railStyle}
@@ -227,7 +240,7 @@ const Image = ({
                 id='contrast-slider'
                 defaultValue={0}
                 onChange={handleContrastChange}
-                disabled={image !== null ? false : true}
+                // disabled={isBackImgLayerEmpty}
                 handleStyle={handleStyle}
                 trackStyle={trackStyle}
                 railStyle={railStyle}
@@ -255,6 +268,7 @@ const Image = ({
               <Slider
                 id='rotate-slider'
                 defaultValue={0}
+                // disabled={isBackImgLayerEmpty}
                 handleStyle={handleStyle}
                 trackStyle={trackStyle}
                 railStyle={railStyle}
@@ -274,6 +288,7 @@ const Image = ({
               <Slider
                 id='scale-slider'
                 defaultValue={0}
+                // disabled={isBackImgLayerEmpty}
                 handleStyle={handleStyle}
                 trackStyle={trackStyle}
                 railStyle={railStyle}
