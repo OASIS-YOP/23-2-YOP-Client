@@ -26,6 +26,7 @@ import Draw from './Tools/Draw';
 import Text from './Tools/Text';
 import Sticker from './Tools/Sticker';
 import Frame from './Tools/Frame';
+import editorpageAPI from '../../api/editorpage/editorpageAPI';
 
 const Editor = () => {
   // const [isLogedIn, setIsLogedIn] = useState();
@@ -453,17 +454,20 @@ useEffect((resetFiltersValue) => {
 
       const formData = new FormData();
       console.log('File로 저장됨 : ', convertedImage);
-      convertedImage && formData.append('file', convertedImage);
+      convertedImage && formData.append('image', convertedImage);
 
       //formdata에 잘 들어갔는지 확인하는 코드
       for (var pair of formData.entries()) {
         console.log(pair[0] + ', ' + pair[1]);
       }
+      editorpageAPI
+        .postDesignedPhotoCard(formData)
+        .then((data) => console.log(data));
+      window.alert('성공적으로 저장되었습니다!');
     } else {
       window.alert('저장할 이미지가 없습니다.');
     }
   };
-    
 
   return (
     <s.Wrapper>
@@ -562,7 +566,7 @@ useEffect((resetFiltersValue) => {
         <s.RightContainer>
           <s.ToolContainer>
             <s.ToolLabelWrapper>
-              { toolMenus.map((item) => (
+              {toolMenus.map((item) => (
                 <s.ToolLabel
                   key={item.id}
                   onClick={() => handleToolClick(item.id)}
@@ -571,14 +575,14 @@ useEffect((resetFiltersValue) => {
                   <s.ToolLabelIcon isActive={item.isActive}>
                     {item.icon}
                   </s.ToolLabelIcon>
-                  <s.ToolLabelText isActive={item.isActive} >
+                  <s.ToolLabelText isActive={item.isActive}>
                     {item.name}
                   </s.ToolLabelText>
                 </s.ToolLabel>
               ))}
             </s.ToolLabelWrapper>
             <s.ToolContentsWrapper>
-                {toolMenus.find((item) => item.id === tool)?.contents}
+              {toolMenus.find((item) => item.id === tool)?.contents}
             </s.ToolContentsWrapper>
           </s.ToolContainer>
         </s.RightContainer>
