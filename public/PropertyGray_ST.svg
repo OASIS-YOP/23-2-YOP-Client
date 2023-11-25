@@ -1,0 +1,29 @@
+<svg width="110" height="220" viewBox="0 0 110 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_281_4433)">
+<rect width="110" height="220" fill="#ABAAA8"/>
+<rect x="10" y="10" width="90" height="20" fill="#807F7E"/>
+<rect x="10" y="40" width="90" height="20" fill="#807F7E"/>
+<rect x="10" y="70" width="50" height="20" fill="#807F7E"/>
+<rect x="10" y="100" width="50" height="20" fill="#807F7E"/>
+<rect x="10" y="30" width="10" height="10" fill="#62616D"/>
+<rect x="30" y="30" width="10" height="10" fill="#62616D"/>
+<rect x="80" y="30" width="20" height="10" fill="#62616D"/>
+<rect x="20" y="80" width="30" height="10" fill="#62616D"/>
+<rect x="70" y="80" width="30" height="10" fill="#807F7E"/>
+<rect x="80" y="70" width="10" height="30" fill="#807F7E"/>
+<rect y="130" width="110" height="90" fill="#807F7E"/>
+<rect x="10" y="210" width="10" height="10" fill="#62616D"/>
+<rect x="30" y="210" width="10" height="10" fill="#62616D"/>
+<rect x="50" y="210" width="10" height="10" fill="#62616D"/>
+<rect x="70" y="210" width="10" height="10" fill="#62616D"/>
+<rect x="90" y="210" width="10" height="10" fill="#62616D"/>
+<rect x="80" y="110" width="10" height="10" fill="#ABF131"/>
+<rect x="10" y="180" width="10" height="20" fill="#686564"/>
+<rect x="40" y="140" width="30" height="10" fill="#5A6B7B"/>
+</g>
+<defs>
+<clipPath id="clip0_281_4433">
+<rect width="110" height="220" fill="white"/>
+</clipPath>
+</defs>
+</svg>
