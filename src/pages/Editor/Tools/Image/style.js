@@ -1,15 +1,17 @@
 import styled from 'styled-components';
 
+
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
 
   width: 100%;
+  height: fit-content;
+  min-height: 550px;
 
   background-color: transparent;
 
-  border: 1px solid red;
 
 `
 
@@ -19,12 +21,14 @@ export const TopButtonsWrapper = styled.div`
   justify-content: center;
   align-items: center;
 
-  width: 100%;
+  width: 95%;
   height: 50px;
 
   padding: 0 10px;
 
-  border: 1px dashed #f0f0f0;
+  margin-top: 50px;
+  
+
 
 `;
 
@@ -34,39 +38,63 @@ export const TopButton = styled.button`
   justify-content: center;
   align-items: center;
 
-  width: 30%;
+  width: 120px;
+  height: 35px;
 
-  border: 1px solid #f0f0f0;
-  border-radius: 10px;
+  border: 1px solid #B7C0D8;
+  border-radius: 15px;
+ 
+  margin: 0 8px;
 
   background-color: white;
 
+  &:hover {  
+      background-color: #CCD0DD;
+      cursor: pointer;
+    
+    
+    /* background-color: ${({ disabled }) => ( disabled ? 'white' : '#CCD0DD')};
+    cursor: ${({ disabled }) => ( disabled ? 'default' : 'pointer')}; */
+  };
+
+  &:active {
+    background-color: white;
+  };
+
 `;
 
-export const ButtonIcon = styled.div`
+export const TopButtonIcon = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 
+  margin-right: 6px;
 
 `;
 
-export const ButtonText = styled.div`
+export const TopButtonLabel = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  font-weight: 500;
+  font-size: 13.4px;
   
 `;
 
 export const FiltersContainer = styled.div`
   display: flex;
-  flex-direction: colunm;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 
-  width: 100%;
-  height: 50%;
+  width: 300px;
+  height: 100%;
 
-  padding: 20px;
-
-  border: 1px dashed green;
-
-
-
+  
+  margin-top: 35px;
 
 `;
 
@@ -76,16 +104,124 @@ export const Filter = styled.div`
   justify-content: center;
   align-items: center;
 
+  width: 95%;
+  height: 50px;
+
+  margin: 5px 0;
+
+  margin-collase: collapse;
+
 `;
 
 export const FilterIcon = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 
-`
+  margin-right: 10px;
 
-export const FilterText = styled.div`
-`
+  width: 20px;
+
+  fill: black;
+`;
+
+export const FilterLabel = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+
+  width: 50px;
+  
+
+  font-weight: 500;
+  font-size: 13.4px;
+
+  margin-right: 10px;
+`;
 
 export const FilterSlider = styled.div`
-`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+
+  width: 200px;
+
+  height: 25px;
+
+  // 추가된 부분: 가운데 선 스타일링
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 1.8px; // 선의 너비
+    background-color: #B7C0D8; // 선의 색상
+
+    z-index: 998;
+
+  }
+
+`;
+
+export const FilterValue = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  width: 30px;
+  
+  font-weight: 500;
+  font-size: 13.4px;
+
+  margin-left: 10px;
+`;
+
+export const devider = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #B7C0D8;
+
+  width: 100%;
+  height: 1px;
+
+  margin-top: 35px;
+
+
+`;
+
+export const ToggleWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 0;
+
+ 
+`;
+
+export const ToggleLabel = styled.label`
+  
+`;
+
+
+
+export const ToggleInput = styled.input`
+  
+`;
+
+export const ToggleSapn = styled.span`
+`;
+
+
 
 
