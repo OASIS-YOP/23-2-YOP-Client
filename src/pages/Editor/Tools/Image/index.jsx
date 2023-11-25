@@ -40,35 +40,48 @@ const Image = ({
   const [ mouseDragStart, setMouseDragStart ] = useState(false);
   const [ mouseDragEnd, setMouseDragEnd ] = useState(false);
 
+  const [ isLayerEmpty, setIsLayerEmpty ] = useState(true);
+
+  useEffect(() => {
+    setIsLayerEmpty(isBackImgLayerEmpty);
+  }, [isBackImgLayerEmpty]);
+
   const handleFlipX = () => {
-    setFlipX((이전FlipX) => !이전FlipX);
-    console.log('flipX', !flipX);
-  
-    // 두 번째 호출
-    setTimeout(() => {
-      console.log('flipX', !flipX);
+    // if( !isLayerEmpty ) {
       setFlipX((이전FlipX) => !이전FlipX);
-  
-    }, 0);
+      console.log('flipX', !flipX);
+    
+      // 두 번째 호출
+      setTimeout(() => {
+        console.log('flipX', !flipX);
+        setFlipX((이전FlipX) => !이전FlipX);
+    
+      }, 0);
+
+   // }
   };
 
   const handleFlipY = () => {
-    setFlipY((이전FlipY) => !이전FlipY);
-    console.log('flipY', !flipY);
-
-    // 두 번째 호출
-    setTimeout(() => {
-      console.log('flipY', !flipY);
+    // if( !isLayerEmpty ) {
       setFlipY((이전FlipY) => !이전FlipY);
+      console.log('flipY', !flipY);
+
+      // 두 번째 호출
+      setTimeout(() => {
+        console.log('flipY', !flipY);
+        setFlipY((이전FlipY) => !이전FlipY);
     
-    }, 0);
+      }, 0);
+   //}
   };
 
+
   const handleBlackWhite = () => {
+    // if( !isLayerEmpty ) {
     setBlackWhite((이전BlackWhite) => !이전BlackWhite);
     console.log('blackWhite', !blackWhite);
 
-  
+    //}
   };
 
 

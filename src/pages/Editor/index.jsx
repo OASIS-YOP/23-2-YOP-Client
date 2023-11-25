@@ -329,8 +329,8 @@ const Editor = () => {
       setIsBackImgLayerEmpty(false);
 
       
-      // 레이어 상태 업데이트
-      backImgLayer.batchDraw();
+      // // 레이어 상태 업데이트
+      // backImgLayer.batchDraw();
 
       // 이미지 스테이트 업데이트
       setImage(backImg);
@@ -343,6 +343,9 @@ const Editor = () => {
       backImg.brightness(brightness);
       backImg.saturation(saturation);
       backImg.contrast(contrast);
+
+      // 레이어 상태 업데이트
+      backImgLayer.batchDraw();
 
       
   
@@ -367,11 +370,11 @@ useEffect((resetFiltersValue) => {
   if (image && stageRef.current) {
     const stage = stageRef.current;
     const layer = backLayerRef.current;
-
-    layer.draw();
-
+    
     console.log(resetFiltersValue);
     console.log(brightness, saturation, contrast)
+
+    image.cache();
     
     setBrightness(0);
     setSaturation(0);
@@ -385,6 +388,8 @@ useEffect((resetFiltersValue) => {
   useEffect(() => {
     if (image) {
       setResetFiltersValue(false);
+
+      image.cache();
       image.brightness(brightness);
 
       image.hue(0);
