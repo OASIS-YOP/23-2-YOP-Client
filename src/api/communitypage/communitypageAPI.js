@@ -28,9 +28,9 @@ const communitypageAPI = {
       return null;
     }
   },
-  getMyCollectionQuant: async (artistId) => {
+  getMyCollectionQuant: async (artistId, userId) => {
     try {
-      const path = `${process.env.REACT_APP_BASE_URL}/community/${artistId}/artistProfile`;
+      const path = `${process.env.REACT_APP_BASE_URL}/community/${artistId}/${userId}/collectionQuant`;
       const response = await HttpClient.get(path);
       return response;
     } catch (e) {
