@@ -54,6 +54,16 @@ const Editor = () => {
   const [ saturation, setSaturation ] = useState(0);
   const [ contrast, setContrast ] = useState(0);
 
+  // 회전 값 스테이트
+  const [ rotationValue, setRotationValue ] = useState(0);
+
+  // 스케일 값 스테이트
+  const [ scaleValue, setScaleValue ] = useState(1);
+  const [ isSclaeChanged, setIsScaleChanged ] = useState(false);
+
+  // const [ horizontal, setHorizontal ] = useState(340/2);
+  // const [ vertical, setVertical ] = useState(image.y/2);
+
   //캔버스 비워졌는지 여부
   const [ isBackImgLayerEmpty, setIsBackImgLayerEmpty ] = useState(true);
 
@@ -166,6 +176,10 @@ const Editor = () => {
       setBrightness(0);
       setSaturation(0);
       setContrast(0);
+      setRotationValue(0);
+      setIsScaleChanged(false);
+      setScaleValue(1);
+      // setHorizontal(340/2);
     }
     console.log('필터 리셋 :', resetFiltersValue, brightness, saturation, contrast)
   }, [resetFiltersValue]);
@@ -252,7 +266,8 @@ const Editor = () => {
         setBlackWhite(false);
         setFlipX(false);
         setFlipY(false);
-        
+
+        console.log('스케일 초기화:', isSclaeChanged);
         /////////////// 캔버스에 들어갈 이미지 사이즈 조정
         const canvasWidth = 340;
         const canvasHeight = 492;
@@ -290,6 +305,7 @@ const Editor = () => {
           image: orgImg,
           x: x,
           y: y,
+          rotation: rotationValue,
           width: newWidth,
           height: newHeight,
           draggable: true,
@@ -404,6 +420,27 @@ const Editor = () => {
     }
     
   }, [blackWhite]);
+
+  // 회전 적용 함수
+  useEffect(() => {
+    if (image) {
+      image.rotation(rotationValue);
+    }
+  }, [image, rotationValue]);
+
+  // 스케일 적용 함수
+  useEffect(() => {
+    if (image && isSclaeChanged) {
+      image.scale({ x: scaleValue, y: scaleValue});
+    };
+  }, [image, scaleValue]);
+
+  // 좌우 이동 적용 함수
+  // useEffect(() => {
+  //   if (image) {
+  //     image.x(horizontal);
+  //   }
+  // }, [image, horizontal]);
 
   //base64 -> File로 변환하는 함수
   const dataURLtoFile = (dataurl, fileName) => {
@@ -559,6 +596,7 @@ const Editor = () => {
                   backLayerRef={backLayerRef}
                   isBackImgLayerEmpty={isBackImgLayerEmpty}
                   image={image} 
+                  // 필터값
                   setBrightness={setBrightness} 
                   setSaturation={setSaturation}
                   setContrast={setContrast}
@@ -567,12 +605,24 @@ const Editor = () => {
                   contrast={contrast}
                   resetFiltersValue={resetFiltersValue}
                   setResetFiltersValue={setResetFiltersValue}
+                  blackWhite={blackWhite}
+                  setBlackWhite={setBlackWhite}
+                  // 반전
                   flipX={flipX}
                   flipY={flipY}
                   setFlipX={setFlipX}
                   setFlipY={setFlipY}
-                  blackWhite={blackWhite}
-                  setBlackWhite={setBlackWhite}
+                  // 회전
+                  setRotationValue={setRotationValue}
+                  rotationValue={rotationValue}
+                  // 스케일
+                  scaleValue={scaleValue}
+                  setScaleValue={setScaleValue}
+                  setIsScaleChanged={setIsScaleChanged}
+                  isSclaeChanged={isSclaeChanged}
+                  // // 좌우 이동
+                  // horizontal={horizontal}
+                  // setHorizontal={setHorizontal}
                 />
               }
               {tool === 2 && <Draw />}

@@ -31,6 +31,10 @@ const Image = ({
   flipX, setFlipX, flipY, setFlipY,
   blackWhite, setBlackWhite,
   isBackImgLayerEmpty, updateIsBackImgLayerEmpty,
+  setRotationValue, rotationValue,
+  scaleValue, setScaleValue,
+  image, setIsScaleChanged, isScaleChanged,
+  setHorizontal, horizontal,
 }) => {
 
   // const [brightnessVlaue, setBrightnessValue] = useState(0);
@@ -39,6 +43,10 @@ const Image = ({
 
   const [ mouseDragStart, setMouseDragStart ] = useState(false);
   const [ mouseDragEnd, setMouseDragEnd ] = useState(false);
+
+  const [ scaleSliderValue, setScaleSliderValue ] = useState(0);
+
+  
 
   const handleFlipX = () => {
     // if( !isLayerEmpty ) {
@@ -91,6 +99,28 @@ const Image = ({
 
     }
   }, [resetFiltersValue]);
+
+  const handleRotaionChange = (value) => {
+    setRotationValue(value);
+    console.log('회전' + value);
+  };
+
+  const handleScaleChange = (value) => {
+    setIsScaleChanged(true);
+    setScaleSliderValue(value);
+    if (scaleSliderValue === 0) {
+      setScaleValue(1);
+    } else {
+    setScaleValue(1+scaleSliderValue/100);
+    }
+    console.log('크기' + value);
+  };
+
+  // const handleHorizontalChange = (value) => {
+  //   setHorizontal(value);
+  //   console.log('X축' + value);
+  // };
+
 
 
   // const valueReset = () => {
@@ -276,13 +306,16 @@ const Image = ({
                 disabled={isBackImgLayerEmpty}
                 updateIsBackImgLayerEmpty={updateIsBackImgLayerEmpty}
                 isBackImgLayerEmpty={isBackImgLayerEmpty}
+                onChange={handleRotaionChange}
+                value = { resetFiltersValue ? 0 : rotationValue}
                 handleStyle={handleStyle}
                 trackStyle={trackStyle}
                 railStyle={railStyle}
-                min={-100}
-                max={100}
+                min={-180}
+                max={180}
               />
             </s.FilterSlider>
+            <s.FilterValue >{rotationValue} </s.FilterValue>
           </s.Filter>
           <s.Filter>
             <s.FilterIcon>
@@ -296,8 +329,10 @@ const Image = ({
                 id='scale-slider'
                 defaultValue={0}
                 disabled={isBackImgLayerEmpty}
+                value = { resetFiltersValue ? 0 : scaleSliderValue }
                 updateIsBackImgLayerEmpty={updateIsBackImgLayerEmpty}
                 isBackImgLayerEmpty={isBackImgLayerEmpty}
+                onChange={handleScaleChange}
                 handleStyle={handleStyle}
                 trackStyle={trackStyle}
                 railStyle={railStyle}
@@ -305,8 +340,56 @@ const Image = ({
                 max={100}
               />
             </s.FilterSlider>
+            <s.FilterValue >{scaleSliderValue} </s.FilterValue>
           </s.Filter>
-          
+          {/* <s.Filter>
+            <s.FilterIcon>
+              <Horizontal />
+            </s.FilterIcon>
+            <s.FilterLabel>
+              X축
+            </s.FilterLabel>
+            <s.FilterSlider>
+              <Slider
+                id='horizontal-slider'
+                defaultValue={0}
+                disabled={isBackImgLayerEmpty}
+                value = { resetFiltersValue ? 0 : horizontal }
+                updateIsBackImgLayerEmpty={updateIsBackImgLayerEmpty}
+                isBackImgLayerEmpty={isBackImgLayerEmpty}
+                onChange={handleHorizontalChange}
+                handleStyle={handleStyle}
+                trackStyle={trackStyle}
+                railStyle={railStyle}
+                min={-100}
+                max={100}
+              />
+            </s.FilterSlider>
+            </s.Filter>
+            <s.Filter>
+            <s.FilterIcon>
+              <Vertical />
+            </s.FilterIcon>
+            <s.FilterLabel>
+              Y축
+            </s.FilterLabel>
+            <s.FilterSlider>
+              <Slider
+                id='vertical-slider'
+                defaultValue={0}
+                disabled={isBackImgLayerEmpty}
+                value = { resetFiltersValue ? 0 : ''}
+                updateIsBackImgLayerEmpty={updateIsBackImgLayerEmpty}
+                isBackImgLayerEmpty={isBackImgLayerEmpty}
+                // onChange={handleScaleChange}
+                handleStyle={handleStyle}
+                trackStyle={trackStyle}
+                railStyle={railStyle}
+                min={-100}
+                max={100}
+              />
+            </s.FilterSlider>
+            </s.Filter>  */}
         </s.FiltersContainer>
 
       </s.Wrapper>
