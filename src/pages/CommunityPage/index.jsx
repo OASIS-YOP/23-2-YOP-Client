@@ -22,48 +22,56 @@ const CommunityPage = () => {
 
   const fandomName = ['아미', '마이', '유애나', '버니즈'];
 
-  const getArtistProfile = () => {
-    communitypageAPI.getArtistProfile(artistId).then((data) => {
-      setArtistInfo(data?.ArtistProfile);
-      console.log(data);
-    });
-  };
+  const fetchData = async () => {
+    try {
+      const artistProfileData = await communitypageAPI.getArtistProfile(
+        artistId
+      );
+      setArtistInfo(artistProfileData.ArtistProfile);
+      console.log(artistProfileData);
 
-  const getMemberProfile = () => {
-    communitypageAPI
-      .getMemberProfile(artistId)
-      .then((data) => setMemberProfile(data?.memberPhoto));
-  };
-  const getArtistFavoriteQuant = () => {
-    communitypageAPI.getArtistFavoriteQuant(artistId).then((data) => {
-      console.log(data);
-      setArtistFavoriteQuant(data?.favoriteQuant);
-    });
-  };
+      const allArtistPostData = await communitypageAPI.getAllArtistPost(
+        artistId
+      );
+      setAllPost(allArtistPostData?.allPostList);
 
-  const getMyCollectionQuant = () => {
-    communitypageAPI.getMyCollectionQuant(artistId, userId).then((data) => {
-      setMyCollectionQuant(data?.collectionQuant);
-    });
-  };
+      const myCollectionQuantData = await communitypageAPI.getMyCollectionQuant(
+        artistId,
+        userId
+      );
+      setMyCollectionQuant(myCollectionQuantData.collectionQuant);
 
-  const getMemberPost = (memberName) => {
-    if (artistId === 3) return;
-    communitypageAPI.getMemberPost(memberName).then((data) => {
-      setMemberPost(data?.memberPostList);
-      console.log(data);
-    });
+      const artistFavoriteQuantData =
+        await communitypageAPI.getArtistFavoriteQuant(artistId);
+      console.log(artistFavoriteQuantData);
+      setArtistFavoriteQuant(artistFavoriteQuantData.favoriteQuant);
+
+      const memberProfileData = await communitypageAPI.getMemberProfile(
+        artistId
+      );
+      setMemberProfile(memberProfileData.memberPhoto);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
   };
 
   const handleClickMember = (memberName) => {
     getMemberPost(memberName);
   };
 
-  const getAllArtistPost = () => {
-    communitypageAPI
-      .getAllArtistPost(artistId)
-      .then((data) => setAllPost(data?.allPostList));
+  const getMemberPost = (memberName) => {
+    if (artistId === 3) return;
+    communitypageAPI.getMemberPost(memberName).then((data) => {
+      setMemberPost(data.memberPostList);
+      console.log(data);
+    });
   };
+
+  // const getAllArtistPost = () => {
+  //   communitypageAPI
+  //     .getAllArtistPost(artistId)
+  //     .then((data) => setAllPost(data?.allPostList));
+  // };
 
   // const getPostLikeQuant = () => {
   //   communitypageAPI
@@ -72,20 +80,9 @@ const CommunityPage = () => {
   // };
 
   useEffect(() => {
-    console.log(artistId);
-    getArtistProfile();
-    getArtistFavoriteQuant();
-    getMyCollectionQuant();
-    getMemberProfile();
+    fetchData();
   }, []);
 
-  useEffect(() => {
-    getAllArtistPost();
-  }, []);
-
-  // useEffect(() => {
-  // getPostLikeQuant();
-  // }, [artistInfo, artistFavoriteQuant]);
   return (
     <>
       <Header />
@@ -135,11 +132,11 @@ const CommunityPage = () => {
         <s.photoCardContainer>
           <s.ContentWrapper>
             {allPost &&
-              allPost.map((item) => {
+              allPost.map((item) => (
                 <s.CardImageContainer>
-                  <img />
-                </s.CardImageContainer>;
-              })}
+                  <img src={item.polaroid} alt='allPolaroid' />
+                </s.CardImageContainer>
+              ))}
           </s.ContentWrapper>
         </s.photoCardContainer>
       </s.BodyContainer>
