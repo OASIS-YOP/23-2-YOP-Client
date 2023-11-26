@@ -113,43 +113,37 @@ const SelectCollection = () => {
         </s.Wrapper>
       </Modal>
 
-      {isSecondaryModalOpened &&
-        ReactDOM.createPortal(
-          <Modal
-            isOpen={isSecondaryModalOpened}
-            style={UploadModalStyle}
-            onRequestClose={closeSecondaryModal}
-            ariaHideApp={false}
-          >
-            <s.Wrapper>
-              <s.LabelWrapper>
-                <s.Label>컬렉션 선택</s.Label>
-                <span> {'>'} </span>
-                <s.Label>도안 선택</s.Label>
-                <span> {'>'} </span>
-                <s.Label>업로드</s.Label>
-              </s.LabelWrapper>
-              <s.PolaroidWrapper>
-                {[1, 2, 3, 4, 5, 6, 7, 8].map((index) => (
-                  <s.PolaroidCard
-                    key={index}
-                    onClick={() => openModal(index - 1)}
-                  >
-                    <img
-                      src={`https://upload.wikimedia.org/wikipedia/en/thumb/3/33/BTS_-_Butter_CD.png/220px-BTS_-_Butter_CD${index}.png`}
-                      alt={`Collection Card ${index}`}
-                      width={120}
-                      height={200}
-                    />
-                  </s.PolaroidCard>
-                ))}
-              </s.PolaroidWrapper>
-            </s.Wrapper>
-            <div>
-              <button onClick={closeSecondaryModal}>X</button>
-            </div>
-          </Modal>
-        )}
+      <Modal
+        isOpen={true}
+        style={UploadModalStyle}
+        onRequestClose={closeSecondaryModal}
+        ariaHideApp={false}
+      >
+        <s.Wrapper>
+          <s.LabelWrapper>
+            <s.Label>컬렉션 선택</s.Label>
+            <span> {'>'} </span>
+            <s.Label>도안 선택</s.Label>
+            <span> {'>'} </span>
+            <s.Label>업로드</s.Label>
+          </s.LabelWrapper>
+          <s.PolaroidWrapper>
+            {[1, 2, 3, 4, 5, 6, 7, 8].map((index) => (
+              <s.PolaroidCard key={index} onClick={() => openModal(index - 1)}>
+                <img
+                  src={`https://upload.wikimedia.org/wikipedia/en/thumb/3/33/BTS_-_Butter_CD.png/220px-BTS_-_Butter_CD${index}.png`}
+                  alt={`Collection Card ${index}`}
+                  width={120}
+                  height={200}
+                />
+              </s.PolaroidCard>
+            ))}
+          </s.PolaroidWrapper>
+        </s.Wrapper>
+        <div>
+          <button onClick={closeSecondaryModal}>X</button>
+        </div>
+      </Modal>
     </>
   );
 };
