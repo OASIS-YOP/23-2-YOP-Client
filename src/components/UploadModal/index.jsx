@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
+import { useNavigate } from 'react-router-dom';
 import * as s from './upload.style.js';
 
 Modal.setAppElement('#root');
@@ -8,7 +9,28 @@ Modal.setAppElement('#root');
 const SelectCollection = () => {
   const [isModalOpened, setIsModalOpened] = useState(true);
   const [selectedCard, setSelectedCard] = useState(null);
-  const [isSecondaryModalOpened, setIsSecondaryModalOpened] = useState(false); // Added this state
+  const [isSecondaryModalOpened, setIsSecondaryModalOpened] = useState(false);
+  const [isPolaroid, setIsPolaroid] = useState(false);
+
+  const openPrimaryModal = (index) => {
+    setSelectedCard(index);
+    setIsSecondaryModalOpened(true);
+    setIsPolaroid(false);
+  };
+
+  const openSecondaryModal = (index) => {
+    setSelectedCard(index);
+    setIsSecondaryModalOpened(true);
+    setIsPolaroid(true);
+  };
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isSecondaryModalOpened === true) {
+      navigate('/uploadModal2');
+    }
+  }, [isSecondaryModalOpened]);
 
   const UploadModalStyle = {
     overlay: {
@@ -37,8 +59,11 @@ const SelectCollection = () => {
   };
 
   const openModal = (index) => {
-    setSelectedCard(index);
-    setIsSecondaryModalOpened(true);
+    if (isPolaroid) {
+      openSecondaryModal(index);
+    } else {
+      openPrimaryModal(index);
+    }
   };
 
   const closeModal = () => {
@@ -88,44 +113,46 @@ const SelectCollection = () => {
         </s.Wrapper>
       </Modal>
 
-      {isSecondaryModalOpened && (
-        <Modal
-          isOpen={isSecondaryModalOpened}
-          style={UploadModalStyle}
-          onRequestClose={closeSecondaryModal}
-          ariaHideApp={false}
-        >
-          <s.Wrapper>
-            <s.LabelWrapper>
-              <s.Label>컬렉션 선택</s.Label>
-              <span> {'>'} </span>
-              <s.Label>도안 선택</s.Label>
-              <span> {'>'} </span>
-              <s.Label>업로드</s.Label>
-            </s.LabelWrapper>
-            <s.PolaroidWrapper>
-              {[1, 2, 3, 4, 5, 6, 7, 8].map((index) => (
-                <s.PolaroidCard
-                  key={index}
-                  onClick={() => openModal(index - 1)}
-                >
-                  <img
-                    src={`https://upload.wikimedia.org/wikipedia/en/thumb/3/33/BTS_-_Butter_CD.png/220px-BTS_-_Butter_CD${index}.png`}
-                    alt={`Collection Card ${index}`}
-                    width={120}
-                    height={200}
-                  />
-                </s.PolaroidCard>
-              ))}
-            </s.PolaroidWrapper>
-          </s.Wrapper>
-          <div>
-            <button onClick={closeSecondaryModal}>X</button>
-          </div>
-        </Modal>
-      )}
+      {isSecondaryModalOpened &&
+        ReactDOM.createPortal(
+          <Modal
+            isOpen={isSecondaryModalOpened}
+            style={UploadModalStyle}
+            onRequestClose={closeSecondaryModal}
+            ariaHideApp={false}
+          >
+            <s.Wrapper>
+              <s.LabelWrapper>
+                <s.Label>컬렉션 선택</s.Label>
+                <span> {'>'} </span>
+                <s.Label>도안 선택</s.Label>
+                <span> {'>'} </span>
+                <s.Label>업로드</s.Label>
+              </s.LabelWrapper>
+              <s.PolaroidWrapper>
+                {[1, 2, 3, 4, 5, 6, 7, 8].map((index) => (
+                  <s.PolaroidCard
+                    key={index}
+                    onClick={() => openModal(index - 1)}
+                  >
+                    <img
+                      src={`https://upload.wikimedia.org/wikipedia/en/thumb/3/33/BTS_-_Butter_CD.png/220px-BTS_-_Butter_CD${index}.png`}
+                      alt={`Collection Card ${index}`}
+                      width={120}
+                      height={200}
+                    />
+                  </s.PolaroidCard>
+                ))}
+              </s.PolaroidWrapper>
+            </s.Wrapper>
+            <div>
+              <button onClick={closeSecondaryModal}>X</button>
+            </div>
+          </Modal>
+        )}
     </>
   );
 };
 
 export default SelectCollection;
+t;

@@ -49,7 +49,7 @@ export const CollectionCard = styled.div`
   width: 120px;
   height: 120px;
   border-radius: 10px;
-  border: 1px solid 3F70FF;
+  border: 1px solid #3f70ff;
   margin: 0 15px 40px 15px;
   overflow: hidden;
   img {
@@ -76,11 +76,6 @@ export const Label = styled.div`
   background-color: grey;
   color: white;
   border-radius: 20px;
-
-  &:nth-child(2) {
-    font-weight: bold;
-    color: black;
-  }
 `;
 
 export const PolaroidWrapper = styled.div`
@@ -106,7 +101,7 @@ export const PolaroidCard = styled.div`
   width: 120px;
   height: 200x;
   border-radius: 10px;
-  border: 1px solid 3F70FF;
+  border: 1px solid #3f70ff;
   margin: 0 15px 40px 15px;
   overflow: hidden;
   img {
