@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as s from './upload.style.js';
 
@@ -155,4 +156,3 @@ const SelectCollection = () => {
 };
 
 export default SelectCollection;
-t;
