@@ -111,12 +111,17 @@ export const CardImageContainer = styled.div`
   overflow: hidden;
 
   background-color: #d7d7d7;
+  cursor: pointer;
+  transition: all 0.1s linear;
 
   img {
     width: 100%;
     height: 100%;
 
     object-fit: cover;
+  }
+  &:hover {
+    transform: scale(1.1);
   }
 `;
 

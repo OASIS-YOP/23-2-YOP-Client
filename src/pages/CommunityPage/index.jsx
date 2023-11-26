@@ -3,7 +3,6 @@ import * as s from './style';
 import { useParams } from 'react-router-dom';
 import Header from '../../components/Header';
 import Star from '../../assets/Star.svg';
-import ArtistInfo from '../../Temp/communitypage/ArtistInfo.js';
 import communitypageAPI from '../../api/communitypage/communitypageAPI.js';
 
 const CommunityPage = () => {
@@ -18,7 +17,7 @@ const CommunityPage = () => {
   const [memberProfile, setMemberProfile] = useState([]);
   const [allPost, setAllPost] = useState([]);
   const [memberPost, setMemberPost] = useState([]);
-  const [isClickedName, setIsClickedName] = useState('');
+  const [isClickedMember, setIsClickedMember] = useState(null);
 
   const fandomName = ['아미', '마이', '유애나', '버니즈'];
 
@@ -56,11 +55,12 @@ const CommunityPage = () => {
   };
 
   const handleClickMember = (memberName) => {
+    if (artistId === 3) return;
+    setIsClickedMember(memberName);
     getMemberPost(memberName);
   };
 
   const getMemberPost = (memberName) => {
-    if (artistId === 3) return;
     communitypageAPI.getMemberPost(memberName).then((data) => {
       setMemberPost(data.memberPostList);
       console.log(data);
@@ -90,7 +90,6 @@ const CommunityPage = () => {
       <s.ProfileContainer>
         <s.ProfileWrapper>
           <s.ProfileImage>
-            {/* artistInfo는 db에있던 데이터, ArtistInfo는 더미데이터 */}
             {artistInfo?.photo && (
               <img src={artistInfo?.photo} alt='artistPhoto' />
             )}
@@ -131,12 +130,17 @@ const CommunityPage = () => {
         )}
         <s.photoCardContainer>
           <s.ContentWrapper>
-            {allPost &&
-              allPost.map((item) => (
-                <s.CardImageContainer>
-                  <img src={item.polaroid} alt='allPolaroid' />
-                </s.CardImageContainer>
-              ))}
+            {!memberPost
+              ? allPost.map((item) => (
+                  <s.CardImageContainer key={`allPost_${item.postId}`}>
+                    <img src={item.polaroid} alt='allPolaroid' />
+                  </s.CardImageContainer>
+                ))
+              : memberPost.map((item) => (
+                  <s.CardImageContainer key={`memberPost_${item.postId}`}>
+                    <img src={item.polaroid} alt='Polaroid' />
+                  </s.CardImageContainer>
+                ))}
           </s.ContentWrapper>
         </s.photoCardContainer>
       </s.BodyContainer>
