@@ -9,6 +9,8 @@ const Collections = () => {
   const [artistList, setArtistList] = useState([]);
   const [isActivated, setIsActivated] = useState(false);
   const [selectedArtist, setSelectedArtist] = useState();
+  const [allCollection, setAllCollection] = useState([]);
+  const [activatedCollection, setActivatedCollection] = useState([]);
   const [selectedCollection, setSelectedCollection] = useState('');
   const [isCollectionClicked, setIsCollectionClicked] = useState(false);
   const [userId, setUserId] = useState(1);
@@ -27,13 +29,15 @@ const Collections = () => {
   };
 
   const getAllCollection = () => {
-    mypageAPI.getAllCollection(userId, 3).then((data) => {
+    mypageAPI.getAllCollection(userId, selectedArtist).then((data) => {
       console.log(data.allCollectionList);
+      setAllCollection(data.allCollectionList);
     });
   };
   const getMyActiveCollection = () => {
-    mypageAPI.getMyActiveCollection(userId, 3).then((data) => {
+    mypageAPI.getMyActiveCollection(userId, selectedArtist).then((data) => {
       console.log(data.activeCollectionList);
+      setActivatedCollection(data.activeCollectionList);
     });
   };
 
@@ -55,28 +59,32 @@ const Collections = () => {
 
   useEffect(() => {
     getMyCollectionArtistTab();
+  }, []);
+
+  useEffect(() => {
     getAllCollection();
     getMyActiveCollection();
-  }, []);
+  }, [selectedArtist]);
+
   return (
     <>
       <s.Wrapper>
         <s.ArtistsTabWrapper>{artists}</s.ArtistsTabWrapper>
         {!isCollectionClicked ? (
           <s.CollectionCardsContainer>
-            {/* {selectedArtistContents.collections.length !== 0 ? (
-              selectedArtistContents.collections.map((item) => {
+            {allCollection &&
+              allCollection.map((item) => {
                 return (
                   <CollectionCard
                     selectedCollection={selectedCollection}
                     setSelectedCollection={setSelectedCollection}
                     setIsCollectionClicked={setIsCollectionClicked}
-                    collection={item}
+                    albumJacket={item.albumJacket}
+                    albumName={item.albumName}
+                    activatedCollection={activatedCollection}
                   />
                 );
-              }) */}
-            ) : (<div>컬렉션을 활성화해주세요!</div>
-            )}
+              })}
           </s.CollectionCardsContainer>
         ) : (
           <CollectionDetails
@@ -92,10 +100,12 @@ const Collections = () => {
 
 //컬렉션 카드 컴포넌트
 const CollectionCard = ({
-  collection,
-  setIsCollectionClicked,
-  setSelectedCollection,
   selectedCollection,
+  setSelectedCollection,
+  setIsCollectionClicked,
+  albumJacket,
+  albumName,
+  activatedCollection,
 }) => {
   const [ismouseOver, setIsMouseOver] = useState(false);
 
@@ -110,35 +120,35 @@ const CollectionCard = ({
 
   const onClickCollection = () => {
     setIsCollectionClicked(true);
-    setSelectedCollection(collection.albumName);
-    console.log(collection.albumName);
-    console.log(selectedCollection);
+    setSelectedCollection(albumName);
   };
 
   return (
     <s.CollectionCardWrapper
-      styled={collection.isActivated && { cursor: 'pointer' }}
+      styled={albumName === activatedCollection && { cursor: 'pointer' }}
     >
-      {collection.isActivated ? (
+      {albumName === activatedCollection.albumName ? (
         // 활성화된 컬렉션
         <>
           <s.ActivatedCollectionCardWrapper
             onClick={onClickCollection}
             onMouseOut={onHandleMouseOut}
           >
-            <s.CollectionCardImage src={collection.fileUrl} alt='collection' />
+            <s.CollectionCardImage src={albumJacket} alt='collection' />
             <s.CollectionInfoWrapper>
               <s.CollectionInfoContainer>
-                <s.CollectionInfo>{collection.albumName}</s.CollectionInfo>
+                <s.CollectionInfo>{albumName}</s.CollectionInfo>
                 <s.CollectionInfo>
-                  활성일 : {collection.activatedDate}
+                  활성일 : {activatedCollection.activeDateTime}
                 </s.CollectionInfo>
                 <s.CollectionInfo>
-                  수집률 :{' '}
-                  {(collection.myQuant / collection.photoCardQuant) * 100}%
+                  {/* 수정요망 */}
+                  수집률 : {(1 / 20) * 100}%
                 </s.CollectionInfo>
                 <s.CollectionInfo>
-                  포카수 : {collection.myQuant}/{collection.photoCardQuant}장
+                  {/* 내가가진포카수 구해서 넣어야함 */}
+                  포카수 : 1/
+                  {activatedCollection.photoCardQuant}장
                 </s.CollectionInfo>
               </s.CollectionInfoContainer>
             </s.CollectionInfoWrapper>
@@ -148,7 +158,7 @@ const CollectionCard = ({
         //비활성화된 컬렉션
         <>
           <s.InActivatedCollectionCardImage
-            src={collection.fileUrl}
+            src={albumJacket}
             alt='collection'
             onMouseOut={onHandleMouseOut}
           />

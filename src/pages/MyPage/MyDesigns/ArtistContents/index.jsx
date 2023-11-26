@@ -54,7 +54,6 @@ const ArtistContents = () => {
   });
 
   useEffect(() => {
-    console.log('맨처음', selectedArtist);
     getMyPolaroidArtistTab();
   }, []);
 

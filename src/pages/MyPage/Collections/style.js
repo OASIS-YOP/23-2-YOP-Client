@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
- display: flex;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -12,10 +12,10 @@ export const Wrapper = styled.div`
   min-width: 1000px;
 
   //드래그 방지
-    -webkit-user-select:none;
-    -moz-user-select:none;
-    -ms-user-select:none;
-    user-select:none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 `;
 export const ArtistsTabWrapper = styled.div`
   display: flex;
@@ -26,7 +26,7 @@ export const ArtistsTabWrapper = styled.div`
   width: 100%;
   height: 30px;
 
-  padding-left: 80px; 
+  padding-left: 80px;
 
   // border: 1px solid red;
 `;
@@ -49,10 +49,10 @@ export const ArtistsTab = styled.button`
   color: gray;
 
   &:hover {
-    color: #3F70FF;
+    color: #3f70ff;
     cursor: pointer;
   }
-  
+
   &.active {
     color: black;
   }
