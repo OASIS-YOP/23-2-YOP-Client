@@ -28,37 +28,22 @@ const Image = ({
   setBrightness, setSaturation, setContrast,
   brightness, saturation, contrast,
   setResetFiltersValue, resetFiltersValue,
-  image, flipX, setFlipX, flipY, setFlipY,
+  flipX, setFlipX, flipY, setFlipY,
   blackWhite, setBlackWhite,
-  isBackImgLayerEmpty,
+  isBackImgLayerEmpty, updateIsBackImgLayerEmpty,
 }) => {
 
-  const [brightnessVlaue, setBrightnessValue] = useState(0);
-  const [saturationValue, setSaturationValue] = useState(0);
-  const [contrastValue, setContrastValue] = useState(0);
+  // const [brightnessVlaue, setBrightnessValue] = useState(0);
+  // const [saturationValue, setSaturationValue] = useState(0);
+  // const [contrastValue, setContrastValue] = useState(0);
 
   const [ mouseDragStart, setMouseDragStart ] = useState(false);
   const [ mouseDragEnd, setMouseDragEnd ] = useState(false);
-
-  const [ isLayerEmpty, setIsLayerEmpty ] = useState(true);
-
-  useEffect(() => {
-    setIsLayerEmpty(isBackImgLayerEmpty);
-  }, [isBackImgLayerEmpty]);
 
   const handleFlipX = () => {
     // if( !isLayerEmpty ) {
       setFlipX((이전FlipX) => !이전FlipX);
       console.log('flipX', !flipX);
-    
-      // 두 번째 호출
-      setTimeout(() => {
-        console.log('flipX', !flipX);
-        setFlipX((이전FlipX) => !이전FlipX);
-    
-      }, 0);
-
-   // }
   };
 
   const handleFlipY = () => {
@@ -66,13 +51,6 @@ const Image = ({
       setFlipY((이전FlipY) => !이전FlipY);
       console.log('flipY', !flipY);
 
-      // 두 번째 호출
-      setTimeout(() => {
-        console.log('flipY', !flipY);
-        setFlipY((이전FlipY) => !이전FlipY);
-    
-      }, 0);
-   //}
   };
 
 
@@ -87,39 +65,41 @@ const Image = ({
 
   const handleBrightnessChange = (value) => {
     console.log('명도' + value);
-  
-    setBrightnessValue(value);
     setBrightness(value/160);
-    // setBrightnessValue(brightness);
   };
 
   const handleSaturationChange = (value) => {
     console.log('채도' + value);
-    setSaturationValue(value);
     setSaturation(value/60);
     // setSaturationValue(value);
   };
 
   const handleContrastChange = (value) => {
     console.log('대비' + value);
-    setContrastValue(value);
     setContrast(value/4);
     // setContrastValue(value);
   };
 
   useEffect(() => {
-    if(resetFiltersValue === true) {
-    valueReset();}
+    if (resetFiltersValue) {
+      setResetFiltersValue(false);
+      setBrightness(brightness);
+      setSaturation(saturation);
+      setContrast(contrast);
+
+      console.log('리셋안함', brightness, saturation, contrast);
+
+    }
   }, [resetFiltersValue]);
 
 
-  const valueReset = () => {
-    console.log('리셋', brightness, saturation, contrast);
-    setBrightness(0);
-    setSaturation(0);
-    setContrast(0);
-    setResetFiltersValue(false);
-  };
+  // const valueReset = () => {
+  //   console.log('리셋', brightness, saturation, contrast);
+  //   setBrightness(0);
+  //   setSaturation(0);
+  //   setContrast(0);
+  //   setResetFiltersValue(false);
+  // };
   
 
 
@@ -155,15 +135,15 @@ const Image = ({
     
 
 
-  
-
   return (
     <>
       <s.Wrapper>
         <s.TopButtonsWrapper>
           <s.TopButton 
             onClick={handleFlipX}
-            // disabled={isBackImgLayerEmpty}
+            disabled={isBackImgLayerEmpty}
+            updateIsBackImgLayerEmpty={updateIsBackImgLayerEmpty}
+            isBackImgLayerEmpty={isBackImgLayerEmpty}
           >
             <s.TopButtonIcon>
               <AlignCenterHorizontal />
@@ -174,7 +154,9 @@ const Image = ({
             </s.TopButton>
             <s.TopButton 
               onClick={handleFlipY}
-              // disabled={ isBackImgLayerEmpty}
+              disabled={isBackImgLayerEmpty}
+              updateIsBackImgLayerEmpty={updateIsBackImgLayerEmpty}
+              isBackImgLayerEmpty={isBackImgLayerEmpty}
             >
             <s.TopButtonIcon>
               <AlignCenterVertical />
@@ -185,7 +167,9 @@ const Image = ({
           </s.TopButton>
           <s.TopButton
             onClick={handleBlackWhite}
-            // disabled={ isBackImgLayerEmpty}  
+            disabled={isBackImgLayerEmpty}  
+            updateIsBackImgLayerEmpty={updateIsBackImgLayerEmpty}
+            isBackImgLayerEmpty={isBackImgLayerEmpty}
           >
             <s.TopButtonIcon>
               <BlackWhite />
@@ -207,9 +191,11 @@ const Image = ({
               <Slider
                 id='brightness-slider'
                 defaultValue={0}
+                value = {resetFiltersValue ? 0 : brightness*160}
                 onChange={handleBrightnessChange}
-                // disabled={isBackImgLayerEmpty}
-                value={ resetFiltersValue === true ? brightness : brightnessVlaue}
+                disabled={isBackImgLayerEmpty}
+                updateIsBackImgLayerEmpty={updateIsBackImgLayerEmpty}
+                isBackImgLayerEmpty={isBackImgLayerEmpty}
                 handleStyle={handleStyle}
                 trackStyle={trackStyle}
                 railStyle={railStyle}
@@ -217,7 +203,7 @@ const Image = ({
                 max={100}
               />
             </s.FilterSlider>
-            <s.FilterValue >{brightnessVlaue} </s.FilterValue>
+            <s.FilterValue >{brightness*160} </s.FilterValue>
           </s.Filter>
           <s.Filter>
             <s.FilterIcon>
@@ -231,7 +217,10 @@ const Image = ({
                 id='saturation-slider'
                 defaultValue={0}
                 onChange={handleSaturationChange}
-                // disabled={isBackImgLayerEmpty}
+                disabled={isBackImgLayerEmpty}
+                value = {resetFiltersValue ? 0 : saturation*60}
+                updateIsBackImgLayerEmpty={updateIsBackImgLayerEmpty}
+                isBackImgLayerEmpty={isBackImgLayerEmpty}
                 handleStyle={handleStyle}
                 trackStyle={trackStyle}
                 railStyle={railStyle}
@@ -239,7 +228,7 @@ const Image = ({
                 max={100}
               />
             </s.FilterSlider>
-            <s.FilterValue >{saturationValue} </s.FilterValue>
+            <s.FilterValue >{saturation*60} </s.FilterValue>
           </s.Filter>
           <s.Filter>
             <s.FilterIcon>
@@ -253,7 +242,10 @@ const Image = ({
                 id='contrast-slider'
                 defaultValue={0}
                 onChange={handleContrastChange}
-                // disabled={isBackImgLayerEmpty}
+                value = {resetFiltersValue ? 0 : contrast*4}
+                disabled={isBackImgLayerEmpty}
+                updateIsBackImgLayerEmpty={updateIsBackImgLayerEmpty}
+                isBackImgLayerEmpty={isBackImgLayerEmpty}
                 handleStyle={handleStyle}
                 trackStyle={trackStyle}
                 railStyle={railStyle}
@@ -261,7 +253,7 @@ const Image = ({
                 max={100}
               />
             </s.FilterSlider>
-            <s.FilterValue >{contrastValue} </s.FilterValue>
+            <s.FilterValue >{contrast*4} </s.FilterValue>
           </s.Filter>
           <s.devider />
         </s.FiltersContainer>
@@ -281,7 +273,9 @@ const Image = ({
               <Slider
                 id='rotate-slider'
                 defaultValue={0}
-                // disabled={isBackImgLayerEmpty}
+                disabled={isBackImgLayerEmpty}
+                updateIsBackImgLayerEmpty={updateIsBackImgLayerEmpty}
+                isBackImgLayerEmpty={isBackImgLayerEmpty}
                 handleStyle={handleStyle}
                 trackStyle={trackStyle}
                 railStyle={railStyle}
@@ -301,7 +295,9 @@ const Image = ({
               <Slider
                 id='scale-slider'
                 defaultValue={0}
-                // disabled={isBackImgLayerEmpty}
+                disabled={isBackImgLayerEmpty}
+                updateIsBackImgLayerEmpty={updateIsBackImgLayerEmpty}
+                isBackImgLayerEmpty={isBackImgLayerEmpty}
                 handleStyle={handleStyle}
                 trackStyle={trackStyle}
                 railStyle={railStyle}

@@ -78,54 +78,30 @@ const Editor = () => {
       name: '이미지',
       icon: <ImageIcon />,
       isActive: true,
-      contents: <Image 
-        stageRef={stageRef} 
-        backLayerRef={backLayerRef}
-        isBackImgLayerEmpty={isBackImgLayerEmpty}
-        image={image} 
-        setBrightness={setBrightness} 
-        setSaturation={setSaturation}
-        setContrast={setContrast}
-        brightness={brightness}
-        saturation={saturation}
-        contrast={contrast}
-        resetFiltersValue={resetFiltersValue}
-        setResetFiltersValue={setResetFiltersValue}
-        flipX={flipX}
-        flipY={flipY}
-        setFlipX={setFlipX}
-        setFlipY={setFlipY}
-        blackWhite={blackWhite}
-        setBlackWhite={setBlackWhite}
-      />,
     },
     {
       id: 2,
       name: '그리기',
       icon: <DrawIcon />,
       isActive: false,
-      contents: <Draw />,
     },
     {
       id: 3,
       name: '텍스트',
       icon: <TextIcon />,
       isActive: false,
-      contents: <Text />,
     },
     {
       id: 4,
       name: '스티커',
       icon: <StickerIcon />,
       isActive: false,
-      contents: <Sticker />,
     },
     {
       id: 5,
       name: '프레임',
       icon: <FrameIcon />,
       isActive: false,
-      contents: <Frame />,
     },
   ]);
   const handleToolClick = (id) => { // 툴 메뉴 클릭 시 실행되는 함수
@@ -156,7 +132,6 @@ const Editor = () => {
     Konva.Filters.Contrast,
   ];
 
-
   // 캔버스 생성
   const initStage = () => {
     const canvas = new Konva.Stage({
@@ -177,12 +152,26 @@ const Editor = () => {
       stage.destroy();
     }
     initStage();
-
     setIsBackImgLayerEmpty(true);
+    // 필터 및 효과 초기화
+    setResetFiltersValue(true);
+    setBlackWhite(false);
+    setFlipX(false);
+    setFlipY(false);
   };
 
   useEffect(() => {
-    console.log(isBackImgLayerEmpty);
+    // 필터값 초기화
+    if (resetFiltersValue) {
+      setBrightness(0);
+      setSaturation(0);
+      setContrast(0);
+    }
+    console.log('필터 리셋 :', resetFiltersValue, brightness, saturation, contrast)
+  }, [resetFiltersValue]);
+
+  useEffect(() => {
+    console.log('백그라운드 이미지 레이어 비었음:', isBackImgLayerEmpty);
   }, [isBackImgLayerEmpty]);
 
   // 백그라운드 이미지용 레이어 생성(포토카드가 들어가는 레이어)
@@ -242,7 +231,6 @@ const Editor = () => {
     input.click();
   };
 
-
   // 파일 불러와서 이미지 로드하는 함수
   const handleImageLoad = (file) => {
     const reader = new FileReader();
@@ -258,15 +246,19 @@ const Editor = () => {
         const canvas = stageRef.current;
         const backImgLayer = backLayerRef.current;
 
-        // 기존 이미지 제거
+        // 기존 이미지 제거 및 필터와 효과 초기화
         backImgLayer.removeChildren();
+        setResetFiltersValue(true);
+        setBlackWhite(false);
+        setFlipX(false);
+        setFlipY(false);
         
         /////////////// 캔버스에 들어갈 이미지 사이즈 조정
         const canvasWidth = 340;
         const canvasHeight = 492;
         const imgWidth = orgImg.width;
         const imgHeight = orgImg.height;
-        const maxWidth = canvas;
+        const maxWidth = canvasWidth;
         const maxHeight = canvasHeight;
         const aspectRatio = imgWidth / imgHeight;
         const x = canvasWidth/2;
@@ -337,57 +329,34 @@ const Editor = () => {
       
       console.log('추가된 이미지 :', backImg);
 
-      // 필터 적용할 때 캐시를 사용하도록 설정
-      backImg.cache();
-      backImg.filters(filters);
-      backImg.brightness(brightness);
-      backImg.saturation(saturation);
-      backImg.contrast(contrast);
-
+      // 필터 적용
+      applyFilters(backImg);
       // 레이어 상태 업데이트
+
       backImgLayer.batchDraw();
-
-      
-  
       };
-      
-      
       console.log('이미지 로드됨:', file);
-
-      // console.log(stageRef.current)
     };
   };
 
-  const applyFilters = () => {
+  // 필터 적용 함수
+  const applyFilters = (image) => {
     const canvas = stageRef.current;
     const backImgLayer = backLayerRef.current;
-    const backImg = backImgLayer.find('#backImg')[0];
 
-  }
+    const backImg = image;
 
-// 이미지 캔버스에 추가하는 함수
-useEffect((resetFiltersValue) => {
-  if (image && stageRef.current) {
-    const stage = stageRef.current;
-    const layer = backLayerRef.current;
-    
-    console.log(resetFiltersValue);
-    console.log(brightness, saturation, contrast)
+    backImg.cache();
+    backImg.filters(filters);
+    backImg.brightness(brightness);
+    backImg.saturation(saturation);
+    backImg.contrast(contrast);
 
-    image.cache();
-    
-    setBrightness(0);
-    setSaturation(0);
-    setContrast(0);
-
-    layer.batchDraw();
-  }
-}, [image]);
+  };
 
   // 밝기, 채도, 명암 필터 적용 함수
   useEffect(() => {
     if (image) {
-      setResetFiltersValue(false);
 
       image.cache();
       image.brightness(brightness);
@@ -399,23 +368,23 @@ useEffect((resetFiltersValue) => {
       image.contrast(contrast);
 
     }
-  }, [image, brightness, saturation, contrast , flipX]);
+  }, [image, brightness, saturation, contrast ,]);
 
   // 좌우반전 적용 함수
   useEffect(() => {
     if (image && flipX) {
-      image.scaleX(-image.scaleX());
+      image.scaleX(-1);
     } else if (image && !flipX) {
-      image.scaleX(image.scaleX());
+      image.scaleX(1);
     }
 
   }, [image, flipX]);
 
   useEffect(() => {
     if (image && flipY) {
-      image.scaleY(-image.scaleY());
+      image.scaleY(-1);
     } else if (image && !flipY) {
-      image.scaleY(image.scaleY());
+      image.scaleY(1);
     }
 
   }, [image, flipY]);
@@ -424,17 +393,18 @@ useEffect((resetFiltersValue) => {
   useEffect(() => {
     if (image && blackWhite ) {
       image.cache();
-      image.filters([Konva.Filters.Grayscale, Konva.Filters.Brighten, Konva.Filters.HSV, Konva.Filters.Contrast,]);
+      filters.push(Konva.Filters.Grayscale)
+      image.filters(filters);
       image.draw();
     } else if (image && !blackWhite) {
       image.cache();
-      image.filters([Konva.Filters.Brighten, Konva.Filters.HSV, Konva.Filters.Contrast,]);
+      filters.splice(Konva.Filters.Grayscale);
+      image.filters(filters);
       image.draw();
     }
-  }, [image, blackWhite]);
+    
+  }, [blackWhite]);
 
-  
- 
   //base64 -> File로 변환하는 함수
   const dataURLtoFile = (dataurl, fileName) => {
     var arr = dataurl.split(','),
@@ -583,7 +553,32 @@ useEffect((resetFiltersValue) => {
               ))}
             </s.ToolLabelWrapper>
             <s.ToolContentsWrapper>
-                {toolMenus.find((item) => item.id === tool)?.contents}
+              {tool === 1 && 
+                <Image 
+                  stageRef={stageRef} 
+                  backLayerRef={backLayerRef}
+                  isBackImgLayerEmpty={isBackImgLayerEmpty}
+                  image={image} 
+                  setBrightness={setBrightness} 
+                  setSaturation={setSaturation}
+                  setContrast={setContrast}
+                  brightness={brightness}
+                  saturation={saturation}
+                  contrast={contrast}
+                  resetFiltersValue={resetFiltersValue}
+                  setResetFiltersValue={setResetFiltersValue}
+                  flipX={flipX}
+                  flipY={flipY}
+                  setFlipX={setFlipX}
+                  setFlipY={setFlipY}
+                  blackWhite={blackWhite}
+                  setBlackWhite={setBlackWhite}
+                />
+              }
+              {tool === 2 && <Draw />}
+              {tool === 3 && <Text />}
+              {tool === 4 && <Sticker />}
+              {tool === 5 && <Frame />}
             </s.ToolContentsWrapper>
           </s.ToolContainer>
         </s.RightContainer>

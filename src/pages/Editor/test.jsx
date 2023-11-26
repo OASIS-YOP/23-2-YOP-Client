@@ -108,7 +108,6 @@ const Editor = () => {
 
   /////////////////////////
 
-
   // 파일 불러오기 버튼 눌렀을 때 실행되는 함수
   const handleLoadFile = () => {
     const input = document.createElement('input');
