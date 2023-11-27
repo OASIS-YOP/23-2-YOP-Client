@@ -50,9 +50,19 @@ const Editor = () => {
   // 간단하게 말하면 draw()는 레이어를 최신 데이터로 업데이트하는 메서드입니다.
 
   // 필터 값 스테이트
-  const [brightness, setBrightness] = useState(0);
-  const [saturation, setSaturation] = useState(0);
-  const [contrast, setContrast] = useState(0);
+  const [ brightness, setBrightness ] = useState(0); 
+  const [ saturation, setSaturation ] = useState(0);
+  const [ contrast, setContrast ] = useState(0);
+
+  // 회전 값 스테이트
+  const [ rotationValue, setRotationValue ] = useState(0);
+
+  // 스케일 값 스테이트
+  const [ scaleValue, setScaleValue ] = useState(1);
+  const [ isSclaeChanged, setIsScaleChanged ] = useState(false);
+
+  // const [ horizontal, setHorizontal ] = useState(340/2);
+  // const [ vertical, setVertical ] = useState(image.y/2);
 
   //캔버스 비워졌는지 여부
   const [isBackImgLayerEmpty, setIsBackImgLayerEmpty] = useState(true);
@@ -78,56 +88,30 @@ const Editor = () => {
       name: '이미지',
       icon: <ImageIcon />,
       isActive: true,
-      contents: (
-        <Image
-          stageRef={stageRef}
-          backLayerRef={backLayerRef}
-          isBackImgLayerEmpty={isBackImgLayerEmpty}
-          image={image}
-          setBrightness={setBrightness}
-          setSaturation={setSaturation}
-          setContrast={setContrast}
-          brightness={brightness}
-          saturation={saturation}
-          contrast={contrast}
-          resetFiltersValue={resetFiltersValue}
-          setResetFiltersValue={setResetFiltersValue}
-          flipX={flipX}
-          flipY={flipY}
-          setFlipX={setFlipX}
-          setFlipY={setFlipY}
-          blackWhite={blackWhite}
-          setBlackWhite={setBlackWhite}
-        />
-      ),
     },
     {
       id: 2,
       name: '그리기',
       icon: <DrawIcon />,
       isActive: false,
-      contents: <Draw />,
     },
     {
       id: 3,
       name: '텍스트',
       icon: <TextIcon />,
       isActive: false,
-      contents: <Text />,
     },
     {
       id: 4,
       name: '스티커',
       icon: <StickerIcon />,
       isActive: false,
-      contents: <Sticker />,
     },
     {
       id: 5,
       name: '프레임',
       icon: <FrameIcon />,
       isActive: false,
-      contents: <Frame />,
     },
   ]);
   const handleToolClick = (id) => {
@@ -154,7 +138,7 @@ const Editor = () => {
   ///////////////
 
   // 오브젝트 레이어 배열
-  const objLayers = [{}];
+  const objLayers = [];
 
   // 백그라운드 이미지 필터 목록
   const filters = [
@@ -180,15 +164,35 @@ const Editor = () => {
   // 캔버스 제거
   const removeStage = (stage) => {
     if (stage) {
+      window.confirm('캔버스를 초기화하시겠습니까?');
       stage.destroy();
     }
     initStage();
-
     setIsBackImgLayerEmpty(true);
+    // 필터 및 효과 초기화
+    setResetFiltersValue(true);
+    setBlackWhite(false);
+    setFlipX(false);
+    setFlipY(false);
+    setImage(null);
   };
 
   useEffect(() => {
-    console.log(isBackImgLayerEmpty);
+    // 필터값 초기화
+    if (resetFiltersValue) {
+      setBrightness(0);
+      setSaturation(0);
+      setContrast(0);
+      setRotationValue(0);
+      setIsScaleChanged(false);
+      // setHorizontal(340/2);
+
+      console.log('필터 리셋 :', resetFiltersValue, brightness, saturation, contrast);
+    }
+  }, [resetFiltersValue]);
+
+  useEffect(() => {
+    console.log('백그라운드 이미지 레이어 비었음:', isBackImgLayerEmpty);
   }, [isBackImgLayerEmpty]);
 
   // 백그라운드 이미지용 레이어 생성(포토카드가 들어가는 레이어)
@@ -215,14 +219,24 @@ const Editor = () => {
 
   //////////// 오브젝트 관리
 
-  const objLayer = new Konva.Layer({
-    className: 'objLayer',
-  });
+  // const objLayer = new Konva.Layer({
+  //   className: 'objLayer',
+  //   width: 340,
+  //   height: 492,
 
-  const createObjLayer = () => {
-    objLayers.push(objLayer);
-    console.log(objLayers);
-  };
+  // });
+
+  // const createObjLayer = (img) => {
+  //   const canvas = stageRef.current;
+  //   canvas.add(objLayer);
+
+  //   canvas.batchDraw();
+
+  //   objLayers.push(objLayer);
+  //   console.log(objLayers);
+  //   objLayer.add(img);
+  //   objLayer.batchDraw();
+  // };
 
   /////////////////////////
 
@@ -258,12 +272,17 @@ const Editor = () => {
 
       orgImg.onload = () => {
         // 현재 캔버스와 레이어 가져오기
-        const canvas = stageRef.current;
+        // const canvas = stageRef.current;
         const backImgLayer = backLayerRef.current;
 
-        // 기존 이미지 제거
+        // 기존 이미지 제거 및 필터와 효과 초기화
         backImgLayer.removeChildren();
+        setResetFiltersValue(true);
+        setBlackWhite(false);
+        setFlipX(false);
+        setFlipY(false);
 
+        console.log('스케일 초기화:', isSclaeChanged);
         /////////////// 캔버스에 들어갈 이미지 사이즈 조정
         const canvasWidth = 340;
         const canvasHeight = 492;
@@ -301,6 +320,7 @@ const Editor = () => {
           image: orgImg,
           x: x,
           y: y,
+          rotation: rotationValue,
           width: newWidth,
           height: newHeight,
           draggable: true,
@@ -341,55 +361,34 @@ const Editor = () => {
 
         console.log('추가된 이미지 :', backImg);
 
-        // 필터 적용할 때 캐시를 사용하도록 설정
-        backImg.cache();
-        backImg.filters(filters);
-        backImg.brightness(brightness);
-        backImg.saturation(saturation);
-        backImg.contrast(contrast);
+      // 필터 적용
+      applyFilters(backImg);
+      // 레이어 상태 업데이트
 
-        // 레이어 상태 업데이트
-        backImgLayer.batchDraw();
+      backImgLayer.batchDraw();
       };
-
       console.log('이미지 로드됨:', file);
-
-      // console.log(stageRef.current)
     };
   };
 
-  const applyFilters = () => {
-    const canvas = stageRef.current;
-    const backImgLayer = backLayerRef.current;
-    const backImg = backImgLayer.find('#backImg')[0];
+  // 필터 적용 함수
+  const applyFilters = (image) => {
+    // const canvas = stageRef.current;
+    // const backImgLayer = backLayerRef.current;
+
+    const backImg = image;
+
+    backImg.cache();
+    backImg.filters(filters);
+    backImg.brightness(brightness);
+    backImg.saturation(saturation);
+    backImg.contrast(contrast);
+
   };
-
-  // 이미지 캔버스에 추가하는 함수
-  useEffect(
-    (resetFiltersValue) => {
-      if (image && stageRef.current) {
-        const stage = stageRef.current;
-        const layer = backLayerRef.current;
-
-        console.log(resetFiltersValue);
-        console.log(brightness, saturation, contrast);
-
-        image.cache();
-
-        setBrightness(0);
-        setSaturation(0);
-        setContrast(0);
-
-        layer.batchDraw();
-      }
-    },
-    [image]
-  );
 
   // 밝기, 채도, 명암 필터 적용 함수
   useEffect(() => {
     if (image) {
-      setResetFiltersValue(false);
 
       image.cache();
       image.brightness(brightness);
@@ -400,22 +399,22 @@ const Editor = () => {
 
       image.contrast(contrast);
     }
-  }, [image, brightness, saturation, contrast, flipX]);
+  }, [image, brightness, saturation, contrast ,]);
 
   // 좌우반전 적용 함수
   useEffect(() => {
     if (image && flipX) {
-      image.scaleX(-image.scaleX());
+      image.scaleX(-1);
     } else if (image && !flipX) {
-      image.scaleX(image.scaleX());
+      image.scaleX(1);
     }
   }, [image, flipX]);
 
   useEffect(() => {
     if (image && flipY) {
-      image.scaleY(-image.scaleY());
+      image.scaleY(-1);
     } else if (image && !flipY) {
-      image.scaleY(image.scaleY());
+      image.scaleY(1);
     }
   }, [image, flipY]);
 
@@ -423,23 +422,38 @@ const Editor = () => {
   useEffect(() => {
     if (image && blackWhite) {
       image.cache();
-      image.filters([
-        Konva.Filters.Grayscale,
-        Konva.Filters.Brighten,
-        Konva.Filters.HSV,
-        Konva.Filters.Contrast,
-      ]);
+      filters.push(Konva.Filters.Grayscale)
+      image.filters(filters);
       image.draw();
     } else if (image && !blackWhite) {
       image.cache();
-      image.filters([
-        Konva.Filters.Brighten,
-        Konva.Filters.HSV,
-        Konva.Filters.Contrast,
-      ]);
+      filters.splice(Konva.Filters.Grayscale);
+      image.filters(filters);
       image.draw();
     }
-  }, [image, blackWhite]);
+    
+  }, [blackWhite]);
+
+  // 회전 적용 함수
+  useEffect(() => {
+    if (image) {
+      image.rotation(rotationValue);
+    }
+  }, [image, rotationValue]);
+
+  // 스케일 적용 함수
+  useEffect(() => {
+    if (image && isSclaeChanged) {
+      image.scale({ x: scaleValue, y: scaleValue});
+    };
+  }, [image, scaleValue]);
+
+  // 좌우 이동 적용 함수
+  // useEffect(() => {
+  //   if (image) {
+  //     image.x(horizontal);
+  //   }
+  // }, [image, horizontal]);
 
   //base64 -> File로 변환하는 함수
   const dataURLtoFile = (dataurl, fileName) => {
@@ -586,7 +600,51 @@ const Editor = () => {
               ))}
             </s.ToolLabelWrapper>
             <s.ToolContentsWrapper>
-              {toolMenus.find((item) => item.id === tool)?.contents}
+              {tool === 1 && 
+                <Image 
+                  stageRef={stageRef} 
+                  backLayerRef={backLayerRef}
+                  isBackImgLayerEmpty={isBackImgLayerEmpty}
+                  image={image} 
+                  // 필터값
+                  setBrightness={setBrightness} 
+                  setSaturation={setSaturation}
+                  setContrast={setContrast}
+                  brightness={brightness}
+                  saturation={saturation}
+                  contrast={contrast}
+                  resetFiltersValue={resetFiltersValue}
+                  setResetFiltersValue={setResetFiltersValue}
+                  blackWhite={blackWhite}
+                  setBlackWhite={setBlackWhite}
+                  // 반전
+                  flipX={flipX}
+                  flipY={flipY}
+                  setFlipX={setFlipX}
+                  setFlipY={setFlipY}
+                  // 회전
+                  setRotationValue={setRotationValue}
+                  rotationValue={rotationValue}
+                  // 스케일
+                  scaleValue={scaleValue}
+                  setScaleValue={setScaleValue}
+                  setIsScaleChanged={setIsScaleChanged}
+                  isSclaeChanged={isSclaeChanged}
+                  // // 좌우 이동
+                  // horizontal={horizontal}
+                  // setHorizontal={setHorizontal}
+                />
+              }
+              {tool === 2 && <Draw />}
+              {tool === 3 && <Text />}
+              {tool === 4 && <Sticker
+                stageRef={stageRef}
+                objLayers={objLayers}
+                image={image}
+
+                />
+              }
+              {tool === 5 && <Frame />}
             </s.ToolContentsWrapper>
           </s.ToolContainer>
         </s.RightContainer>
