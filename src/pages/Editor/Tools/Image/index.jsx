@@ -1,6 +1,6 @@
 import * as s from './style';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import AlignCenterHorizontal from '../../../../assets/AlignCenterHorizontal';
 import AlignCenterVertical from '../../../../assets/AlignCenterVertical';
@@ -41,8 +41,8 @@ const Image = ({
   // const [saturationValue, setSaturationValue] = useState(0);
   // const [contrastValue, setContrastValue] = useState(0);
 
-  const [ mouseDragStart, setMouseDragStart ] = useState(false);
-  const [ mouseDragEnd, setMouseDragEnd ] = useState(false);
+  // const [ mouseDragStart, setMouseDragStart ] = useState(false);
+  // const [ mouseDragEnd, setMouseDragEnd ] = useState(false);
 
   const [ scaleSliderValue, setScaleSliderValue ] = useState(0);
 
@@ -94,10 +94,13 @@ const Image = ({
       setBrightness(brightness);
       setSaturation(saturation);
       setContrast(contrast);
+      setScaleSliderValue(0);
+      setScaleValue(scaleValue);
 
-      console.log('리셋안함', brightness, saturation, contrast);
+      console.log('명도, 채도, 대비', brightness, saturation, contrast);
 
     }
+
   }, [resetFiltersValue]);
 
   const handleRotaionChange = (value) => {

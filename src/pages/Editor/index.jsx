@@ -133,7 +133,7 @@ const Editor = () => {
 
   
   // 오브젝트 레이어 배열
-  const objLayers = [{}];
+  const objLayers = [];
 
   // 백그라운드 이미지 필터 목록
   const filters = [
@@ -159,6 +159,7 @@ const Editor = () => {
   // 캔버스 제거
   const removeStage = (stage) => {
     if (stage) {
+      window.confirm('캔버스를 초기화하시겠습니까?');
       stage.destroy();
     }
     initStage();
@@ -168,6 +169,7 @@ const Editor = () => {
     setBlackWhite(false);
     setFlipX(false);
     setFlipY(false);
+    setImage(null);
   };
 
   useEffect(() => {
@@ -178,10 +180,10 @@ const Editor = () => {
       setContrast(0);
       setRotationValue(0);
       setIsScaleChanged(false);
-      setScaleValue(1);
       // setHorizontal(340/2);
+
+      console.log('필터 리셋 :', resetFiltersValue, brightness, saturation, contrast);
     }
-    console.log('필터 리셋 :', resetFiltersValue, brightness, saturation, contrast)
   }, [resetFiltersValue]);
 
   useEffect(() => {
@@ -213,14 +215,24 @@ const Editor = () => {
 
   //////////// 오브젝트 관리
 
-  const objLayer = new Konva.Layer({
-    className: 'objLayer',
-  });
+  // const objLayer = new Konva.Layer({
+  //   className: 'objLayer',
+  //   width: 340,
+  //   height: 492,
 
-  const createObjLayer = () => {
-    objLayers.push(objLayer);
-    console.log(objLayers);
-  };
+  // });
+
+  // const createObjLayer = (img) => {
+  //   const canvas = stageRef.current;
+  //   canvas.add(objLayer);
+
+  //   canvas.batchDraw();
+
+  //   objLayers.push(objLayer);
+  //   console.log(objLayers);
+  //   objLayer.add(img);
+  //   objLayer.batchDraw();
+  // };
 
   /////////////////////////
 
@@ -257,7 +269,7 @@ const Editor = () => {
 
       orgImg.onload = () => {
         // 현재 캔버스와 레이어 가져오기
-        const canvas = stageRef.current;
+        // const canvas = stageRef.current;
         const backImgLayer = backLayerRef.current;
 
         // 기존 이미지 제거 및 필터와 효과 초기화
@@ -357,8 +369,8 @@ const Editor = () => {
 
   // 필터 적용 함수
   const applyFilters = (image) => {
-    const canvas = stageRef.current;
-    const backImgLayer = backLayerRef.current;
+    // const canvas = stageRef.current;
+    // const backImgLayer = backLayerRef.current;
 
     const backImg = image;
 
@@ -627,7 +639,13 @@ const Editor = () => {
               }
               {tool === 2 && <Draw />}
               {tool === 3 && <Text />}
-              {tool === 4 && <Sticker />}
+              {tool === 4 && <Sticker
+                stageRef={stageRef}
+                objLayers={objLayers}
+                image={image}
+
+                />
+              }
               {tool === 5 && <Frame />}
             </s.ToolContentsWrapper>
           </s.ToolContainer>
