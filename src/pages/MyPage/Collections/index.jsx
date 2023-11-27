@@ -12,6 +12,7 @@ const Collections = () => {
   const [allCollection, setAllCollection] = useState([]);
   const [activatedCollection, setActivatedCollection] = useState([]);
   const [selectedCollection, setSelectedCollection] = useState('');
+  const [photocardList, setPhotocardList] = useState([]);
   const [isCollectionClicked, setIsCollectionClicked] = useState(false);
   const [userId, setUserId] = useState(1);
 
@@ -109,6 +110,11 @@ const CollectionCard = ({
 }) => {
   const [ismouseOver, setIsMouseOver] = useState(false);
 
+  const getCollectionPhotocardList = (albumName) => {
+    mypageAPI
+      .getCollectionPhotocardList(1, decodeURI(albumName))
+      .then((data) => console.log(data));
+  };
   const onHandleMouseOver = (e) => {
     e.preventDefault();
     setIsMouseOver(true);
@@ -118,10 +124,12 @@ const CollectionCard = ({
     setIsMouseOver(false);
   };
 
-  const onClickCollection = () => {
+  const onClickCollection = (albumName) => {
     setIsCollectionClicked(true);
-    setSelectedCollection(albumName);
+    getCollectionPhotocardList(albumName);
   };
+
+  useEffect(() => {}, []);
 
   return (
     <s.CollectionCardWrapper
