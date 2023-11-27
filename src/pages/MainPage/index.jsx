@@ -37,26 +37,35 @@ const MainPage = () => {
     });
   };
 
-  // const getHot10 = () => {
-  //   mainpageAPI.getHot10(userId).then((data) => {
-  //     console.log(data);
-  //     setHot10(data.hot10List);
-  //   });
-  // };
+  const getHot10 = () => {
+    mainpageAPI.getHot10(userId).then((data) => {
+      console.log(data);
+      setHot10(data.hot10List);
+    });
+  };
 
+  const getHot10Like = () => {
+    mainpageAPI.getHot10Like().then((data) => {
+      console.log(data);
+      // setHot10(data.hot10LikeList);
+    });
+  };
   const getNow5 = () => {
     mainpageAPI.getNow5(userId).then((data) => {
       console.log(data);
       setNow5(data.now5List);
     });
   };
-  // const
+
   useEffect(() => {
     getFavArtist();
     getRandomArtist();
-    // getHot10();
+    getHot10();
+    getHot10Like();
     getNow5();
+    getHot10Like();
   }, []);
+
   return (
     <s.Wrapper>
       {/* 헤더 */}
@@ -91,9 +100,13 @@ const MainPage = () => {
       {/* 폴꾸 Top10 */}
       <s.PageLabel>폴꾸 TOP 10</s.PageLabel>
       <CardsSlider>
-        {Top10 &&
-          Top10.map((item, index) => (
-            <Top10DesignCard key={index} photoCard={item} />
+        {hot10 &&
+          hot10.map((item, index) => (
+            <Top10DesignCard
+              key={`hot10_${item.postId}`}
+              photo={item}
+              index={index + 1}
+            />
           ))}
       </CardsSlider>
 

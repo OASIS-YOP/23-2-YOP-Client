@@ -26,6 +26,7 @@ import Draw from './Tools/Draw';
 import Text from './Tools/Text';
 import Sticker from './Tools/Sticker';
 import Frame from './Tools/Frame';
+import editorpageAPI from '../../api/editorpage/editorpageAPI';
 
 const Editor = () => {
   // const [isLogedIn, setIsLogedIn] = useState();
@@ -477,17 +478,20 @@ const Editor = () => {
 
       const formData = new FormData();
       console.log('File로 저장됨 : ', convertedImage);
-      convertedImage && formData.append('file', convertedImage);
+      convertedImage && formData.append('image', convertedImage);
 
       //formdata에 잘 들어갔는지 확인하는 코드
       for (var pair of formData.entries()) {
         console.log(pair[0] + ', ' + pair[1]);
       }
+      editorpageAPI
+        .postDesignedPhotoCard(formData)
+        .then((data) => console.log(data));
+      window.alert('성공적으로 저장되었습니다!');
     } else {
       window.alert('저장할 이미지가 없습니다.');
     }
   };
-    
 
   return (
     <s.Wrapper>
@@ -586,7 +590,7 @@ const Editor = () => {
         <s.RightContainer>
           <s.ToolContainer>
             <s.ToolLabelWrapper>
-              { toolMenus.map((item) => (
+              {toolMenus.map((item) => (
                 <s.ToolLabel
                   key={item.id}
                   onClick={() => handleToolClick(item.id)}
@@ -595,58 +599,13 @@ const Editor = () => {
                   <s.ToolLabelIcon isActive={item.isActive}>
                     {item.icon}
                   </s.ToolLabelIcon>
-                  <s.ToolLabelText isActive={item.isActive} >
+                  <s.ToolLabelText isActive={item.isActive}>
                     {item.name}
                   </s.ToolLabelText>
                 </s.ToolLabel>
               ))}
             </s.ToolLabelWrapper>
             <s.ToolContentsWrapper>
-              {tool === 1 && 
-                <Image 
-                  stageRef={stageRef} 
-                  backLayerRef={backLayerRef}
-                  isBackImgLayerEmpty={isBackImgLayerEmpty}
-                  image={image} 
-                  // 필터값
-                  setBrightness={setBrightness} 
-                  setSaturation={setSaturation}
-                  setContrast={setContrast}
-                  brightness={brightness}
-                  saturation={saturation}
-                  contrast={contrast}
-                  resetFiltersValue={resetFiltersValue}
-                  setResetFiltersValue={setResetFiltersValue}
-                  blackWhite={blackWhite}
-                  setBlackWhite={setBlackWhite}
-                  // 반전
-                  flipX={flipX}
-                  flipY={flipY}
-                  setFlipX={setFlipX}
-                  setFlipY={setFlipY}
-                  // 회전
-                  setRotationValue={setRotationValue}
-                  rotationValue={rotationValue}
-                  // 스케일
-                  scaleValue={scaleValue}
-                  setScaleValue={setScaleValue}
-                  setIsScaleChanged={setIsScaleChanged}
-                  isSclaeChanged={isSclaeChanged}
-                  // // 좌우 이동
-                  // horizontal={horizontal}
-                  // setHorizontal={setHorizontal}
-                />
-              }
-              {tool === 2 && <Draw />}
-              {tool === 3 && <Text />}
-              {tool === 4 && <Sticker
-                stageRef={stageRef}
-                objLayers={objLayers}
-                image={image}
-
-                />
-              }
-              {tool === 5 && <Frame />}
             </s.ToolContentsWrapper>
           </s.ToolContainer>
         </s.RightContainer>
