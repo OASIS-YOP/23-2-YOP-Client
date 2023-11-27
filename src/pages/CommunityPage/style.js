@@ -54,14 +54,24 @@ export const ArtistName = styled.p`
   color: white;
   font-weight: bold;
 `;
-export const ArtistStars = styled.p`
+export const FavoriteQuantWrapper = styled.p`
   display: flex;
-  width: 130px;
   justify-content: space-between;
   align-items: center;
+  width: 20px;
+
+  margin-right: 20px;
   font-size: 18px;
   color: white;
   font-weight: bold;
+`;
+
+export const StarIcon = styled.img`
+  margin-right: 10px;
+  cursor: pointer;
+  &:hover {
+    transform: scale(1.1);
+  }
 `;
 export const ArtistInfoText = styled.p`
   margin-bottom: 10px;
