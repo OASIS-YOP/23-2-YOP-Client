@@ -114,22 +114,21 @@ const Stickers = ({
       draggable: true,
       className: 'sticker',
     });
-
-    canvas.add(objLayer)
-    objLayer.add(img);
-      objLayer.batchDraw();
-
-      objLayers.push(objLayer);
-      console.log(objLayers);
+    
+    
     
     if (image){
+      canvas.add(objLayer);
+
+      console.log(objLayers);
       objLayer.add(img);
-      objLayer.batchDraw();
       
       tr.nodes([img]);
       objLayer.add(tr);
       objLayers.push(objLayer);
       console.log(objLayers);
+      objLayer.batchDraw();
+
 
       img.on('click', function (e) {
         setSelectedSticker(img);
