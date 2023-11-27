@@ -30,14 +30,14 @@ import editorpageAPI from '../../api/editorpage/editorpageAPI';
 
 const Editor = () => {
   // const [isLogedIn, setIsLogedIn] = useState();
-  
+
   const [image, setImage] = useState('');
 
   const stageRef = useRef(null); // 캔버스 레퍼런스
   const backLayerRef = useRef(null); // 백그라운드 이미지용 레이어 레퍼런스
   // ***********레퍼런스 사용법***********
   // 현재 사용중인 캔버스/레이어를 불러올 때
-  // -> const canvas = stageRef.current; / const layer = backLayerRef.current; 
+  // -> const canvas = stageRef.current; / const layer = backLayerRef.current;
   // 이런 식으로 정의 후 canvas.add 등에 사용
   // 업데이트는 아마(확실치 않지만) 위와 같이 정의 후 canvas.draw() 등으로 사용하면 될듯
   // *************** Konva js "draw() 메서드" 설명 : 출처 -> Chat GPT ********************
@@ -48,7 +48,6 @@ const Editor = () => {
 
   // 캐시된 캔버스는 cache() 메서드를 사용하여 만들어집니다. 그런 다음 draw()를 호출하면 변경된 부분만 다시 렌더링되고, 전체 캔버스를 다시 그리는 것보다 효율적으로 동작합니다.
   // 간단하게 말하면 draw()는 레이어를 최신 데이터로 업데이트하는 메서드입니다.
-
 
   // 필터 값 스테이트
   const [ brightness, setBrightness ] = useState(0); 
@@ -66,24 +65,24 @@ const Editor = () => {
   // const [ vertical, setVertical ] = useState(image.y/2);
 
   //캔버스 비워졌는지 여부
-  const [ isBackImgLayerEmpty, setIsBackImgLayerEmpty ] = useState(true);
+  const [isBackImgLayerEmpty, setIsBackImgLayerEmpty] = useState(true);
 
   // 필터 초기화 여부
-  const [ resetFiltersValue , setResetFiltersValue] = useState(false);
+  const [resetFiltersValue, setResetFiltersValue] = useState(false);
 
-  // 대칭 여부 스테이트 
+  // 대칭 여부 스테이트
   const [flipX, setFlipX] = useState(false); // 좌우반전
   const [flipY, setFlipY] = useState(false); // 상하반전
 
   // 흑백 여부 스테이트
-  const [ blackWhite, setBlackWhite ] = useState(false);
+  const [blackWhite, setBlackWhite] = useState(false);
 
   // const [imageFile, setImageFile] = useState(null); (=> 수정님 필요 없음 지워주세요!)
 
-
   /////// 툴 메뉴 스테이트 ////////
   const [tool, setTool] = useState(1); // 인덱스
-  const [toolMenus, setToolMenus] = useState([ // 툴 메뉴 목록
+  const [toolMenus, setToolMenus] = useState([
+    // 툴 메뉴 목록
     {
       id: 1,
       name: '이미지',
@@ -115,7 +114,8 @@ const Editor = () => {
       isActive: false,
     },
   ]);
-  const handleToolClick = (id) => { // 툴 메뉴 클릭 시 실행되는 함수
+  const handleToolClick = (id) => {
+    // 툴 메뉴 클릭 시 실행되는 함수
     setTool(id);
     setToolMenus((prevMenus) =>
       prevMenus.map((item) => ({
@@ -124,15 +124,19 @@ const Editor = () => {
       }))
     );
   };
-  useEffect(() => {  // 툴 메뉴 변경 시 실행되는 함수
+  useEffect(() => {
+    // 툴 메뉴 변경 시 실행되는 함수
     if (tool) {
-      console.log('툴메뉴 :', tool, toolMenus.find((item) => item.id === tool).name);
+      console.log(
+        '툴메뉴 :',
+        tool,
+        toolMenus.find((item) => item.id === tool).name
+      );
     }
   }, [tool, toolMenus]);
 
   ///////////////
 
-  
   // 오브젝트 레이어 배열
   const objLayers = [];
 
@@ -194,13 +198,13 @@ const Editor = () => {
   // 백그라운드 이미지용 레이어 생성(포토카드가 들어가는 레이어)
   const initBackImgLayer = () => {
     const canvas = stageRef.current;
-    
+
     const backImgLayer = new Konva.Layer({
       id: 'backImgLayer',
       moveToBottom: true,
       ref: backLayerRef,
     });
-    
+
     backLayerRef.current = backImgLayer;
 
     canvas.add(backImgLayer);
@@ -212,7 +216,6 @@ const Editor = () => {
   useEffect(() => {
     initStage();
   }, []);
-
 
   //////////// 오브젝트 관리
 
@@ -236,7 +239,6 @@ const Editor = () => {
   // };
 
   /////////////////////////
-
 
   // 파일 불러오기 버튼 눌렀을 때 실행되는 함수
   const handleLoadFile = () => {
@@ -289,8 +291,8 @@ const Editor = () => {
         const maxWidth = canvasWidth;
         const maxHeight = canvasHeight;
         const aspectRatio = imgWidth / imgHeight;
-        const x = canvasWidth/2;
-        const y = canvasHeight/2;
+        const x = canvasWidth / 2;
+        const y = canvasHeight / 2;
 
         let newWidth = imgWidth;
         let newHeight = imgHeight;
@@ -324,7 +326,10 @@ const Editor = () => {
           draggable: true,
           dragBoundFunc: (pos) => {
             // 이미지의 가로가 세로보다 크거나 같을 때 -> 좌우로만 이동 가능
-            if (orgImg.width > orgImg.height || orgImg.width === orgImg.height) {
+            if (
+              orgImg.width > orgImg.height ||
+              orgImg.width === orgImg.height
+            ) {
               return {
                 x: pos.x, // x 좌표는 변경 가능
                 y: y, // y 좌표는 변경되지 않음
@@ -338,25 +343,23 @@ const Editor = () => {
             }
           },
         });
-        
-      // 편집 기준점을 이미지의 중앙으로 설정 (좌우 상하 반전을 위한 설정)
-      backImg.offsetX(backImg.width() / 2);
-      backImg.offsetY(backImg.height() / 2);
 
-    
-      // 이미지를 레이어에 추가
-      backImgLayer.add(backImg);
+        // 편집 기준점을 이미지의 중앙으로 설정 (좌우 상하 반전을 위한 설정)
+        backImg.offsetX(backImg.width() / 2);
+        backImg.offsetY(backImg.height() / 2);
 
-      setIsBackImgLayerEmpty(false);
+        // 이미지를 레이어에 추가
+        backImgLayer.add(backImg);
 
-      
-      // // 레이어 상태 업데이트
-      // backImgLayer.batchDraw();
+        setIsBackImgLayerEmpty(false);
 
-      // 이미지 스테이트 업데이트
-      setImage(backImg);
-      
-      console.log('추가된 이미지 :', backImg);
+        // // 레이어 상태 업데이트
+        // backImgLayer.batchDraw();
+
+        // 이미지 스테이트 업데이트
+        setImage(backImg);
+
+        console.log('추가된 이미지 :', backImg);
 
       // 필터 적용
       applyFilters(backImg);
@@ -395,7 +398,6 @@ const Editor = () => {
       image.value(0);
 
       image.contrast(contrast);
-
     }
   }, [image, brightness, saturation, contrast ,]);
 
@@ -406,7 +408,6 @@ const Editor = () => {
     } else if (image && !flipX) {
       image.scaleX(1);
     }
-
   }, [image, flipX]);
 
   useEffect(() => {
@@ -415,12 +416,11 @@ const Editor = () => {
     } else if (image && !flipY) {
       image.scaleY(1);
     }
-
   }, [image, flipY]);
 
   // 흑백 필터 적용 함수
   useEffect(() => {
-    if (image && blackWhite ) {
+    if (image && blackWhite) {
       image.cache();
       filters.push(Konva.Filters.Grayscale)
       image.filters(filters);
@@ -505,14 +505,10 @@ const Editor = () => {
                   isActive={true}
                   onClick={handleLoadFile} // 파일 불러오기 버튼 눌렀을 때 실행되는 함수
                 >
-                  <s.TopMenuButtonIcon
-                    isActive={true}
-                  >
+                  <s.TopMenuButtonIcon isActive={true}>
                     <Load />
                   </s.TopMenuButtonIcon>
-                  <s.TopMenuButtonLabel 
-                    isActive={true}
-                  >
+                  <s.TopMenuButtonLabel isActive={true}>
                     불러오기
                   </s.TopMenuButtonLabel>
                 </s.TopMenuButton>
@@ -523,14 +519,12 @@ const Editor = () => {
                   isActive={!isBackImgLayerEmpty}
                   disabled={isBackImgLayerEmpty}
                 >
-                  <s.TopMenuButtonIcon
-                    isActive={!isBackImgLayerEmpty}
-                  >
+                  <s.TopMenuButtonIcon isActive={!isBackImgLayerEmpty}>
                     <Delete />
                   </s.TopMenuButtonIcon>
-                  <s.TopMenuButtonLabel
-                    isActive={!isBackImgLayerEmpty}
-                  >삭제하기</s.TopMenuButtonLabel>
+                  <s.TopMenuButtonLabel isActive={!isBackImgLayerEmpty}>
+                    삭제하기
+                  </s.TopMenuButtonLabel>
                 </s.TopMenuButton>
               </s.TopMenuButtonLeft>
             </s.TopMenuGroupWrapper>
@@ -606,6 +600,51 @@ const Editor = () => {
               ))}
             </s.ToolLabelWrapper>
             <s.ToolContentsWrapper>
+              {tool === 1 && 
+                <Image 
+                  stageRef={stageRef} 
+                  backLayerRef={backLayerRef}
+                  isBackImgLayerEmpty={isBackImgLayerEmpty}
+                  image={image} 
+                  // 필터값
+                  setBrightness={setBrightness} 
+                  setSaturation={setSaturation}
+                  setContrast={setContrast}
+                  brightness={brightness}
+                  saturation={saturation}
+                  contrast={contrast}
+                  resetFiltersValue={resetFiltersValue}
+                  setResetFiltersValue={setResetFiltersValue}
+                  blackWhite={blackWhite}
+                  setBlackWhite={setBlackWhite}
+                  // 반전
+                  flipX={flipX}
+                  flipY={flipY}
+                  setFlipX={setFlipX}
+                  setFlipY={setFlipY}
+                  // 회전
+                  setRotationValue={setRotationValue}
+                  rotationValue={rotationValue}
+                  // 스케일
+                  scaleValue={scaleValue}
+                  setScaleValue={setScaleValue}
+                  setIsScaleChanged={setIsScaleChanged}
+                  isSclaeChanged={isSclaeChanged}
+                  // // 좌우 이동
+                  // horizontal={horizontal}
+                  // setHorizontal={setHorizontal}
+                />
+              }
+              {tool === 2 && <Draw />}
+              {tool === 3 && <Text />}
+              {tool === 4 && <Sticker
+                stageRef={stageRef}
+                objLayers={objLayers}
+                image={image}
+
+                />
+              }
+              {tool === 5 && <Frame />}
             </s.ToolContentsWrapper>
           </s.ToolContainer>
         </s.RightContainer>

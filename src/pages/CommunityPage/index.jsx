@@ -3,66 +3,88 @@ import * as s from './style';
 import { useParams } from 'react-router-dom';
 import Header from '../../components/Header';
 import Star from '../../assets/Star.svg';
-import ArtistInfo from '../../Temp/communitypage/ArtistInfo.js';
+import EmptyStar from '../../assets/EmptyStar.svg';
 import communitypageAPI from '../../api/communitypage/communitypageAPI.js';
+import commonAPI from '../../api/commonAPI.js';
 
 const CommunityPage = () => {
-  const [artistInfo, setArtistInfo] = useState({});
-  const [artistFavoriteQuant, setArtistFavoriteQuant] = useState();
-  const [myCollectionQuant, setMyCollectionQuant] = useState();
-
   const params = useParams();
   const userId = 1;
   const artistId = Number(params.artistId);
 
+  const [artistInfo, setArtistInfo] = useState({});
+  const [artistFavoriteQuant, setArtistFavoriteQuant] = useState();
+  const [myCollectionQuant, setMyCollectionQuant] = useState();
   const [memberProfile, setMemberProfile] = useState([]);
   const [allPost, setAllPost] = useState([]);
   const [memberPost, setMemberPost] = useState([]);
-  const [isClickedName, setIsClickedName] = useState('');
+  const [isClickedMember, setIsClickedMember] = useState(null);
+
+  const [isClickStar, setIsClickStar] = useState(false);
 
   const fandomName = ['아미', '마이', '유애나', '버니즈'];
 
-  const getArtistProfile = () => {
-    communitypageAPI.getArtistProfile(artistId).then((data) => {
-      setArtistInfo(data?.ArtistProfile);
-      console.log(data);
-    });
+  const fetchData = async () => {
+    try {
+      const artistProfileData = await communitypageAPI.getArtistProfile(
+        artistId
+      );
+      setArtistInfo(artistProfileData.ArtistProfile);
+      console.log(artistProfileData);
+
+      const allArtistPostData = await communitypageAPI.getAllArtistPost(
+        artistId
+      );
+      setAllPost(allArtistPostData?.allPostList);
+
+      const myCollectionQuantData = await communitypageAPI.getMyCollectionQuant(
+        artistId,
+        userId
+      );
+      setMyCollectionQuant(myCollectionQuantData.collectionQuant);
+
+      const artistFavoriteQuantData =
+        await communitypageAPI.getArtistFavoriteQuant(artistId);
+      console.log(artistFavoriteQuantData);
+      setArtistFavoriteQuant(artistFavoriteQuantData.favoriteQuant);
+
+      const memberProfileData = await communitypageAPI.getMemberProfile(
+        artistId
+      );
+      setMemberProfile(memberProfileData.memberPhoto);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
   };
 
-  const getMemberProfile = () => {
-    communitypageAPI
-      .getMemberProfile(artistId)
-      .then((data) => setMemberProfile(data?.memberPhoto));
-  };
-  const getArtistFavoriteQuant = () => {
-    communitypageAPI.getArtistFavoriteQuant(artistId).then((data) => {
-      console.log(data);
-      setArtistFavoriteQuant(data?.favoriteQuant);
-    });
-  };
-
-  const getMyCollectionQuant = () => {
-    communitypageAPI.getMyCollectionQuant(artistId, userId).then((data) => {
-      setMyCollectionQuant(data?.collectionQuant);
-    });
-  };
-
-  const getMemberPost = (memberName) => {
-    if (artistId === 3) return;
-    communitypageAPI.getMemberPost(memberName).then((data) => {
-      setMemberPost(data?.memberPostList);
-      console.log(data);
-    });
+  const handleClickStar = () => {
+    setIsClickStar((prev) => !prev);
+    postFavoriteArtist();
+    // deleteFavoriteArtist();
   };
 
   const handleClickMember = (memberName) => {
+    if (artistId === 3) return;
+    setIsClickedMember(memberName);
     getMemberPost(memberName);
   };
 
-  const getAllArtistPost = () => {
-    communitypageAPI
-      .getAllArtistPost(artistId)
-      .then((data) => setAllPost(data?.allPostList));
+  const getMemberPost = (memberName) => {
+    communitypageAPI.getMemberPost(memberName).then((data) => {
+      setMemberPost(data.memberPostList);
+      console.log(data);
+    });
+  };
+
+  const postFavoriteArtist = () => {
+    commonAPI.postFavorite(artistId, userId).then((data) => {
+      console.log(data.message);
+    });
+  };
+  const deleteFavoriteArtist = () => {
+    commonAPI.deleteFavorite(artistId, userId).then((data) => {
+      console.log(data);
+    });
   };
 
   // const getPostLikeQuant = () => {
@@ -72,20 +94,9 @@ const CommunityPage = () => {
   // };
 
   useEffect(() => {
-    console.log(artistId);
-    getArtistProfile();
-    getArtistFavoriteQuant();
-    getMyCollectionQuant();
-    getMemberProfile();
+    fetchData();
   }, []);
 
-  useEffect(() => {
-    getAllArtistPost();
-  }, []);
-
-  // useEffect(() => {
-  // getPostLikeQuant();
-  // }, [artistInfo, artistFavoriteQuant]);
   return (
     <>
       <Header />
@@ -93,17 +104,21 @@ const CommunityPage = () => {
       <s.ProfileContainer>
         <s.ProfileWrapper>
           <s.ProfileImage>
-            {/* artistInfo는 db에있던 데이터, ArtistInfo는 더미데이터 */}
             {artistInfo?.photo && (
               <img src={artistInfo?.photo} alt='artistPhoto' />
             )}
           </s.ProfileImage>
           <s.ProfileInfo>
             {artistInfo && <s.ArtistName>{artistInfo?.groupName}</s.ArtistName>}
-            <s.ArtistStars>
-              <img src={Star} alt='star' />
+            <s.FavoriteQuantWrapper>
+              <s.StarIcon
+                onClick={handleClickStar}
+                src={isClickStar ? Star : EmptyStar}
+                style={{ fill: 'white' }}
+                alt='star'
+              />
               {artistFavoriteQuant && artistFavoriteQuant}
-            </s.ArtistStars>
+            </s.FavoriteQuantWrapper>
             <s.ArtistInfoText>
               팬덤명 : {fandomName[artistId - 1]} <br />
               {artistInfo && `소속 : ${artistInfo?.enterComp}`}
@@ -134,12 +149,17 @@ const CommunityPage = () => {
         )}
         <s.photoCardContainer>
           <s.ContentWrapper>
-            {allPost &&
-              allPost.map((item) => {
-                <s.CardImageContainer>
-                  <img />
-                </s.CardImageContainer>;
-              })}
+            {!memberPost
+              ? allPost.map((item) => (
+                  <s.CardImageContainer key={`allPost_${item.postId}`}>
+                    <img src={item.polaroid} alt='allPolaroid' />
+                  </s.CardImageContainer>
+                ))
+              : memberPost.map((item) => (
+                  <s.CardImageContainer key={`memberPost_${item.postId}`}>
+                    <img src={item.polaroid} alt='Polaroid' />
+                  </s.CardImageContainer>
+                ))}
           </s.ContentWrapper>
         </s.photoCardContainer>
       </s.BodyContainer>
