@@ -5,6 +5,7 @@ import Header from '../../components/Header';
 import Star from '../../assets/Star.svg';
 import EmptyStar from '../../assets/EmptyStar.svg';
 import communitypageAPI from '../../api/communitypage/communitypageAPI.js';
+import commonAPI from '../../api/commonAPI.js';
 
 const CommunityPage = () => {
   const params = useParams();
@@ -58,6 +59,8 @@ const CommunityPage = () => {
 
   const handleClickStar = () => {
     setIsClickStar((prev) => !prev);
+    postFavoriteArtist();
+    // deleteFavoriteArtist();
   };
 
   const handleClickMember = (memberName) => {
@@ -69,6 +72,17 @@ const CommunityPage = () => {
   const getMemberPost = (memberName) => {
     communitypageAPI.getMemberPost(memberName).then((data) => {
       setMemberPost(data.memberPostList);
+      console.log(data);
+    });
+  };
+
+  const postFavoriteArtist = () => {
+    commonAPI.postFavorite(artistId, userId).then((data) => {
+      console.log(data.message);
+    });
+  };
+  const deleteFavoriteArtist = () => {
+    commonAPI.deleteFavorite(artistId, userId).then((data) => {
       console.log(data);
     });
   };
