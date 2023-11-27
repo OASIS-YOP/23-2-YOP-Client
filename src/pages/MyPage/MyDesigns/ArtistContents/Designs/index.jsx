@@ -1,17 +1,16 @@
 import * as s from './style.js';
 import { useEffect, useState } from 'react';
-import MyDesigns from '../../../../../Temp/mypage/mydesign/MyDesigns';
 import mypageAPI from '../../../../../api/mypage/mypageAPI.js';
 
-const Designs = ({ selectedArtist, selectedCollection }) => {
+const Designs = ({ selectedCollection }) => {
   const [myPolaroids, setMyPolaroids] = useState([]);
-  const [userId, setUserId] = useState(1);
+  const userId = 1;
 
   const getMyPolaroids = () => {
     mypageAPI
       .getMyPolaroids(userId, decodeURI(selectedCollection))
       .then((data) => {
-        setMyPolaroids(data.myPolariodBackupList);
+        setMyPolaroids(data?.myPolariodBackupList);
       });
   };
 

@@ -87,6 +87,12 @@ const CommunityPage = () => {
     });
   };
 
+  const getIfFavoriteArtist = () => {
+    communitypageAPI
+      .getIfFavoriteArtist(artistId, userId)
+      .then((data) => console.log(data));
+  };
+
   // const getPostLikeQuant = () => {
   //   communitypageAPI
   //     .getPostLikeQuant(artistId,postId)
@@ -94,6 +100,7 @@ const CommunityPage = () => {
   // };
 
   useEffect(() => {
+    getIfFavoriteArtist();
     fetchData();
   }, []);
 
@@ -104,9 +111,7 @@ const CommunityPage = () => {
       <s.ProfileContainer>
         <s.ProfileWrapper>
           <s.ProfileImage>
-            {artistInfo?.photo && (
-              <img src={artistInfo?.photo} alt='artistPhoto' />
-            )}
+            {artistInfo && <img src={artistInfo?.photo} alt='artistPhoto' />}
           </s.ProfileImage>
           <s.ProfileInfo>
             {artistInfo && <s.ArtistName>{artistInfo?.groupName}</s.ArtistName>}

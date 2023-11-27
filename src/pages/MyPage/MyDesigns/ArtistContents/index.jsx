@@ -1,7 +1,6 @@
 import * as s from './style';
 import { useEffect, useState } from 'react';
 import MyDesignCollection from '../../../../components/MyDesignCollection';
-import MyCollections from '../../../../Temp/mypage/mydesign/MyCollections';
 import Designs from './Designs';
 import mypageAPI from '../../../../api/mypage/mypageAPI';
 
@@ -43,7 +42,7 @@ const ArtistContents = () => {
     setIsCollectionClicked(false);
   };
 
-  const artists = artistList.map((item, index) => {
+  const artists = artistList.map((item) => {
     return (
       <s.ArtistsTab
         key={`myPolaroidArtist_${item.artistId}`}
