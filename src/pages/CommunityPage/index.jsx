@@ -154,7 +154,7 @@ const CommunityPage = () => {
         )}
         <s.photoCardContainer>
           <s.ContentWrapper>
-            {!memberPost
+            {!memberProfile
               ? allPost.map((item) => (
                   <s.CardImageContainer key={`allPost_${item.postId}`}>
                     <img src={item.polaroid} alt='allPolaroid' />
