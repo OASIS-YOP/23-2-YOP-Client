@@ -115,7 +115,7 @@ const Stickers = ({
       className: 'sticker',
     });
 
-
+    canvas.add(objLayer)
     objLayer.add(img);
       objLayer.batchDraw();
 
