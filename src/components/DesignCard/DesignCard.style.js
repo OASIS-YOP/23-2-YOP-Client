@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  width: 200px;
   margin-left: 30px;
 `;
 
@@ -68,10 +69,6 @@ export const likeIcon = styled.img`
   height: 20px;
   padding-top: 5%;
   padding-right: 10%;
-
-  &:hover {
-    cursor: pointer;
-  }
 `;
 export const ContentText = styled.div`
   font-size: 20px;

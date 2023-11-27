@@ -4,7 +4,7 @@ const communitypageAPI = {
   getAllArtist: async () => {
     try {
       const path = `${process.env.REACT_APP_BASE_URL}/artistpage/allArtist`;
-      const response = HttpClient.get(path);
+      const response = await HttpClient.get(path);
       return response;
     } catch (e) {
       return null;
@@ -13,7 +13,7 @@ const communitypageAPI = {
   getArtistProfile: async (artistId) => {
     try {
       const path = `${process.env.REACT_APP_BASE_URL}/community/${artistId}/artistProfile`;
-      const response = HttpClient.get(path);
+      const response = await HttpClient.get(path);
       return response;
     } catch (e) {
       return null;
@@ -22,16 +22,16 @@ const communitypageAPI = {
   getArtistFavoriteQuant: async (artistId) => {
     try {
       const path = `${process.env.REACT_APP_BASE_URL}/community/${artistId}/favoriteQuant`;
-      const response = HttpClient.get(path);
+      const response = await HttpClient.get(path);
       return response;
     } catch (e) {
       return null;
     }
   },
-  getMyCollectionQuant: async (artistId) => {
+  getMyCollectionQuant: async (artistId, userId) => {
     try {
-      const path = `${process.env.REACT_APP_BASE_URL}/community/${artistId}/artistProfile`;
-      const response = HttpClient.get(path);
+      const path = `${process.env.REACT_APP_BASE_URL}/community/${artistId}/${userId}/collectionQuant`;
+      const response = await HttpClient.get(path);
       return response;
     } catch (e) {
       return null;
@@ -40,7 +40,7 @@ const communitypageAPI = {
   getMemberProfile: async (artistId) => {
     try {
       const path = `${process.env.REACT_APP_BASE_URL}/community/${artistId}/members`;
-      const response = HttpClient.get(path);
+      const response = await HttpClient.get(path);
       return response;
     } catch (e) {
       return null;
@@ -48,8 +48,10 @@ const communitypageAPI = {
   },
   getMemberPost: async (memberName) => {
     try {
-      const path = `${process.env.REACT_APP_BASE_URL}/community/${memberName}/memberPost`;
-      const response = HttpClient.get(path);
+      const path = `${process.env.REACT_APP_BASE_URL}/community/${decodeURI(
+        memberName
+      )}/memberPost`;
+      const response = await HttpClient.get(path);
       return response;
     } catch (e) {
       return null;
@@ -58,7 +60,7 @@ const communitypageAPI = {
   getAllArtistPost: async (artistId) => {
     try {
       const path = `${process.env.REACT_APP_BASE_URL}/community/${artistId}/allPost`;
-      const response = HttpClient.get(path);
+      const response = await HttpClient.get(path);
       return response;
     } catch (e) {
       return null;
@@ -66,8 +68,8 @@ const communitypageAPI = {
   },
   getPostLikeQuant: async (artistId, postId) => {
     try {
-      const path = `${process.env.REACT_APP_BASE_URL}/community/:${artistId}/allPost/:${postId}/like`;
-      const response = HttpClient.get(path);
+      const path = `${process.env.REACT_APP_BASE_URL}/community/${artistId}/allPost/${postId}/like`;
+      const response = await HttpClient.get(path);
       return response;
     } catch (e) {
       return null;

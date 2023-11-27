@@ -2,95 +2,69 @@ import * as s from './style';
 import dotdotdot from '../../../assets/dotdotdot.svg';
 import UnLikedIcon from '../../../assets/UnLikedIcon.svg';
 import LikedIcon from '../../../assets/LikedIcon.svg';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import mypageAPI from '../../../api/mypage/mypageAPI';
 
 const MyLikes = () => {
-  const [postLikes, setPostLikes] = useState([
-    { id: 1, liked: true, likeCount: 52 },
-    { id: 2, liked: true, likeCount: 36 },
-    { id: 3, liked: true, likeCount: 10512 },
-    { id: 4, liked: true, likeCount: 89 },
-  ]);
+  const userId = 1;
+  const [myLikePost, setMyLikePost] = useState([]);
 
-  const userName = [
-    'OnPol1004',
-    'User1',
-    'User2',
-    'User3',
-    'User4',
-    'User5',
-    'User6',
-    'User7',
-    'User8',
-    'User9',
-    'User10',
-  ];
-
-  const users = userName.map((user, index) => {
-    return <s.nicknameWrapper key={user + index}>{user}</s.nicknameWrapper>;
-  });
-
-  const createPost = (post) => {
-    if (!post.liked) {
-      // 좋아요가 false인 포스트는 렌더링하지 않음
-    }
-
-    const user = users[post.id - 1];
-
-    return (
-      <>
-        <s.PostFrame key={post.id}>
-          <s.leftContainer>
-            <s.PostImage />
-          </s.leftContainer>
-          <s.rightContainer>
-            <s.postInfoWrapper>
-              <>{user}</>
-              <s.tagsWrapper>
-                #소속사 #아티스트 <br /> #멤버이름 #컬렉션명
-              </s.tagsWrapper>
-              <s.dateWrapper>2023.10.13</s.dateWrapper>
-              <s.likeWrapper>
-                <s.likeIcon
-                  src={post.liked ? LikedIcon : UnLikedIcon}
-                  onClick={() => handleClickLike(post.id)}
-                />
-                <s.likeCount>{post.likeCount}</s.likeCount>
-              </s.likeWrapper>
-            </s.postInfoWrapper>
-          </s.rightContainer>
-        </s.PostFrame>
-      </>
-    );
-  };
-
-  const handleClickLike = (postId) => {
-    setPostLikes((prevLikes) => {
-      const updatedLikes = prevLikes.map((post) => {
-        if (post.id === postId) {
-          return {
-            ...post,
-            liked: !post.liked,
-            likeCount: post.liked ? post.likeCount - 1 : post.likeCount + 1,
-          };
-        }
-        return post;
-      });
-      const updatedPosts = updatedLikes.filter((post) => post.liked);
-      return updatedPosts;
+  const getMyLike = () => {
+    mypageAPI.getMyLike(userId).then((data) => {
+      setMyLikePost(data.myLikeList);
+      console.log(data.myLikeList);
     });
   };
 
-  const posts = postLikes.map((post) => createPost(post));
+  const handleClickLike = (postId) => {};
+
+  useEffect(() => {
+    getMyLike();
+  }, []);
 
   return (
     <>
       <s.Wrapper>
         <s.PostsWrapper>
-          {posts.length === 0 ? (
+          {myLikePost.length === 0 ? (
             <s.NoLikes>마음에 드는 도안에 좋아요를 눌러보세요!</s.NoLikes>
           ) : (
-            posts
+            <>
+              {myLikePost.map((item) => (
+                <s.PostFrame key={item.id}>
+                  <s.leftContainer>
+                    <s.PostImageFrame>
+                      <s.PostImage src={item.polaroid} />
+                    </s.PostImageFrame>
+                  </s.leftContainer>
+                  <s.rightContainer>
+                    <s.postInfoWrapper>
+                      <s.nicknameWrapper>{item.nickname}</s.nicknameWrapper>
+                      <s.tagsWrapper>
+                        #{item.enterComp} #{item.groupName} <br />
+                        {item.groupName === item.memberName
+                          ? ''
+                          : `#${item.memberName}`}
+                        #{item.albumName}
+                      </s.tagsWrapper>
+                      <s.dateWrapper>
+                        {item?.postDateTime.slice(
+                          0,
+                          item?.postDateTime.indexOf('T')
+                        )}
+                      </s.dateWrapper>
+                      <s.likeWrapper>
+                        <s.likeIcon
+                          src={LikedIcon}
+                          // onClick={() => handleClickLike(post.id)}
+                        />
+                        <s.likeCount>{item.likeQuant}</s.likeCount>
+                      </s.likeWrapper>
+                    </s.postInfoWrapper>
+                  </s.rightContainer>
+                </s.PostFrame>
+              ))}
+            </>
           )}
         </s.PostsWrapper>
       </s.Wrapper>

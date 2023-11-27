@@ -54,14 +54,24 @@ export const ArtistName = styled.p`
   color: white;
   font-weight: bold;
 `;
-export const ArtistStars = styled.p`
+export const FavoriteQuantWrapper = styled.p`
   display: flex;
-  width: 130px;
   justify-content: space-between;
   align-items: center;
+  width: 20px;
+
+  margin-right: 20px;
   font-size: 18px;
   color: white;
   font-weight: bold;
+`;
+
+export const StarIcon = styled.img`
+  margin-right: 10px;
+  cursor: pointer;
+  &:hover {
+    transform: scale(1.1);
+  }
 `;
 export const ArtistInfoText = styled.p`
   margin-bottom: 10px;
@@ -76,7 +86,6 @@ export const BodyContainer = styled.div`
   width: 100%;
   height: fit-content;
   padding-top: 20px;
-  border: 1px solid black;
 `;
 export const MemberCardsWrapper = styled.div`
   display: flex;
@@ -112,12 +121,17 @@ export const CardImageContainer = styled.div`
   overflow: hidden;
 
   background-color: #d7d7d7;
+  cursor: pointer;
+  transition: all 0.1s linear;
 
   img {
     width: 100%;
     height: 100%;
 
     object-fit: cover;
+  }
+  &:hover {
+    transform: scale(1.1);
   }
 `;
 
