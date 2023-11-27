@@ -8,12 +8,6 @@ import mypageAPI from '../../../api/mypage/mypageAPI';
 const MyLikes = () => {
   const userId = 1;
   const [myLikePost, setMyLikePost] = useState([]);
-  const [postLikes, setPostLikes] = useState([
-    { id: 1, liked: true, likeCount: 52 },
-    { id: 2, liked: true, likeCount: 36 },
-    { id: 3, liked: true, likeCount: 10512 },
-    { id: 4, liked: true, likeCount: 89 },
-  ]);
 
   const getMyLike = () => {
     mypageAPI.getMyLike(userId).then((data) => {
@@ -21,36 +15,8 @@ const MyLikes = () => {
       console.log(data.myLikeList);
     });
   };
-  const userName = [
-    'OnPol1004',
-    'User1',
-    'User2',
-    'User3',
-    'User4',
-    'User5',
-    'User6',
-    'User7',
-    'User8',
-    'User9',
-    'User10',
-  ];
 
-  const handleClickLike = (postId) => {
-    setPostLikes((prevLikes) => {
-      const updatedLikes = prevLikes.map((post) => {
-        if (post.id === postId) {
-          return {
-            ...post,
-            liked: !post.liked,
-            likeCount: post.liked ? post.likeCount - 1 : post.likeCount + 1,
-          };
-        }
-        return post;
-      });
-      const updatedPosts = updatedLikes.filter((post) => post.liked);
-      return updatedPosts;
-    });
-  };
+  const handleClickLike = (postId) => {};
 
   useEffect(() => {
     getMyLike();
