@@ -37,8 +37,10 @@ const ArtistContents = () => {
   //   return null; // Handle the case when artist is not found
   // }
 
-  const onClickArtist = () => {
+  const onClickArtist = (artistId) => {
+    setSelectedArtist(artistId);
     console.log(selectedArtist);
+    setIsCollectionClicked(false);
   };
 
   const artists = artistList.map((item, index) => {
@@ -85,10 +87,7 @@ const ArtistContents = () => {
           </s.CollectionListWrapper>
         ) : (
           <>
-            <Designs
-              selectedArtist={selectedArtist}
-              selectedCollection={selectedCollection}
-            />
+            <Designs selectedCollection={selectedCollection} />
           </>
         )}
       </s.ContentsWrapper>
