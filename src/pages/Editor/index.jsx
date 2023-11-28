@@ -30,6 +30,8 @@ import Sticker from './Tools/Sticker';
 import Frame from './Tools/Frame';
 import editorpageAPI from '../../api/editorpage/editorpageAPI';
 
+import ContextMenu from './ContextMenu';
+
 const Editor = () => {
   const [isLogedIn, setIsLogedIn] = useState(true);
 
@@ -45,15 +47,8 @@ const Editor = () => {
   const [ saturation, setSaturation ] = useState(0);
   const [ contrast, setContrast ] = useState(0);
 
-  // 회전 값 스테이트
-  // const [ rotationValue, setRotationValue ] = useState(0);
-
-  // 스케일 값 스테이트
-  // const [ scaleValue, setScaleValue ] = useState(1);
-  // const [ isSclaeChanged, setIsScaleChanged ] = useState(false);
-
-  // const [ horizontal, setHorizontal ] = useState(340/2);
-  // const [ vertical, setVertical ] = useState(image.y/2);
+  const [isContextMenuVisible, setContextMenuVisible] = useState(false);
+  const [contextMenuPos, setContextMenuPos] = useState({ x: 0, y: 0 });
 
   //캔버스 이미지 비워졌는지 여부
   const [isBackImgEmpty, setIsBackImgEmpty] = useState(true);
@@ -205,8 +200,6 @@ const Editor = () => {
 
               //드래그 동작 구현
             });
-              
-
             const imgWidth = imgFile.width;
             const imgHeight = imgFile.height;
 
@@ -339,6 +332,140 @@ const Editor = () => {
       }
     }, [canvas]);
 
+     ////////////////컨텍스트 메뉴 ////////////////////
+
+  const handleContextMenu = (e) => {
+    e.preventDefault();
+    // 마우스 우클릭 시 마우스 위치에 컨텍스트 메뉴를 표시하기 위한 정보 설정
+    setContextMenuPos({ x: e.clientX, y: e.clientY });
+    // 컨텍스트 메뉴를 표시
+    setContextMenuVisible(true);
+  };
+
+  // 컨텍스트 메뉴를 닫는 함수
+  const closeContextMenu = () => {
+    setContextMenuVisible(false);
+  };
+
+  // // 복사한 객체를 저장하는 state
+  // const [copiedObject, setCopiedObject] = useState(null); // 부모 컴포넌트에서 관리
+  // // console.log(copiedObject);
+  // // console.log('copiedObject');
+
+  // // 복사한 객체를 저장하는 함수
+  // const handleCopyObject = (object) => {
+  //   setCopiedObject(object);
+  //   console.log('object is copied', object);
+  // };
+
+  // // 붙여넣기 함수
+  // const handlePasteObject = (x, y) => {
+  //   if (copiedObject !== null) {
+  //     if (copiedObject.type !== 'activeSelection') {
+  //       // 선택된 객체가 단일 객체인 경우
+  //       if (copiedObject.type === 'image') {
+  //         fabric.Image.fromObject(copiedObject, function (img) {
+  //           img.set({
+  //             left: x / 3 ,
+  //             top: y / 3 ,
+
+  //             evented: true,
+  //             svgViewportTransformation: true,
+  //           });
+  //           canvas.add(img);
+  //           canvas.renderAll();
+  //         });
+  //       } else if (copiedObject.type === 'i-text') {
+  //         fabric.IText.fromObject(copiedObject, function (text) {
+  //           text.set({
+  //             left: x / 3,
+  //             top: y / 3,
+  //             evented: true,
+  //             svgViewportTransformation: true,
+  //           });
+  //           canvas.add(text);
+  //           canvas.renderAll();
+  //         });
+  //       }
+  //       console.log('object is pasted', copiedObject);
+  //     } else if (copiedObject.type === 'activeSelection') {
+  //       // 선택된 객체가 다중 객체인 경우
+  //       for (let i = 0; i < copiedObject.objects.length; i++) {
+  //         {
+  //           if (copiedObject.objects[i].type === 'image') {
+  //             fabric.Image.fromObject(copiedObject.objects[i], function (img) {
+  //               img.set({
+  //                 left: x / 3,
+  //                 top: y / 3 ,
+  //                 evented: true,
+  //                 svgViewportTransformation: true,
+  //               });
+  //               canvas.add(img);
+  //               canvas.renderAll();
+  //             });
+  //           // } else if (copiedObject.objects[i].type === 'i-text') {
+  //           //   fabric.IText.fromObject(copiedObject.objects[i], function (text) {
+  //           //     text.set({
+  //           //       left: x / 3,
+  //           //       top: y / 3,
+  //           //       evented: true,
+  //           //       svgViewportTransformation: true,
+  //           //     });
+  //           //     canvas.add(text);
+  //           //     canvas.renderAll();
+  //           //   });
+  //           }
+  //         }
+  //       }
+  //     }
+  //     console.log('objects is pasted', copiedObject);
+  //   } else {
+  //     console.log('no object is copied');
+  //   }
+  // };
+
+  // // 삭제 함수 1
+  // const removeObjects = (object) => {
+  //   if (object) {
+  //     if (object.type === 'image' || object.type === 'i-text') {
+  //       // 선택된 객체가 단일 객체인 경우
+  //       const onlyObjects = canvas.getObjects().filter((obj) => {
+  //         return obj.id !== 'backImg';
+  //       });
+  //       canvas.remove(onlyObjects);
+  //       canvas.renderAll();
+  //       console.log(canvas.getObjects());
+  //       console.log('object is deleted', object);
+  //     } else if (object.type === 'activeSelection') {
+  //       const onlyObjects = canvas.getObjects().filter((obj) => {
+  //         return obj.id !== 'backImg';
+  //       });
+  //       canvas.remove(onlyObjects);
+  //       // 선택된 객체가 다중 객체인 경우
+  //       canvas.renderAll();
+  //     } else {
+  //       console.log('no object is selected');
+  //     }
+  //   }
+  // };
+
+  // // 삭제 함수 2
+  // const handleDeleteObject = (object) => {
+  //   // console.log(object);
+  //   removeObjects(object);
+  // };
+
+  // // 잘라내기 함수
+  // const handleCutObject = (object) => {
+  //   setCopiedObject(object);
+  //   removeObjects(object);
+  //   console.log('object is cut', object);
+  //   canvas.renderAll();
+  // };
+
+  ///////////////////////////////////////////////
+
+
 
     
   
@@ -446,8 +573,24 @@ const Editor = () => {
             </s.TopMenuGroupWrapper>
           </s.TopMenuWrapper>
           <s.CanvasSpaceWrapper>
-            <s.CanvasWrapper ref={canvasRef}>
+            <s.CanvasWrapper
+              onContextMenu={handleContextMenu} // 컨텍스트 메뉴 표시 이벤트
+              onClick={closeContextMenu} // 컨텍스트 메뉴 영역 외 클릭 시 컨텍스트 메뉴 닫기
+              ref={canvasRef}
+            >
               <canvas id='canvas' />
+              {isContextMenuVisible && (
+                  <ContextMenu
+                    canvas={canvas}
+                    x={contextMenuPos.x} // 컨텍스트 메뉴 표시 위치 x
+                    y={contextMenuPos.y} // 컨텍스트 메뉴 표시 위치 y
+                    onClose={closeContextMenu} // 컨텍스트 메뉴 닫기 이벤트
+                    // onCopy={handleCopyObject} // 복사 이벤트
+                    // onPaste={handlePasteObject} // 붙여넣기 이벤트
+                    // onCut={handleCutObject} // 잘라내기 이벤트
+                    // onDelete={handleDeleteObject} // 삭제 이벤트
+                  />
+                )}
             </s.CanvasWrapper>
             <s.LayerButtonWrapper>
               <s.LayerButton>

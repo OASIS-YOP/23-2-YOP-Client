@@ -505,30 +505,22 @@ const Image = ({
             <s.FilterValue >{isBackImgEmpty ? 50 : scaleValue} </s.FilterValue>
           </s.Filter>
           <s.devider />
-          <s.Filter>
+          <s.TopButtonsWrapper>
             <s.TopButton
               id='refresh'
               onClick={handleRefresh}
               disabled={isBackImgEmpty}
-              style={{
-                marginTop: '80px',
-              }}
             >
               초기화
             </s.TopButton>
-          </s.Filter>
-          <s.Filter>
             <s.TopButton
               id='lock'
               onClick={lockImage}
               disabled={isBackImgEmpty}
-              style={{
-                marginTop: '80px',
-              }}
             >
               {imageLock ? '잠금' : '잠금해제'}
             </s.TopButton>
-          </s.Filter>
+          </s.TopButtonsWrapper>
         </s.FiltersContainer>
 
       </s.Wrapper>
