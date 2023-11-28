@@ -319,15 +319,12 @@ const Editor = () => {
                 top: 492 / 2,
               });
             } else if (x < -340/2)  {
-              // 이미지의 x좌표를 캔버스의 가운데로 고정
               obj.set({
                 left: -340/2,
                 top: 492 / 2,
               }); 
             }
-            // 이미지의 x좌표가 캔버스의 가운데를 넘어가지 않으면
             else {
-              // 이미지의 x좌표를 마우스 포인터의 x좌표로 고정
               obj.set({
                 left: x,
                 top: 492 / 2,
@@ -335,15 +332,15 @@ const Editor = () => {
             }
           } else if ( obj.height > obj.width) {
             // 이미지의 세로가 가로보다 클 때
-            if (y > 492 + 492/2) {
+            if (y > 492 + 492/3) {
               obj.set({
                 left: 340 / 2,
-                top: 492 + 492/2,
+                top: 492 + 492/3,
               });
-            } else if (y < -492/2) {
+            } else if (y < -492/3) {
               obj.set({
                 left: 340 / 2,
-                top: -492/2,
+                top: -492/3,
               });
             } else {
               obj.set({
@@ -361,13 +358,13 @@ const Editor = () => {
               obj.set({
                 left: -340/2,
               });
-            } else if (y > 492 + 492/2) {
+            } else if (y > 492 + 492/3) {
               obj.set({
-                top: 492 + 492/2,
+                top: 492 + 492/3,
               });
-            } else if (y < -492/2) {
+            } else if (y < -492/3) {
               obj.set({
-                top: -492/2,
+                top: -492/3,
               });
             } else {
               obj.set({
@@ -387,6 +384,7 @@ const Editor = () => {
       }
     }, [canvas]);
   
+    
 
 
 
