@@ -31,7 +31,7 @@ const Collections = () => {
 
   const getAllCollection = () => {
     mypageAPI.getAllCollection(userId, selectedArtist).then((data) => {
-      console.log(data.allCollectionList);
+      console.log('모든 컬렉션', data.allCollectionList);
       setAllCollection(data.allCollectionList);
     });
   };
@@ -110,6 +110,8 @@ const CollectionCard = ({
 }) => {
   const [ismouseOver, setIsMouseOver] = useState(false);
 
+  let activatedAlbumName = activatedCollection.map((item) => item);
+
   const getCollectionPhotocardList = (albumName) => {
     mypageAPI
       .getCollectionPhotocardList(1, decodeURI(albumName))
@@ -129,57 +131,60 @@ const CollectionCard = ({
     getCollectionPhotocardList(albumName);
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    console.log('모든앨범명', typeof albumName);
+    console.log('활성화된앨범명', activatedAlbumName);
+  }, []);
 
   return (
-    <s.CollectionCardWrapper
-      styled={albumName === activatedCollection && { cursor: 'pointer' }}
-    >
-      {albumName === activatedCollection.albumName ? (
-        // 활성화된 컬렉션
-        <>
-          <s.ActivatedCollectionCardWrapper
-            onClick={onClickCollection}
-            onMouseOut={onHandleMouseOut}
-          >
-            <s.CollectionCardImage src={albumJacket} alt='collection' />
-            <s.CollectionInfoWrapper>
-              <s.CollectionInfoContainer>
-                <s.CollectionInfo>{albumName}</s.CollectionInfo>
-                <s.CollectionInfo>
-                  활성일 : {activatedCollection.activeDateTime}
-                </s.CollectionInfo>
-                <s.CollectionInfo>
-                  {/* 수정요망 */}
-                  수집률 : {(1 / 20) * 100}%
-                </s.CollectionInfo>
-                <s.CollectionInfo>
-                  {/* 내가가진포카수 구해서 넣어야함 */}
-                  포카수 : 1/
-                  {activatedCollection.photoCardQuant}장
-                </s.CollectionInfo>
-              </s.CollectionInfoContainer>
-            </s.CollectionInfoWrapper>
-          </s.ActivatedCollectionCardWrapper>
-        </>
-      ) : (
-        //비활성화된 컬렉션
-        <>
-          <s.InActivatedCollectionCardImage
-            src={albumJacket}
-            alt='collection'
-            onMouseOut={onHandleMouseOut}
-          />
-          {ismouseOver ? (
-            <s.InputCodeButton onMouseOver={onHandleMouseOver}>
-              코드 입력
-            </s.InputCodeButton>
-          ) : (
-            <s.InActivatedLockWrapper>
-              <img src={Lock} alt='lock' onMouseOver={onHandleMouseOver} />
-            </s.InActivatedLockWrapper>
-          )}
-        </>
+    <s.CollectionCardWrapper styled={{ cursor: 'pointer' }}>
+      {activatedCollection.map((item) =>
+        albumName === item.albumName ? (
+          // 활성화된 컬렉션
+          <>
+            <s.ActivatedCollectionCardWrapper
+              onClick={onClickCollection}
+              onMouseOut={onHandleMouseOut}
+            >
+              <s.CollectionCardImage src={albumJacket} alt='collection' />
+              <s.CollectionInfoWrapper>
+                <s.CollectionInfoContainer>
+                  <s.CollectionInfo>{albumName}</s.CollectionInfo>
+                  <s.CollectionInfo>
+                    활성일 : {activatedCollection.activeDateTime}
+                  </s.CollectionInfo>
+                  <s.CollectionInfo>
+                    {/* 수정요망 */}
+                    수집률 : {(1 / 20) * 100}%
+                  </s.CollectionInfo>
+                  <s.CollectionInfo>
+                    {/* 내가가진포카수 구해서 넣어야함 */}
+                    포카수 : 1/
+                    {activatedCollection.photoCardQuant}장
+                  </s.CollectionInfo>
+                </s.CollectionInfoContainer>
+              </s.CollectionInfoWrapper>
+            </s.ActivatedCollectionCardWrapper>
+          </>
+        ) : (
+          //비활성화된 컬렉션
+          <>
+            <s.InActivatedCollectionCardImage
+              src={albumJacket}
+              alt='collection'
+              onMouseOut={onHandleMouseOut}
+            />
+            {ismouseOver ? (
+              <s.InputCodeButton onMouseOver={onHandleMouseOver}>
+                코드 입력
+              </s.InputCodeButton>
+            ) : (
+              <s.InActivatedLockWrapper>
+                <img src={Lock} alt='lock' onMouseOver={onHandleMouseOver} />
+              </s.InActivatedLockWrapper>
+            )}
+          </>
+        )
       )}
     </s.CollectionCardWrapper>
   );

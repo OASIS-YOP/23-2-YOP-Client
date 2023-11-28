@@ -47,21 +47,22 @@ const AllArtist = () => {
       </CardsSlider>
 
       <s.PageLabel>모든 아티스트</s.PageLabel>
-      {allArtistList.map((item) => (
-        <React.Fragment key={`enterComp_${item.enterComp}`}>
-          <s.EnterCompLabel>{item.enterComp}</s.EnterCompLabel>
-          <CardsSlider>
-            {item.artistList.map((item) => (
-              <ArtistCard
-                key={`artist_${item.artistId}`}
-                photo={item.photo}
-                groupName={item.groupName}
-                artistId={item.artistId}
-              />
-            ))}
-          </CardsSlider>
-        </React.Fragment>
-      ))}
+      {allArtistList &&
+        allArtistList.map((item) => (
+          <React.Fragment key={`enterComp_${item.enterComp}`}>
+            <s.EnterCompLabel>{item.enterComp}</s.EnterCompLabel>
+            <CardsSlider>
+              {item.artistList.map((item) => (
+                <ArtistCard
+                  key={`artist_${item.artistId}`}
+                  photo={item.photo}
+                  groupName={item.groupName}
+                  artistId={item.artistId}
+                />
+              ))}
+            </CardsSlider>
+          </React.Fragment>
+        ))}
     </>
   );
 };
