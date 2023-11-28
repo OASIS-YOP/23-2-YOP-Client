@@ -75,6 +75,15 @@ const communitypageAPI = {
       return null;
     }
   },
+  getIfFavoriteArtist: async (userId, artistId) => {
+    try {
+      const path = `${process.env.REACT_APP_BASE_URL}/community/${userId}/isFavorite/${artistId}`;
+      const response = await HttpClient.get(path);
+      return response;
+    } catch (e) {
+      return null;
+    }
+  },
 };
 
 export default communitypageAPI;
