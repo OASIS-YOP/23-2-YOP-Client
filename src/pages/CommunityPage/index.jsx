@@ -20,6 +20,8 @@ const CommunityPage = () => {
   const [memberPost, setMemberPost] = useState([]);
   const [isClickedMember, setIsClickedMember] = useState(null);
 
+  const [isFavorite, setIsFavorite] = useState();
+
   const [isClickStar, setIsClickStar] = useState(false);
 
   const fandomName = ['아미', '마이', '유애나', '버니즈'];
@@ -58,9 +60,8 @@ const CommunityPage = () => {
   };
 
   const handleClickStar = () => {
-    setIsClickStar((prev) => !prev);
-    postFavoriteArtist();
-    // deleteFavoriteArtist();
+    setIsFavorite((prev) => !prev);
+    isFavorite ? deleteFavoriteArtist() : postFavoriteArtist();
   };
 
   const handleClickMember = (memberName) => {
@@ -87,6 +88,12 @@ const CommunityPage = () => {
     });
   };
 
+  const getIfFavoriteArtist = () => {
+    communitypageAPI
+      .getIfFavoriteArtist(userId, artistId)
+      .then((data) => setIsFavorite(data));
+  };
+
   // const getPostLikeQuant = () => {
   //   communitypageAPI
   //     .getPostLikeQuant(artistId,postId)
@@ -94,8 +101,11 @@ const CommunityPage = () => {
   // };
 
   useEffect(() => {
-    fetchData();
+    getIfFavoriteArtist();
   }, []);
+  useEffect(() => {
+    fetchData();
+  }, [isFavorite]);
 
   return (
     <>
@@ -104,17 +114,14 @@ const CommunityPage = () => {
       <s.ProfileContainer>
         <s.ProfileWrapper>
           <s.ProfileImage>
-            {artistInfo?.photo && (
-              <img src={artistInfo?.photo} alt='artistPhoto' />
-            )}
+            {artistInfo && <img src={artistInfo?.photo} alt='artistPhoto' />}
           </s.ProfileImage>
           <s.ProfileInfo>
             {artistInfo && <s.ArtistName>{artistInfo?.groupName}</s.ArtistName>}
             <s.FavoriteQuantWrapper>
               <s.StarIcon
                 onClick={handleClickStar}
-                src={isClickStar ? Star : EmptyStar}
-                style={{ fill: 'white' }}
+                src={isFavorite ? Star : EmptyStar}
                 alt='star'
               />
               {artistFavoriteQuant && artistFavoriteQuant}
@@ -149,7 +156,7 @@ const CommunityPage = () => {
         )}
         <s.photoCardContainer>
           <s.ContentWrapper>
-            {!memberPost
+            {!memberProfile
               ? allPost.map((item) => (
                   <s.CardImageContainer key={`allPost_${item.postId}`}>
                     <img src={item.polaroid} alt='allPolaroid' />
