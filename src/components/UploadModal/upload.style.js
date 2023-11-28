@@ -109,3 +109,23 @@ export const PolaroidCard = styled.div`
     height: 200%;
   }
 `;
+
+export const Button = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 380px;
+  height: 30px;
+  margin-top: 10px;
+`;
+
+export const ThirdModal = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100%;
+  background-color: gray;
+  color: white;
+  border-radius: 20px;
+`;
