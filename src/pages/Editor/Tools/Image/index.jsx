@@ -126,11 +126,11 @@ const Image = ({
   }, [image]);
 
 
-  useEffect(() => {
-    if (image) {
-      console.log('필터값들:', brightnessValue, saturationValue, contrastValue, rotationValue, scaleValue);
-    }
-  }, [brightnessValue, saturationValue, contrastValue, rotationValue, scaleValue]);
+  // useEffect(() => {
+  //   if (image) {
+  //     console.log('필터값들:', brightnessValue, saturationValue, contrastValue, rotationValue, scaleValue);
+  //   }
+  // }, [brightnessValue, saturationValue, contrastValue, rotationValue, scaleValue]);
 
 
 
@@ -313,7 +313,7 @@ const Image = ({
                     1,
                     new fabric.Image.filters.Brightness({
                       brightness: parseFloat(
-                        value / 100
+                        value / 220
                       ),
                     })
                   );
@@ -321,7 +321,7 @@ const Image = ({
                     1,
                     'brightness',
                     parseFloat(
-                      value / 100
+                      value / 220
                     )
                   );
                   setBrightnessValue(value);
@@ -355,7 +355,7 @@ const Image = ({
                     2,
                     new fabric.Image.filters.Saturation({
                       saturation: parseFloat(
-                        value / 50
+                        value / 110
                       ),
                     })
                   );
@@ -363,7 +363,7 @@ const Image = ({
                     2,
                     'saturation',
                     parseFloat(
-                      value / 50
+                      value / 110
                     )
                   );
                   setSaturationValue(value);
@@ -398,14 +398,14 @@ const Image = ({
                     3,
                     new fabric.Image.filters.Contrast({
                       contrast: parseFloat(
-                        value / 50
+                        value / 230
                       ),
                     })
                   );
                   applyFilterValue(
                     3,
                     'contrast',
-                    parseFloat(value / 50)
+                    parseFloat(value / 230)
                   );
                   setContrastValue(value);
                 }}

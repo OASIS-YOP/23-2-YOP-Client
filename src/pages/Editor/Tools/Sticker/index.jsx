@@ -59,7 +59,7 @@ const Stickers = ({
       canvas.add(img);
       canvas.renderAll();
     } // image가 존재하면 canvas에 img를 추가
-    else {
+    else if (!image) {
       alert('이미지를 먼저 업로드해주세요!');
     } // image가 존재하지 않으면 경고창 띄움
 

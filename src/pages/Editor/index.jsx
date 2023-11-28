@@ -157,7 +157,7 @@ const Editor = () => {
   const removeCanvas = () => {
     window.confirm('정말로 캔버스를 초기화하시겠습니까?');
     canvas.clear();
-    initCanvas();
+    setImage(null);
     setIsBackImgEmpty(true);
     console.log('캔버스 초기화');
   };
@@ -225,6 +225,7 @@ const Editor = () => {
 
             canvas.add(imgFile);
             setImage(imgFile);
+            setIsBackImgEmpty(false);
           
             canvas.renderAll();
 
@@ -333,8 +334,13 @@ const Editor = () => {
           const obj = e.target;
           setImagePosition({imageLeft: obj.left, imageTop: obj.top});
         });
+
+        console.log('캔버스 :', canvas );
       }
     }, [canvas]);
+
+
+    
   
   //base64 -> File로 변환하는 함수
   const dataURLtoFile = (dataurl, fileName) => {
