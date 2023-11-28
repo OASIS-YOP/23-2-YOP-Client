@@ -20,6 +20,8 @@ const CommunityPage = () => {
   const [memberPost, setMemberPost] = useState([]);
   const [isClickedMember, setIsClickedMember] = useState(null);
 
+  const [isFavorite, setIsFavorite] = useState();
+
   const [isClickStar, setIsClickStar] = useState(false);
 
   const fandomName = ['아미', '마이', '유애나', '버니즈'];
@@ -58,9 +60,8 @@ const CommunityPage = () => {
   };
 
   const handleClickStar = () => {
-    setIsClickStar((prev) => !prev);
-    postFavoriteArtist();
-    // deleteFavoriteArtist();
+    setIsFavorite((prev) => !prev);
+    isFavorite ? deleteFavoriteArtist() : postFavoriteArtist();
   };
 
   const handleClickMember = (memberName) => {
@@ -89,8 +90,8 @@ const CommunityPage = () => {
 
   const getIfFavoriteArtist = () => {
     communitypageAPI
-      .getIfFavoriteArtist(artistId, userId)
-      .then((data) => console.log(data));
+      .getIfFavoriteArtist(userId, artistId)
+      .then((data) => setIsFavorite(data));
   };
 
   // const getPostLikeQuant = () => {
@@ -101,8 +102,10 @@ const CommunityPage = () => {
 
   useEffect(() => {
     getIfFavoriteArtist();
-    fetchData();
   }, []);
+  useEffect(() => {
+    fetchData();
+  }, [isFavorite]);
 
   return (
     <>
@@ -118,8 +121,7 @@ const CommunityPage = () => {
             <s.FavoriteQuantWrapper>
               <s.StarIcon
                 onClick={handleClickStar}
-                src={isClickStar ? Star : EmptyStar}
-                style={{ fill: 'white' }}
+                src={isFavorite ? Star : EmptyStar}
                 alt='star'
               />
               {artistFavoriteQuant && artistFavoriteQuant}
