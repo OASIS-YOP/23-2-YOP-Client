@@ -46,20 +46,18 @@ const Editor = () => {
   const [ contrast, setContrast ] = useState(0);
 
   // 회전 값 스테이트
-  const [ rotationValue, setRotationValue ] = useState(0);
+  // const [ rotationValue, setRotationValue ] = useState(0);
 
   // 스케일 값 스테이트
-  const [ scaleValue, setScaleValue ] = useState(1);
-  const [ isSclaeChanged, setIsScaleChanged ] = useState(false);
+  // const [ scaleValue, setScaleValue ] = useState(1);
+  // const [ isSclaeChanged, setIsScaleChanged ] = useState(false);
 
   // const [ horizontal, setHorizontal ] = useState(340/2);
   // const [ vertical, setVertical ] = useState(image.y/2);
 
-  //캔버스 비워졌는지 여부
-  const [isBackImgLayerEmpty, setIsBackImgLayerEmpty] = useState(true);
+  //캔버스 이미지 비워졌는지 여부
+  const [isBackImgEmpty, setIsBackImgEmpty] = useState(true);
 
-  // 필터 초기화 여부
-  const [resetFiltersValue, setResetFiltersValue] = useState(false);
 
   // 대칭 여부 스테이트
   const [flipX, setFlipX] = useState(false); // 좌우반전
@@ -154,28 +152,15 @@ const Editor = () => {
     initCanvas();
   }, []);
 
-  //////////// 오브젝트 관리
 
-  // const objLayer = new Konva.Layer({
-  //   className: 'objLayer',
-  //   width: 340,
-  //   height: 492,
-
-  // });
-
-  // const createObjLayer = (img) => {
-  //   const canvas = stageRef.current;
-  //   canvas.add(objLayer);
-
-  //   canvas.batchDraw();
-
-  //   objLayers.push(objLayer);
-  //   console.log(objLayers);
-  //   objLayer.add(img);
-  //   objLayer.batchDraw();
-  // };
-
-  /////////////////////////
+  // 캔버스 초기화 함수
+  const removeCanvas = () => {
+    window.confirm('정말로 캔버스를 초기화하시겠습니까?');
+    canvas.clear();
+    initCanvas();
+    setIsBackImgEmpty(true);
+    console.log('캔버스 초기화');
+  };
 
   // 파일 불러오기 버튼 눌렀을 때 실행되는 함수
   const handleLoadFile = () => {
@@ -233,43 +218,15 @@ const Editor = () => {
               imgFile.scaleToHeight(492);
             }
 
-            
-
-
-            // this.canvas?.on('mouse:down', () => {
-            //   const target = this.canvas?.getActiveObject();
-            //   // 뷰포트보다 이미지 영역 클 때만 panning 활성화
-            //   if (!target && this.scaleFactor < this.currentScaleFactor) {
-            //     this.panning = true;
-            //     this.canvas?.setCursor('grabbing');
-            //   }
-            // });
-            // this.canvas?.on('mouse:move', (e) => {
-            //   if (this.panning && e.e && this.scaleFactor < this.currentScaleFactor) {
-            //     const delta = new fabric.Point(e.e.movementX, e.e.movementY);
-            //     this.canvas?.relativePan(delta);
-            //   }
-            // });
-        
-            // this.canvas?.on('mouse:up', () => {
-            //   this.panning = false;
-            //   this.canvas?.setCursor('grab');
-            // });
-
-            imgFile.on('loaded', () => {
-              console.log('조절된 이미지 크기:', imgFile.width, imgFile.height);
-            });
             if( image )
             {
               canvas.remove(image);
             }
-            
 
             canvas.add(imgFile);
             setImage(imgFile);
           
             canvas.renderAll();
-            setIsBackImgLayerEmpty(false);
 
             
           });
@@ -278,8 +235,7 @@ const Editor = () => {
       };
     };
 
-
-
+    // 추가된 이미지 조회
     useEffect(() => {
       if (image) {
         console.log('추가된 이미지 :', image);
@@ -291,14 +247,9 @@ const Editor = () => {
 
     useEffect(() => {
       if (image) {
-        (console.log(imageLeft, imageTop));
-        
+        (console.log('이미지 좌표 => ', '좌:', imageLeft, '우:', imageTop));
       }
     }, [image, imageLeft, imageTop]);
-
-
-
-
 
 
     useEffect(() => {
@@ -374,6 +325,7 @@ const Editor = () => {
             }
           }
           // 이동 후 캔버스 렌더링
+          
           canvas.renderAll();
         });
 
@@ -384,241 +336,43 @@ const Editor = () => {
       }
     }, [canvas]);
   
-    
+  //base64 -> File로 변환하는 함수
+  const dataURLtoFile = (dataurl, fileName) => {
+    var arr = dataurl.split(','),
+      mime = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(arr[1]),
+      n = bstr.length,
+      u8arr = new Uint8Array(n);
 
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
 
+    return new File([u8arr], fileName, { type: mime });
+  };
 
+  //이미지 저장할 때
+  const handleExport = () => {
+    const uri = canvas?.toDataURL();
+    if (uri) {
+      let convertedImage = dataURLtoFile(uri, 'konva');
 
-        
-   
-  //   // reader.onload = () => {
-  //   //   // 원본 이미지
-  //   //   const orgImg = new window.Image();
-  //   //   // 이미지 파일 url을 이미지 객체에 주입
-  //   //   orgImg.src = reader.result;
+      const formData = new FormData();
+      console.log('File로 저장됨 : ', convertedImage);
+      convertedImage && formData.append('image', convertedImage);
 
-  //   //   orgImg.onload = () => {
-  //   //     // 현재 캔버스와 레이어 가져오기
-  //   //     // const canvas = stageRef.current;
-  //   //     const backImgLayer = backLayerRef.current;
-
-  //   //     // 기존 이미지 제거 및 필터와 효과 초기화
-  //   //     backImgLayer.removeChildren();
-  //   //     setResetFiltersValue(true);
-  //   //     setBlackWhite(false);
-  //   //     setFlipX(false);
-  //   //     setFlipY(false);
-
-  //   //     console.log('스케일 초기화:', isSclaeChanged);
-  //   //     /////////////// 캔버스에 들어갈 이미지 사이즈 조정
-  //   //     const canvasWidth = 340;
-  //   //     const canvasHeight = 492;
-  //   //     const imgWidth = orgImg.width;
-  //   //     const imgHeight = orgImg.height;
-  //   //     const maxWidth = canvasWidth;
-  //   //     const maxHeight = canvasHeight;
-  //   //     const aspectRatio = imgWidth / imgHeight;
-  //   //     const x = canvasWidth / 2;
-  //   //     const y = canvasHeight / 2;
-
-  //   //     let newWidth = imgWidth;
-  //   //     let newHeight = imgHeight;
-
-  //   //     // 이미지의 가로가 세로보다 클 때
-  //   //     if (imgWidth > imgHeight) {
-  //   //       newHeight = maxHeight;
-  //   //       newWidth = newHeight * aspectRatio;
-  //   //     }
-  //   //     // 이미지의 세로가 가로보다 클 때
-  //   //     if (imgHeight > imgWidth) {
-  //   //       newWidth = maxWidth;
-  //   //       newHeight = newWidth / aspectRatio;
-  //   //     }
-  //   //     // 이미지의 가로와 세로가 같을 때
-  //   //     if (imgWidth === imgHeight) {
-  //   //       newHeight = maxHeight;
-  //   //       newWidth = newHeight * aspectRatio;
-  //   //     }
-  //   //     ////////////////////////////////////////
-
-  //   //     // 사이즈 조정 후 이미지(실제 캔버스에 들어갈 이미지)
-  //   //     const backImg = new Konva.Image({
-  //   //       id: 'backImg',
-  //   //       image: orgImg,
-  //   //       x: x,
-  //   //       y: y,
-  //   //       rotation: rotationValue,
-  //   //       width: newWidth,
-  //   //       height: newHeight,
-  //   //       draggable: true,
-  //   //       dragBoundFunc: (pos) => {
-  //   //         // 이미지의 가로가 세로보다 크거나 같을 때 -> 좌우로만 이동 가능
-  //   //         if (
-  //   //           orgImg.width > orgImg.height ||
-  //   //           orgImg.width === orgImg.height
-  //   //         ) {
-  //   //           return {
-  //   //             x: pos.x, // x 좌표는 변경 가능
-  //   //             y: y, // y 좌표는 변경되지 않음
-  //   //           };
-  //   //         } else {
-  //   //           // 이미지의 세로가 가로보다 클 때 -> 위치 이동 불가능
-  //   //           return {
-  //   //             x: x,
-  //   //             y: y,
-  //   //           };
-  //   //         }
-  //   //       },
-  //   //     });
-
-  //       // 편집 기준점을 이미지의 중앙으로 설정 (좌우 상하 반전을 위한 설정)
-  //       // backImg.offsetX(backImg.width() / 2);
-  //       // backImg.offsetY(backImg.height() / 2);
-
-  //       // 이미지를 레이어에 추가
-  //     //   backImgLayer.add(backImg);
-
-  //     //   setIsBackImgLayerEmpty(false);
-
-  //     //   // // 레이어 상태 업데이트
-  //     //   // backImgLayer.batchDraw();
-
-  //     //   // 이미지 스테이트 업데이트
-  //     //   setImage(backImg);
-
-  //     //   console.log('추가된 이미지 :', backImg);
-
-  //     // // 필터 적용
-  //     // applyFilters(backImg);
-  //     // // 레이어 상태 업데이트
-
-  //     // backImgLayer.batchDraw();
-  //     // };
-  // //     console.log('이미지 로드됨:', file);
-  // //   };
-  // // };
-
-  // // 필터 적용 함수
-  // const applyFilters = (image) => {
-  //   // const canvas = stageRef.current;
-  //   // const backImgLayer = backLayerRef.current;
-
-  //   const backImg = image;
-
-  //   backImg.cache();
-  //   backImg.filters(filters);
-  //   backImg.brightness(brightness);
-  //   backImg.saturation(saturation);
-  //   backImg.contrast(contrast);
-
-  // };
-
-  // // 밝기, 채도, 명암 필터 적용 함수
-  // useEffect(() => {
-  //   if (image) {
-
-  //     image.cache();
-  //     image.brightness(brightness);
-
-  //     image.hue(0);
-  //     image.saturation(saturation);
-  //     image.value(0);
-
-  //     image.contrast(contrast);
-  //   }
-  // }, [image, brightness, saturation, contrast ,]);
-
-  // // 좌우반전 적용 함수
-  // useEffect(() => {
-  //   if (image && flipX) {
-  //     image.scaleX(-1);
-  //   } else if (image && !flipX) {
-  //     image.scaleX(1);
-  //   }
-  // }, [image, flipX]);
-
-  // useEffect(() => {
-  //   if (image && flipY) {
-  //     image.scaleY(-1);
-  //   } else if (image && !flipY) {
-  //     image.scaleY(1);
-  //   }
-  // }, [image, flipY]);
-
-  // // 흑백 필터 적용 함수
-  // useEffect(() => {
-  //   if (image && blackWhite) {
-  //     image.cache();
-  //     filters.push(Konva.Filters.Grayscale)
-  //     image.filters(filters);
-  //     image.draw();
-  //   } else if (image && !blackWhite) {
-  //     image.cache();
-  //     filters.splice(Konva.Filters.Grayscale);
-  //     image.filters(filters);
-  //     image.draw();
-  //   }
-    
-  // }, [blackWhite]);
-
-  // // 회전 적용 함수
-  // useEffect(() => {
-  //   if (image) {
-  //     image.rotation(rotationValue);
-  //   }
-  // }, [image, rotationValue]);
-
-  // // 스케일 적용 함수
-  // useEffect(() => {
-  //   if (image && isSclaeChanged) {
-  //     image.scale({ x: scaleValue, y: scaleValue});
-  //   };
-  // }, [image, scaleValue]);
-
-  // // 좌우 이동 적용 함수
-  // // useEffect(() => {
-  // //   if (image) {
-  // //     image.x(horizontal);
-  // //   }
-  // // }, [image, horizontal]);
-
-  // //base64 -> File로 변환하는 함수
-  // const dataURLtoFile = (dataurl, fileName) => {
-  //   var arr = dataurl.split(','),
-  //     mime = arr[0].match(/:(.*?);/)[1],
-  //     bstr = atob(arr[1]),
-  //     n = bstr.length,
-  //     u8arr = new Uint8Array(n);
-
-  //   while (n--) {
-  //     u8arr[n] = bstr.charCodeAt(n);
-  //   }
-
-  //   return new File([u8arr], fileName, { type: mime });
-  // };
-
-  // //이미지 저장할 때
-  // const handleExport = () => {
-  //   const uri = canvasRef.current?.toDataURL();
-  //   if (uri) {
-  //     let convertedImage = dataURLtoFile(uri, 'konva');
-
-  //     const formData = new FormData();
-  //     console.log('File로 저장됨 : ', convertedImage);
-  //     convertedImage && formData.append('image', convertedImage);
-
-  //     //formdata에 잘 들어갔는지 확인하는 코드
-  //     for (var pair of formData.entries()) {
-  //       console.log(pair[0] + ', ' + pair[1]);
-  //     }
-  //     editorpageAPI
-  //       .postDesignedPhotoCard(formData)
-  //       .then((data) => console.log(data));
-  //     window.alert('성공적으로 저장되었습니다!');
-  //   } else {
-  //     window.alert('저장할 이미지가 없습니다.');
-  //   }
-  // };
+      //formdata에 잘 들어갔는지 확인하는 코드
+      for (var pair of formData.entries()) {
+        console.log(pair[0] + ', ' + pair[1]);
+      }
+      editorpageAPI
+        .postDesignedPhotoCard(formData)
+        .then((data) => console.log(data));
+      window.alert('성공적으로 저장되었습니다!');
+    } else {
+      window.alert('저장할 이미지가 없습니다.');
+    }
+  };
 
   return (
     <s.Wrapper>
@@ -640,16 +394,17 @@ const Editor = () => {
                   </s.TopMenuButtonLabel>
                 </s.TopMenuButton>
                 <s.TopMenuButton
-                  // onClick={() => {
-                  //   removeStage(stageRef.current);
-                  // }}
-                  isActive={!isBackImgLayerEmpty}
-                  disabled={isBackImgLayerEmpty}
+                  onClick={() => {
+                    removeCanvas(canvas);
+                    window.alert('캔버스가 초기화되었습니다!');
+                  }}
+                  isActive={!isBackImgEmpty}
+                  disabled={isBackImgEmpty}
                 >
-                  <s.TopMenuButtonIcon isActive={!isBackImgLayerEmpty}>
+                  <s.TopMenuButtonIcon isActive={!isBackImgEmpty}>
                     <Delete />
                   </s.TopMenuButtonIcon>
-                  <s.TopMenuButtonLabel isActive={!isBackImgLayerEmpty}>
+                  <s.TopMenuButtonLabel isActive={!isBackImgEmpty}>
                     삭제하기
                   </s.TopMenuButtonLabel>
                 </s.TopMenuButton>
@@ -670,14 +425,14 @@ const Editor = () => {
                   <s.TopMenuButtonLabel>앞으로</s.TopMenuButtonLabel>
                 </s.TopMenuButton>
                 <s.TopMenuButton
-                  // onClick={handleExport}
-                  isActive={!isBackImgLayerEmpty}
-                  disabled={isBackImgLayerEmpty}
+                  onClick={handleExport}
+                  isActive={!isBackImgEmpty}
+                  disabled={isBackImgEmpty}
                 >
-                  <s.TopMenuButtonIcon isActive={!isBackImgLayerEmpty}>
+                  <s.TopMenuButtonIcon isActive={!isBackImgEmpty}>
                     <Save />
                   </s.TopMenuButtonIcon>
-                  <s.TopMenuButtonLabel isActive={!isBackImgLayerEmpty}>
+                  <s.TopMenuButtonLabel isActive={!isBackImgEmpty}>
                     저장하기
                   </s.TopMenuButtonLabel>
                 </s.TopMenuButton>
@@ -731,43 +486,16 @@ const Editor = () => {
             <s.ToolContentsWrapper>
               {tool === 1 && 
                 <Image 
-                  stageRef={canvasRef} 
-                  isBackImgLayerEmpty={isBackImgLayerEmpty}
+                  isBackImgEmpty={isBackImgEmpty}
+                  setIsBackImgEmpty={setIsBackImgEmpty}
                   image={image} 
-                  // 필터값
-                  setBrightness={setBrightness} 
-                  setSaturation={setSaturation}
-                  setContrast={setContrast}
-                  brightness={brightness}
-                  saturation={saturation}
-                  contrast={contrast}
-                  resetFiltersValue={resetFiltersValue}
-                  setResetFiltersValue={setResetFiltersValue}
-                  blackWhite={blackWhite}
-                  setBlackWhite={setBlackWhite}
-                  // 반전
-                  flipX={flipX}
-                  flipY={flipY}
-                  setFlipX={setFlipX}
-                  setFlipY={setFlipY}
-                  // 회전
-                  setRotationValue={setRotationValue}
-                  rotationValue={rotationValue}
-                  // 스케일
-                  scaleValue={scaleValue}
-                  setScaleValue={setScaleValue}
-                  setIsScaleChanged={setIsScaleChanged}
-                  isSclaeChanged={isSclaeChanged}
-                  // // 좌우 이동
-                  // horizontal={horizontal}
-                  // setHorizontal={setHorizontal}
+                  canvas={canvas}
                 />
               }
               {tool === 2 && <Draw />}
               {tool === 3 && <Text />}
               {tool === 4 && <Sticker
-                stageRef={canvasRef}
-                objLayers={objLayers}
+                canvas={canvas}
                 image={image}
 
                 />

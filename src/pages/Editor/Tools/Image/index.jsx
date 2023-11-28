@@ -18,121 +18,202 @@ import Scale from '../../../../assets/editorIcons/image/Scale';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
-import Konva from 'konva';
+import { fabric } from 'fabric';
+// import Konva from 'konva';
 
 
 
 
 
 const Image = ({
-  setBrightness, setSaturation, setContrast,
-  brightness, saturation, contrast,
-  setResetFiltersValue, resetFiltersValue,
-  flipX, setFlipX, flipY, setFlipY,
-  blackWhite, setBlackWhite,
-  isBackImgLayerEmpty, updateIsBackImgLayerEmpty,
-  setRotationValue, rotationValue,
-  scaleValue, setScaleValue,
-  image, setIsScaleChanged, isScaleChanged,
-  setHorizontal, horizontal,
+  image, canvas,
+  isBackImgEmpty, setIsBackImgEmpty,
 }) => {
 
   // const [brightnessVlaue, setBrightnessValue] = useState(0);
   // const [saturationValue, setSaturationValue] = useState(0);
   // const [contrastValue, setContrastValue] = useState(0);
 
-  // const [ mouseDragStart, setMouseDragStart ] = useState(false);
-  // const [ mouseDragEnd, setMouseDragEnd ] = useState(false);
+  // const [ isBackImgEmpty, setIsBackImgEmpty ] = useState(true);
+  const [reverseXToggle, setReverseXToggle] = useState(true);
+  const [reverseYToggle, setReverseYToggle] = useState(true);
+  const [applyGray, setApplyGray] = useState(false);
 
-  const [ scaleSliderValue, setScaleSliderValue ] = useState(0);
+  const [ imageLock, setImageLock ] = useState(false);
 
-  
+  const [ refreshImage, setRefreshImage ] = useState(false);
 
-  const handleFlipX = () => {
-    // if( !isLayerEmpty ) {
-      setFlipX((이전FlipX) => !이전FlipX);
-      console.log('flipX', !flipX);
+  const [ brightnessValue, setBrightnessValue ] = useState(0);
+  const [ saturationValue, setSaturationValue ] = useState(0);
+  const [ contrastValue, setContrastValue ] = useState(0);
+  const [ rotationValue, setRotationValue ] = useState(0);
+  const [ scaleValue, setScaleValue ] = useState(1);
+
+  //filter part
+
+  const applyFilter = (index, filter) => {
+    image.filters[index] = filter;
+    image.applyFilters();
+    canvas.renderAll();
   };
 
-  const handleFlipY = () => {
-    // if( !isLayerEmpty ) {
-      setFlipY((이전FlipY) => !이전FlipY);
-      console.log('flipY', !flipY);
-
+  const applyFilterValue = (index, prop, value) => {
+    if (image.filters[index]) {
+      image.filters[index][prop] = value;
+      image.applyFilters();
+      canvas.renderAll();
+    }
   };
 
-
-  const handleBlackWhite = () => {
-    // if( !isLayerEmpty ) {
-    setBlackWhite((이전BlackWhite) => !이전BlackWhite);
-    console.log('blackWhite', !blackWhite);
-
-    //}
+  const onClickGray = () => {
+    console.log('gray!');
+    setApplyGray((prev) => !prev);
   };
 
-
-  const handleBrightnessChange = (value) => {
-    console.log('명도' + value);
-    setBrightness(value/160);
+  const applyGrayFilter = (index, filter) => {
+    setIsBackImgEmpty(false);
+    image.filters[index] = filter;
+    console.log(image.filters);
+    image.applyFilters();
+    canvas.renderAll();
   };
 
-  const handleSaturationChange = (value) => {
-    console.log('채도' + value);
-    setSaturation(value/60);
-    // setSaturationValue(value);
+  const removeGrayFilter = () => {
+    image.filters.splice(0);
+    image.applyFilters();
+    canvas.renderAll();
   };
 
-  const handleContrastChange = (value) => {
-    console.log('대비' + value);
-    setContrast(value/4);
-    // setContrastValue(value);
+  //이미지 잠금
+  const lockImage = () => {
+    setImageLock((prev) => !prev);
+    image.set({
+      evented: imageLock,
+    });
+    canvas.renderAll();
+  };
+
+  //좌우반전 part
+  const reverseX = () => {
+    image.set('flipX', reverseXToggle);
+    setReverseXToggle((prev) => !prev);
+    canvas.renderAll();
+  };
+  const reverseY = () => {
+    image.set('flipY', reverseYToggle);
+    setReverseYToggle((prev) => !prev);
+    canvas.renderAll();
   };
 
   useEffect(() => {
-    if (resetFiltersValue) {
-      setResetFiltersValue(false);
-      setBrightness(brightness);
-      setSaturation(saturation);
-      setContrast(contrast);
-      setScaleSliderValue(0);
-      setScaleValue(scaleValue);
+    //필터 초기화
+    if(!image){
+    setIsBackImgEmpty(true);
+    setApplyGray(false);
+    } 
+    else if (image) {
+    setBrightnessValue(0);
+    setSaturationValue(0);
+    setContrastValue(0);
+    setRotationValue(0);
+    setScaleValue(50);
 
-      console.log('명도, 채도, 대비', brightness, saturation, contrast);
+    setReverseXToggle(true);
+    setReverseYToggle(true);
+    
+    setIsBackImgEmpty(false);
+  }
+  }, [image]);
 
+
+  useEffect(() => {
+    if (image) {
+      console.log('필터값들:', brightnessValue, saturationValue, contrastValue, rotationValue, scaleValue);
     }
+  }, [brightnessValue, saturationValue, contrastValue, rotationValue, scaleValue]);
 
-  }, [resetFiltersValue]);
 
-  const handleRotaionChange = (value) => {
-    setRotationValue(value);
-    console.log('회전' + value);
+
+  //canvas clear될때마다 inputValue 초기화
+  // canvas.on({ 'canvas:cleared': initRangeInputValues });
+
+  // 초기화 버튼 누르면
+  const handleRefresh = () => {
+    //필터 초기화
+      setRefreshImage(true);
+
+      setApplyGray(false);
+
+      setBrightnessValue(0);
+      setSaturationValue(0);
+      setContrastValue(0);
+      setRotationValue(0);
+      setScaleValue(50);
+  
+      setReverseXToggle(true);
+      setReverseYToggle(true);
+
+      image.set('flipX', false);
+      image.set('flipY', false);
+      image.set('angle', 0);
+
+      // 명도 필터 초기화
+      applyFilter(1, new fabric.Image.filters.Brightness({ brightness: 0 }));
+      applyFilterValue(1, 'brightness', 0);
+
+      // 채도 필터 초기화
+      applyFilter(2, new fabric.Image.filters.Saturation({ saturation: 0 }));
+      applyFilterValue(2, 'saturation', 0);
+
+      // 대비 필터 초기화
+      applyFilter(3, new fabric.Image.filters.Contrast({ contrast: 0 }));
+      applyFilterValue(3, 'contrast', 0);
+
+      //이미지 위치 초기화
+      image.set({
+        left: 340/2,
+        top: 492/2,
+      });
+
+      image.setCoords();
+      canvas.renderAll();
   };
 
-  const handleScaleChange = (value) => {
-    setIsScaleChanged(true);
-    setScaleSliderValue(value);
-    if (scaleSliderValue === 0) {
-      setScaleValue(1);
-    } else {
-    setScaleValue(1+scaleSliderValue/100);
+  useEffect(() => {
+
+    console.log('이미지 초기화:', refreshImage)
+    if (image && refreshImage) {
+      const imgWidth = image.width;
+      const imgHeight = image.height;
+  
+      // 이미지 크기 변경
+      if (imgWidth > imgHeight) {
+        image.scaleToHeight(492);
+      } else if (imgHeight > imgWidth) {
+        image.scaleToWidth(340);
+      } else if (imgWidth === imgHeight) {
+        image.scaleToHeight(492);
+      }
+      image.set('scaleX', image.scaleX).set('scaleY', image.scaleY);
+      image.setCoords();
+      canvas.renderAll();
+      setRefreshImage(false);
+    } else if (!refreshImage){
+      return;
     }
-    console.log('크기' + value);
-  };
-
-  // const handleHorizontalChange = (value) => {
-  //   setHorizontal(value);
-  //   console.log('X축' + value);
-  // };
+    
+  }, [image, refreshImage]);
 
 
 
-  // const valueReset = () => {
-  //   console.log('리셋', brightness, saturation, contrast);
-  //   setBrightness(0);
-  //   setSaturation(0);
-  //   setContrast(0);
-  //   setResetFiltersValue(false);
-  // };
+
+  //gray toggle
+  useEffect(() => {
+    if (!image) return;
+    applyGray
+      ? applyGrayFilter(0, new fabric.Image.filters.Grayscale())
+      : removeGrayFilter();
+  }, [applyGray]);
   
 
 
@@ -173,10 +254,10 @@ const Image = ({
       <s.Wrapper>
         <s.TopButtonsWrapper>
           <s.TopButton 
-            onClick={handleFlipX}
-            disabled={isBackImgLayerEmpty}
-            updateIsBackImgLayerEmpty={updateIsBackImgLayerEmpty}
-            isBackImgLayerEmpty={isBackImgLayerEmpty}
+            onClick={reverseX}
+            disabled={isBackImgEmpty}
+            // updateIsBackImgEmpty={updateIsBackImgEmpty}
+            isBackImgEmpty={isBackImgEmpty}
           >
             <s.TopButtonIcon>
               <AlignCenterHorizontal />
@@ -186,10 +267,10 @@ const Image = ({
             </s.TopButtonLabel>
             </s.TopButton>
             <s.TopButton 
-              onClick={handleFlipY}
-              disabled={isBackImgLayerEmpty}
-              updateIsBackImgLayerEmpty={updateIsBackImgLayerEmpty}
-              isBackImgLayerEmpty={isBackImgLayerEmpty}
+              onClick={reverseY}
+              disabled={isBackImgEmpty}
+              // updateIsBackImgEmpty={updateIsBackImgEmpty}
+              isBackImgEmpty={isBackImgEmpty}
             >
             <s.TopButtonIcon>
               <AlignCenterVertical />
@@ -199,10 +280,11 @@ const Image = ({
             </s.TopButtonLabel>
           </s.TopButton>
           <s.TopButton
-            onClick={handleBlackWhite}
-            disabled={isBackImgLayerEmpty}  
-            updateIsBackImgLayerEmpty={updateIsBackImgLayerEmpty}
-            isBackImgLayerEmpty={isBackImgLayerEmpty}
+            id='grayscale'
+            onClick={onClickGray}
+            disabled={isBackImgEmpty}  
+            // updateIsBackImgEmpty={updateIsBackImgEmpty}
+            isBackImgEmpty={isBackImgEmpty}
           >
             <s.TopButtonIcon>
               <BlackWhite />
@@ -222,13 +304,30 @@ const Image = ({
             </s.FilterLabel>
             <s.FilterSlider>
               <Slider
-                id='brightness-slider'
+                className='image-input'
+                id='brightness-value'
                 defaultValue={0}
-                value = {resetFiltersValue ? 0 : brightness*160}
-                onChange={handleBrightnessChange}
-                disabled={isBackImgLayerEmpty}
-                updateIsBackImgLayerEmpty={updateIsBackImgLayerEmpty}
-                isBackImgLayerEmpty={isBackImgLayerEmpty}
+                value={isBackImgEmpty ? 0 : brightnessValue}
+                onChange={(value)=> {
+                  applyFilter(
+                    1,
+                    new fabric.Image.filters.Brightness({
+                      brightness: parseFloat(
+                        value / 100
+                      ),
+                    })
+                  );
+                  applyFilterValue(
+                    1,
+                    'brightness',
+                    parseFloat(
+                      value / 100
+                    )
+                  );
+                  setBrightnessValue(value);
+                }}
+                disabled={isBackImgEmpty}
+                isBackImgEmpty={isBackImgEmpty}
                 handleStyle={handleStyle}
                 trackStyle={trackStyle}
                 railStyle={railStyle}
@@ -236,7 +335,7 @@ const Image = ({
                 max={100}
               />
             </s.FilterSlider>
-            <s.FilterValue >{brightness*160} </s.FilterValue>
+            <s.FilterValue >{isBackImgEmpty ? 0 : brightnessValue}</s.FilterValue>
           </s.Filter>
           <s.Filter>
             <s.FilterIcon>
@@ -247,13 +346,31 @@ const Image = ({
             </s.FilterLabel>
             <s.FilterSlider>
               <Slider
-                id='saturation-slider'
+                className='image-input'
+                id='saturation-value'
                 defaultValue={0}
-                onChange={handleSaturationChange}
-                disabled={isBackImgLayerEmpty}
-                value = {resetFiltersValue ? 0 : saturation*60}
-                updateIsBackImgLayerEmpty={updateIsBackImgLayerEmpty}
-                isBackImgLayerEmpty={isBackImgLayerEmpty}
+                value={isBackImgEmpty ? 0 : saturationValue}
+                onChange={(value) => {
+                  applyFilter(
+                    2,
+                    new fabric.Image.filters.Saturation({
+                      saturation: parseFloat(
+                        value / 50
+                      ),
+                    })
+                  );
+                  applyFilterValue(
+                    2,
+                    'saturation',
+                    parseFloat(
+                      value / 50
+                    )
+                  );
+                  setSaturationValue(value);
+                }}
+                disabled={isBackImgEmpty}
+                // updateIsBackImgEmpty={updateIsBackImgEmpty}
+                isBackImgEmpty={isBackImgEmpty}
                 handleStyle={handleStyle}
                 trackStyle={trackStyle}
                 railStyle={railStyle}
@@ -261,7 +378,7 @@ const Image = ({
                 max={100}
               />
             </s.FilterSlider>
-            <s.FilterValue >{saturation*60} </s.FilterValue>
+            <s.FilterValue >{isBackImgEmpty ? 0 : saturationValue} </s.FilterValue>
           </s.Filter>
           <s.Filter>
             <s.FilterIcon>
@@ -272,13 +389,29 @@ const Image = ({
             </s.FilterLabel>
             <s.FilterSlider>
               <Slider
-                id='contrast-slider'
+                className='image-input'
+                id='contrast-value'
                 defaultValue={0}
-                onChange={handleContrastChange}
-                value = {resetFiltersValue ? 0 : contrast*4}
-                disabled={isBackImgLayerEmpty}
-                updateIsBackImgLayerEmpty={updateIsBackImgLayerEmpty}
-                isBackImgLayerEmpty={isBackImgLayerEmpty}
+                value={isBackImgEmpty ? 0 : contrastValue}
+                onChange={(value) => {
+                  applyFilter(
+                    3,
+                    new fabric.Image.filters.Contrast({
+                      contrast: parseFloat(
+                        value / 50
+                      ),
+                    })
+                  );
+                  applyFilterValue(
+                    3,
+                    'contrast',
+                    parseFloat(value / 50)
+                  );
+                  setContrastValue(value);
+                }}
+                disabled={isBackImgEmpty}
+                // updateIsBackImgEmpty={updateIsBackImgEmpty}
+                isBackImgEmpty={isBackImgEmpty}
                 handleStyle={handleStyle}
                 trackStyle={trackStyle}
                 railStyle={railStyle}
@@ -286,7 +419,7 @@ const Image = ({
                 max={100}
               />
             </s.FilterSlider>
-            <s.FilterValue >{contrast*4} </s.FilterValue>
+            <s.FilterValue >{isBackImgEmpty ? 0 : contrastValue} </s.FilterValue>
           </s.Filter>
           <s.devider />
         </s.FiltersContainer>
@@ -304,13 +437,17 @@ const Image = ({
             </s.FilterLabel>
             <s.FilterSlider>
               <Slider
+                className='image-input'
                 id='rotate-slider'
                 defaultValue={0}
-                disabled={isBackImgLayerEmpty}
-                updateIsBackImgLayerEmpty={updateIsBackImgLayerEmpty}
-                isBackImgLayerEmpty={isBackImgLayerEmpty}
-                onChange={handleRotaionChange}
-                value = { resetFiltersValue ? 0 : rotationValue}
+                disabled={isBackImgEmpty}
+                onChange={(value) => {
+                    const newAngle = parseInt(value);
+                    setRotationValue(value);
+                    image.set('angle', newAngle).setCoords();
+                    canvas.requestRenderAll();
+                }}
+                value={isBackImgEmpty ? 0 : rotationValue}
                 handleStyle={handleStyle}
                 trackStyle={trackStyle}
                 railStyle={railStyle}
@@ -318,7 +455,7 @@ const Image = ({
                 max={180}
               />
             </s.FilterSlider>
-            <s.FilterValue >{rotationValue} </s.FilterValue>
+            <s.FilterValue >{isBackImgEmpty ? 0 : rotationValue} </s.FilterValue>
           </s.Filter>
           <s.Filter>
             <s.FilterIcon>
@@ -329,78 +466,75 @@ const Image = ({
             </s.FilterLabel>
             <s.FilterSlider>
               <Slider
+                className='image-input'
                 id='scale-slider'
-                defaultValue={0}
-                disabled={isBackImgLayerEmpty}
-                value = { resetFiltersValue ? 0 : scaleSliderValue }
-                updateIsBackImgLayerEmpty={updateIsBackImgLayerEmpty}
-                isBackImgLayerEmpty={isBackImgLayerEmpty}
-                onChange={handleScaleChange}
+                defaultValue={50}
+                disabled={isBackImgEmpty}
+                value = {isBackImgEmpty ? 50 : scaleValue}
+                onChange={(value) => {
+                  if(image.width> image.height){
+                    const scaleFactor = value / 130; 
+                    image.scale(scaleFactor).setCoords();
+
+                    canvas.requestRenderAll();
+
+                    setScaleValue(value);
+                  } else if (image.width< image.height){
+                    const scaleFactor = value / 300; 
+                    image.scale(scaleFactor).setCoords();
+
+                    canvas.requestRenderAll();
+
+                    setScaleValue(value);
+                  } else if (image.width === image.height){
+                    const scaleFactor = value / 200; 
+                    image.scale(scaleFactor).setCoords();
+
+                    canvas.requestRenderAll();
+
+                    setScaleValue(value);
+                  }
+                }}
                 handleStyle={handleStyle}
                 trackStyle={trackStyle}
                 railStyle={railStyle}
-                min={-100}
+                min={1}
                 max={100}
               />
             </s.FilterSlider>
-            <s.FilterValue >{scaleSliderValue} </s.FilterValue>
+            <s.FilterValue >{isBackImgEmpty ? 50 : scaleValue} </s.FilterValue>
           </s.Filter>
-          {/* <s.Filter>
-            <s.FilterIcon>
-              <Horizontal />
-            </s.FilterIcon>
-            <s.FilterLabel>
-              X축
-            </s.FilterLabel>
-            <s.FilterSlider>
-              <Slider
-                id='horizontal-slider'
-                defaultValue={0}
-                disabled={isBackImgLayerEmpty}
-                value = { resetFiltersValue ? 0 : horizontal }
-                updateIsBackImgLayerEmpty={updateIsBackImgLayerEmpty}
-                isBackImgLayerEmpty={isBackImgLayerEmpty}
-                onChange={handleHorizontalChange}
-                handleStyle={handleStyle}
-                trackStyle={trackStyle}
-                railStyle={railStyle}
-                min={-100}
-                max={100}
-              />
-            </s.FilterSlider>
-            </s.Filter>
-            <s.Filter>
-            <s.FilterIcon>
-              <Vertical />
-            </s.FilterIcon>
-            <s.FilterLabel>
-              Y축
-            </s.FilterLabel>
-            <s.FilterSlider>
-              <Slider
-                id='vertical-slider'
-                defaultValue={0}
-                disabled={isBackImgLayerEmpty}
-                value = { resetFiltersValue ? 0 : ''}
-                updateIsBackImgLayerEmpty={updateIsBackImgLayerEmpty}
-                isBackImgLayerEmpty={isBackImgLayerEmpty}
-                // onChange={handleScaleChange}
-                handleStyle={handleStyle}
-                trackStyle={trackStyle}
-                railStyle={railStyle}
-                min={-100}
-                max={100}
-              />
-            </s.FilterSlider>
-            </s.Filter>  */}
+          <s.devider />
+          <s.Filter>
+            <s.TopButton
+              id='refresh'
+              onClick={handleRefresh}
+              disabled={isBackImgEmpty}
+              style={{
+                marginTop: '80px',
+              }}
+            >
+              초기화
+            </s.TopButton>
+          </s.Filter>
+          <s.Filter>
+            <s.TopButton
+              id='lock'
+              onClick={lockImage}
+              disabled={isBackImgEmpty}
+              style={{
+                marginTop: '80px',
+              }}
+            >
+              {imageLock ? '잠금' : '잠금해제'}
+            </s.TopButton>
+          </s.Filter>
         </s.FiltersContainer>
 
       </s.Wrapper>
       
     </>
   );
-
-
 };
 
 export default Image;
