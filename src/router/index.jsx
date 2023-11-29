@@ -11,6 +11,7 @@ import MyLikes from '../pages/MyPage/MyLikes';
 import AllArtist from '../pages/CommunityPage/AllArtist';
 import UploadModal from '../components/UploadModal';
 import Editor from '../pages/Editor';
+import CollectionCard from '../components/UploadModal/';
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
   {
     path: '/upload',
     element: <UploadModal />,
+  },
+  {
+    path: '//uploadModal2/:uploadId',
+    element: <CollectionCard />,
   },
   {
     path: '/mypage',
