@@ -70,6 +70,7 @@ const SelectCollection = () => {
     setSelectedCard(index);
     setIsSecondaryModalOpened(true);
     setIsPolaroid(false);
+    navigate(`/uploadmodal2/${index}`);
   };
 
   const openSecondaryModal = (index) => {
@@ -95,7 +96,7 @@ const SelectCollection = () => {
 
   useEffect(() => {
     if (isSecondaryModalOpened === true) {
-      navigate(`/uploadModal2/${selectedCard}`);
+      navigate(`/uploadmodal2/${selectedCard}`);
     }
   }, [isSecondaryModalOpened, navigate, selectedCard]);
 
@@ -148,7 +149,7 @@ const SelectCollection = () => {
               element={<DesignSelection openModal={openModal} />}
             />
             <Route
-              path="/uploadModal2/:selectedCard"
+              path="/uploadmodal2/:selectedCard"
               element={<UploadComponent closeModal={closeModal} />}
             />
           </Routes>
