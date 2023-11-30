@@ -9,6 +9,7 @@ const ContextMenu = ({
   onPaste,
   onCut,
   onDelete,
+  selectedObject,
 }) => {
   // 컨텍스트 메뉴
   const handleMenuItemClick = (action) => {
@@ -16,43 +17,60 @@ const ContextMenu = ({
     if (action === 'copy') {
       // 복사 동작 처리
 
-      // if (
-      //   canvas.getActiveObject() !== null &&
-      //   canvas.getActiveObject() !== undefined
-      // ) {
-      //   // 선택된 객체가 있는지 확인
-      //   const activeObject = canvas.getActiveObject().toObject();
-      //   // console.log(typeof activeObject);
-      //   onCopy(activeObject);
-      // } else {
-      //   console.log('no object is selected');
-      // }
+      // 선택된 객체가 있는지 확인
+      if (
+        canvas.getActiveObject() !== null &&
+        canvas.getActiveObject() !== undefined
+      ) {
+        
+        if( canvas.getActiveObject().type !== 'activeSelection'){
+          if( canvas.getActiveObject().id === 'backImg'){
+            console.log('배경이미지는 복사할 수 없습니다.');
+            return;
+          }
+          else{
+            const activeObject = canvas.getActiveObject().toObject();
+            // console.log(typeof activeObject);
+            onCopy(activeObject);
+          }
+        } else {
+          const activeObject = canvas.getActiveObject().toObject();
+          // console.log(typeof activeObject);
+          onCopy(activeObject);
+        } 
+      } else {
+        console.log('no object is selected');
+      }
     } else if (action === 'paste') {
       // 붙여넣기 동작 처리
-
-      // onPaste(x, y);
+      onPaste(x, y);
       // // 마우스 좌클릭 위치를 onPaste 함수로 전달
     } else if (action === 'cut') {
       // 잘라내기 동작 처리
-
-      // if (canvas.getActiveObject() !== null || undefined) {
-      //   // 선택된 객체가 있는지 확인
-      //   const activeObject = canvas.getActiveObject().toObject();
-      //   // console.log(typeof activeObject);
-      //   onCut(activeObject);
-      // } else {
-      //   console.log('no object is selected');
-      // }
+      if (  canvas.getActiveObject() ) {
+        // 선택된 객체가 있는지 확인
+        if( canvas.getActiveObject().type !== 'activeSelection'){
+            const activeObject = canvas.getActiveObject().toObject();
+            // console.log(typeof activeObject);
+            onCut(activeObject);
+        } else {
+          const activeObject = canvas.getActiveObject().toObject();
+          // console.log(typeof activeObject);
+          onCut(activeObject);
+        }
+      } else {
+        console.log('no object is selected');
+      }
     } else if (action === 'delete') {
-      // // 삭제 동작 처리
-
-      // if (canvas.getActiveObject() !== null || undefined) {
-      //   // 선택된 객체가 있는지 확인
-      //   const activeObject = canvas.getActiveObject().toObject();
-      //   onDelete(activeObject);
-      // } else {
-      //   console.log('no object is selected');
-      // }
+      // 삭제 동작 처리
+      console.log('삭제할 객체들:', canvas.getActiveObject().toObject());
+      if (canvas.getActiveObject()) {
+        // 선택된 객체가 있는지 확인
+        const activeObject = canvas.getActiveObject().toObject();
+        onDelete(activeObject);
+      } else {
+        console.log('no object is selected');
+      }
     }
     onClose();
     // 컨텍스트 메뉴 닫기

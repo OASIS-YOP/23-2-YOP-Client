@@ -1,81 +1,306 @@
 
 
-
 export const stickerData1 = [
   ////1번째 스티커 리스트
-    { src: 'GoodVibesST.svg', spec:'', class: 'ST1' },
-    { src:'HelloST.svg', spec:'', class: 'ST1' },
-    { src:'BFF_ST.svg', spec:'', class: 'ST1' },
-    { src: 'Love_ST.svg' , spec: '', class: 'ST1' },
-    { src: 'SprinkleYellow_ST.svg', spec: 'particlesS', class: 'ST1' },
-    { src: 'FlowerYellow_ST.svg', spec: '', class: 'ST1' },
-    { src: 'Love_ST2.svg',spec: '', class: 'ST1' },
-    { src: 'LYS_ST.svg',spec: '', class: 'ST1' },
-    { src: 'New_ST.svg',spec: '', class: 'ST1' },
+  { 
+    id: 1,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/GoodVibesST.svg`,
+    spec: '',
+    class: 'ST1', 
+  },
+  { 
+    id: 2,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/HelloST.svg`,
+    spec: '',
+    class: 'ST1',
+  },
+  {
+    id: 3,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/BFF_ST.svg`,
+    spec: '',
+    class: 'ST1',
+  },
+  {
+    id: 4,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/Love_ST.svg`,
+    spec: '',
+    class: 'ST1',
+  },
+  {
+    id: 5,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/SprinkleYellow_ST.svg`,
+    spec: 'particlesS',
+    class: 'ST1',
+  },
+  {
+    id: 6,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/FlowerYellow_ST.svg`,
+    spec: '',
+    class: 'ST1',
+  },
+  {
+    id: 7,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/Love_ST2.svg`,
+    spec: '',
+    class: 'ST1',
+  },
+  {
+    id: 8,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/LYS_ST.svg`,
+    spec: '',
+    class: 'ST1',
+  },
+  {
+    id: 9,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/New_ST.svg`,
+    spec: '',
+    class: 'ST1',
+  },
 ];
 
 export const stickerData2 = [
   ////2번째 스티커 리스트
     // m : monitor
     // p : property
-    { src: 'MonitorCRT_ST.svg', spec:'m' },
-    { src:'MonitorCRTPac-Man_ST.svg', spec:'m', },
-    { src:'MonitorCRTFigma_ST.svg', spec: 'm', },
-    { src: 'MonitorFlatscreen_ST.svg' , spec: 'm', },
-    { src: 'MonitorFlatscreenFigma_ST.svg', spec: 'm', },
-    { src: 'MonitorFlatscreenPac-Man_ST.svg',spec: 'm', },
-    { src: 'PropertyBeige_ST.svg',spec: 'p', },
-    { src: 'PropertyGray_ST.svg',spec: 'p', },
+    {
+      id: 1,
+      fileUrl: `${process.env.PUBLIC_URL}/images/stickers/MonitorCRT_ST.svg`,
+      spec: 'm',
+    },
+    {
+      id: 2,
+      fileUrl: `${process.env.PUBLIC_URL}/images/stickers/MonitorCRTPac-Man_ST.svg`,
+      spec: 'm',
+    },
+    {
+      id: 3,
+      fileUrl: `${process.env.PUBLIC_URL}/images/stickers/MonitorCRTFigma_ST.svg`,
+      spec: 'm',
+    },
+    {
+      id: 4,
+      fileUrl: `${process.env.PUBLIC_URL}/images/stickers/MonitorFlatscreen_ST.svg`,
+      spec: 'm',
+    },
+    {
+      id: 5,
+      fileUrl: `${process.env.PUBLIC_URL}/images/stickers/MonitorFlatscreenFigma_ST.svg`,
+      spec: 'm',
+    },
+    {
+      id: 6,
+      fileUrl: `${process.env.PUBLIC_URL}/images/stickers/MonitorFlatscreenPac-Man_ST.svg`,
+      spec: 'm',
+    },
+    {
+      id: 7,
+      fileUrl: `${process.env.PUBLIC_URL}/images/stickers/PropertyBeige_ST.svg`,
+      spec: 'p',
+    },
+    {
+      id: 8,
+      fileUrl: `${process.env.PUBLIC_URL}/images/stickers/PropertyGray_ST.svg`,
+      spec: 'p',
+    },
 ];
 
 export const stickerData3 = [
-  { src: 'BrokenHeartFixel.svg', spec:'particlesM' },
-  { src:'OKHeartFixel.svg', spec:'particlesM', },
+  {
+    id: 1,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/BrokenHeartFixel.svg`,
+    spec: 'particlesM',
+  },
+  {
+    id: 2,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/OKHeartFixel.svg`,
+    spec: 'particlesM',
+  },
 ];
 
 export const stickerData4 = [
-  { src: 'RBPC1.png', spec:'ribbonL' },
-  { src:'RBPC2.png', spec:'ribbonM' },
-  { src:'RBPC3.png', spec:'ribbonM' },
-  { src:'RBPC4.png', spec:'ribbonL' },
-  { src:'RBPC5.png', spec:'ribbonL' },
-  { src:'RBPC6.png', spec:'ribbonM' },
-  { src:'RBPC7.png', spec:'ribbonL' },
-  { src:'RBPC8.png', spec:'ribbonS' },
-  { src:'RBPC9.png', spec:'ribbonS' },
-  { src:'RBPC10.png', spec:'ribbonS' },
-  { src:'RBPC11.png', spec:'ribbonS' },
-  { src:'RBPC12.png', spec:'ribbonS' },
-  { src:'RBPC13.png', spec:'ribbonS' },
+  {
+    id: 1,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/RBPC1.png`,
+    spec: 'ribbonL',
+  },
+  {
+    id: 2,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/RBPC2.png`,
+    spec: 'ribbonM',
+  },
+  {
+    id: 3,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/RBPC3.png`,
+    spec: 'ribbonM',
+  },
+  {
+    id: 4,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/RBPC4.png`,
+    spec: 'ribbonL',
+  },
+  {
+    id: 5,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/RBPC5.png`,
+    spec: 'ribbonL',
+  },
+  {
+    id: 6,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/RBPC6.png`,
+    spec: 'ribbonM',
+  },
+  {
+    id: 7,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/RBPC7.png`,
+    spec: 'ribbonL',
+  },
+  {
+    id: 8,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/RBPC8.png`,
+    spec: 'ribbonS',
+  },
+  {
+    id: 9,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/RBPC9.png`,
+    spec: 'ribbonS',
+  },
+  {
+    id: 10,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/RBPC10.png`,
+    spec: 'ribbonS',
+  },
+  {
+    id: 11,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/RBPC11.png`,
+    spec: 'ribbonS',
+  },
+  {
+    id: 12,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/RBPC12.png`,
+    spec: 'ribbonS',
+  },
+  {
+    id: 13,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/RBPC13.png`,
+    spec: 'ribbonS',
+  },
 ];
 
 export const stickerData5 = [ 
-  { src:'RBP1.png', spec:'ribbonL' },
-  { src:'RBP2.png', spec:'ribbonM' },
-  { src:'RBP3.png', spec:'ribbonM' },
-  { src:'RBP4.png', spec:'ribbonL' },
-  { src:'RBP5.png', spec:'ribbonL' },
-  { src:'RBP6.png', spec:'ribbonM' },
-  { src:'RBP7.png', spec:'ribbonL' },
-  { src:'RBP8.png', spec:'ribbonS' },
-  { src:'RBP9.png', spec:'ribbonS' },
-  { src:'RBP10.png', spec:'ribbonS' },
-  { src:'RBP11.png', spec:'ribbonS' },
-  { src:'RBP12.png', spec:'ribbonS' },
-  { src:'RBP13.png', spec:'ribbonS' },
+  {
+    id: 1,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/RBP1.png`,
+    spec: 'ribbonL',
+  },
+  {
+    id: 2,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/RBP2.png`,
+    spec: 'ribbonM',
+  },
+  {
+    id: 3,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/RBP3.png`,
+    spec: 'ribbonM',
+  },
+  {
+    id: 4,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/RBP4.png`,
+    spec: 'ribbonL',
+  },
+  {
+    id: 5,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/RBP5.png`,
+    spec: 'ribbonL',
+  },
+  {
+    id: 6,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/RBP6.png`,
+    spec: 'ribbonM',
+  },
+  {
+    id: 7,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/RBP7.png`,
+    spec: 'ribbonL',
+  },
+  {
+    id: 8,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/RBP8.png`,
+    spec: 'ribbonS',
+  },
+  {
+    id: 9,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/RBP9.png`,
+    spec: 'ribbonS',
+  },
+  {
+    id: 10,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/RBP10.png`,
+    spec: 'ribbonS',
+  },
+  {
+    id: 11,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/RBP11.png`,
+    spec: 'ribbonS',
+  },
+  {
+    id: 12,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/RBP12.png`,
+    spec: 'ribbonS',
+  },
+  {
+    id: 13,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/RBP13.png`,
+    spec: 'ribbonS',
+  },
 ];
 
 export const stickerData6 = [
-  { src: 'RBY1.svg', spec:'ribbonM' },
-  { src:'RBY2.svg', spec:'ribbonM' },
-]
+  {
+    id: 1,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/RBY1.svg`,
+    spec: 'ribbonM',
+  },
+  {
+    id: 2,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/RBY2.svg`,
+    spec: 'ribbonM',
+  },
+];
 
+// 주접스티커
 export const stickerData7 = [
-  { src: 'MTChY.png', spec:'L' },
-  { src: 'MTChB.png', spec:'L' },
-  { src: '주접1.svg', spec:'' },
-  { src:'주접2.svg', spec:'L' },
-  { src:'주접3.svg', spec:'' },
-  { src:'주접4.svg', spec:'L' },
-  { src:'주접5.svg', spec:'L' },
-]
+  {
+    id: 1,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/MTChY.png`,
+    spec: 'L',
+  },
+  {
+    id: 2,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/MTChB.png`,
+    spec: 'L',
+  },
+  {
+    id: 3,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/주접1.svg`,
+    spec: '',
+  },
+  {
+    id: 4,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/주접2.svg`,
+    spec: 'L',
+  },
+  {
+    id: 5,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/주접3.svg`,
+    spec: '',
+  },
+  {
+    id: 6,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/주접4.svg`,
+    spec: 'L',
+  },
+  {
+    id: 7,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/주접5.svg`,
+    spec: 'L',
+  },
+];
