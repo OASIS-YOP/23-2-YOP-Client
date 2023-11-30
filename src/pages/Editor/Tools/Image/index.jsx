@@ -49,6 +49,9 @@ const Image = ({
   const [ rotationValue, setRotationValue ] = useState(0);
   const [ scaleValue, setScaleValue ] = useState(1);
 
+  const [ newWidth, setNewWidth ] = useState( 0 );
+  const [ newHeight, setNewHeight ] = useState( 0 );
+
   //filter part
 
   const applyFilter = (index, filter) => {
@@ -246,7 +249,51 @@ const Image = ({
     marginTop: -2,
   };
 
-    
+
+   /////////////// 캔버스에 들어갈 이미지 사이즈 조정
+
+   const resizeImage = () => {
+    if (image)
+   {const canvasWidth = 340;
+   const canvasHeight = 492;
+
+   const imgWidth = image.width;
+   const imgHeight = image.height;
+
+   const maxWidth = canvasWidth;
+   const maxHeight = canvasHeight;
+
+   const aspectRatio = imgWidth / imgHeight;
+
+   let newWidth = imgWidth;
+   let newHeight = imgHeight;
+
+   // 이미지의 가로가 세로보다 클 때
+   if (imgWidth > imgHeight) {
+     newHeight = maxHeight;
+     newWidth = newHeight * aspectRatio;
+   }
+   // 이미지의 세로가 가로보다 클 때
+   if (imgHeight > imgWidth) {
+     newWidth = maxWidth;
+     newHeight = newWidth / aspectRatio;
+   }
+   // 이미지의 가로와 세로가 같을 때
+   if (imgWidth === imgHeight) {
+     newHeight = maxHeight;
+     newWidth = newHeight * aspectRatio;
+   }
+    console.log('newWidth:', newWidth, 'newHeight:', newHeight);
+    setNewWidth(newWidth);
+    setNewHeight(newHeight);
+  }
+
+  };
+   ////////////////////////////////////////
+
+   useEffect((image) => {
+    resizeImage(image);
+  }, [image]);
 
 
   return (
@@ -473,22 +520,22 @@ const Image = ({
                 value = {isBackImgEmpty ? 50 : scaleValue}
                 onChange={(value) => {
                   if(image.width> image.height){
-                    const scaleFactor = value / 130; 
-                    image.scale(scaleFactor).setCoords();
+                    const scaleFactor = value * newWidth/50; 
+                    image.scaleToWidth(scaleFactor).setCoords();
 
                     canvas.requestRenderAll();
 
                     setScaleValue(value);
                   } else if (image.width< image.height){
-                    const scaleFactor = value / 300; 
-                    image.scale(scaleFactor).setCoords();
+                    const scaleFactor = value * newHeight/50; 
+                    image.scaleToHeight(scaleFactor).setCoords();
 
                     canvas.requestRenderAll();
 
                     setScaleValue(value);
                   } else if (image.width === image.height){
-                    const scaleFactor = value / 200; 
-                    image.scale(scaleFactor).setCoords();
+                    const scaleFactor = value * newHeight/50; 
+                    image.scaleToHeight(scaleFactor).setCoords();
 
                     canvas.requestRenderAll();
 
@@ -518,7 +565,7 @@ const Image = ({
               onClick={lockImage}
               disabled={isBackImgEmpty}
             >
-              {imageLock ? '잠금' : '잠금해제'}
+              {imageLock ? '잠금해제' : '잠금'}
             </s.TopButton>
           </s.TopButtonsWrapper>
         </s.FiltersContainer>
