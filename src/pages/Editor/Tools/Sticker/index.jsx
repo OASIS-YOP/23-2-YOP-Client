@@ -4,57 +4,18 @@ import { useEffect, useState } from 'react';
 import { stickerData1, stickerData2, stickerData3, stickerData4, stickerData5, stickerData6, stickerData7 } from './stickerData';
 import Konva from 'konva';
 
+import { fabric } from 'fabric';
+
 const Stickers = ({ 
-  stageRef,
-  objLayers,
+  canvas,
   image,
 }) => {
 
-  const [selectedSticker, setSelectedSticker] = useState(null);
-
-  const [objLayer, setObjLayer] = useState(new Konva.Layer({ className: 'objLayer' }));
-
-  console.log(stageRef);
-
-  const tr = new Konva.Transformer({
-    className: 'transformer',
-    keepRatio: true,
-    enabledAnchors: [
-      'top-left',
-      'top-right',
-      'bottom-left',
-      'bottom-right',
-      'middle-left',
-      'middle-right',
-      'top-center',
-      'bottom-center',
-
-    ],
-    boundBoxFunc: function (oldBox, newBox) {
-      // limit resize
-      if (newBox.width < 5 || newBox.height < 5) {
-        return oldBox;
-      }
-      return newBox;
-    },
-  });
-
-  useEffect(() => {
-    const initialObjLayer = new Konva.Layer({ className: 'objLayer' });
-    initialObjLayer.add(tr);
-    stageRef.current.add(initialObjLayer);
-    setObjLayer(initialObjLayer);
-  }, []);
-
-  //////////////////////// 스티커 이미지 클릭시 캔버스에 추가하는 함수 ////////////////////////
-
   const handleImageClick = (e) => {
-    const canvas = stageRef.current;
 
-    // const { offsetX, offsetY } = e.nativeEvent;
+    const { offsetX, offsetY } = e.nativeEvent;
     const imageUrl = e.target.src;
     const spec = e.target.dataset.spec;
-
 
     const isParticlesS = spec === "particlesS";
     const isPrticlesM = spec === "particlesM";
@@ -65,121 +26,53 @@ const Stickers = ({
     const isRibbonS = spec === "ribbonS";
 
     // const frame = canvas.getObjects().find((object) => object.class === 'frame');
+    // frame이라는 class를 가진 객체를 찾아서 frame에 할당
 
-  Konva.Image.fromURL(imageUrl, function (img) {
-    const imageObj = new window.Image();
-    imageObj.src = imageUrl;
-    
-
-    const canvas = stageRef.current;
-
-    const imgWidth = imageObj.width;
-    const imgHeight = imageObj.height;
-    const aspectRatio = imgWidth / imgHeight;
-
-    let newWidth, newHeight;
-    
-    if (!isNaN(newWidth) || !isNaN(newHeight)) {
-      if (isParticlesS) {
-        newWidth = 30;
-        newHeight = newWidth / aspectRatio;
-      } else if (isP || isPrticlesM || isRibbonS) {
-        newWidth = 50;
-        newHeight = newWidth / aspectRatio;
-      } else if (isRibbonL) {
-        newWidth = 150;
-        newHeight = newWidth / aspectRatio;
-      } else {
-        newWidth = 120;
-        newHeight = newWidth / aspectRatio;
-      }
-
-    } else if (isNaN(newWidth) || isNaN(newHeight)) {
-      // Provide default values or handle this case as per your requirement
-      newWidth = 150;
-      newHeight = 150;
-    };
-    
-    const x = (canvas.width() - newWidth) / 2;
-    const y = (canvas.height() - newHeight) / 2;
-
-    img.setAttrs({
-      id: 'sticker',
-      image: imageObj,
-      spec: spec,
-      width: newWidth,
-      height: newHeight,
-      x: x,
-      y: y,
-      draggable: true,
-      className: 'sticker',
+  fabric.Image.fromURL(imageUrl, function (img) {
+    img.set({
+      left: offsetX - img.width / 1000,
+      top: offsetY - img.height / 1000,
+      evented: true,
+      class: 'sticker', // sticker라는 class를 추가
+      svgViewportTransformation: true,
     });
-    
-    
-    
-    if (image){
-      canvas.add(objLayer);
 
-      console.log(objLayers);
-      objLayer.add(img);
-      
-      tr.nodes([img]);
-      objLayer.add(tr);
-      objLayers.push(objLayer);
-      console.log(objLayers);
-      objLayer.batchDraw();
-
-
-      img.on('click', function (e) {
-        setSelectedSticker(img);
-        tr.nodes([img]);
-        objLayer.batchDraw();
-      });
-
-      stageRef.current.findOne('#backImgLayer').on('click', function (e) {
-        tr.nodes([]);
-        objLayer.batchDraw();
-        setSelectedSticker(null);
-      });
-
-      console.log(canvas);
-    } else {
-      window.alert('이미지를 먼저 추가해주세요.');
+    if (isParticlesS) {
+      img.scaleToWidth(30);
+    } else if(isP) {
+      img.scaleToWidth(50);
+    } else if(isPrticlesM) {
+      img.scaleToWidth(50);
+    } else if(isRibbonL) {
+      img.scaleToWidth(150);
+    } else if(isRibbonM) {
+      img.scaleToWidth(65);
+    } else if(isRibbonS) {
+      img.scaleToWidth(50);
+    } else if(isL) {
+      img.scaleToWidth(150);
+    } else{
+      img.scaleToWidth(100);
     }
 
+    if (image) {
+      canvas.add(img);
+      canvas.renderAll();
+    } // image가 존재하면 canvas에 img를 추가
+    else if (!image) {
+      alert('이미지를 먼저 업로드해주세요!');
+    } // image가 존재하지 않으면 경고창 띄움
 
     // if (frame) {
     //   frame.sendToBack();
     // } // frame이 존재하면 frame을 뒤로 보냄
-
-
-  });
-  };
-
-  useEffect(() => {
-    console.log('선택된 이미지:', selectedSticker);
-  }, [selectedSticker]);
-
   
-
-  // 스티커 삭제 함수
-  const handleDelete = () => {
-    if (selectedSticker) {
-      // 현재 선택된 스티커 객체가 있다면 삭제
-      selectedSticker.destroy();
-      stageRef.current.batchDraw(); // 레이어를 다시 그리기
-    }
-  };
-
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'Delete') {
-      handleDelete();
-    }
   });
+  };
 
   return (
     <s.StickerList> 
-      <button onClick={handleDelete}>삭제</button>
+      {/* <button onClick={handleDelete}>삭제</button> */}
       {stickerData4.map( (stickerData4, index) => (
           ( stickerData4.spec === 'ribbonL' ? (
             <img
