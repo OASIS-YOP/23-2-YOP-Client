@@ -311,12 +311,22 @@ const Editor = () => {
       const canvasObjects = canvas
         .getObjects()
         .filter((obj) => obj.id !== 'backImg' && obj.class !== 'frame');
-      setObjects(canvasObjects);
-      if (canvasObjects.length !== 0) {
-        console.log('현재 총 오브젝트 :', canvasObjects);
+      setObjects(canvasObjects, []);
+      if (canvasObjects.length > 0) {
+        console.log('현재 총 오브젝트 :', objects);
       }
+    } else if (canvas && canvas.getObjects().length === 1) {
+      setObjects([]);
+      console.log('현재 총 오브젝트 :', objects);
     }
   };
+
+
+  useEffect (() => {
+    console.log('총 오브젝트 수:', objects);
+    setObjects(objects);
+
+  }, [objects])
   // 캔버스에 추가된 오브젝트 업데이트 이벤트 리스너 등록
   useEffect(() => {
     if (canvas) {
@@ -590,36 +600,37 @@ const Editor = () => {
           } else {
             console.log('no object is selected');
           }
-        } else if (e.key === 'Control') {
-          // Set the flag to indicate that the Ctrl key is pressed
-          isCtrlPressed = true;
-        } else if (e.key === 'c' && isCtrlPressed) {
-          if (canvas.getActiveObject() !== null) {
-            console.log('Ctrl+C pressed');
-            // Handle copy action here
-            handleCopyObject(canvas.getActiveObject().toObject());
-          } else {
-            console.log('No object is selected');
-          }
-        } else if (e.key === 'v' && isCtrlPressed) {
-          if (copiedObject !== null) {
-            console.log('Ctrl+V pressed');
-            // Handle paste action here
-            handlePasteObject(170, 246);
-          } else {
-            console.log('No object is copied');
-          }
-        } else if (e.key === 'x' && isCtrlPressed) {
-          if (canvas.getActiveObject() !== null) {
-            console.log('Ctrl+X pressed');
-            // Handle cut action here
-            handleCutObject(canvas.getActiveObject().toObject());
-          } else {
-            console.log('No object is selected');
-          }
-        } else {
-          console.log('');
         }
+        // } else if (e.key === 'Control') {
+        //   // Set the flag to indicate that the Ctrl key is pressed
+        //   isCtrlPressed = true;
+        // } else if (e.key === 'c' && isCtrlPressed) {
+        //   if (canvas.getActiveObject() !== null) {
+        //     console.log('Ctrl+C pressed');
+        //     // Handle copy action here
+        //     handleCopyObject(canvas.getActiveObject().toObject());
+        //   } else {
+        //     console.log('No object is selected');
+        //   }
+        // } else if (e.key === 'v' && isCtrlPressed) {
+        //   if (copiedObject !== null) {
+        //     console.log('Ctrl+V pressed');
+        //     // Handle paste action here
+        //     handlePasteObject(170, 246);
+        //   } else {
+        //     console.log('No object is copied');
+        //   }
+        // } else if (e.key === 'x' && isCtrlPressed) {
+        //   if (canvas.getActiveObject() !== null) {
+        //     console.log('Ctrl+X pressed');
+        //     // Handle cut action here
+        //     handleCutObject(canvas.getActiveObject().toObject());
+        //   } else {
+        //     console.log('No object is selected');
+        //   }
+        // } else {
+        //   console.log('');
+        // }
       });
       window.addEventListener('keyup', (e) => {
         if (e.key === 'Control') {
@@ -796,7 +807,7 @@ const Editor = () => {
             <s.SelectedObjects>
               선택된 오브젝트:{' '}
               {selectedObject?.length ? selectedObject.length : 0}/
-              {objects.length}
+              {objects?.length}
             </s.SelectedObjects>
           </s.CanvasSpaceWrapper>
         </s.LeftContainer>
