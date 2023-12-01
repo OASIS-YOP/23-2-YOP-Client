@@ -17,14 +17,13 @@ const Collections = () => {
 
   const onClickArtist = (artistId) => {
     setSelectedArtist(artistId);
-    // setIsCollectionClicked(false);
-    // console.log(artistName);
+    setIsCollectionClicked(false);
   };
 
   const getMyCollectionArtistTab = () => {
     mypageAPI.getMyCollectionArtistTab(userId).then((data) => {
-      setArtistList(data.collectionArtistList);
       setSelectedArtist(data.collectionArtistList[0].artistId);
+      setArtistList(data.collectionArtistList);
     });
   };
 
@@ -62,6 +61,8 @@ const Collections = () => {
     getMyActiveCollection();
   }, [selectedArtist]);
 
+  // useEffect(() => {}, [selectedCollection]);
+
   return (
     <>
       <s.Wrapper>
@@ -86,6 +87,7 @@ const Collections = () => {
           <CollectionDetails
             selectedArtist={selectedArtist}
             selectedCollection={selectedCollection}
+            setIsCollectionClicked={setIsCollectionClicked}
           />
         )}
       </s.Wrapper>
@@ -96,7 +98,7 @@ const Collections = () => {
 //컬렉션 카드 컴포넌트
 const CollectionCard = ({
   // selectedCollection,
-  // setSelectedCollection,
+  setSelectedCollection,
   setIsCollectionClicked,
   albumJacket,
   albumName,
@@ -128,6 +130,7 @@ const CollectionCard = ({
 
   const onClickCollection = (albumName) => {
     setIsCollectionClicked(true);
+    setSelectedCollection(albumName);
   };
 
   return (
@@ -137,7 +140,7 @@ const CollectionCard = ({
           // 활성화된 컬렉션
           <>
             <s.ActivatedCollectionCardWrapper
-              onClick={onClickCollection}
+              onClick={() => onClickCollection(item.albumName)}
               onMouseOver={onHandleActiveMouseOver}
               onMouseOut={onHandleActiveMouseOut}
             >
@@ -158,23 +161,6 @@ const CollectionCard = ({
                   </s.CollectionCardInfo>
                 </s.CollectionInfoWrapper>
               )}
-              {/* <s.CollectionInfoWrapper>
-                <s.CollectionInfoContainer>
-                  <s.CollectionInfo>{albumName}</s.CollectionInfo>
-                  <s.CollectionInfo>
-                    활성일 : {item.activeDateTime}
-                  </s.CollectionInfo>
-                  <s.CollectionInfo> */}
-              {/* 수정요망 */}
-              {/* 수집률 : {(1 / item.photoCardQuant) * 100}%
-                  </s.CollectionInfo>
-                  <s.CollectionInfo> */}
-              {/* 내가가진포카수 구해서 넣어야함 */}
-              {/* 포카수 : 1/
-                    {item.photoCardQuant}장
-                  </s.CollectionInfo>
-                </s.CollectionInfoContainer>
-              </s.CollectionInfoWrapper> */}
             </s.ActivatedCollectionCardWrapper>
           </>
         ) : (
