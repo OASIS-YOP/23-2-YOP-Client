@@ -173,11 +173,13 @@ const SelectCollection = () => {
         ariaHideApp={false}
       >
         <s.Wrapper>
-          <s.Button>BUTTER</s.Button>
-          <span> {'>'} </span>
-          <s.Button>JH_BT01</s.Button>
-          <span> {'>'} </span>
-          <s.Button>업로드</s.Button>
+          <s.ButtonWrappper>
+            <s.Button>BUTTER</s.Button>
+            <span> {'>'} </span>
+            <s.Button>JH_BT01</s.Button>
+            <span> {'>'} </span>
+            <s.Button>업로드</s.Button>
+          </s.ButtonWrappper>
           <s.EditingCardWrapper>
             {[1].map((index) => (
               <s.EditingCard key={index} onClick={() => openModal(index - 1)}>
@@ -191,7 +193,8 @@ const SelectCollection = () => {
             ))}
           </s.EditingCardWrapper>
           <div>
-            <button onClick={closeThirdModal}>X</button>
+            <button onClick={closeModal}>X</button>
+            <button>업로드</button>
           </div>
         </s.Wrapper>
       </Modal>
