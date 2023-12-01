@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
-import { Link, Route, useNavigate, Routes } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import * as s from './upload.style.js';
 
 Modal.setAppElement('#root');
@@ -66,11 +66,18 @@ const SelectCollection = () => {
   const [isPolaroid, setIsPolaroid] = useState(false);
   const [isThirdModalOpened, setIsThirdModalOpened] = useState(false);
 
+  const navigate = useNavigate();
+
   const openModal = (index) => {
     setSelectedCard(index);
     setIsSecondaryModalOpened(true);
     setIsPolaroid(false);
-    navigate(`/uploadmodal2/${index}`);
+
+    setTimeout(() => {
+      if (!isPolaroid) {
+        setIsThirdModalOpened(true);
+      }
+    }, 0);
   };
 
   const openSecondaryModal = (index) => {
@@ -92,13 +99,11 @@ const SelectCollection = () => {
     setIsSecondaryModalOpened(false);
   };
 
-  const navigate = useNavigate();
-
   useEffect(() => {
     if (isSecondaryModalOpened === true) {
       navigate(`/uploadmodal2/${selectedCard}`);
     }
-  }, [isSecondaryModalOpened, navigate, selectedCard]); //
+  }, [isSecondaryModalOpened, navigate, selectedCard]);
 
   return (
     <>
@@ -152,8 +157,8 @@ const SelectCollection = () => {
                 <img
                   src={`https://upload.wikimedia.org/wikipedia/en/thumb/3/33/BTS_-_Butter_CD.png/220px-BTS_-_Butter_CD${index}.png`}
                   alt={`Collection Card ${index}`}
-                  width={100}
-                  height={100}
+                  width={120}
+                  height={200}
                 />
               </s.PolaroidCard>
             ))}
@@ -167,19 +172,28 @@ const SelectCollection = () => {
         onRequestClose={closeThirdModal}
         ariaHideApp={false}
       >
-        {
-          <>
-            <s.Button>컬렉션 선택</s.Button>
-            <span> {'>'} </span>
-            <s.Button>도안 선택</s.Button>
-            <span> {'>'} </span>
-            <s.Button>업로드</s.Button>
-          </>
-        }
-        <div>
-          <h2>Upload</h2>
-          <button onClick={closeThirdModal}>X</button>
-        </div>
+        <s.Wrapper>
+          <s.Button>BUTTER</s.Button>
+          <span> {'>'} </span>
+          <s.Button>JH_BT01</s.Button>
+          <span> {'>'} </span>
+          <s.Button>업로드</s.Button>
+          <s.EditingCardWrapper>
+            {[1].map((index) => (
+              <s.EditingCard key={index} onClick={() => openModal(index - 1)}>
+                <img
+                  src={`https://upload.wikimedia.org/wikipedia/en/thumb/3/33/BTS_-_Butter_CD.png/220px-BTS_-_Butter_CD${index}.png`}
+                  alt={`Collection Card ${index}`}
+                  width={240}
+                  height={300}
+                />
+              </s.EditingCard>
+            ))}
+          </s.EditingCardWrapper>
+          <div>
+            <button onClick={closeThirdModal}>X</button>
+          </div>
+        </s.Wrapper>
       </Modal>
     </>
   );
