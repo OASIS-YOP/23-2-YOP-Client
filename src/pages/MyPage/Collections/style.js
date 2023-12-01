@@ -136,9 +136,9 @@ export const CollectionInfoWrapper = styled.div`
 export const CollectionCardInfo = styled.div`
   display: absolute;
   text-align: center;
-  font-size: 23px;
+  font-size: 1.6vw;
   font-weight: bold;
-  line-height: 35px;
+  line-height: 3vw;
   color: white;
 `;
 

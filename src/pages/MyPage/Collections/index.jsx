@@ -150,7 +150,7 @@ const CollectionCard = ({
                     활성일 : {item.activeDateTime}
                     <br />
                     {/* 수정요망 */}
-                    수집률 : {(1 / item.photoCardQuant) * 100}%
+                    수집률 : {Math.round((1 / item.photoCardQuant) * 100)}%
                     <br />
                     {/* 내가가진포카수 구해서 넣어야함 */}
                     포카수 : 1/
