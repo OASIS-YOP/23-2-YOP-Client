@@ -11,7 +11,7 @@ const MyCollectionModal = () => {
   const [isCollectionClicked, setIsCollectionClicked] = useState(false);
   const [selectedCollection, setSelectedCollection] = useState('');
 
-  const [ismouseOver, setIsMouseOver] = useState(false);
+  const [isMouseOver, setIsMouseOver] = useState(false);
 
   const onHandleMouseOver = (e) => {
     e.preventDefault();
@@ -78,28 +78,29 @@ const MyCollectionModal = () => {
                     <s.ActivatedCollectionCardWrapper
                       onClick={onClickCollection}
                       onMouseOut={onHandleMouseOut}
+                      onMouseOver={onHandleMouseOver}
                     >
                       <s.CollectionCardImage
                         src={item.albumJacket}
                         alt='collection'
                       />
-                      <s.CollectionInfoWrapper>
-                        <s.CollectionInfoContainer>
-                          <s.CollectionInfo>{item.albumName}</s.CollectionInfo>
-                          <s.CollectionInfo>
+                      {isMouseOver && (
+                        <s.CollectionInfoWrapper>
+                          <s.CollectionCardInfo>
+                            {item.albumName}
+                            <br />
                             활성일 : {item.activeDateTime}
-                          </s.CollectionInfo>
-                          <s.CollectionInfo>
+                            <br />
                             {/* 수정요망 */}
-                            수집률 : (1 / {item.photoCardQuant} )* 100%
-                          </s.CollectionInfo>
-                          <s.CollectionInfo>
+                            수집률 :{' '}
+                            {Math.round((1 / item.photoCardQuant) * 100)}%
+                            <br />
                             {/* 내가가진포카수 구해서 넣어야함 */}
                             포카수 : 1/
                             {item.photoCardQuant}장
-                          </s.CollectionInfo>
-                        </s.CollectionInfoContainer>
-                      </s.CollectionInfoWrapper>
+                          </s.CollectionCardInfo>
+                        </s.CollectionInfoWrapper>
+                      )}
                     </s.ActivatedCollectionCardWrapper>
                   </s.CollectionCardWrapper>
                 );
