@@ -4,6 +4,7 @@ import { fabric } from 'fabric';
 import * as s from './style';
 import HeaderIsLogOffed from '../../components/Header/HeaderIsLogOffed';
 import Header from '../../components/Header';
+import Modal from 'react-modal';
 
 //아이콘
 import Load from '../../assets/Load';
@@ -31,8 +32,23 @@ import Frame from './Tools/Frame';
 import editorpageAPI from '../../api/editorpage/editorpageAPI';
 
 import ContextMenu from './ContextMenu';
+import EditorUploadModal from '../../components/EditorUploadModal';
 
 const Editor = () => {
+  const [isOpenUploadModal, setIsOpenUploadModal] = useState(false);
+
+  const [image, setImage] = useState('');
+  const [{ imageLeft, imageTop }, setImagePosition] = useState({
+    imageLeft: 170,
+    imageTop: 246,
+  });
+
+//   const canvasEl = canvasRef.current;
+
+  // 필터 값 스테이트
+  const [brightness, setBrightness] = useState(0);
+  const [saturation, setSaturation] = useState(0);
+  const [contrast, setContrast] = useState(0);
   // 로그인 여부
   const [isLogedIn, setIsLogedIn] = useState(true);
 
@@ -41,7 +57,6 @@ const Editor = () => {
   const [ canvas, setCanvas ] = useState();
   const canvasRef = useRef(null);
 
-
   // 백그라운드 이미지 스테이트
   const [image, setImage] = useState('');
   const [{imageLeft, imageTop}, setImagePosition] = useState({imageLeft: 170, imageTop: 246});
@@ -49,6 +64,11 @@ const Editor = () => {
   const [isBackImgEmpty, setIsBackImgEmpty] = useState(true);
   // 이미지 이동 잠금 여부
   const [ imageLock, setImageLock ] = useState(false);
+
+
+  // 대칭 여부 스테이트
+  const [flipX, setFlipX] = useState(false); // 좌우반전
+  const [flipY, setFlipY] = useState(false); // 상하반전
 
   // 오브젝트 스테이트
   // 캔버스에 추가된 총 오브젝트
@@ -61,8 +81,6 @@ const Editor = () => {
   const [isContextMenuVisible, setContextMenuVisible] = useState(false);
   const [contextMenuPos, setContextMenuPos] = useState({ x: 0, y: 0 });
 
-  
-  // const [imageFile, setImageFile] = useState(null); (=> 수정님 필요 없음 지워주세요!)
 
 
   /////// 툴 메뉴 관리 ////////
@@ -101,7 +119,38 @@ const Editor = () => {
       isActive: false,
     },
   ]);
+
+  //도안 불러오기 모달 스타일
+
+  const EditorUploadModalStyle = {
+    overlay: {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: 'rgba(0,0,0, 0.7)',
+      zIndex: 999,
+    },
+    content: {
+      background: 'white',
+      overflow: 'auto',
+      width: 'fit-content',
+      height: 'fit-content',
+      margin: 'auto auto',
+      WebkitOverflowScrolling: 'touch',
+      borderRadius: '20px',
+      outline: 'none',
+      zIndex: 10,
+    },
+  };
+
+  const onClickUploadModal = () => {
+    setIsOpenUploadModal((prev) => !prev);
+  };
+
   // 툴 메뉴 클릭 시 실행되는 함수
+
   const handleToolClick = (id) => {
     setTool(id);
     setToolMenus((prevMenus) =>
@@ -124,6 +173,13 @@ const Editor = () => {
 
   ///////////////
 
+//혜림님 일단 주석처리해놓겠습니다!
+  // 오브젝트 레이어 배열
+//   const objLayers = [];
+
+  // 백그라운드 이미지 필터 목록
+//   const filters = [];
+
   // 오브젝트 트랜스포머 스타일 설정
   fabric.Object.prototype.set({
     transparentCorners: 'false',
@@ -143,7 +199,6 @@ const Editor = () => {
       height: 492,
       backgroundColor: 'transparent',
     });
-    
     console.log('캔버스 처음 생성됨:', newCanvas);
     setCanvas(newCanvas);
   };
@@ -151,6 +206,7 @@ const Editor = () => {
   useEffect(() => {
     initCanvas();
   }, []);
+
   // 캔버스 초기화 함수
   const removeCanvas = () => {
     window.confirm('정말로 캔버스를 초기화하시겠습니까?');
@@ -160,81 +216,73 @@ const Editor = () => {
     console.log('캔버스 초기화');
   };
 
+  // // 파일 불러오기 버튼 눌렀을 때 실행되는 함수
+  // const handleLoadFile = () => {
+  //   const input = document.createElement('input');
+  //   input.type = 'file';
+  //   input.accept = 'image/*';
+  //   input.onchange = (e) => {
+  //     const file = e.target.files[0];
+  //     console.log('파일 로드 :' + file.name);
 
-  /////// 이미지 관리 ////////
+  //     if (file && file.type.includes('image') && canvas) {
+  //       // 이미지 로드 함수를 호출하여 이미지 전달
+  //       handleImageLoad(file);
+  //     } else {
+  //       console.log('파일 로드 실패');
+  //     }
+  //   };
+  //   input.click();
+  // };
 
-  // 파일 불러오기 버튼 눌렀을 때 실행되는 함수
-  const handleLoadFile = () => {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = 'image/*';
-    input.onchange = (e) => {
-      const file = e.target.files[0];
-      console.log('파일 로드 :' + file.name);
+  // // 파일 불러와서 이미지 로드하는 함수
+  // const handleImageLoad = (file) => {
+  //   const reader = new FileReader();
+  //   reader.readAsDataURL(file);
+  //   reader.onload = () => {
+  //     const resultImage = reader.result;
+  //     const loadImage = () => {
+  //       new fabric.Image.fromURL(resultImage.toString(), (imgFile) => {
+  //         imgFile.set({
+  //           id: 'backImg',
+  //           left: 340 / 2,
+  //           top: 492 / 2,
+  //           originX: 'center',
+  //           originY: 'center',
+  //           // rotation: rotationValue,
+  //           evented: true,
+  //           hoverCursor: 'default',
+  //           selected: true,
+  //           hasControls: false, // Optional: Disable resizing controls
+  //           hasBorders: false, // Optional: Disable borders
 
-      if (file && file.type.includes('image') && canvas) {
-        // 이미지 로드 함수를 호출하여 이미지 전달
-        handleImageLoad(file);
-      } else {
-        console.log('파일 로드 실패');
-      }
-    };
-    input.click();
-  };
+  //           //드래그 동작 구현
+  //         });
+  //         const imgWidth = imgFile.width;
+  //         const imgHeight = imgFile.height;
 
-  // 파일 불러와서 이미지 로드하는 함수
-  const handleImageLoad = (file) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      const resultImage = reader.result;
-        const loadImage = () => {
-          new fabric.Image.fromURL(resultImage.toString(), (imgFile) => {
-            
-            imgFile.set({
-              id: 'backImg',
-              class: 'backImg',
-              left: 340 / 2,
-              top: 492 / 2,
-              originX: 'center',
-              originY: 'center',
-              // rotation: rotationValue,
-              evented: true,
-              hoverCursor: 'default',
-              selected: true,
-              hasControls: false, // Optional: Disable resizing controls
-              hasBorders: false,  // Optional: Disable borders
+  //         if (imgWidth > imgHeight) {
+  //           imgFile.scaleToHeight(492);
+  //         } else if (imgHeight > imgWidth) {
+  //           imgFile.scaleToWidth(340);
+  //         } else if (imgWidth === imgHeight) {
+  //           imgFile.scaleToHeight(492);
+  //         }
 
-              //드래그 동작 구현
-            });
-            const imgWidth = imgFile.width;
-            const imgHeight = imgFile.height;
+  //         if (image) {
+  //           canvas.remove(image);
+  //         }
 
-            if (imgWidth > imgHeight) {
-              imgFile.scaleToHeight(492);
-            } else if (imgHeight > imgWidth) {
-              imgFile.scaleToWidth(340);
-            } else if (imgWidth === imgHeight) {
-              imgFile.scaleToHeight(492);
-            }
+  //         canvas.add(imgFile);
+  //         setImage(imgFile);
+  //         setIsBackImgEmpty(false);
 
-            if( image )
-            {
-              canvas.remove(image);
-            }
-
-            canvas.add(imgFile);
-            setImage(imgFile);
-            setIsBackImgEmpty(false);
-          
-            canvas.renderAll();
-
-            
-          });
-        };
-        loadImage();
-      };
-    };
+  //         canvas.renderAll();
+  //       });
+  //     };
+  //     loadImage();
+  //   };
+  // };
 
   // 추가된 이미지 조회
   useEffect(() => {
@@ -436,7 +484,7 @@ const Editor = () => {
   }, [selectedObject]);
 
 
-     ////////////////컨텍스트 메뉴 ////////////////////
+  ////////////////컨텍스트 메뉴 ////////////////////
 
   const handleContextMenu = (e) => {
     e.preventDefault();
@@ -722,7 +770,7 @@ const Editor = () => {
               <s.TopMenuButtonLeft>
                 <s.TopMenuButton
                   isActive={true}
-                  onClick={handleLoadFile} // 파일 불러오기 버튼 눌렀을 때 실행되는 함수
+                  onClick={onClickUploadModal} // 파일 불러오기 버튼 눌렀을 때 실행되는 함수
                 >
                   <s.TopMenuButtonIcon isActive={true}>
                     <Load />
@@ -731,6 +779,20 @@ const Editor = () => {
                     불러오기
                   </s.TopMenuButtonLabel>
                 </s.TopMenuButton>
+                <Modal
+                  isOpen={isOpenUploadModal}
+                  style={EditorUploadModalStyle}
+                  onRequestClose={onClickUploadModal} // 오버레이나 esc를 누르면 핸들러 동작
+                  ariaHideApp={false}
+                >
+                  <EditorUploadModal
+                    canvas={canvas}
+                    image={image}
+                    setImage={setImage}
+                    setIsBackImgEmpty={setIsBackImgEmpty}
+                    setIsOpenUploadModal={setIsOpenUploadModal}
+                  />
+                </Modal>
                 <s.TopMenuButton
                   onClick={() => {
                     removeCanvas(canvas);
@@ -785,6 +847,7 @@ const Editor = () => {
             >
               <canvas id='canvas' />
               {isContextMenuVisible && (
+
                   <ContextMenu
                     canvas={canvas}
                     x={contextMenuPos.x} // 컨텍스트 메뉴 표시 위치 x
@@ -862,13 +925,14 @@ const Editor = () => {
               ))}
             </s.ToolLabelWrapper>
             <s.ToolContentsWrapper>
-              {tool === 1 && 
-                <Image 
+              {tool === 1 && (
+                <Image
                   isBackImgEmpty={isBackImgEmpty}
                   setIsBackImgEmpty={setIsBackImgEmpty}
-                  image={image} 
+                  image={image}
                   canvas={canvas}
                 />
+
               }
               {tool === 2 && <Draw 
                 canvas={canvas}
@@ -891,6 +955,7 @@ const Editor = () => {
                 image={image}
                 isBackImgEmpty={isBackImgEmpty}
               />}
+// 
             </s.ToolContentsWrapper>
           </s.ToolContainer>
         </s.RightContainer>

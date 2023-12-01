@@ -1,25 +1,41 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as s from './style';
 import CollectionCards from '../../../../Temp/mypage/CollectionCards';
+import mypageAPI from '../../../../api/mypage/mypageAPI';
 
-const CollectionDetails = ({ selectedCollection, selectedArtist }) => {
-  const collectionList = CollectionCards.find(
-    (collection) => collection.artistName === selectedArtist
-  )?.collections || [];
+const CollectionDetails = ({ selectedArtist, selectedCollection }) => {
+  const [collectionPhotocard, setCollectionPhotocard] = useState([]);
+  const collectionList =
+    CollectionCards.find(
+      (collection) => collection.artistName === selectedArtist
+    )?.collections || [];
 
-  const currentCollection = collectionList.find(
-    (collection) => collection.albumName === selectedCollection)?.photoCards || [];
+  const currentCollection =
+    collectionList.find(
+      (collection) => collection.albumName === selectedCollection
+    )?.photoCards || [];
 
-  const cardsV1 = currentCollection.find((card) => card.version === '1')?.cards || [];
+  const cardsV1 =
+    currentCollection.find((card) => card.version === '1')?.cards || [];
 
+  const getCollectionPhotocardList = (selectedCollection) => {
+    mypageAPI
+      .getCollectionPhotocardList(1, decodeURI(selectedCollection))
+      .then((data) => {
+        console.log(data.collectionPhotocardList);
+        setCollectionPhotocard(data.collectionPhotocardList);
+      });
+  };
 
+  useEffect(() => {
+    getCollectionPhotocardList();
+    console.log(selectedCollection);
+  }, []);
 
   return (
     <>
       <s.Wrapper className={selectedArtist}>
-        <s.CollectionName>
-            {selectedCollection}
-        </s.CollectionName>
+        <s.CollectionName>{selectedCollection}</s.CollectionName>
         <s.PhotocardListWrapper>
           {/* <s.VersionContainer>
             <s.Version>
@@ -29,33 +45,28 @@ const CollectionDetails = ({ selectedCollection, selectedArtist }) => {
               V2
             </s.Version>
           </s.VersionContainer> */}
-          { cardsV1.map((card, index) => {
+          {cardsV1.map((card, index) => {
             return (
-              <s.PhotoCardContainer
-                className={selectedArtist}
-              >
-                <s.MemberName
-                  className={selectedArtist}
-                >
+              <s.PhotoCardContainer className={selectedArtist}>
+                <s.MemberName className={selectedArtist}>
                   {card.member}
                 </s.MemberName>
-                <s.PhotocardImageFrame
-                className={selectedArtist}>
+                <s.PhotocardImageFrame className={selectedArtist}>
                   <s.PhotocardImage
                     key={card + index}
                     src={card.fileUrl}
-                    className={`${card.isActivated ? '' : 'locked'} ${selectedArtist}`}      
+                    className={`${
+                      card.isActivated ? '' : 'locked'
+                    } ${selectedArtist}`}
                     alt='photocard'
                   />
                 </s.PhotocardImageFrame>
               </s.PhotoCardContainer>
-            )
-            }
-          )}
-        </s.PhotocardListWrapper> 
+            );
+          })}
+        </s.PhotocardListWrapper>
       </s.Wrapper>
     </>
-
   );
 };
 

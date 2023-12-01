@@ -96,9 +96,9 @@ const Posts = () => {
                       #{item.albumName}
                     </s.tagsWrapper>
                     <s.dateWrapper>
-                      {item?.postDateTime.slice(
+                      {item.postDateTime?.slice(
                         0,
-                        item?.postDateTime.indexOf('T')
+                        item.postDateTime?.indexOf('T')
                       )}
                     </s.dateWrapper>
                     <s.likeWrapper>
