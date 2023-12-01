@@ -39,8 +39,6 @@ const Image = ({
   const [reverseYToggle, setReverseYToggle] = useState(true);
   const [applyGray, setApplyGray] = useState(false);
 
-  const [ imageLock, setImageLock ] = useState(false);
-
   const [ refreshImage, setRefreshImage ] = useState(false);
 
   const [ brightnessValue, setBrightnessValue ] = useState(0);
@@ -49,12 +47,15 @@ const Image = ({
   const [ rotationValue, setRotationValue ] = useState(0);
   const [ scaleValue, setScaleValue ] = useState(1);
 
+  const [ newWidth, setNewWidth ] = useState( 0 );
+  const [ newHeight, setNewHeight ] = useState( 0 );
+
   //filter part
 
   const applyFilter = (index, filter) => {
     image.filters[index] = filter;
     image.applyFilters();
-    canvas.renderAll();
+    canvas.requestRenderAll();
   };
 
   const applyFilterValue = (index, prop, value) => {
@@ -81,15 +82,6 @@ const Image = ({
   const removeGrayFilter = () => {
     image.filters.splice(0);
     image.applyFilters();
-    canvas.renderAll();
-  };
-
-  //이미지 잠금
-  const lockImage = () => {
-    setImageLock((prev) => !prev);
-    image.set({
-      evented: imageLock,
-    });
     canvas.renderAll();
   };
 
@@ -181,27 +173,28 @@ const Image = ({
 
   useEffect(() => {
 
-    console.log('이미지 초기화:', refreshImage)
-    if (image && refreshImage) {
-      const imgWidth = image.width;
-      const imgHeight = image.height;
-  
-      // 이미지 크기 변경
-      if (imgWidth > imgHeight) {
-        image.scaleToHeight(492);
-      } else if (imgHeight > imgWidth) {
-        image.scaleToWidth(340);
-      } else if (imgWidth === imgHeight) {
-        image.scaleToHeight(492);
-      }
-      image.set('scaleX', image.scaleX).set('scaleY', image.scaleY);
-      image.setCoords();
-      canvas.renderAll();
-      setRefreshImage(false);
-    } else if (!refreshImage){
-      return;
-    }
+    if(image){
+      console.log('백그라운드 이미지 초기화:', refreshImage)
+      if (refreshImage) {
+        const imgWidth = image.width;
+        const imgHeight = image.height;
     
+        // 이미지 크기 변경
+        if (imgWidth > imgHeight) {
+          image.scaleToHeight(492);
+        } else if (imgHeight > imgWidth) {
+          image.scaleToWidth(340);
+        } else if (imgWidth === imgHeight) {
+          image.scaleToHeight(492);
+        }
+        image.set('scaleX', image.scaleX).set('scaleY', image.scaleY);
+        image.setCoords();
+        canvas.renderAll();
+        setRefreshImage(false);
+      } else if (!refreshImage){
+        return;
+      }
+    }
   }, [image, refreshImage]);
 
 
@@ -246,7 +239,51 @@ const Image = ({
     marginTop: -2,
   };
 
-    
+
+   /////////////// 캔버스에 들어갈 이미지 사이즈 조정
+
+   const resizeImage = () => {
+    if (image)
+   {const canvasWidth = 340;
+   const canvasHeight = 492;
+
+   const imgWidth = image.width;
+   const imgHeight = image.height;
+
+   const maxWidth = canvasWidth;
+   const maxHeight = canvasHeight;
+
+   const aspectRatio = imgWidth / imgHeight;
+
+   let newWidth = imgWidth;
+   let newHeight = imgHeight;
+
+   // 이미지의 가로가 세로보다 클 때
+   if (imgWidth > imgHeight) {
+     newHeight = maxHeight;
+     newWidth = newHeight * aspectRatio;
+   }
+   // 이미지의 세로가 가로보다 클 때
+   if (imgHeight > imgWidth) {
+     newWidth = maxWidth;
+     newHeight = newWidth / aspectRatio;
+   }
+   // 이미지의 가로와 세로가 같을 때
+   if (imgWidth === imgHeight) {
+     newHeight = maxHeight;
+     newWidth = newHeight * aspectRatio;
+   }
+    console.log('현재 백그라운드이미지 크기:', 'newWidth:', newWidth, 'newHeight:', newHeight);
+    setNewWidth(newWidth);
+    setNewHeight(newHeight);
+  }
+
+  };
+   ////////////////////////////////////////
+
+   useEffect((image) => {
+    resizeImage(image);
+  }, [image]);
 
 
   return (
@@ -473,22 +510,22 @@ const Image = ({
                 value = {isBackImgEmpty ? 50 : scaleValue}
                 onChange={(value) => {
                   if(image.width> image.height){
-                    const scaleFactor = value / 130; 
-                    image.scale(scaleFactor).setCoords();
+                    const scaleFactor = value * newWidth/50; 
+                    image.scaleToWidth(scaleFactor).setCoords();
 
                     canvas.requestRenderAll();
 
                     setScaleValue(value);
                   } else if (image.width< image.height){
-                    const scaleFactor = value / 300; 
-                    image.scale(scaleFactor).setCoords();
+                    const scaleFactor = value * newHeight/50; 
+                    image.scaleToHeight(scaleFactor).setCoords();
 
                     canvas.requestRenderAll();
 
                     setScaleValue(value);
                   } else if (image.width === image.height){
-                    const scaleFactor = value / 200; 
-                    image.scale(scaleFactor).setCoords();
+                    const scaleFactor = value * newHeight/50; 
+                    image.scaleToHeight(scaleFactor).setCoords();
 
                     canvas.requestRenderAll();
 
@@ -505,20 +542,17 @@ const Image = ({
             <s.FilterValue >{isBackImgEmpty ? 50 : scaleValue} </s.FilterValue>
           </s.Filter>
           <s.devider />
-          <s.TopButtonsWrapper>
+          <s.TopButtonsWrapper
+            style={{
+              marginTop: '30px'
+            }}
+          >
             <s.TopButton
               id='refresh'
               onClick={handleRefresh}
               disabled={isBackImgEmpty}
             >
               초기화
-            </s.TopButton>
-            <s.TopButton
-              id='lock'
-              onClick={lockImage}
-              disabled={isBackImgEmpty}
-            >
-              {imageLock ? '잠금' : '잠금해제'}
             </s.TopButton>
           </s.TopButtonsWrapper>
         </s.FiltersContainer>

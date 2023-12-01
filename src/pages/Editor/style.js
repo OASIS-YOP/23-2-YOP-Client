@@ -201,16 +201,26 @@ export const LayerButton = styled.button`
   margin: 0 2px;
 
   &:hover {
-
-    cursor: ${({ isActive }) => (isActive ? 'pointer' : '')};
+    background-color: #CCD0DD;
+    cursor: ${({ isActive }) => (isActive ? 'pointer' : 'default')};
 
   }
+
+  &:active {
+    background-color: white;
+  };
+
+  font-size: 11px;
+  font-weight: 700;
+
+  color: ${({ isActive }) => (isActive ? '#898989' : '')};
 `;
 
 export const LayerButtonIcon = styled.img`
   width: 18px;
 
   margin: 0 1.5%;
+
 `;
 
 export const LayerButtonLabel = styled.div`
@@ -225,6 +235,8 @@ export const LayerButtonLabel = styled.div`
 export const SelectedObjects = styled.div`
   font-size: 12px;
   font-weight: 700;
+
+  margin-top: 20px;
 
   color: #898989;
 `;
