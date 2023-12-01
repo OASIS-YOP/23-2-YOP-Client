@@ -103,7 +103,9 @@ const CollectionCard = ({
   activatedCollection,
 }) => {
   const [ismouseOver, setIsMouseOver] = useState(false);
+  const [isActiveMouseOver, setIsActiveMouseOver] = useState(false);
 
+  //비활성화컬렉션
   const onHandleMouseOver = (e) => {
     e.preventDefault();
     setIsMouseOver(true);
@@ -111,6 +113,17 @@ const CollectionCard = ({
   const onHandleMouseOut = (e) => {
     e.preventDefault();
     setIsMouseOver(false);
+  };
+
+  //활성화컬렉션
+  const onHandleActiveMouseOver = (e) => {
+    e.preventDefault();
+    setIsActiveMouseOver(true);
+  };
+
+  const onHandleActiveMouseOut = (e) => {
+    e.preventDefault();
+    setIsActiveMouseOver(false);
   };
 
   const onClickCollection = (albumName) => {
@@ -125,26 +138,43 @@ const CollectionCard = ({
           <>
             <s.ActivatedCollectionCardWrapper
               onClick={onClickCollection}
-              onMouseOut={onHandleMouseOut}
+              onMouseOver={onHandleActiveMouseOver}
+              onMouseOut={onHandleActiveMouseOut}
             >
               <s.CollectionCardImage src={albumJacket} alt='collection' />
-              <s.CollectionInfoWrapper>
+              {isActiveMouseOver && (
+                <s.CollectionInfoWrapper>
+                  <s.CollectionCardInfo>
+                    {albumName}
+                    <br />
+                    활성일 : {item.activeDateTime}
+                    <br />
+                    {/* 수정요망 */}
+                    수집률 : {(1 / item.photoCardQuant) * 100}%
+                    <br />
+                    {/* 내가가진포카수 구해서 넣어야함 */}
+                    포카수 : 1/
+                    {item.photoCardQuant}장
+                  </s.CollectionCardInfo>
+                </s.CollectionInfoWrapper>
+              )}
+              {/* <s.CollectionInfoWrapper>
                 <s.CollectionInfoContainer>
                   <s.CollectionInfo>{albumName}</s.CollectionInfo>
                   <s.CollectionInfo>
                     활성일 : {item.activeDateTime}
                   </s.CollectionInfo>
-                  <s.CollectionInfo>
-                    {/* 수정요망 */}
-                    수집률 : {(1 / item.photoCardQuant) * 100}%
+                  <s.CollectionInfo> */}
+              {/* 수정요망 */}
+              {/* 수집률 : {(1 / item.photoCardQuant) * 100}%
                   </s.CollectionInfo>
-                  <s.CollectionInfo>
-                    {/* 내가가진포카수 구해서 넣어야함 */}
-                    포카수 : 1/
+                  <s.CollectionInfo> */}
+              {/* 내가가진포카수 구해서 넣어야함 */}
+              {/* 포카수 : 1/
                     {item.photoCardQuant}장
                   </s.CollectionInfo>
                 </s.CollectionInfoContainer>
-              </s.CollectionInfoWrapper>
+              </s.CollectionInfoWrapper> */}
             </s.ActivatedCollectionCardWrapper>
           </>
         ) : (

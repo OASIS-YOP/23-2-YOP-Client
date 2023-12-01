@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-
 export const ImageContainer = styled.div`
   position: relative;
   display: flex;
@@ -18,14 +17,13 @@ export const ImageContainer = styled.div`
     > img {
       filter: brightness(30%);
     }
-  };
+  }
 
-  &:active{
+  &:active {
     > img {
       filter: brightness(50%);
     }
-
-  };
+  }
 
   /* @media (max-width: 768px) {
     width: 150px;
@@ -41,13 +39,11 @@ export const ImageContainer = styled.div`
     width: 350px;
     height: 350px;
   }; */
-
 `;
-
 
 export const CollectionImage = styled.img`
   position: relative;
-  dipaly: table;
+  display: table;
   padding: 0;
 
   width: 100%;
@@ -68,43 +64,39 @@ export const CollectionImage = styled.img`
     width: 350px;
     height: 350px;
   }; */
-
 `;
 
 export const CollectionInfoWrapper = styled.div`
-    display: table-cell;
-    vertical-align: middle;
-    align-items: center;
-    position: absolute;
-    box-sizing: border-box;
-    justify-content: center;
-    filter: brightness(100%);
+  display: table-cell;
+  vertical-align: middle;
+  align-items: center;
+  position: absolute;
+  box-sizing: border-box;
+  justify-content: center;
+  filter: brightness(100%);
 
-    width: fit-content;
-    height: fit-content;
+  width: fit-content;
+  height: fit-content;
 
-    z-index: 998;
-  `;
+  z-index: 998;
+`;
 
-  export const CollectionCardInfo = styled.div`
-    display: absolute;
-    text-align: center;
-    font-size: 25px;
-    font-weight: bold;
-    color: white;
-  
-  `;
+export const CollectionCardInfo = styled.div`
+  display: absolute;
+  text-align: center;
+  font-size: 25px;
+  font-weight: bold;
+  color: white;
+`;
 
-    
+//   background-color: white;
 
-  //   background-color: white;
+// `;
 
-  // `;
+// export const InfoWrapper = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: flex-start;
 
-  // export const InfoWrapper = styled.div`
-  //   display: flex;
-  //   flex-direction: column;
-  //   justify-content: center;
-  //   align-items: flex-start;
-    
-  // `;
+// `;

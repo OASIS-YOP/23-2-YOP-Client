@@ -93,12 +93,23 @@ export const CollectionCardWrapper = styled.div`
 `;
 
 export const ActivatedCollectionCardWrapper = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
 
   &:hover {
+    > img {
+      filter: brightness(30%);
+    }
+  }
+
+  /*
+  &:hover {
     transform: scale(1.1);
     transition: all linear 200ms;
-  }
+  } */
 `;
 
 export const CollectionCardImage = styled.img`
@@ -113,29 +124,22 @@ export const CollectionCardImage = styled.img`
 export const CollectionInfoWrapper = styled.div`
   display: table-cell;
   vertical-align: middle;
+  align-items: center;
   position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 30%;
   box-sizing: border-box;
-  background-color: white;
-  z-index: 999;
-`;
-export const CollectionInfoContainer = styled.div`
-  width: 85%;
-  height: 90%;
-  margin: 15px auto;
+  justify-content: center;
+
+  width: fit-content;
+  height: fit-content;
 `;
 
-export const CollectionInfo = styled.p`
-  margin: 5px;
-  font-size: 10px;
+export const CollectionCardInfo = styled.div`
+  display: absolute;
+  text-align: center;
+  font-size: 23px;
   font-weight: bold;
-  line-height: 10px;
-  &:first-child {
-    font-size: 16px;
-    line-height: 25px;
-  }
+  line-height: 35px;
+  color: white;
 `;
 
 export const InActivatedCollectionCardImage = styled.img`
