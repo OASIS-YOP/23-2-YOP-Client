@@ -4,6 +4,7 @@ import { fabric } from 'fabric';
 import * as s from './style';
 import HeaderIsLogOffed from '../../components/Header/HeaderIsLogOffed';
 import Header from '../../components/Header';
+import Modal from 'react-modal';
 
 //아이콘
 import Load from '../../assets/Load';
@@ -31,28 +32,32 @@ import Frame from './Tools/Frame';
 import editorpageAPI from '../../api/editorpage/editorpageAPI';
 
 import ContextMenu from './ContextMenu';
+import EditorUploadModal from '../../components/EditorUploadModal';
 
 const Editor = () => {
+  const [isOpenUploadModal, setIsOpenUploadModal] = useState(false);
   const [isLogedIn, setIsLogedIn] = useState(true);
 
   const [image, setImage] = useState('');
-  const [{imageLeft, imageTop}, setImagePosition] = useState({imageLeft: 170, imageTop: 246});
+  const [{ imageLeft, imageTop }, setImagePosition] = useState({
+    imageLeft: 170,
+    imageTop: 246,
+  });
 
-  const [ canvas, setCanvas ] = useState();
+  const [canvas, setCanvas] = useState();
   const canvasRef = useRef(null);
   const canvasEl = canvasRef.current;
 
   // 필터 값 스테이트
-  const [ brightness, setBrightness ] = useState(0); 
-  const [ saturation, setSaturation ] = useState(0);
-  const [ contrast, setContrast ] = useState(0);
+  const [brightness, setBrightness] = useState(0);
+  const [saturation, setSaturation] = useState(0);
+  const [contrast, setContrast] = useState(0);
 
   const [isContextMenuVisible, setContextMenuVisible] = useState(false);
   const [contextMenuPos, setContextMenuPos] = useState({ x: 0, y: 0 });
 
   //캔버스 이미지 비워졌는지 여부
   const [isBackImgEmpty, setIsBackImgEmpty] = useState(true);
-
 
   // 대칭 여부 스테이트
   const [flipX, setFlipX] = useState(false); // 좌우반전
@@ -98,6 +103,35 @@ const Editor = () => {
       isActive: false,
     },
   ]);
+
+  //도안 불러오기 모달 스타일
+
+  const EditorUploadModalStyle = {
+    overlay: {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: 'rgba(0,0,0, 0.7)',
+      zIndex: 999,
+    },
+    content: {
+      background: 'white',
+      overflow: 'auto',
+      width: 'fit-content',
+      height: 'fit-content',
+      margin: 'auto auto',
+      WebkitOverflowScrolling: 'touch',
+      borderRadius: '20px',
+      outline: 'none',
+      zIndex: 10,
+    },
+  };
+
+  const onClickUploadModal = () => {
+    setIsOpenUploadModal((prev) => !prev);
+  };
   const handleToolClick = (id) => {
     // 툴 메뉴 클릭 시 실행되는 함수
     setTool(id);
@@ -125,9 +159,7 @@ const Editor = () => {
   const objLayers = [];
 
   // 백그라운드 이미지 필터 목록
-  const filters = [
-
-  ];
+  const filters = [];
 
   // 캔버스 생성
   const initCanvas = () => {
@@ -137,7 +169,7 @@ const Editor = () => {
       height: 492,
       backgroundColor: 'transparent',
     });
-    
+
     console.log('캔버스 생성:', newCanvas);
     setCanvas(newCanvas);
   };
@@ -146,7 +178,6 @@ const Editor = () => {
   useEffect(() => {
     initCanvas();
   }, []);
-
 
   // 캔버스 초기화 함수
   const removeCanvas = () => {
@@ -157,182 +188,173 @@ const Editor = () => {
     console.log('캔버스 초기화');
   };
 
-  // 파일 불러오기 버튼 눌렀을 때 실행되는 함수
-  const handleLoadFile = () => {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = 'image/*';
-    input.onchange = (e) => {
-      const file = e.target.files[0];
-      console.log('파일 로드 :' + file.name);
+  // // 파일 불러오기 버튼 눌렀을 때 실행되는 함수
+  // const handleLoadFile = () => {
+  //   const input = document.createElement('input');
+  //   input.type = 'file';
+  //   input.accept = 'image/*';
+  //   input.onchange = (e) => {
+  //     const file = e.target.files[0];
+  //     console.log('파일 로드 :' + file.name);
 
-      if (file && file.type.includes('image') && canvas) {
-        // 이미지 로드 함수를 호출하여 이미지 전달
-        handleImageLoad(file);
-      } else {
-        console.log('파일 로드 실패');
-      }
-    };
-    input.click();
-  };
+  //     if (file && file.type.includes('image') && canvas) {
+  //       // 이미지 로드 함수를 호출하여 이미지 전달
+  //       handleImageLoad(file);
+  //     } else {
+  //       console.log('파일 로드 실패');
+  //     }
+  //   };
+  //   input.click();
+  // };
 
-  // 파일 불러와서 이미지 로드하는 함수
-  const handleImageLoad = (file) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      const resultImage = reader.result;
-        const loadImage = () => {
-          new fabric.Image.fromURL(resultImage.toString(), (imgFile) => {
-            
-            imgFile.set({
-              id: 'backImg',
-              left: 340 / 2,
+  // // 파일 불러와서 이미지 로드하는 함수
+  // const handleImageLoad = (file) => {
+  //   const reader = new FileReader();
+  //   reader.readAsDataURL(file);
+  //   reader.onload = () => {
+  //     const resultImage = reader.result;
+  //     const loadImage = () => {
+  //       new fabric.Image.fromURL(resultImage.toString(), (imgFile) => {
+  //         imgFile.set({
+  //           id: 'backImg',
+  //           left: 340 / 2,
+  //           top: 492 / 2,
+  //           originX: 'center',
+  //           originY: 'center',
+  //           // rotation: rotationValue,
+  //           evented: true,
+  //           hoverCursor: 'default',
+  //           selected: true,
+  //           hasControls: false, // Optional: Disable resizing controls
+  //           hasBorders: false, // Optional: Disable borders
+
+  //           //드래그 동작 구현
+  //         });
+  //         const imgWidth = imgFile.width;
+  //         const imgHeight = imgFile.height;
+
+  //         if (imgWidth > imgHeight) {
+  //           imgFile.scaleToHeight(492);
+  //         } else if (imgHeight > imgWidth) {
+  //           imgFile.scaleToWidth(340);
+  //         } else if (imgWidth === imgHeight) {
+  //           imgFile.scaleToHeight(492);
+  //         }
+
+  //         if (image) {
+  //           canvas.remove(image);
+  //         }
+
+  //         canvas.add(imgFile);
+  //         setImage(imgFile);
+  //         setIsBackImgEmpty(false);
+
+  //         canvas.renderAll();
+  //       });
+  //     };
+  //     loadImage();
+  //   };
+  // };
+
+  // 추가된 이미지 조회
+  useEffect(() => {
+    if (image) {
+      console.log('추가된 이미지 :', image);
+    }
+  }, [image]);
+
+  useEffect(() => {
+    if (image) {
+      console.log('이미지 좌표 => ', '좌:', imageLeft, '우:', imageTop);
+    }
+  }, [image, imageLeft, imageTop]);
+
+  useEffect(() => {
+    if (canvas) {
+      // object:moving 이벤트 리스너 등록
+      canvas.on('object:moving', (e) => {
+        const obj = e.target;
+        const x = obj.left;
+        //마우스 포인터를 따라 움직이는 이미지의 y좌표
+        const y = obj.top;
+        // 이미지의 가로가 세로보다 클 때
+        if (obj.width > obj.height) {
+          // 마우스 포인터를 따라 움직이는 이미지의 x좌표
+          if (x > 340 + 340 / 2) {
+            // 이미지의 x좌표를 캔버스의 가운데로 고정
+            obj.set({
+              left: 340 + 340 / 2,
               top: 492 / 2,
-              originX: 'center',
-              originY: 'center',
-              // rotation: rotationValue,
-              evented: true,
-              hoverCursor: 'default',
-              selected: true,
-              hasControls: false, // Optional: Disable resizing controls
-              hasBorders: false,  // Optional: Disable borders
-
-              //드래그 동작 구현
             });
-            const imgWidth = imgFile.width;
-            const imgHeight = imgFile.height;
-
-            if (imgWidth > imgHeight) {
-              imgFile.scaleToHeight(492);
-            } else if (imgHeight > imgWidth) {
-              imgFile.scaleToWidth(340);
-            } else if (imgWidth === imgHeight) {
-              imgFile.scaleToHeight(492);
-            }
-
-            if( image )
-            {
-              canvas.remove(image);
-            }
-
-            canvas.add(imgFile);
-            setImage(imgFile);
-            setIsBackImgEmpty(false);
-          
-            canvas.renderAll();
-
-            
-          });
-        };
-        loadImage();
-      };
-    };
-
-    // 추가된 이미지 조회
-    useEffect(() => {
-      if (image) {
-        console.log('추가된 이미지 :', image);
-      }
-    }, [image]);
-
-
-
-
-    useEffect(() => {
-      if (image) {
-        (console.log('이미지 좌표 => ', '좌:', imageLeft, '우:', imageTop));
-      }
-    }, [image, imageLeft, imageTop]);
-
-
-    useEffect(() => {
-      if (canvas) {
-        // object:moving 이벤트 리스너 등록
-        canvas.on('object:moving', (e) => {
-          const obj = e.target;
-          const x = obj.left;
-          //마우스 포인터를 따라 움직이는 이미지의 y좌표
-          const y = obj.top;
-          // 이미지의 가로가 세로보다 클 때
-          if (obj.width > obj.height) {
-            // 마우스 포인터를 따라 움직이는 이미지의 x좌표
-            if (x > 340 + 340/2) {
-              // 이미지의 x좌표를 캔버스의 가운데로 고정
-              obj.set({
-                left: 340 + 340/2,
-                top: 492 / 2,
-              });
-            } else if (x < -340/2)  {
-              obj.set({
-                left: -340/2,
-                top: 492 / 2,
-              }); 
-            }
-            else {
-              obj.set({
-                left: x,
-                top: 492 / 2,
-              });
-            }
-          } else if ( obj.height > obj.width) {
-            // 이미지의 세로가 가로보다 클 때
-            if (y > 492 + 492/3) {
-              obj.set({
-                left: 340 / 2,
-                top: 492 + 492/3,
-              });
-            } else if (y < -492/3) {
-              obj.set({
-                left: 340 / 2,
-                top: -492/3,
-              });
-            } else {
-              obj.set({
-                left: 340 / 2,
-                top: y,
-              });
-            }
-          } else if (obj.width === obj.height) {
-            // 이미지의 가로와 세로가 같을 때
-            if (x > 340 + 340/2) {
-              obj.set({
-                left: 340 + 340/2,
-              });
-            } else if (x < -340/2) {
-              obj.set({
-                left: -340/2,
-              });
-            } else if (y > 492 + 492/3) {
-              obj.set({
-                top: 492 + 492/3,
-              });
-            } else if (y < -492/3) {
-              obj.set({
-                top: -492/3,
-              });
-            } else {
-              obj.set({
-                left: x,
-                top: y,
-              });
-            }
+          } else if (x < -340 / 2) {
+            obj.set({
+              left: -340 / 2,
+              top: 492 / 2,
+            });
+          } else {
+            obj.set({
+              left: x,
+              top: 492 / 2,
+            });
           }
-          // 이동 후 캔버스 렌더링
-          
-          canvas.renderAll();
-        });
+        } else if (obj.height > obj.width) {
+          // 이미지의 세로가 가로보다 클 때
+          if (y > 492 + 492 / 3) {
+            obj.set({
+              left: 340 / 2,
+              top: 492 + 492 / 3,
+            });
+          } else if (y < -492 / 3) {
+            obj.set({
+              left: 340 / 2,
+              top: -492 / 3,
+            });
+          } else {
+            obj.set({
+              left: 340 / 2,
+              top: y,
+            });
+          }
+        } else if (obj.width === obj.height) {
+          // 이미지의 가로와 세로가 같을 때
+          if (x > 340 + 340 / 2) {
+            obj.set({
+              left: 340 + 340 / 2,
+            });
+          } else if (x < -340 / 2) {
+            obj.set({
+              left: -340 / 2,
+            });
+          } else if (y > 492 + 492 / 3) {
+            obj.set({
+              top: 492 + 492 / 3,
+            });
+          } else if (y < -492 / 3) {
+            obj.set({
+              top: -492 / 3,
+            });
+          } else {
+            obj.set({
+              left: x,
+              top: y,
+            });
+          }
+        }
+        // 이동 후 캔버스 렌더링
 
-        canvas.on('object:modified', (e) => {
-          const obj = e.target;
-          setImagePosition({imageLeft: obj.left, imageTop: obj.top});
-        });
+        canvas.renderAll();
+      });
 
-        console.log('캔버스 :', canvas );
-      }
-    }, [canvas]);
+      canvas.on('object:modified', (e) => {
+        const obj = e.target;
+        setImagePosition({ imageLeft: obj.left, imageTop: obj.top });
+      });
 
-     ////////////////컨텍스트 메뉴 ////////////////////
+      console.log('캔버스 :', canvas);
+    }
+  }, [canvas]);
+
+  ////////////////컨텍스트 메뉴 ////////////////////
 
   const handleContextMenu = (e) => {
     e.preventDefault();
@@ -465,10 +487,6 @@ const Editor = () => {
 
   ///////////////////////////////////////////////
 
-
-
-    
-  
   //base64 -> File로 변환하는 함수
   const dataURLtoFile = (dataurl, fileName) => {
     var arr = dataurl.split(','),
@@ -517,7 +535,7 @@ const Editor = () => {
               <s.TopMenuButtonLeft>
                 <s.TopMenuButton
                   isActive={true}
-                  onClick={handleLoadFile} // 파일 불러오기 버튼 눌렀을 때 실행되는 함수
+                  onClick={onClickUploadModal} // 파일 불러오기 버튼 눌렀을 때 실행되는 함수
                 >
                   <s.TopMenuButtonIcon isActive={true}>
                     <Load />
@@ -526,6 +544,20 @@ const Editor = () => {
                     불러오기
                   </s.TopMenuButtonLabel>
                 </s.TopMenuButton>
+                <Modal
+                  isOpen={isOpenUploadModal}
+                  style={EditorUploadModalStyle}
+                  onRequestClose={onClickUploadModal} // 오버레이나 esc를 누르면 핸들러 동작
+                  ariaHideApp={false}
+                >
+                  <EditorUploadModal
+                    canvas={canvas}
+                    image={image}
+                    setImage={setImage}
+                    setIsBackImgEmpty={setIsBackImgEmpty}
+                    setIsOpenUploadModal={setIsOpenUploadModal}
+                  />
+                </Modal>
                 <s.TopMenuButton
                   onClick={() => {
                     removeCanvas(canvas);
@@ -580,17 +612,17 @@ const Editor = () => {
             >
               <canvas id='canvas' />
               {isContextMenuVisible && (
-                  <ContextMenu
-                    canvas={canvas}
-                    x={contextMenuPos.x} // 컨텍스트 메뉴 표시 위치 x
-                    y={contextMenuPos.y} // 컨텍스트 메뉴 표시 위치 y
-                    onClose={closeContextMenu} // 컨텍스트 메뉴 닫기 이벤트
-                    // onCopy={handleCopyObject} // 복사 이벤트
-                    // onPaste={handlePasteObject} // 붙여넣기 이벤트
-                    // onCut={handleCutObject} // 잘라내기 이벤트
-                    // onDelete={handleDeleteObject} // 삭제 이벤트
-                  />
-                )}
+                <ContextMenu
+                  canvas={canvas}
+                  x={contextMenuPos.x} // 컨텍스트 메뉴 표시 위치 x
+                  y={contextMenuPos.y} // 컨텍스트 메뉴 표시 위치 y
+                  onClose={closeContextMenu} // 컨텍스트 메뉴 닫기 이벤트
+                  // onCopy={handleCopyObject} // 복사 이벤트
+                  // onPaste={handlePasteObject} // 붙여넣기 이벤트
+                  // onCut={handleCutObject} // 잘라내기 이벤트
+                  // onDelete={handleDeleteObject} // 삭제 이벤트
+                />
+              )}
             </s.CanvasWrapper>
             <s.LayerButtonWrapper>
               <s.LayerButton>
@@ -633,22 +665,17 @@ const Editor = () => {
               ))}
             </s.ToolLabelWrapper>
             <s.ToolContentsWrapper>
-              {tool === 1 && 
-                <Image 
+              {tool === 1 && (
+                <Image
                   isBackImgEmpty={isBackImgEmpty}
                   setIsBackImgEmpty={setIsBackImgEmpty}
-                  image={image} 
+                  image={image}
                   canvas={canvas}
                 />
-              }
+              )}
               {tool === 2 && <Draw />}
               {tool === 3 && <Text />}
-              {tool === 4 && <Sticker
-                canvas={canvas}
-                image={image}
-
-                />
-              }
+              {tool === 4 && <Sticker canvas={canvas} image={image} />}
               {tool === 5 && <Frame />}
             </s.ToolContentsWrapper>
           </s.ToolContainer>

@@ -6,8 +6,8 @@ export const Wrapper = styled.div`
   align-items: center;
   width: 550px;
   height: 270px;
-  padding: 20px 20px;
-  border: 1px solid black;
+  padding: 15px 15px;
+  /* border: 1px solid black; */
   border-radius: 20px;
 `;
 
@@ -44,6 +44,11 @@ export const ButtonBox = styled.div`
   border: none;
   border-radius: 15px;
   background-color: ${(props) => props.bg && props.bg};
+
+  cursor: pointer;
+  &:hover {
+    filter: brightness(0.9);
+  }
 `;
 
 export const Icon = styled.img``;
@@ -62,6 +67,7 @@ export const BodyLabel = styled.div`
   width: 100%;
   height: fit-content;
   text-align: center;
+  font-weight: 500;
   font-size: 14px;
   color: rgba(137, 137, 137, 1);
 `;
