@@ -1,8 +1,8 @@
 import * as s from './style';
 // import { fabric } from 'fabric';
-import { useEffect, useState } from 'react';
+// import { useEffect, useState } from 'react';
 import { stickerData1, stickerData2, stickerData3, stickerData4, stickerData5, stickerData6, stickerData7 } from './stickerData';
-import Konva from 'konva';
+// import Konva from 'konva';
 
 import { fabric } from 'fabric';
 
@@ -16,6 +16,7 @@ const Stickers = ({
     const { offsetX, offsetY } = e.nativeEvent;
     const imageUrl = e.target.src;
     const spec = e.target.dataset.spec;
+    console.log(spec);
 
     const isParticlesS = spec === "particlesS";
     const isPrticlesM = spec === "particlesM";
@@ -73,22 +74,22 @@ const Stickers = ({
   return (
     <s.StickerList> 
       {/* <button onClick={handleDelete}>삭제</button> */}
-      {stickerData4.map( (stickerData4, index) => (
-          ( stickerData4.spec === 'ribbonL' ? (
+      {stickerData4.map( (item) => (
+          ( item.spec === 'ribbonL' ? (
             <img
-              key={index}
-              src={stickerData4.src} 
+              key={item.id}
+              src={item.fileUrl} 
               onClick={(e) => handleImageClick(e)}
-              data-spec={stickerData4.spec}
+              data-spec={item.spec}
               alt='sticker'
               width='150px'
               height='auto'
             />
             ):( <img
-                  key={index}
-                  src={stickerData4.src} 
+                  key={item.id}
+                  src={item.fileUrl} 
                   onClick={(e) => handleImageClick(e)}
-                  data-spec={stickerData4.spec}
+                  data-spec={item.spec}
                   alt='sticker'
                   width='120px'
                   height='120px'
@@ -96,22 +97,22 @@ const Stickers = ({
           ))
         )
       )}
-      {stickerData5.map( (stickerData5, index) => (
-          ( stickerData5.spec === 'ribbonL' ? (
+      {stickerData5.map( (item) => (
+          ( item.spec === 'ribbonL' ? (
             <img
-              key={index}
-              src={stickerData5.src} 
+              key={item.id}
+              src={item.fileUrl} 
               onClick={(e) => handleImageClick(e)}
-              data-spec={stickerData5.spec}
+              data-spec={item.spec}
               alt='sticker'
               width='150px'
               height='auto'
             />
             ):( <img
-                  key={index}
-                  src={stickerData5.src} 
+                  key={item.id}
+                  src={item.fileUrl} 
                   onClick={(e) => handleImageClick(e)}
-                  data-spec={stickerData5.spec}
+                  data-spec={item.spec}
                   alt='sticker'
                   width='120px'
                   height='120px'
@@ -119,21 +120,22 @@ const Stickers = ({
           ))
         )
       )}
-      {stickerData6.map( (stickerData6, index) => (
-          ( stickerData6.spec === 'ribbonL' ? (
+      {stickerData6.map( (item) => (
+          ( item.spec === 'ribbonL' ? (
             <img
-              key={index}
-              src={stickerData6.src}onClick={(e) => handleImageClick(e)}
-              data-spec={stickerData6.spec}
+              key={item.id}
+              src={item.fileUrl}
+              onClick={(e) => handleImageClick(e)}
+              data-spec={item.spec}
               alt='sticker'
               width='150px'
               height='auto'
             />
             ):( <img
-                  key={index}
-                  src={stickerData6.src} 
+                  key={item.id}
+                  src={item.fileUrl} 
                   onClick={(e) => handleImageClick(e)}
-                  data-spec={stickerData6.spec}
+                  data-spec={item.spec}
                   alt='sticker'
                   width='120px'
                   height='120px'
@@ -141,22 +143,22 @@ const Stickers = ({
           ))
         )
       )}
-      {stickerData7.map( (stickerData7, index) => (
-        ( stickerData7.spec === 'particlesS' ? (          
+      {stickerData7.map( (item) => (
+        ( item.spec === 'particlesS' ? (          
           <img
-            key={index}
-            src={stickerData7.src} 
+            key={item.id}
+            src={item.fileUrl} 
             onClick={(e) => handleImageClick(e)}
-            data-spec={stickerData7.spec} 
+            data-spec={item.spec} 
             alt='sticker'
             width='50px'
             height='auto'
           />
           ):( <img
-                key={index}
-                src={stickerData7.src} 
+                key={item.id}
+                src={item.fileUrl} 
                 onClick={(e) => handleImageClick(e)}
-                data-spec={stickerData7.spec}
+                data-spec={item.spec}
                 alt='sticker'
                 height='auto'
                 width='130px'
@@ -164,22 +166,22 @@ const Stickers = ({
           ))
         )
       )}
-      {stickerData1.map( (stickerData1, index) => {
+      {stickerData1.map( (item) => {
         return (
-          (stickerData1.spec === 'particlesS' ? (
+          (item.spec === 'particlesS' ? (
             <img
-              key={index}
-              src={stickerData1.src}
+              key={item.id}
+              src={item.fileUrl}
               onClick={(e) => handleImageClick(e)}
-              data-spec={stickerData1.spec}
+              data-spec={item.spec}
               alt='sticker'
               width='50px'
               height='auto' />
           ) : (<img
-            key={index}
-            src={stickerData1.src}
+            key={item.id}
+            src={item.fileUrl}
             onClick={(e) => handleImageClick(e)}
-            data-spec={stickerData1.spec}
+            data-spec={item.spec}
             alt='sticker'
             height='auto'
             width='130px' />
@@ -187,44 +189,44 @@ const Stickers = ({
         );
       }
       )}
-      {stickerData2.map( (stickerData2, index) => (
-        ( stickerData2.spec === 'm' ? (
+      {stickerData2.map( (item) => (
+        ( item.spec === 'm' ? (
           <img
-            key={index}
-            src={stickerData2.src} 
+            key={item.id}
+            src={item.fileUrl} 
             onClick={(e) => handleImageClick(e)}
-            data-spec={stickerData2.spec}
+            data-spec={item.spec}
             alt='sticker'
             width='150px'
             height='auto'
           />
           ):( <img
-                key={index}
-                src={stickerData2.src} 
+                key={item.id}
+                src={item.fileUrl} 
                 onClick={(e) => handleImageClick(e)}
-                data-spec={stickerData2.spec}
+                data-spec={item.spec}
                 alt='sticker'
                 width='50px'
               />
           ))
         )
       )}
-      {stickerData3.map( (stickerData3, index) => (
-        ( stickerData2.spec === '' ? (
+      {stickerData3.map( (item) => (
+        ( item.spec === '' ? (
           <img
-            key={index}
-            src={stickerData3.src} 
+            key={item.id}
+            src={item.fileUrl} 
             onClick={(e) => handleImageClick(e)}
-            data-spec={stickerData3.spec}
+            data-spec={item.spec}
             alt='sticker'
             width='150px'
             height='auto'
           />
           ):( <img
-                key={index}
-                src={stickerData3.src} 
+                key={item.id}
+                src={item.fileUrl} 
                 onClick={(e) => handleImageClick(e)}
-                data-spec={stickerData3.spec}
+                data-spec={item.spec}
                 alt='sticker'
                 width='50px'
               />

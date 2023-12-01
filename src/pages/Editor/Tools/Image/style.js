@@ -26,9 +26,7 @@ export const TopButtonsWrapper = styled.div`
 
   padding: 0 10px;
 
-  margin-top: 50px;
-  
-
+  margin-top: 60px;
 
 `;
 
