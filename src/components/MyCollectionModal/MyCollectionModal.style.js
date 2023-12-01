@@ -3,20 +3,24 @@ import styled from 'styled-components';
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  width: 800px;
+  height: 550px;
+  /* border: 1px solid black; */
+`;
 
+export const ModalTitle = styled.div`
+  width: 100%;
+  height: 30px;
+  font-size: 24px;
+  font-weight: 700;
+`;
+
+export const BodyWrapper = styled.div`
   width: 100%;
   height: 100%;
-
-  /* min-width: 1000px; */
-
-  //드래그 방지
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 `;
+
 export const ArtistsTabWrapper = styled.div`
   display: flex;
   flex-direction: row;
@@ -30,7 +34,6 @@ export const ArtistsTabWrapper = styled.div`
 
   // border: 1px solid red;
 `;
-
 export const ArtistsTab = styled.button`
   display: flex;
   align-items: center;
@@ -57,7 +60,6 @@ export const ArtistsTab = styled.button`
     color: black;
   }
 `;
-
 export const CollectionCardsContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -69,8 +71,6 @@ export const CollectionCardsContainer = styled.div`
   padding-top: 20px;
 `;
 
-////CollectionCard
-
 export const CollectionCardWrapper = styled.div`
   position: relative;
   display: flex;
@@ -78,6 +78,7 @@ export const CollectionCardWrapper = styled.div`
   align-items: center;
 
   width: 28%;
+  height: fit-content;
   margin: 28px 24px;
   box-sizing: border-box;
   border-radius: 35px;
@@ -93,23 +94,12 @@ export const CollectionCardWrapper = styled.div`
 `;
 
 export const ActivatedCollectionCardWrapper = styled.div`
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   cursor: pointer;
 
   &:hover {
-    > img {
-      filter: brightness(30%);
-    }
+    /* transform: scale(1.1);
+    transition: all linear 200ms; */
   }
-
-  /*
-  &:hover {
-    transform: scale(1.1);
-    transition: all linear 200ms;
-  } */
 `;
 
 export const CollectionCardImage = styled.img`
@@ -124,68 +114,27 @@ export const CollectionCardImage = styled.img`
 export const CollectionInfoWrapper = styled.div`
   display: table-cell;
   vertical-align: middle;
-  align-items: center;
   position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 30%;
   box-sizing: border-box;
-  justify-content: center;
-
-  width: fit-content;
-  height: fit-content;
-`;
-
-export const CollectionCardInfo = styled.div`
-  display: absolute;
-  text-align: center;
-  font-size: 23px;
-  font-weight: bold;
-  line-height: 35px;
-  color: white;
-`;
-
-export const InActivatedCollectionCardImage = styled.img`
-  position: absolute;
-  padding: 0;
-  width: 110%;
-  height: 110%;
-  object-fit: cover;
-  filter: blur(5px) brightness(50%);
-`;
-
-export const InActivatedLockWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 70px;
-  height: 70px;
-  border-radius: 15px;
-  background-color: #6a7db4;
-  z-index: 998;
-  cursor: pointer;
-
-  &img {
-    width: auto;
-    height: auto;
-  }
-`;
-
-export const InputCodeButton = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 140px;
-  height: 30px;
-  border: none;
-  border-radius: 10px;
   background-color: white;
-  color: black;
-  font-size: 18px;
-  font-weight: 600;
-  z-index: 998;
-  cursor: pointer;
-  &:hover {
-    filter: brightness(90%);
-  }
-  &:active {
-    filter: brightness(50%);
+  z-index: 999;
+`;
+export const CollectionInfoContainer = styled.div`
+  width: 85%;
+  height: 90%;
+  margin: 15px auto;
+`;
+
+export const CollectionInfo = styled.p`
+  margin: 5px;
+  font-size: 10px;
+  font-weight: bold;
+  line-height: 10px;
+  &:first-child {
+    font-size: 16px;
+    line-height: 25px;
   }
 `;

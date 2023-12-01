@@ -4,6 +4,8 @@ import Desktop from '../../assets/Desktop.svg';
 import MyPage from '../../assets/MyPage.svg';
 import Arrow from '../../assets/Arrow.svg';
 import { fabric } from 'fabric';
+import Modal from 'react-modal';
+import MyCollectionModal from '../MyCollectionModal';
 
 const EditorUploadModal = ({
   canvas,
@@ -13,6 +15,35 @@ const EditorUploadModal = ({
   setIsOpenUploadModal,
 }) => {
   const [myPhotocard, setMyPhotoCard] = useState();
+  const [isOpenMyDesignModal, setIsOpenMyDesignModal] = useState(false);
+
+  const MyDesignModalStyle = {
+    overlay: {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: 'rgba(0,0,0, 0.5)',
+      zIndex: 999,
+    },
+    content: {
+      background: 'white',
+      overflow: 'auto',
+      width: 'fit-content',
+      height: 'fit-content',
+      margin: 'auto auto',
+      WebkitOverflowScrolling: 'touch',
+      WebkitUserSelect: 'none',
+      borderRadius: '20px',
+      outline: 'none',
+      zIndex: 10,
+    },
+  };
+
+  const onClickMyDesignButton = () => {
+    setIsOpenMyDesignModal((prev) => !prev);
+  };
 
   // 파일 불러오기 버튼 눌렀을 때 실행되는 함수
   const handleLoadFile = () => {
@@ -100,15 +131,25 @@ const EditorUploadModal = ({
         <s.BodyItem>
           <s.ButtonBox
             bg={'rgba(63, 112, 255, 1)'}
-            onClick={() => setIsOpenUploadModal(false)}
+            onClick={() => {
+              setIsOpenMyDesignModal(true);
+            }}
           >
             <s.Icon src={MyPage} width={50} height={50}></s.Icon>
             <s.ButtonLabel>마이페이지</s.ButtonLabel>
           </s.ButtonBox>
           <s.BodyLabel>
-            <s.Icon src={Arrow} width={25} height={25} />내 도안 불러오기
+            <s.Icon src={Arrow} width={25} height={25} />내 포토카드 불러오기
           </s.BodyLabel>
         </s.BodyItem>
+        <Modal
+          isOpen={isOpenMyDesignModal}
+          style={MyDesignModalStyle}
+          onRequestClose={onClickMyDesignButton} // 오버레이나 esc를 누르면 핸들러 동작
+          ariaHideApp={false}
+        >
+          <MyCollectionModal />
+        </Modal>
       </s.BodyWrapper>
     </s.Wrapper>
   );
