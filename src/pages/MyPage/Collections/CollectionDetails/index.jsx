@@ -4,19 +4,37 @@ import mypageAPI from '../../../../api/mypage/mypageAPI';
 
 const CollectionDetails = ({ selectedArtist, selectedCollection }) => {
   const [collectionPhotocard, setCollectionPhotocard] = useState([]);
+  const [activePhotocard, setActivePhotocard] = useState([]);
 
-  const getCollectionPhotocardList = () => {
+  const getCollectionAllPhotocard = () => {
     mypageAPI
-      .getCollectionPhotocardList(1, decodeURI(selectedCollection))
+      .getCollectionAllPhotocard(1, decodeURI(selectedCollection))
       .then((data) => {
-        console.log(data.collectionPhotocardList);
+        console.log('이앨범의모든포카', data.collectionPhotocardList);
         setCollectionPhotocard(data.collectionPhotocardList);
       });
   };
+  const getCollectionActivePhotocard = () => {
+    mypageAPI
+      .getCollectionActivePhotocard(1, decodeURI(selectedCollection))
+      .then((data) => {
+        console.log('활성화된포카', data.ActivePhotocardList);
+        setActivePhotocard(data.ActivePhotocardList);
+      });
+  };
+
+  const activePhotocardId = activePhotocard.map((item) => {
+    return item.photocardId;
+  });
 
   useEffect(() => {
-    getCollectionPhotocardList();
+    getCollectionAllPhotocard();
+    getCollectionActivePhotocard();
   }, []);
+
+  useEffect(() => {
+    console.log(activePhotocardId);
+  }, [activePhotocard]);
 
   return (
     <>
@@ -34,6 +52,11 @@ const CollectionDetails = ({ selectedArtist, selectedCollection }) => {
                     key={`photocared_${item.photocardId}`}
                     src={item.photocard}
                     alt='photocard'
+                    className={
+                      activePhotocardId.find((id) => id === item.photocardId)
+                        ? ''
+                        : 'locked'
+                    }
                   />
                 </s.PhotocardImageFrame>
               </s.PhotoCardContainer>
