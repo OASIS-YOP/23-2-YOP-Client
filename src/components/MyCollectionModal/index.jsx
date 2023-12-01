@@ -1,9 +1,16 @@
 import * as s from './MyCollectionModal.style';
 import mypageAPI from '../../api/mypage/mypageAPI';
 import { useEffect, useState } from 'react';
-import CollectionDetails from '../../pages/MyPage/Collections/CollectionDetails';
+import { fabric } from 'fabric';
 
-const MyCollectionModal = () => {
+const MyCollectionModal = ({
+  setIsOpenCollectionModal,
+  setIsOpenUploadModal,
+  canvas,
+  image,
+  setImage,
+  setIsBackImgEmpty,
+}) => {
   const userId = 1;
   const [selectedArtist, setSelectedArtist] = useState();
   const [artistList, setArtistList] = useState([]);
@@ -24,6 +31,7 @@ const MyCollectionModal = () => {
 
   const onClickCollection = (albumName) => {
     setIsCollectionClicked(true);
+    setSelectedCollection(albumName);
   };
 
   const getMyCollectionArtistTab = () => {
@@ -41,10 +49,56 @@ const MyCollectionModal = () => {
 
   const onClickArtist = (artistId) => {
     setSelectedArtist(artistId);
-    // setIsCollectionClicked(false);
+    setIsCollectionClicked(false);
     // console.log(artistName);
   };
 
+  const onClickPhotocard = (photocard) => {
+    setIsOpenCollectionModal(false);
+    setIsOpenUploadModal(false);
+
+    new fabric.Image.fromURL(
+      photocard,
+      (imgFile) => {
+        imgFile.set({
+          id: 'backImg',
+          left: 340 / 2,
+          top: 492 / 2,
+          originX: 'center',
+          originY: 'center',
+          // rotation: rotationValue,
+          evented: true,
+          hoverCursor: 'default',
+          selected: true,
+          hasControls: false, // Optional: Disable resizing controls
+          hasBorders: false, // Optional: Disable borders
+
+          //드래그 동작 구현
+        });
+        const imgWidth = imgFile.width;
+        const imgHeight = imgFile.height;
+
+        if (imgWidth > imgHeight) {
+          imgFile.scaleToHeight(492);
+        } else if (imgHeight > imgWidth) {
+          imgFile.scaleToWidth(340);
+        } else if (imgWidth === imgHeight) {
+          imgFile.scaleToHeight(492);
+        }
+
+        if (image) {
+          canvas.remove(image);
+        }
+
+        canvas.add(imgFile);
+        setImage(imgFile);
+        setIsBackImgEmpty(false);
+
+        canvas.renderAll();
+      },
+      { crossOrigin: 'anonymous' }
+    );
+  };
   const artists = artistList.map((item) => {
     return (
       <s.ArtistsTab
@@ -76,7 +130,7 @@ const MyCollectionModal = () => {
                 return (
                   <s.CollectionCardWrapper styled={{ cursor: 'pointer' }}>
                     <s.ActivatedCollectionCardWrapper
-                      onClick={onClickCollection}
+                      onClick={() => onClickCollection(item.albumName)}
                       onMouseOut={onHandleMouseOut}
                       onMouseOver={onHandleMouseOver}
                     >
@@ -107,13 +161,64 @@ const MyCollectionModal = () => {
               })}
           </s.CollectionCardsContainer>
         ) : (
-          <CollectionDetails
+          <ModalCollectionDetails
             selectedArtist={selectedArtist}
             selectedCollection={selectedCollection}
+            onClickPhotocard={onClickPhotocard}
           />
         )}
       </s.BodyWrapper>
     </s.Wrapper>
+  );
+};
+
+const ModalCollectionDetails = ({
+  selectedArtist,
+  selectedCollection,
+  onClickPhotocard,
+}) => {
+  const [activePhotocard, setActivePhotocard] = useState([]);
+
+  const getCollectionActivePhotocard = () => {
+    mypageAPI
+      .getCollectionActivePhotocard(1, decodeURI(selectedCollection))
+      .then((data) => {
+        console.log('활성화된포카', data.ActivePhotocardList);
+        setActivePhotocard(data.ActivePhotocardList);
+      });
+  };
+
+  useEffect(() => {
+    getCollectionActivePhotocard();
+  }, []);
+
+  return (
+    <>
+      <s.ModalCollectionDetailsWrapper className={String(selectedArtist)}>
+        <s.CollectionName>{selectedCollection}</s.CollectionName>
+        <s.PhotocardListWrapper>
+          {activePhotocard.map((item) => {
+            return (
+              <s.PhotoCardContainer className={selectedArtist}>
+                <s.MemberName className={selectedArtist}>
+                  {item.memberName}
+                </s.MemberName>
+                <s.PhotocardImageFrame
+                  className={String(selectedArtist)}
+                  onClick={() => onClickPhotocard(item.photocard)}
+                >
+                  <s.PhotocardImage
+                    key={`Modalphotocard_${item.photocardId}`}
+                    src={item.photocard}
+                    alt='photocard'
+                  />
+                </s.PhotocardImageFrame>
+              </s.PhotoCardContainer>
+            );
+          })}
+        </s.PhotocardListWrapper>
+      </s.ModalCollectionDetailsWrapper>
+    </>
   );
 };
 

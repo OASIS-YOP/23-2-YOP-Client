@@ -161,19 +161,9 @@ export const PhotocardImage = styled.img`
 
   background-color: lightgray;
 
+  -webkit-user-drag: none;
+
   &.locked {
-    filter: blur(5px);
+    filter: blur(7px);
   }
-
-  /* &.4 {
-    width: 100%;
-  }
-
-  &.1 {
-    width: 230%;
-  }
-
-  &.2 {
-    width: 100%;
-  } */
 `;

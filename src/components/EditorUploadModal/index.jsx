@@ -15,7 +15,7 @@ const EditorUploadModal = ({
   setIsOpenUploadModal,
 }) => {
   const [myPhotocard, setMyPhotoCard] = useState();
-  const [isOpenMyDesignModal, setIsOpenMyDesignModal] = useState(false);
+  const [isOpenCollectionModal, setIsOpenCollectionModal] = useState(false);
 
   const MyDesignModalStyle = {
     overlay: {
@@ -41,8 +41,8 @@ const EditorUploadModal = ({
     },
   };
 
-  const onClickMyDesignButton = () => {
-    setIsOpenMyDesignModal((prev) => !prev);
+  const onClickCollectionButton = () => {
+    setIsOpenCollectionModal((prev) => !prev);
   };
 
   // 파일 불러오기 버튼 눌렀을 때 실행되는 함수
@@ -132,7 +132,7 @@ const EditorUploadModal = ({
           <s.ButtonBox
             bg={'rgba(63, 112, 255, 1)'}
             onClick={() => {
-              setIsOpenMyDesignModal(true);
+              setIsOpenCollectionModal(true);
             }}
           >
             <s.Icon src={MyPage} width={50} height={50}></s.Icon>
@@ -143,12 +143,19 @@ const EditorUploadModal = ({
           </s.BodyLabel>
         </s.BodyItem>
         <Modal
-          isOpen={isOpenMyDesignModal}
+          isOpen={isOpenCollectionModal}
           style={MyDesignModalStyle}
-          onRequestClose={onClickMyDesignButton} // 오버레이나 esc를 누르면 핸들러 동작
+          onRequestClose={onClickCollectionButton} // 오버레이나 esc를 누르면 핸들러 동작
           ariaHideApp={false}
         >
-          <MyCollectionModal />
+          <MyCollectionModal
+            setIsOpenCollectionModal={setIsOpenCollectionModal}
+            setIsOpenUploadModal={setIsOpenUploadModal}
+            canvas={canvas}
+            image={image}
+            setImage={setImage}
+            setIsBackImgEmpty={setIsBackImgEmpty}
+          />
         </Modal>
       </s.BodyWrapper>
     </s.Wrapper>
