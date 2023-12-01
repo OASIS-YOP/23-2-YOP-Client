@@ -30,7 +30,7 @@ export const ArtistsTabWrapper = styled.div`
   width: 100%;
   height: 30px;
 
-  padding-left: 80px;
+  padding: 20px 0 0 20px;
 
   // border: 1px solid red;
 `;

@@ -48,7 +48,7 @@ const MyLikes = () => {
                         #{item.albumName}
                       </s.tagsWrapper>
                       <s.dateWrapper>
-                        {item?.postDateTime.slice(
+                        {item?.postDateTime?.slice(
                           0,
                           item?.postDateTime.indexOf('T')
                         )}
