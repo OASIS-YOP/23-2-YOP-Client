@@ -8,7 +8,6 @@ export const Wrapper = styled.div`
   height: 270px;
   padding: 15px 15px;
   /* border: 1px solid black; */
-  border-radius: 20px;
 `;
 
 export const Text = styled.p`
@@ -51,7 +50,13 @@ export const ButtonBox = styled.div`
   }
 `;
 
-export const Icon = styled.img``;
+export const Icon = styled.img`
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+`;
 
 export const ButtonLabel = styled.p`
   width: 115px;

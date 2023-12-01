@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import * as s from './style';
-import CollectionCards from '../../../Temp/mypage/CollectionCards';
 import CollectionDetails from './CollectionDetails';
 import Lock from '../../../assets/Lock.svg';
 import mypageAPI from '../../../api/mypage/mypageAPI';
@@ -96,8 +95,8 @@ const Collections = () => {
 
 //컬렉션 카드 컴포넌트
 const CollectionCard = ({
-  selectedCollection,
-  setSelectedCollection,
+  // selectedCollection,
+  // setSelectedCollection,
   setIsCollectionClicked,
   albumJacket,
   albumName,
@@ -137,7 +136,7 @@ const CollectionCard = ({
                   </s.CollectionInfo>
                   <s.CollectionInfo>
                     {/* 수정요망 */}
-                    수집률 : (1 / {item.photoCardQuant} )* 100%
+                    수집률 : {(1 / item.photoCardQuant) * 100}%
                   </s.CollectionInfo>
                   <s.CollectionInfo>
                     {/* 내가가진포카수 구해서 넣어야함 */}
