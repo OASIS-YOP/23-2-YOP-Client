@@ -35,6 +35,9 @@ import EditorUploadModal from '../../components/EditorUploadModal';
 
 const Editor = () => {
   const [isOpenUploadModal, setIsOpenUploadModal] = useState(false);
+  //한수정 편집부분
+  const userId = 1;
+  const [photocardId, setPhotocardId] = useState();
 
   // 로그인 여부
   const [isLogedIn, setIsLogedIn] = useState(true);
@@ -660,7 +663,7 @@ const Editor = () => {
         console.log(pair[0] + ', ' + pair[1]);
       }
       editorpageAPI
-        .postDesignedPhotoCard(formData)
+        .postDesignedPhotoCard(1, photocardId, formData)
         .then((data) => console.log(data));
       window.alert('성공적으로 저장되었습니다!');
     } else {
@@ -699,6 +702,7 @@ const Editor = () => {
                     setImage={setImage}
                     setIsBackImgEmpty={setIsBackImgEmpty}
                     setIsOpenUploadModal={setIsOpenUploadModal}
+                    setPhotocardId={setPhotocardId}
                   />
                 </Modal>
                 <s.TopMenuButton

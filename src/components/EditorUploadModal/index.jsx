@@ -13,6 +13,7 @@ const EditorUploadModal = ({
   setImage,
   setIsBackImgEmpty,
   setIsOpenUploadModal,
+  setPhotocardId,
 }) => {
   const [myPhotocard, setMyPhotoCard] = useState();
   const [isOpenCollectionModal, setIsOpenCollectionModal] = useState(false);
@@ -155,6 +156,7 @@ const EditorUploadModal = ({
             image={image}
             setImage={setImage}
             setIsBackImgEmpty={setIsBackImgEmpty}
+            setPhotocardId={setPhotocardId}
           />
         </Modal>
       </s.BodyWrapper>

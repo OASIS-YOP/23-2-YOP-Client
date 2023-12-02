@@ -10,6 +10,7 @@ const MyCollectionModal = ({
   image,
   setImage,
   setIsBackImgEmpty,
+  setPhotocardId,
 }) => {
   const userId = 1;
   const [selectedArtist, setSelectedArtist] = useState();
@@ -165,6 +166,7 @@ const MyCollectionModal = ({
             selectedArtist={selectedArtist}
             selectedCollection={selectedCollection}
             onClickPhotocard={onClickPhotocard}
+            setPhotocardId={setPhotocardId}
           />
         )}
       </s.BodyWrapper>
@@ -176,6 +178,7 @@ const ModalCollectionDetails = ({
   selectedArtist,
   selectedCollection,
   onClickPhotocard,
+  setPhotocardId,
 }) => {
   const [activePhotocard, setActivePhotocard] = useState([]);
 
@@ -205,7 +208,10 @@ const ModalCollectionDetails = ({
                 </s.MemberName>
                 <s.PhotocardImageFrame
                   className={String(selectedArtist)}
-                  onClick={() => onClickPhotocard(item.photocard)}
+                  onClick={() => {
+                    onClickPhotocard(item.photocard);
+                    setPhotocardId(item.photocardId);
+                  }}
                 >
                   <s.PhotocardImage
                     key={`Modalphotocard_${item.photocardId}`}
