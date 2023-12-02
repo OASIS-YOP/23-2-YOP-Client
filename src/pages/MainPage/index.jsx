@@ -108,7 +108,10 @@ const MainPage = () => {
         <s.DesignCardContainer>
           {now5 &&
             now5.map((item, index) => (
-              <DesignCard key={index} polaroid={item.polaroid} />
+              <DesignCard
+                key={`now5_${item.postId}`}
+                polaroid={item.polaroid}
+              />
             ))}
         </s.DesignCardContainer>
       </s.RealTimeDesignWrapper>
@@ -162,6 +165,7 @@ const MainPage = () => {
             <>
               <CardsSlider>
                 <ArtistCard
+                  key={`randomArtist_${item.artistId}`}
                   photo={item.photo}
                   groupName={item.groupName}
                   artistId={item.artistId}
