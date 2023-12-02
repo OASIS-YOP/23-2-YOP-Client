@@ -4,8 +4,17 @@ import { fabric } from 'fabric';
 import { Demo } from './../ColorPicker';
 import './fonts/font.css';
 
+import TextIcon from './../../../../assets/editorIcons/text/Text';
+import DateIcon from './../../../../assets/editorIcons/text/Date';
+import TextColorIcon from './../../../../assets/editorIcons/text/TextColor';
+import TextFieldIcon from '../../../../assets/editorIcons/text/TextField';
+import DropDownIcon from '../../../../assets/editorIcons/text/DropDown';
+import FontChangeIcon from '../../../../assets/editorIcons/text/FontChange';
+import Lock from '../../../../assets/editorIcons/draw/Lock';
+
 const Text = ({
-  canvas, image
+  canvas, image,
+  isBackImgEmpty
 }) => {
   const [color, setColor] = useState('#6979ffff');
 
@@ -28,6 +37,10 @@ const Text = ({
     });
   });
 
+  const getRandomInt = ( min,  max ) => {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
   const AddDate = () => {
     // 캔버스에 텍스트 추가될 때 디폴트로 표시될 날짜 포맷팅 함수
     const formatDate = (date) => {
@@ -41,11 +54,19 @@ const Text = ({
     if (canvas) {
       let text = new fabric.IText(formatDate(currentDate), {
         fill: color,
+        left:0,
         editable: true,
         hasControls: true,
         class: 'date',
       });
-      text.set('selectable', true);
+      const x = getRandomInt(canvas.width/6, canvas.width/3); // 랜덤한 x 좌표
+      const y = getRandomInt(canvas.height/10, canvas.height-canvas.height/10); // 랜덤한 y 좌표
+      text.set({
+        selectable : true,
+        left: x,
+        top: y
+      });
+
 
       if( image ){
         canvas.add(text);
@@ -63,7 +84,13 @@ const Text = ({
         hasControls: true,
         class: 'text',
       });
-      text.set('selectable', true);
+      const x = getRandomInt(canvas.width/6, canvas.width/3); // 랜덤한 x 좌표
+      const y = getRandomInt(canvas.height/10, canvas.height-canvas.height/10); // 랜덤한 y 좌표
+      text.set({
+        selectable : true,
+        left: x,
+        top: y 
+      });
 
       if( image ){
         canvas.add(text);
@@ -245,28 +272,120 @@ const Text = ({
   return (
     <>
       <s.ContainerText>
-        <s.BtnAddText onClick={AddText}>텍스트 추가</s.BtnAddText>
-        <s.BtnAddText onClick={AddDate}>날짜 추가</s.BtnAddText>
+        <s.Margin />
+        <s.BtnWrapper>
+          <s.Btn
+            onClick={AddText}
+            disabled={isBackImgEmpty}
+          >
+            <s.BtnIcon
+              isActive={!isBackImgEmpty}
+            >
+              <TextIcon />
+            </s.BtnIcon>
+            <s.BtnLabel
+              isActive={!isBackImgEmpty}
+            >
+              텍스트 추가
+            </s.BtnLabel>
+          </s.Btn>
+          <s.Btn
+            onClick={AddDate}
+            disabled={isBackImgEmpty}
+          >
+            <s.BtnIcon
+              isActive={!isBackImgEmpty}
+            >
+              <DateIcon />
+            </s.BtnIcon>
+            <s.BtnLabel
+              isActive={!isBackImgEmpty}
+            >
+              날짜 추가
+            </s.BtnLabel>
+          </s.Btn>
+        </s.BtnWrapper>
         <s.ColorpickerWrapper>
           <Demo color={color} setColor={setColor} />
         </s.ColorpickerWrapper>
-        <s.BtnChangeColor onClick={ChangeTextColor}>
-          색깔 적용하기
-        </s.BtnChangeColor>
-        <s.BtnBackgroundColor onClick={TextBackgroundColor}>
-          배경색 넣기
-        </s.BtnBackgroundColor>
-        <s.BtnFixText onClick={FixText}>선택한 텍스트 고정</s.BtnFixText>
+        <s.Margin />
+        <s.BtnWrapper>
+          <s.Btn 
+            onClick={ChangeTextColor}
+            disabled={isBackImgEmpty}
+          >
+            <s.BtnIcon
+              isActive={!isBackImgEmpty}
+            >
+              <TextColorIcon />
+            </s.BtnIcon>
+            <s.BtnLabel
+              isActive={!isBackImgEmpty}
+            >
+              색상 적용하기
+            </s.BtnLabel>
+          </s.Btn>
+          <s.Btn 
+            onClick={TextBackgroundColor}
+            disabled={isBackImgEmpty}
+          >
+            <s.BtnIcon
+              isActive={!isBackImgEmpty}
+            >
+              <TextFieldIcon />
+            </s.BtnIcon>
+            <s.BtnLabel
+              isActive={!isBackImgEmpty}
+            >
+              배경색 넣기
+            </s.BtnLabel>
+          </s.Btn>
+        </s.BtnWrapper>
+        <s.BtnWrapper>
+        <s.Btn
+          onClick={FixText}
+          disabled={isBackImgEmpty}
+        >
+          <s.BtnIcon
+            isActive={!isBackImgEmpty}
+          >
+            <Lock />
+          </s.BtnIcon>
+          <s.BtnLabel
+            isActive={!isBackImgEmpty}
+          >
+            선택한 텍스트 고정
+          </s.BtnLabel>    
+        </s.Btn>
         {/* <s.BtnFixImage onClick={FixImage}>선택한 이미지 고정</s.BtnFixImage> */}
         {/* <s.BtnDrawText onClick={handleTextDrawClick}>텍스트 그리기</s.BtnDrawText> */}
-        <select
-          id='font-family'
-          onChange={(e) => setSelectedFont(e.target.value)}
-          value={selectedFont}
-        >
-          {/* Options will be added dynamically through the useEffect */}
-        </select>
-        <s.BtnFontChange onClick={TextFonts}>글꼴 바꾸기</s.BtnFontChange>
+        </s.BtnWrapper>
+        <s.BtnWrapper>
+          <s.SelectFont
+            id='font-family'
+            onChange={(e) => setSelectedFont(e.target.value)}
+            value={selectedFont}
+            disabled={isBackImgEmpty}
+          >
+            {/* Options will be added dynamically through the useEffect */}
+            </s.SelectFont>
+          <s.Btn 
+            onClick={TextFonts}
+            disabled={isBackImgEmpty}
+          >
+            <s.BtnIcon
+              isActive={!isBackImgEmpty}
+            >
+              <FontChangeIcon />
+            </s.BtnIcon>
+            <s.BtnLabel
+              isActive={!isBackImgEmpty}
+            >
+              글꼴 바꾸기
+            </s.BtnLabel>
+          </s.Btn>
+        </s.BtnWrapper>
+        <s.Margin />
       </s.ContainerText>
     </>
   );

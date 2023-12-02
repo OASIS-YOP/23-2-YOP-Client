@@ -9,6 +9,12 @@ export const Wrapper = styled.div`
   width: 100%;
   min-width: 1200px;
   height: 100%;
+
+  //드래그 방지
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 `;
 
 //헤더 제외 래퍼
@@ -201,8 +207,8 @@ export const LayerButton = styled.button`
   margin: 0 2px;
 
   &:hover {
-    background-color: #CCD0DD;
-    cursor: ${({ isActive }) => (isActive ? 'pointer' : 'default')};
+    background-color: ${({ disabled }) => ( disabled ? 'white' : '#CCD0DD')};
+    cursor: ${({ disabled }) => ( disabled ? 'not-allowed' : 'pointer')};
 
   }
 
@@ -213,7 +219,6 @@ export const LayerButton = styled.button`
   font-size: 11px;
   font-weight: 700;
 
-  color: ${({ isActive }) => (isActive ? '#898989' : '')};
 `;
 
 export const LayerButtonIcon = styled.img`
@@ -223,23 +228,79 @@ export const LayerButtonIcon = styled.img`
 
 `;
 
+export const LockIcon = styled.div`
+  width: 18px;
+
+  margin: 0 1.5%;
+
+  fill: ${({ isActive }) => (isActive ? '#898989' : '#CCCCCC')};
+`
+
+
 export const LayerButtonLabel = styled.div`
   font-size: 11px;
   font-weight: 700;
 
-  color: #898989;
+  color: ${({ isActive }) => (isActive ? '#898989' : '#CCCCCC')};
 
   margin: 0 1.5%;
 `;
 
 export const SelectedObjects = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+
   font-size: 12px;
   font-weight: 700;
 
-  margin-top: 20px;
-
   color: #898989;
 `;
+
+export const DeleteButton = styled.button`\
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  width: 50px;
+  height: 27px;
+
+  background-color: white;
+  border: none;
+  border-radius: 5px;
+
+  overflow: hidden;
+
+  margin: 0 2px;
+
+
+  &:hover {
+    background-color: ${({ disabled }) => ( disabled ? 'white' : '#CCD0DD' )};
+    cursor: ${({ disabled }) => ( disabled ? ' not-allowed ' : ' pointer ')};
+  }
+
+  &:active {
+    background-color: white;
+  };
+
+  font-size: 11px;
+  font-weight: 700;
+
+
+`
+
+export const DeleteButtonLabel = styled.div`
+  font-size: 11px;
+  font-weight: 700;
+
+  color: ${({ isActive }) => (isActive ? '#898989' : '#CCCCCC')};
+
+  margin: 0 1.5%;
+`
+
 
 //툴박스 공간
 export const RightContainer = styled.div`

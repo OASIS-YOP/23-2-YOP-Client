@@ -8,13 +8,19 @@ export const Wrapper = styled.div`
   height: 270px;
   padding: 15px 15px;
   /* border: 1px solid black; */
+
+  //드래그 방지
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 `;
 
 export const Text = styled.p`
   width: 420px;
   height: 25px;
 
-  font-size: 18px;
+  font-size: 19px;
   font-weight: 500;
   line-height: 24px;
   text-align: center;
@@ -61,7 +67,7 @@ export const Icon = styled.img`
 export const ButtonLabel = styled.p`
   width: 115px;
   height: 20px;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 500;
   text-align: center;
   margin: 5px 0 0 0;
@@ -73,6 +79,6 @@ export const BodyLabel = styled.div`
   height: fit-content;
   text-align: center;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 13px;
   color: rgba(137, 137, 137, 1);
 `;

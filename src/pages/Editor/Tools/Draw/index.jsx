@@ -3,6 +3,12 @@ import * as s from './style';
 import { fabric } from 'fabric';
 import { Demo } from './../ColorPicker';
 
+import Lock from './../../../../assets/editorIcons/draw/Lock';
+import Circle from './../../../../assets/editorIcons/draw/Circle';
+import Square from './../../../../assets/editorIcons/draw/Square';
+import Triangle from './../../../../assets/editorIcons/draw/Triangle';
+import ColorFill from './../../../../assets/editorIcons/draw/ColorFill';
+
 const Draw = ({
   canvas,
   image,
@@ -10,13 +16,23 @@ const Draw = ({
 }) => {
   const [color, setColor] = useState('#6979ffff');
 
+
+  // 캔버스 내의 랜덤 위치 지정
+  const getRandomInt = ( min,  max ) => {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
   const AddObjCircle = () => {
+    const x = getRandomInt(0, canvas.width-40); // 랜덤한 x 좌표
+    const y = getRandomInt(0, canvas.height-40); // 랜덤한 y 좌표
     if (canvas) {
       let circle = new fabric.Circle({
+        width: 40,
+        height: 40,
         radius: 25,
         fill: color,
-        left: 100,
-        top: 100,
+        left: x,
+        top: y,
       });
       circle.set('selectable', true);
       if( image ){
@@ -29,13 +45,15 @@ const Draw = ({
   };
 
   const AddObjRect = () => {
+    const x = getRandomInt(0, canvas.width - 40); // 랜덤한 x 좌표
+    const y = getRandomInt(0, canvas.height-40); // 랜덤한 y 좌표
     if (canvas) {
       let rect = new fabric.Rect({
         width: 40,
         height: 40,
         fill: color,
-        left: 100,
-        top: 100,
+        left: x,
+        top: y,
       });
       rect.set('selectable', true);
 
@@ -48,13 +66,15 @@ const Draw = ({
   };
 
   const AddObjTri = () => {
+    const x = getRandomInt(0, canvas.width-40); // 랜덤한 x 좌표
+    const y = getRandomInt(0, canvas.height-40); // 랜덤한 y 좌표
     if (canvas) {
       let tri = new fabric.Triangle({
         width: 40,
         height: 40,
         fill: color,
-        left: 100,
-        top: 100,
+        left: x,
+        top: y,
       });
       tri.set('selectable', true);
 
@@ -106,16 +126,75 @@ const Draw = ({
   return (
     <>
       <s.PaintContainer>
-        <s.BtnAddObj onClick={AddObjCircle}>동그라미 추가</s.BtnAddObj>
-        <s.BtnAddObj onClick={AddObjRect}>네모 추가</s.BtnAddObj>
-        <s.BtnAddObj onClick={AddObjTri}>세모 추가</s.BtnAddObj>
+        <s.Margin />
+        <s.BtnAddObjWrapper>
+          <s.BtnAddObj 
+            onClick={AddObjCircle}
+            disabled={isBackImgEmpty}
+          >
+            <s.BtnAddObjIcon
+              isActive={!isBackImgEmpty}
+            >
+              <Circle />
+            </s.BtnAddObjIcon>
+            <s.BtnAddObjLabel
+              isActive={!isBackImgEmpty}
+            >
+              동그라미 추가
+            </s.BtnAddObjLabel>
+          </s.BtnAddObj>
+          <s.BtnAddObj 
+            onClick={AddObjRect}
+            disabled={isBackImgEmpty}  
+          >
+            <s.BtnAddObjIcon
+              isActive={!isBackImgEmpty}
+            >
+              <Square />
+            </s.BtnAddObjIcon>
+            <s.BtnAddObjLabel
+              isActive={!isBackImgEmpty}
+            >
+              네모 추가
+            </s.BtnAddObjLabel>
+            </s.BtnAddObj>
+          <s.BtnAddObj 
+            onClick={AddObjTri}
+            disabled={isBackImgEmpty}  
+          >
+            <s.BtnAddObjIcon
+              isActive={!isBackImgEmpty}
+            >
+              <Triangle />
+            </s.BtnAddObjIcon>
+            <s.BtnAddObjLabel
+              isActive={!isBackImgEmpty}
+            >
+              세모 추가
+            </s.BtnAddObjLabel>
+          </s.BtnAddObj>
+        </s.BtnAddObjWrapper>
         <s.ColorpickerWrapper>
           <Demo color={color} setColor={setColor} />
         </s.ColorpickerWrapper>
-        <s.BtnChangeColor onClick={ChangeObjColor}>
-          색깔 적용하기
-        </s.BtnChangeColor>
-        <s.BtnFixObj onClick={FixObj}>선택한 도형 고정</s.BtnFixObj>
+        <s.BtnChangeColorWrapper>
+          <s.BtnChangeColor 
+            onClick={ChangeObjColor}
+            disabled={isBackImgEmpty}  
+          >
+            <s.BtnChangeColorIcon
+              isActive={!isBackImgEmpty}
+            >
+              <ColorFill />
+            </s.BtnChangeColorIcon>
+            <s.BtnChangeColorLabel
+              isActive={!isBackImgEmpty}
+            >
+              색상 적용하기
+            </s.BtnChangeColorLabel>
+          </s.BtnChangeColor>
+        </s.BtnChangeColorWrapper>
+        <s.Margin />
       </s.PaintContainer>
     </>
   );

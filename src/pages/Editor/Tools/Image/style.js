@@ -2,6 +2,8 @@ import styled from 'styled-components';
 
 
 export const Wrapper = styled.div`
+
+ 
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -11,6 +13,7 @@ export const Wrapper = styled.div`
   min-height: 550px;
 
   background-color: transparent;
+
 
 
 `
@@ -49,10 +52,8 @@ export const TopButton = styled.button`
   &:hover {  
       background-color: #CCD0DD;
       cursor: pointer;
-    
-    
-    /* background-color: ${({ disabled }) => ( disabled ? 'white' : '#CCD0DD')};
-    cursor: ${({ disabled }) => ( disabled ? 'default' : 'pointer')}; */
+      background-color: ${({ disabled }) => ( disabled ? 'white' : '#CCD0DD')};
+      cursor: ${({ disabled }) => ( disabled ? 'not-allowed' : 'pointer')};
   };
 
   &:active {
@@ -69,6 +70,8 @@ export const TopButtonIcon = styled.div`
 
   margin-right: 6px;
 
+  fill : ${({ isActive }) => (isActive ? 'black' : '#CCCCCC')};
+
 `;
 
 export const TopButtonLabel = styled.div`
@@ -79,6 +82,8 @@ export const TopButtonLabel = styled.div`
 
   font-weight: 500;
   font-size: 13.4px;
+  
+  color: ${({ isActive }) => (isActive ? 'black' : '#CCCCCC')};
   
 `;
 

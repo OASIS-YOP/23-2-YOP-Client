@@ -1,5 +1,5 @@
-
-import { atom, selector } from 'recoil';
+ 
+import { atom } from 'recoil';
 
 export const brightnessValue = atom({
   key: 'brightnessValue',
@@ -21,12 +21,12 @@ export const rotationValue = atom({
   default: 0,
 });
 
-export const reverseXToggle = atom({
+export const reverseXState = atom({
   key: 'reverseXToggle',
   default: true,
 });
 
-export const reverseYToggle = atom({
+export const reverseYState = atom({
   key: 'reverseYToggle',
   default: true,
 });
@@ -36,27 +36,36 @@ export const scaleValue = atom({
   default: 50,
 });
 
-export const applyGray = atom({
+export const applyGrayState = atom({
   key: 'applyGray',
   default: false,
 });
 
-export const refreshImage = atom({
+export const isBackImgEmptyState = atom({
+  key: 'isBackImgEmpty',
+  default: true,
+});
+
+export const refreshImageState = atom({
   key: 'refreshImage',
   default: false,
 });
 
-export const newWidth = atom({
-  key: 'newWidth',
+export const resizeWidth = atom({
+  key: 'resizeWidth',
   default: 0,
 });
 
-export const newHeight = atom({
-  key: 'newHeight',
+export const resizeHeight = atom({
+  key: 'resizeHeight',
   default: 0,
 });
 
-
+export const imageState = atom({
+  key: 'imageState',
+  type: 'image',
+  default: '',
+});
 
 
 
