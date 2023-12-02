@@ -28,15 +28,15 @@ const mainpageAPI = {
       return null;
     }
   },
-  getHot10Like: async (userId, postId) => {
-    try {
-      const path = `${process.env.REACT_APP_BASE_URL}/mainpage/1/hot10/1/like`;
-      const response = await HttpClient.get(path);
-      return response;
-    } catch (e) {
-      return null;
-    }
-  },
+  // getHot10Like: async (userId, postId) => {
+  //   try {
+  //     const path = `${process.env.REACT_APP_BASE_URL}/mainpage/${userId}/hot10/${postId}/like`;
+  //     const response = await HttpClient.get(path);
+  //     return response;
+  //   } catch (e) {
+  //     return null;
+  //   }
+  // },
   getNow5: async (userId) => {
     try {
       const path = `${process.env.REACT_APP_BASE_URL}/mainpage/${userId}/now5`;

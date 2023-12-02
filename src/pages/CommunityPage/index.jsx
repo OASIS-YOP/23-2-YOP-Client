@@ -72,7 +72,7 @@ const CommunityPage = () => {
 
   const getMemberPost = (memberName) => {
     communitypageAPI.getMemberPost(memberName).then((data) => {
-      setMemberPost(data.memberPostList);
+      setMemberPost(data?.memberPostList);
       console.log(data);
     });
   };
@@ -162,7 +162,7 @@ const CommunityPage = () => {
                     <img src={item.polaroid} alt='allPolaroid' />
                   </s.CardImageContainer>
                 ))
-              : memberPost.map((item) => (
+              : memberPost?.map((item) => (
                   <s.CardImageContainer key={`memberPost_${item.postId}`}>
                     <img src={item.polaroid} alt='Polaroid' />
                   </s.CardImageContainer>

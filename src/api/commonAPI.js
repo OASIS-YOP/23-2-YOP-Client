@@ -37,6 +37,15 @@ const commonAPI = {
       return null;
     }
   },
+  getIfLikePost: async (userId, postId) => {
+    try {
+      const path = `${process.env.REACT_APP_BASE_URL}/${userId}/isLike/${postId}`;
+      const response = await HttpClient.get(path);
+      return response;
+    } catch (e) {
+      return null;
+    }
+  },
 };
 
 export default commonAPI;

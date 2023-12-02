@@ -10,7 +10,6 @@ import FireIcon from '../../assets/FireIcon.svg';
 import mainpageAPI from '../../api/mainpage/mainpageAPI.js';
 
 //더미데이터
-import Top10 from '../../Temp/mainpage/Top10';
 import Banner from '../../components/Banner';
 import BannerSlider from '../../components/BannerSlider';
 
@@ -43,13 +42,6 @@ const MainPage = () => {
       setHot10(data.hot10List);
     });
   };
-
-  const getHot10Like = () => {
-    mainpageAPI.getHot10Like().then((data) => {
-      console.log(data);
-      // setHot10(data.hot10LikeList);
-    });
-  };
   const getNow5 = () => {
     mainpageAPI.getNow5(userId).then((data) => {
       console.log(data);
@@ -58,12 +50,11 @@ const MainPage = () => {
   };
 
   useEffect(() => {
-    getFavArtist();
-    getRandomArtist();
-    getHot10();
-    getHot10Like();
-    getNow5();
-    getHot10Like();
+    Promise.all([getFavArtist(), getRandomArtist()])
+      .then(() => {
+        return Promise.all([getHot10(), getNow5()]);
+      })
+      .catch((error) => console.error('Error in API calls', error));
   }, []);
 
   return (
@@ -106,6 +97,7 @@ const MainPage = () => {
               key={`hot10_${item.postId}`}
               photo={item}
               index={index + 1}
+              updateHot10={getHot10}
             />
           ))}
       </CardsSlider>
