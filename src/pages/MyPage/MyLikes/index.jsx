@@ -1,9 +1,9 @@
+import { useEffect, useState } from 'react';
 import * as s from './style';
-import dotdotdot from '../../../assets/dotdotdot.svg';
 import UnLikedIcon from '../../../assets/UnLikedIcon.svg';
 import LikedIcon from '../../../assets/LikedIcon.svg';
-import { useEffect, useState } from 'react';
 import mypageAPI from '../../../api/mypage/mypageAPI';
+import commonAPI from '../../../api/commonAPI';
 
 const MyLikes = () => {
   const userId = 1;
@@ -16,12 +16,9 @@ const MyLikes = () => {
     });
   };
 
-  const handleClickLike = (postId) => {};
-
   useEffect(() => {
     getMyLike();
   }, []);
-
   return (
     <>
       <s.Wrapper>
@@ -31,44 +28,75 @@ const MyLikes = () => {
           ) : (
             <>
               {myLikePost.map((item) => (
-                <s.PostFrame key={item.id}>
-                  <s.leftContainer>
-                    <s.PostImageFrame>
-                      <s.PostImage src={item.polaroid} />
-                    </s.PostImageFrame>
-                  </s.leftContainer>
-                  <s.rightContainer>
-                    <s.postInfoWrapper>
-                      <s.nicknameWrapper>{item.nickname}</s.nicknameWrapper>
-                      <s.tagsWrapper>
-                        #{item.enterComp} #{item.groupName} <br />
-                        {item.groupName === item.memberName
-                          ? ''
-                          : `#${item.memberName}`}
-                        #{item.albumName}
-                      </s.tagsWrapper>
-                      <s.dateWrapper>
-                        {item?.postDateTime?.slice(
-                          0,
-                          item?.postDateTime.indexOf('T')
-                        )}
-                      </s.dateWrapper>
-                      <s.likeWrapper>
-                        <s.likeIcon
-                          src={LikedIcon}
-                          // onClick={() => handleClickLike(post.id)}
-                        />
-                        <s.likeCount>{item.likeQuant}</s.likeCount>
-                      </s.likeWrapper>
-                    </s.postInfoWrapper>
-                  </s.rightContainer>
-                </s.PostFrame>
+                <MyLikePost item={item} updateMyLike={getMyLike} />
               ))}
             </>
           )}
         </s.PostsWrapper>
       </s.Wrapper>
     </>
+  );
+};
+
+const MyLikePost = ({ item, updateMyLike }) => {
+  const userId = 1;
+  const [isLikePost, setIsLikePost] = useState();
+
+  //여긴 postLike가 필요없음.
+  const deleteLike = () => {
+    commonAPI.deleteLike(userId, item.postId).then((data) => {
+      if (data) {
+        console.log(data.message);
+        updateMyLike();
+      } else {
+        console.log('deleteLike error');
+      }
+    });
+  };
+
+  const getIfLikePost = () => {
+    commonAPI.getIfLikePost(userId, item.postId).then((data) => {
+      setIsLikePost(data);
+    });
+  };
+
+  const handleClickLikeIcon = () => {
+    setIsLikePost((prev) => !prev);
+    deleteLike();
+  };
+
+  useEffect(() => {
+    getIfLikePost();
+  }, []);
+
+  return (
+    <s.PostFrame key={item.id}>
+      <s.leftContainer>
+        <s.PostImageFrame>
+          <s.PostImage src={item.polaroid} />
+        </s.PostImageFrame>
+      </s.leftContainer>
+      <s.rightContainer>
+        <s.postInfoWrapper>
+          <s.nicknameWrapper>{item.nickname}</s.nicknameWrapper>
+          <s.tagsWrapper>
+            #{item.enterComp} #{item.groupName} <br />
+            {item.groupName === item.memberName ? '' : `#${item.memberName}`}#
+            {item.albumName}
+          </s.tagsWrapper>
+          <s.dateWrapper>
+            {item?.postDateTime?.slice(0, item?.postDateTime.indexOf('T'))}
+          </s.dateWrapper>
+          <s.likeWrapper>
+            <s.likeIcon
+              src={isLikePost ? LikedIcon : UnLikedIcon}
+              onClick={handleClickLikeIcon}
+            />
+            <s.likeCount>{item.likeQuant}</s.likeCount>
+          </s.likeWrapper>
+        </s.postInfoWrapper>
+      </s.rightContainer>
+    </s.PostFrame>
   );
 };
 
