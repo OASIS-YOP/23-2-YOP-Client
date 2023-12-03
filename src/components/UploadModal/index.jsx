@@ -130,10 +130,10 @@ const SelectCollection = () => {
         console.log('업로드 성공');
         closeThirdModal();
       } else {
-        console.error('업로드 실패');
+        window.alert('업로드 실패');
       }
     } catch (error) {
-      console.error('업로드 에러 발생:', error);
+      window.alert('업로드 에러 발생:', error);
     }
   };
 
