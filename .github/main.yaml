@@ -1,0 +1,31 @@
+name: CI/CD 프론트엔드
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install Dependencies
+        run: npm install
+        working-directory: /src/pages/MainPage/
+
+      - name: Build
+        run: npm run build
+        working-directory: /src/pages/MainPage/
+
+      - name: Test
+        run: npm test
+        working-directory: /src/pages/MainPage/
