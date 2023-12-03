@@ -35,7 +35,7 @@ const router = createBrowserRouter([
     element: <UploadModal />,
   },
   {
-    path: '//uploadModal2/:uploadId',
+    path: '/uploadModal2/:uploadId',
     element: <CollectionCard />,
   },
   {
