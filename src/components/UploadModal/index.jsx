@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
 import * as s from './upload.style.js';
+import uploadAPI from '../../api/uploadmodal/uploadAPI.js';
 
 Modal.setAppElement('#root');
 
@@ -99,6 +100,43 @@ const SelectCollection = () => {
     setIsSecondaryModalOpened(false);
   };
 
+  const closeUploadModal = () => {
+    closeModal();
+    setIsThirdModalOpened(false);
+  };
+
+  const getSelectedImageData = (selectedCard) => {
+    return {
+      title: 'BUTTER',
+      cardId: `JH_BT0${selectedCard + 1}`,
+    };
+  };
+
+  const handleUploadButtonClick = async (selectedCard, closeThirdModal) => {
+    try {
+      const imageData = getSelectedImageData(selectedCard);
+      const response = await fetch(
+        `${process.env.REACT_APP_BASE_URL}/upload/`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ imageData }),
+        }
+      );
+
+      if (response.ok) {
+        console.log('업로드 성공');
+        closeThirdModal();
+      } else {
+        console.error('업로드 실패');
+      }
+    } catch (error) {
+      console.error('업로드 에러 발생:', error);
+    }
+  };
+
   useEffect(() => {
     if (isSecondaryModalOpened === true) {
       navigate(`/uploadmodal2/${selectedCard}`);
@@ -194,7 +232,7 @@ const SelectCollection = () => {
           </s.EditingCardWrapper>
           <div>
             <button onClick={closeModal}>X</button>
-            <button>업로드</button>
+            <button onClick={handleUploadButtonClick}>업로드</button>
           </div>
         </s.Wrapper>
       </Modal>

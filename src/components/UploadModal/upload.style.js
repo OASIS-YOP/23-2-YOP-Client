@@ -21,7 +21,7 @@ export const HeaderLabel = styled.div`
   align-items: center;
   width: 100px;
   height: 100%;
-  background-color: gray;
+  background-color: #686868;
   color: white;
   border-radius: 20px;
 `;
@@ -73,7 +73,7 @@ export const Label = styled.div`
   align-items: center;
   width: 100px;
   height: 100%;
-  background-color: grey;
+  background-color: #686868;
   color: white;
   border-radius: 20px;
 `;
@@ -125,7 +125,7 @@ export const Button = styled.div`
   align-items: center;
   width: 100px;
   height: 100%;
-  background-color: grey;
+  background-color: #686868;
   color: white;
   border-radius: 20px;
 `;
@@ -136,7 +136,7 @@ export const ThirdModal = styled.div`
   align-items: center;
   width: 100px;
   height: 100%;
-  background-color: gray;
+  background-color: #686868;
   color: white;
   border-radius: 20px;
 `;
