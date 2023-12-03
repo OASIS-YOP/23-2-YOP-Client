@@ -24,7 +24,7 @@ export const Text = styled.p`
   font-weight: 500;
   line-height: 24px;
   text-align: center;
-`;
+`;   
 
 export const BodyWrapper = styled.div`
   display: flex;

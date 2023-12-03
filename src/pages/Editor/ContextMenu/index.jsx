@@ -63,10 +63,10 @@ const ContextMenu = ({
       }
     } else if (action === 'delete') {
       // 삭제 동작 처리
-      console.log('삭제할 객체들:', canvas.getActiveObject().toObject());
-      if (canvas.getActiveObject()) {
+      console.log('삭제할 객체들:', canvas?.getActiveObject()?.toObject());
+      if (canvas?.getActiveObject()) {
         // 선택된 객체가 있는지 확인
-        const activeObject = canvas.getActiveObject().toObject();
+        const activeObject = canvas?.getActiveObject()?.toObject();
         onDelete(activeObject);
       } else {
         console.log('no object is selected');

@@ -52,6 +52,8 @@ const Text = ({
     //오늘 날짜
 
     if (canvas) {
+      const x = getRandomInt(0, canvas.width); // 랜덤한 x 좌표
+      const y = getRandomInt(0, canvas.height); // 랜덤한 y 좌표
       let text = new fabric.IText(formatDate(currentDate), {
         fill: color,
         left:0,
@@ -59,12 +61,10 @@ const Text = ({
         hasControls: true,
         class: 'date',
       });
-      const x = getRandomInt(canvas.width/6, canvas.width/3); // 랜덤한 x 좌표
-      const y = getRandomInt(canvas.height/10, canvas.height-canvas.height/10); // 랜덤한 y 좌표
       text.set({
         selectable : true,
-        left: x,
-        top: y
+        left: Math.min(Math.max(x, 0), canvas.width - text.getScaledWidth()),
+        top: Math.min(Math.max(y, 0), canvas.height - text.getScaledHeight()),
       });
 
 
@@ -78,18 +78,18 @@ const Text = ({
 
   const AddText = () => {
     if (canvas) {
+      const x = getRandomInt(0, canvas.width); // 랜덤한 x 좌표
+      const y = getRandomInt(0, canvas.height); // 랜덤한 y 좌표
       let text = new fabric.IText('double click!', {
         fill: color,
         editable: true,
         hasControls: true,
         class: 'text',
       });
-      const x = getRandomInt(canvas.width/6, canvas.width/3); // 랜덤한 x 좌표
-      const y = getRandomInt(canvas.height/10, canvas.height-canvas.height/10); // 랜덤한 y 좌표
       text.set({
         selectable : true,
-        left: x,
-        top: y 
+        left: Math.min(Math.max(x, 0), canvas.width - text.getScaledWidth()),
+        top: Math.min(Math.max(y, 0), canvas.height - text.getScaledHeight()),
       });
 
       if( image ){

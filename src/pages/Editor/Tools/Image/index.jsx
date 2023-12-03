@@ -133,16 +133,6 @@ const ImageTool = ({ image, canvas, isBackImgEmpty, setIsBackImgEmpty }) => {
   }
   }, [isBackImgEmpty]);
 
-      setIsBackImgEmpty(false);
-    }
-  }, [image]);
-
-  // useEffect(() => {
-  //   if (image) {
-  //     console.log('필터값들:', brightnessValue, saturationValue, contrastValue, rotationValue, scaleValue);
-  //   }
-  // }, [brightnessValue, saturationValue, contrastValue, rotationValue, scaleValue]);
-
   //canvas clear될때마다 inputValue 초기화
   // canvas.on({ 'canvas:cleared': initRangeInputValues });
 
