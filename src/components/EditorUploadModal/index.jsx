@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import * as s from './EditorUploadModal.style';
 import Desktop from '../../assets/Desktop.svg';
 import MyPage from '../../assets/MyPage.svg';
@@ -7,16 +7,35 @@ import { fabric } from 'fabric';
 import Modal from 'react-modal';
 import MyCollectionModal from '../MyCollectionModal';
 
+import { useRecoilState, useRecoilValue, useSetRecoilState, useResetRecoilState } from 'recoil';
+import { 
+  brightnessValue,
+  contrastValue,
+  saturationValue,
+  rotationValue,
+  scaleValue,
+  reverseXState,
+  reverseYState,
+  applyGrayState,
+  isBackImgEmptyState,
+  resizeHeight,
+  resizeWidth,
+} from '../../recoil/atoms';
+
 const EditorUploadModal = ({
   canvas,
   image,
   setImage,
-  setIsBackImgEmpty,
   setIsOpenUploadModal,
   setPhotocardId,
 }) => {
   const [myPhotocard, setMyPhotoCard] = useState();
   const [isOpenCollectionModal, setIsOpenCollectionModal] = useState(false);
+
+  const [ isBackImgEmpty, setIsBackImgEmpty ] = useRecoilState(isBackImgEmptyState);
+
+  const setNewHeight = useSetRecoilState(resizeHeight);
+  const setNewWidth = useSetRecoilState(resizeWidth);
 
   const MyDesignModalStyle = {
     overlay: {
@@ -101,6 +120,7 @@ const EditorUploadModal = ({
 
           if (image) {
             canvas.remove(image);
+            setIsBackImgEmpty(true);
           }
 
           canvas.add(imgFile);
@@ -114,6 +134,52 @@ const EditorUploadModal = ({
       setIsOpenUploadModal(false);
     };
   };
+
+  /////////////// 캔버스에 들어갈 이미지 사이즈 조정
+
+   const resizeImage = () => {
+    if (image)
+   {const canvasWidth = 340;
+   const canvasHeight = 492;
+
+   const imgWidth = image.width;
+   const imgHeight = image.height;
+
+   const maxWidth = canvasWidth;
+   const maxHeight = canvasHeight;
+
+   const aspectRatio = imgWidth / imgHeight;
+
+   let newWidth = imgWidth;
+   let newHeight = imgHeight;
+
+   // 이미지의 가로가 세로보다 클 때
+   if (imgWidth > imgHeight) {
+     newHeight = maxHeight;
+     newWidth = newHeight * aspectRatio;
+   }
+   // 이미지의 세로가 가로보다 클 때
+   if (imgHeight > imgWidth) {
+     newWidth = maxWidth;
+     newHeight = newWidth / aspectRatio;
+   }
+   // 이미지의 가로와 세로가 같을 때
+   if (imgWidth === imgHeight) {
+     newHeight = maxHeight;
+     newWidth = newHeight * aspectRatio;
+   }
+    console.log('현재 백그라운드이미지 크기:', 'newWidth:', newWidth, 'newHeight:', newHeight);
+    setNewWidth(newWidth);
+    setNewHeight(newHeight);
+  }
+
+  };
+   ////////////////////////////////////////
+
+   useEffect((image) => {
+    resizeImage(image);
+  }, [image]);
+
 
   return (
     <s.Wrapper>

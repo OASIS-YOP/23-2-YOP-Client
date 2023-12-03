@@ -6,8 +6,6 @@ import AlignCenterHorizontal from '../../../../assets/AlignCenterHorizontal';
 import AlignCenterVertical from '../../../../assets/AlignCenterVertical';
 import BlackWhite from '../../../../assets/BlackWhite';
 
-import Circle from './../../../../assets/editorIcons/draw/Circle';
-
 import Brightness from '../../../../assets/editorIcons/image/Brightness';
 import Contrast from '../../../../assets/editorIcons/image/Contrast';
 import Saturation from '../../../../assets/editorIcons/image/Saturation';
@@ -23,51 +21,34 @@ import 'rc-slider/assets/index.css';
 import { fabric } from 'fabric';
 // import Konva from 'konva';
 
-import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
-import { 
-  brightnessValue,
-  contrastValue,
-  saturationValue,
-  rotationValue,
-  scaleValue,
-  reverseXState,
-  reverseYState,
-  applyGrayState,
-  refreshImageState,
-  isBackImgEmptyState,
-  resizeHeight,
-  resizeWidth,
-} from '../../../../recoil/atoms';
 
-const ImageTool = ({ image, canvas, isBackImgEmpty, setIsBackImgEmpty }) => {
-  const [ brightness , setBrightness ] = useRecoilState(brightnessValue);
-  const [ contrast , setContrast ] = useRecoilState(contrastValue);
-  const [ saturation , setSaturation ] = useRecoilState(saturationValue);
-  const [ rotation, setRotation ] = useRecoilState(rotationValue);
-  const [ scale, setScale ] = useRecoilState(scaleValue);
-  const [ reverseXToggle, setReverseXToggle ] = useRecoilState(reverseXState);
-  const [ reverseYToggle, setReverseYToggle ] = useRecoilState(reverseYState);
-  const [ applyGray, setApplyGray ] = useRecoilState(applyGrayState);
 
-  const resetBrightness = useResetRecoilState(brightnessValue);
-  const resetContrast = useResetRecoilState(contrastValue);
-  const resetSaturation = useResetRecoilState(saturationValue);
-  const resetRotation = useResetRecoilState(rotationValue);
-  const resetScale = useResetRecoilState(scaleValue);
-  const resetReverseX = useResetRecoilState(reverseXState);
-  const resetReverseY = useResetRecoilState(reverseYState);
-  const resetGray = useResetRecoilState(applyGrayState);
 
-  const [ refreshImage, setRefreshImage ] = useRecoilState(refreshImageState);
-  const [ isBackImgEmpty, setIsBackImgEmpty ] = useRecoilState(isBackImgEmptyState);
 
-  // const [ brightnessValue, setBrightnessValue ] = useState(0);
-  // const [ saturationValue, setSaturationValue ] = useState(0);
-  // const [ contrastValue, setContrastValue ] = useState(0);
-  
+const Image = ({
+  image, canvas,
+  isBackImgEmpty, setIsBackImgEmpty,
+}) => {
 
-  const newWidth = useRecoilValue(resizeWidth);
-  const newHeight = useRecoilValue(resizeHeight);
+  // const [brightnessVlaue, setBrightnessValue] = useState(0);
+  // const [saturationValue, setSaturationValue] = useState(0);
+  // const [contrastValue, setContrastValue] = useState(0);
+
+  // const [ isBackImgEmpty, setIsBackImgEmpty ] = useState(true);
+  const [reverseXToggle, setReverseXToggle] = useState(true);
+  const [reverseYToggle, setReverseYToggle] = useState(true);
+  const [applyGray, setApplyGray] = useState(false);
+
+  const [ refreshImage, setRefreshImage ] = useState(false);
+
+  const [ brightnessValue, setBrightnessValue ] = useState(0);
+  const [ saturationValue, setSaturationValue ] = useState(0);
+  const [ contrastValue, setContrastValue ] = useState(0);
+  const [ rotationValue, setRotationValue ] = useState(0);
+  const [ scaleValue, setScaleValue ] = useState(1);
+
+  const [ newWidth, setNewWidth ] = useState( 0 );
+  const [ newHeight, setNewHeight ] = useState( 0 );
 
   //filter part
 
@@ -99,7 +80,6 @@ const ImageTool = ({ image, canvas, isBackImgEmpty, setIsBackImgEmpty }) => {
   };
 
   const removeGrayFilter = () => {
-    if(image)
     image.filters.splice(0);
     image.applyFilters();
     canvas.renderAll();
@@ -119,23 +99,24 @@ const ImageTool = ({ image, canvas, isBackImgEmpty, setIsBackImgEmpty }) => {
 
   useEffect(() => {
     //필터 초기화
-    if (isBackImgEmpty) {
-    resetBrightness();
-    resetContrast();
-    resetSaturation();
-    resetRotation();
-    resetScale();
-    resetReverseX();
-    resetReverseY();
-    resetGray();
-  } else{
-    return;
-  }
-  }, [isBackImgEmpty]);
+    if(!image){
+    setIsBackImgEmpty(true);
+    setApplyGray(false);
+    } 
+    else if (image) {
+    setBrightnessValue(0);
+    setSaturationValue(0);
+    setContrastValue(0);
+    setRotationValue(0);
+    setScaleValue(50);
 
-      setIsBackImgEmpty(false);
-    }
+    setReverseXToggle(true);
+    setReverseYToggle(true);
+    
+    setIsBackImgEmpty(false);
+  }
   }, [image]);
+
 
   // useEffect(() => {
   //   if (image) {
@@ -143,57 +124,61 @@ const ImageTool = ({ image, canvas, isBackImgEmpty, setIsBackImgEmpty }) => {
   //   }
   // }, [brightnessValue, saturationValue, contrastValue, rotationValue, scaleValue]);
 
+
+
   //canvas clear될때마다 inputValue 초기화
   // canvas.on({ 'canvas:cleared': initRangeInputValues });
 
   // 초기화 버튼 누르면
   const handleRefresh = () => {
     //필터 초기화
-    setRefreshImage(true);
+      setRefreshImage(true);
 
-      resetBrightness();
-      resetContrast();
-      resetSaturation();
-      resetRotation();
-      resetScale();
-      resetReverseX();
-      resetReverseY();
-      resetGray();
+      setApplyGray(false);
 
-    image.set('flipX', false);
-    image.set('flipY', false);
-    image.set('angle', 0);
+      setBrightnessValue(0);
+      setSaturationValue(0);
+      setContrastValue(0);
+      setRotationValue(0);
+      setScaleValue(50);
+  
+      setReverseXToggle(true);
+      setReverseYToggle(true);
 
-    // 명도 필터 초기화
-    applyFilter(1, new fabric.Image.filters.Brightness({ brightness: 0 }));
-    applyFilterValue(1, 'brightness', 0);
+      image.set('flipX', false);
+      image.set('flipY', false);
+      image.set('angle', 0);
 
-    // 채도 필터 초기화
-    applyFilter(2, new fabric.Image.filters.Saturation({ saturation: 0 }));
-    applyFilterValue(2, 'saturation', 0);
+      // 명도 필터 초기화
+      applyFilter(1, new fabric.Image.filters.Brightness({ brightness: 0 }));
+      applyFilterValue(1, 'brightness', 0);
 
-    // 대비 필터 초기화
-    applyFilter(3, new fabric.Image.filters.Contrast({ contrast: 0 }));
-    applyFilterValue(3, 'contrast', 0);
+      // 채도 필터 초기화
+      applyFilter(2, new fabric.Image.filters.Saturation({ saturation: 0 }));
+      applyFilterValue(2, 'saturation', 0);
 
-    //이미지 위치 초기화
-    image.set({
-      left: 340 / 2,
-      top: 492 / 2,
-    });
+      // 대비 필터 초기화
+      applyFilter(3, new fabric.Image.filters.Contrast({ contrast: 0 }));
+      applyFilterValue(3, 'contrast', 0);
+
+      //이미지 위치 초기화
+      image.set({
+        left: 340/2,
+        top: 492/2,
+      });
 
       image.setCoords();
       canvas.renderAll();
-      setRefreshImage(false);
   };
 
   useEffect(() => {
-    if(refreshImage){
+
+    if(image){
       console.log('백그라운드 이미지 초기화:', refreshImage)
       if (refreshImage) {
         const imgWidth = image.width;
         const imgHeight = image.height;
-
+    
         // 이미지 크기 변경
         if (imgWidth > imgHeight) {
           image.scaleToHeight(492);
@@ -205,11 +190,14 @@ const ImageTool = ({ image, canvas, isBackImgEmpty, setIsBackImgEmpty }) => {
         image.set('scaleX', image.scaleX).set('scaleY', image.scaleY);
         image.setCoords();
         canvas.renderAll();
+        setRefreshImage(false);
       } else if (!refreshImage){
         return;
       }
     }
-  }, [refreshImage]);
+  }, [image, refreshImage]);
+
+
 
 
   //gray toggle
@@ -219,6 +207,8 @@ const ImageTool = ({ image, canvas, isBackImgEmpty, setIsBackImgEmpty }) => {
       ? applyGrayFilter(0, new fabric.Image.filters.Grayscale())
       : removeGrayFilter();
   }, [applyGray]);
+  
+
 
   const handleStyle = {
     width: 18,
@@ -227,9 +217,11 @@ const ImageTool = ({ image, canvas, isBackImgEmpty, setIsBackImgEmpty }) => {
     opacity: 100,
     cursor: 'pointer',
     marginTop: -7,
-    border: '1.8px solid #B7C0D8',
+    border: '1.8px solid #B7C0D8',    
   };
 
+  
+  
   const trackStyle = {
     // 트랙(바)의 스타일 정의
     border: '1.8px solid #B7C0D8',
@@ -247,61 +239,94 @@ const ImageTool = ({ image, canvas, isBackImgEmpty, setIsBackImgEmpty }) => {
     marginTop: -2,
   };
 
-  useEffect(() => {
-    if (image) {
-      console.log('이미지탭 마운트:', brightness, saturation, contrast, rotation, scale, );
-    }
-  }, []);
+
+   /////////////// 캔버스에 들어갈 이미지 사이즈 조정
+
+   const resizeImage = () => {
+    if (image)
+   {const canvasWidth = 340;
+   const canvasHeight = 492;
+
+   const imgWidth = image.width;
+   const imgHeight = image.height;
+
+   const maxWidth = canvasWidth;
+   const maxHeight = canvasHeight;
+
+   const aspectRatio = imgWidth / imgHeight;
+
+   let newWidth = imgWidth;
+   let newHeight = imgHeight;
+
+   // 이미지의 가로가 세로보다 클 때
+   if (imgWidth > imgHeight) {
+     newHeight = maxHeight;
+     newWidth = newHeight * aspectRatio;
+   }
+   // 이미지의 세로가 가로보다 클 때
+   if (imgHeight > imgWidth) {
+     newWidth = maxWidth;
+     newHeight = newWidth / aspectRatio;
+   }
+   // 이미지의 가로와 세로가 같을 때
+   if (imgWidth === imgHeight) {
+     newHeight = maxHeight;
+     newWidth = newHeight * aspectRatio;
+   }
+    console.log('현재 백그라운드이미지 크기:', 'newWidth:', newWidth, 'newHeight:', newHeight);
+    setNewWidth(newWidth);
+    setNewHeight(newHeight);
+  }
+
+  };
+   ////////////////////////////////////////
+
+   useEffect((image) => {
+    resizeImage(image);
+  }, [image]);
+
 
   return (
     <>
       <s.Wrapper>
         <s.TopButtonsWrapper>
-          <s.TopButton
+          <s.TopButton 
             onClick={reverseX}
             disabled={isBackImgEmpty}
+            // updateIsBackImgEmpty={updateIsBackImgEmpty}
+            isBackImgEmpty={isBackImgEmpty}
           >
-            <s.TopButtonIcon
-              isActive={!isBackImgEmpty}
-            >
-              <AlignCenterHorizontal
-                isActive={!isBackImgEmpty}
-              />
+            <s.TopButtonIcon>
+              <AlignCenterHorizontal />
             </s.TopButtonIcon>
-            <s.TopButtonLabel
-              isActive={!isBackImgEmpty}
-            >
+            <s.TopButtonLabel>
               좌우대칭
             </s.TopButtonLabel>
             </s.TopButton>
             <s.TopButton 
               onClick={reverseY}
               disabled={isBackImgEmpty}
+              // updateIsBackImgEmpty={updateIsBackImgEmpty}
+              isBackImgEmpty={isBackImgEmpty}
             >
-            <s.TopButtonIcon
-              isActive={!isBackImgEmpty}
-            >
+            <s.TopButtonIcon>
               <AlignCenterVertical />
             </s.TopButtonIcon>
-            <s.TopButtonLabel
-              isActive={!isBackImgEmpty}
-            >
+            <s.TopButtonLabel>
               상하대칭
             </s.TopButtonLabel>
           </s.TopButton>
           <s.TopButton
             id='grayscale'
             onClick={onClickGray}
-            disabled={isBackImgEmpty}
+            disabled={isBackImgEmpty}  
+            // updateIsBackImgEmpty={updateIsBackImgEmpty}
+            isBackImgEmpty={isBackImgEmpty}
           >
-            <s.TopButtonIcon
-              isActive={!isBackImgEmpty}
-            >
+            <s.TopButtonIcon>
               <BlackWhite />
             </s.TopButtonIcon>
-            <s.TopButtonLabel
-              isActive={!isBackImgEmpty}
-            >
+            <s.TopButtonLabel>
               흑백
             </s.TopButtonLabel>
           </s.TopButton>
@@ -311,14 +336,32 @@ const ImageTool = ({ image, canvas, isBackImgEmpty, setIsBackImgEmpty }) => {
             <s.FilterIcon>
               <Brightness />
             </s.FilterIcon>
-            <s.FilterLabel>명도</s.FilterLabel>
+            <s.FilterLabel>
+              명도
+            </s.FilterLabel>
             <s.FilterSlider>
               <Slider
                 className='image-input'
                 id='brightness-value'
-                value={ isBackImgEmpty ? 0 : brightness }
+                defaultValue={0}
+                value={isBackImgEmpty ? 0 : brightnessValue}
                 onChange={(value)=> {
-                  setBrightness(value);
+                  applyFilter(
+                    1,
+                    new fabric.Image.filters.Brightness({
+                      brightness: parseFloat(
+                        value / 220
+                      ),
+                    })
+                  );
+                  applyFilterValue(
+                    1,
+                    'brightness',
+                    parseFloat(
+                      value / 220
+                    )
+                  );
+                  setBrightnessValue(value);
                 }}
                 disabled={isBackImgEmpty}
                 isBackImgEmpty={isBackImgEmpty}
@@ -329,43 +372,38 @@ const ImageTool = ({ image, canvas, isBackImgEmpty, setIsBackImgEmpty }) => {
                 max={100}
               />
             </s.FilterSlider>
-            <s.FilterValue >{brightness}</s.FilterValue>
+            <s.FilterValue >{isBackImgEmpty ? 0 : brightnessValue}</s.FilterValue>
           </s.Filter>
           <s.Filter>
             <s.FilterIcon>
               <Saturation />
             </s.FilterIcon>
-            <s.FilterLabel>채도</s.FilterLabel>
+            <s.FilterLabel>
+              채도
+            </s.FilterLabel>
             <s.FilterSlider>
               <Slider
                 className='image-input'
                 id='saturation-value'
-                value={saturation}
+                defaultValue={0}
+                value={isBackImgEmpty ? 0 : saturationValue}
                 onChange={(value) => {
-                  setSaturation(value);
-                }}
-                disabled={isBackImgEmpty}
-                handleStyle={handleStyle}
-                trackStyle={trackStyle}
-                railStyle={railStyle}
-                min={-100}
-                max={100}
-              />
-            </s.FilterSlider>
-            <s.FilterValue >{saturation} </s.FilterValue>
-          </s.Filter>
-          <s.Filter>
-            <s.FilterIcon>
-              <Contrast />
-            </s.FilterIcon>
-            <s.FilterLabel>대비</s.FilterLabel>
-            <s.FilterSlider>
-              <Slider
-                className='image-input'
-                id='contrast-value'
-                value={isBackImgEmpty ? 0 : contrast}
-                  onChange={(value) => {
-                  setContrast(value);
+                  applyFilter(
+                    2,
+                    new fabric.Image.filters.Saturation({
+                      saturation: parseFloat(
+                        value / 110
+                      ),
+                    })
+                  );
+                  applyFilterValue(
+                    2,
+                    'saturation',
+                    parseFloat(
+                      value / 110
+                    )
+                  );
+                  setSaturationValue(value);
                 }}
                 disabled={isBackImgEmpty}
                 // updateIsBackImgEmpty={updateIsBackImgEmpty}
@@ -377,11 +415,52 @@ const ImageTool = ({ image, canvas, isBackImgEmpty, setIsBackImgEmpty }) => {
                 max={100}
               />
             </s.FilterSlider>
-            <s.FilterValue >{contrast} </s.FilterValue>
+            <s.FilterValue >{isBackImgEmpty ? 0 : saturationValue} </s.FilterValue>
+          </s.Filter>
+          <s.Filter>
+            <s.FilterIcon>
+              <Contrast />
+            </s.FilterIcon>
+            <s.FilterLabel>
+              대비
+            </s.FilterLabel>
+            <s.FilterSlider>
+              <Slider
+                className='image-input'
+                id='contrast-value'
+                defaultValue={0}
+                value={isBackImgEmpty ? 0 : contrastValue}
+                onChange={(value) => {
+                  applyFilter(
+                    3,
+                    new fabric.Image.filters.Contrast({
+                      contrast: parseFloat(
+                        value / 230
+                      ),
+                    })
+                  );
+                  applyFilterValue(
+                    3,
+                    'contrast',
+                    parseFloat(value / 230)
+                  );
+                  setContrastValue(value);
+                }}
+                disabled={isBackImgEmpty}
+                // updateIsBackImgEmpty={updateIsBackImgEmpty}
+                isBackImgEmpty={isBackImgEmpty}
+                handleStyle={handleStyle}
+                trackStyle={trackStyle}
+                railStyle={railStyle}
+                min={-100}
+                max={100}
+              />
+            </s.FilterSlider>
+            <s.FilterValue >{isBackImgEmpty ? 0 : contrastValue} </s.FilterValue>
           </s.Filter>
           <s.devider />
         </s.FiltersContainer>
-        <s.FiltersContainer
+        <s.FiltersContainer 
           style={{
             marginBottom: '100px',
           }}
@@ -390,19 +469,22 @@ const ImageTool = ({ image, canvas, isBackImgEmpty, setIsBackImgEmpty }) => {
             <s.FilterIcon>
               <Rotate />
             </s.FilterIcon>
-            <s.FilterLabel>회전</s.FilterLabel>
+            <s.FilterLabel>
+              회전
+            </s.FilterLabel>
             <s.FilterSlider>
               <Slider
                 className='image-input'
                 id='rotate-slider'
+                defaultValue={0}
                 disabled={isBackImgEmpty}
                 onChange={(value) => {
                     const newAngle = parseInt(value);
-                    setRotation(value);
+                    setRotationValue(value);
                     image.set('angle', newAngle).setCoords();
                     canvas.requestRenderAll();
                 }}
-                value={rotation}
+                value={isBackImgEmpty ? 0 : rotationValue}
                 handleStyle={handleStyle}
                 trackStyle={trackStyle}
                 railStyle={railStyle}
@@ -410,39 +492,44 @@ const ImageTool = ({ image, canvas, isBackImgEmpty, setIsBackImgEmpty }) => {
                 max={180}
               />
             </s.FilterSlider>
-            <s.FilterValue >{rotation} </s.FilterValue>
+            <s.FilterValue >{isBackImgEmpty ? 0 : rotationValue} </s.FilterValue>
           </s.Filter>
           <s.Filter>
             <s.FilterIcon>
               <Scale />
             </s.FilterIcon>
-            <s.FilterLabel>크기</s.FilterLabel>
+            <s.FilterLabel>
+              크기
+            </s.FilterLabel>
             <s.FilterSlider>
               <Slider
                 className='image-input'
                 id='scale-slider'
+                defaultValue={50}
                 disabled={isBackImgEmpty}
-                value = {scale}
+                value = {isBackImgEmpty ? 50 : scaleValue}
                 onChange={(value) => {
-                  if (image.width > image.height) {
-                    const scaleFactor = (value * newWidth) / 50;
+                  if(image.width> image.height){
+                    const scaleFactor = value * newWidth/50; 
                     image.scaleToWidth(scaleFactor).setCoords();
 
                     canvas.requestRenderAll();
-                    setScale(value);
+
+                    setScaleValue(value);
                   } else if (image.width< image.height){
                     const scaleFactor = value * newHeight/50; 
                     image.scaleToHeight(scaleFactor).setCoords();
 
                     canvas.requestRenderAll();
-                    setScale(value);
+
+                    setScaleValue(value);
                   } else if (image.width === image.height){
                     const scaleFactor = value * newHeight/50; 
                     image.scaleToHeight(scaleFactor).setCoords();
 
                     canvas.requestRenderAll();
 
-                    setScale(value);
+                    setScaleValue(value);
                   }
                 }}
                 handleStyle={handleStyle}
@@ -452,12 +539,12 @@ const ImageTool = ({ image, canvas, isBackImgEmpty, setIsBackImgEmpty }) => {
                 max={100}
               />
             </s.FilterSlider>
-            <s.FilterValue >{scale} </s.FilterValue>
+            <s.FilterValue >{isBackImgEmpty ? 50 : scaleValue} </s.FilterValue>
           </s.Filter>
           <s.devider />
           <s.TopButtonsWrapper
             style={{
-              marginTop: '30px',
+              marginTop: '30px'
             }}
           >
             <s.TopButton
@@ -465,17 +552,15 @@ const ImageTool = ({ image, canvas, isBackImgEmpty, setIsBackImgEmpty }) => {
               onClick={handleRefresh}
               disabled={isBackImgEmpty}
             >
-              <s.TopButtonLabel
-                isActive={!isBackImgEmpty}  
-              >
-                초기화
-              </s.TopButtonLabel>
+              초기화
             </s.TopButton>
           </s.TopButtonsWrapper>
         </s.FiltersContainer>
+
       </s.Wrapper>
+      
     </>
   );
 };
 
-export default ImageTool;
+export default Image;
