@@ -39,26 +39,7 @@ import {
   resizeWidth,
 } from '../../../../recoil/atoms';
 
-const ImageTool = ({
-  image, canvas,
-  // setBrightnessValue, setSaturationValue, setContrastValue,
-  // setRotationValue, setScaleValue,
-  // brightnessValue, saturationValue, contrastValue,
-  // rotationValue, scaleValue,
-  // setReverseXToggle, setReverseYToggle,
-  // reverseXToggle, reverseYToggle,
-  // setApplyGray, applyGray,
-}) => {
-
-  // const [brightnessVlaue, setBrightnessValue] = useState(0);
-  // const [saturationValue, setSaturationValue] = useState(0);
-  // const [contrastValue, setContrastValue] = useState(0);
-
-  // const [ isBackImgEmpty, setIsBackImgEmpty ] = useState(true);
-  // const [reverseXToggle, setReverseXToggle] = useState(true);
-  // const [reverseYToggle, setReverseYToggle] = useState(true);
-  // const [applyGray, setApplyGray] = useState(false);
-
+const ImageTool = ({ image, canvas, isBackImgEmpty, setIsBackImgEmpty }) => {
   const [ brightness , setBrightness ] = useRecoilState(brightnessValue);
   const [ contrast , setContrast ] = useRecoilState(contrastValue);
   const [ saturation , setSaturation ] = useRecoilState(saturationValue);
@@ -152,6 +133,23 @@ const ImageTool = ({
   }
   }, [isBackImgEmpty]);
 
+  //canvas clear될때마다 inputValue 초기화
+  // canvas.on({ 'canvas:cleared': initRangeInputValues });
+
+  // 초기화 버튼 누르면
+  const handleRefresh = () => {
+    //필터 초기화
+    setRefreshImage(true);
+
+      resetBrightness();
+      resetContrast();
+      resetSaturation();
+      resetRotation();
+      resetScale();
+      resetReverseX();
+      resetReverseY();
+      resetGray();
+
     image.set('flipX', false);
     image.set('flipY', false);
     image.set('angle', 0);
@@ -173,42 +171,6 @@ const ImageTool = ({
       left: 340 / 2,
       top: 492 / 2,
     });
-
-  // 초기화 버튼 누르면
-  const handleRefresh = () => {
-    //필터 초기화
-      setRefreshImage(true);
-
-      resetBrightness();
-      resetContrast();
-      resetSaturation();
-      resetRotation();
-      resetScale();
-      resetReverseX();
-      resetReverseY();
-      resetGray();
-
-      image.set('flipX', false);
-      image.set('flipY', false);
-      image.set('angle', 0);
-
-      // 명도 필터 초기화
-      applyFilter(1, new fabric.Image.filters.Brightness({ brightness: 0 }));
-      applyFilterValue(1, 'brightness', 0);
-
-      // 채도 필터 초기화
-      applyFilter(2, new fabric.Image.filters.Saturation({ saturation: 0 }));
-      applyFilterValue(2, 'saturation', 0);
-
-      // 대비 필터 초기화
-      applyFilter(3, new fabric.Image.filters.Contrast({ contrast: 0 }));
-      applyFilterValue(3, 'contrast', 0);
-
-      //이미지 위치 초기화
-      image.set({
-        left: 340/2,
-        top: 492/2,
-      });
 
       image.setCoords();
       canvas.renderAll();
@@ -247,8 +209,7 @@ const ImageTool = ({
       ? applyGrayFilter(0, new fabric.Image.filters.Grayscale())
       : removeGrayFilter();
   }, [applyGray]);
-  
-  
+
   const handleStyle = {
     width: 18,
     height: 18,
@@ -458,14 +419,12 @@ const ImageTool = ({
                     image.scaleToWidth(scaleFactor).setCoords();
 
                     canvas.requestRenderAll();
-
                     setScale(value);
                   } else if (image.width< image.height){
                     const scaleFactor = value * newHeight/50; 
                     image.scaleToHeight(scaleFactor).setCoords();
 
                     canvas.requestRenderAll();
-
                     setScale(value);
                   } else if (image.width === image.height){
                     const scaleFactor = value * newHeight/50; 
