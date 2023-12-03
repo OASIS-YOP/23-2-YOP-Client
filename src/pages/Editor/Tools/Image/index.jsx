@@ -39,7 +39,7 @@ import {
   resizeWidth,
 } from '../../../../recoil/atoms';
 
-const ImageTool = ({ image, canvas, isBackImgEmpty, setIsBackImgEmpty }) => {
+const ImageTool = ({ image, canvas,}) => {
   const [ brightness , setBrightness ] = useRecoilState(brightnessValue);
   const [ contrast , setContrast ] = useRecoilState(contrastValue);
   const [ saturation , setSaturation ] = useRecoilState(saturationValue);

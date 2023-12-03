@@ -28,6 +28,7 @@ const EditorUploadModal = ({
   setImage,
   setIsOpenUploadModal,
   setPhotocardId,
+  // canvasHistory,
 }) => {
   const [myPhotocard, setMyPhotoCard] = useState();
   const [isOpenCollectionModal, setIsOpenCollectionModal] = useState(false);
@@ -124,10 +125,14 @@ const EditorUploadModal = ({
           }
 
           canvas.add(imgFile);
+          canvas.sendToBack(imgFile);
+          
           setImage(imgFile);
           setIsBackImgEmpty(false);
 
           canvas.renderAll();
+
+          // canvasHistory.recordState(canvas);
         });
       };
       loadImage();
