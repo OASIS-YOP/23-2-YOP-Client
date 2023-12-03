@@ -68,9 +68,18 @@ const mypageAPI = {
       return null;
     }
   },
-  getCollectionPhotocardList: async (userId, albumName) => {
+  getCollectionAllPhotocard: async (userId, albumName) => {
     try {
       const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myCollection/${albumName}/allPhotocard`;
+      const response = await HttpClient.get(path);
+      return response;
+    } catch (e) {
+      return null;
+    }
+  },
+  getCollectionActivePhotocard: async (userId, albumName) => {
+    try {
+      const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myCollection/${albumName}/activePhotocard`;
       const response = await HttpClient.get(path);
       return response;
     } catch (e) {
@@ -129,6 +138,26 @@ const mypageAPI = {
     try {
       const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myLike`;
       const response = await HttpClient.get(path);
+      return response;
+    } catch (e) {
+      return null;
+    }
+  },
+
+  //컬렉션활성화
+  collectionActivate: async (userId, albumName) => {
+    try {
+      const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myCollection/${albumName}/collectionActivation`;
+      const response = await HttpClient.post(path, {}, {});
+      return response;
+    } catch (e) {
+      return null;
+    }
+  },
+  photocardActivate: async (userId, albumName, code) => {
+    try {
+      const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myCollection/${albumName}/cardActivationRandomly`;
+      const response = await HttpClient.post(path, code, {});
       return response;
     } catch (e) {
       return null;

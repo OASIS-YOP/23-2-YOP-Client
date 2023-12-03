@@ -3,10 +3,11 @@ import * as s from './style';
 import CollectionDetails from './CollectionDetails';
 import Lock from '../../../assets/Lock.svg';
 import mypageAPI from '../../../api/mypage/mypageAPI';
+import Modal from 'react-modal';
+import CodeInputModal from '../../../components/CodeInputModal';
 
 const Collections = () => {
   const [artistList, setArtistList] = useState([]);
-  const [isActivated, setIsActivated] = useState(false);
   const [selectedArtist, setSelectedArtist] = useState();
   const [allCollection, setAllCollection] = useState([]);
   const [activatedCollection, setActivatedCollection] = useState([]);
@@ -17,14 +18,13 @@ const Collections = () => {
 
   const onClickArtist = (artistId) => {
     setSelectedArtist(artistId);
-    // setIsCollectionClicked(false);
-    // console.log(artistName);
+    setIsCollectionClicked(false);
   };
 
   const getMyCollectionArtistTab = () => {
     mypageAPI.getMyCollectionArtistTab(userId).then((data) => {
-      setArtistList(data.collectionArtistList);
       setSelectedArtist(data.collectionArtistList[0].artistId);
+      setArtistList(data.collectionArtistList);
     });
   };
 
@@ -62,6 +62,8 @@ const Collections = () => {
     getMyActiveCollection();
   }, [selectedArtist]);
 
+  // useEffect(() => {}, [selectedCollection]);
+
   return (
     <>
       <s.Wrapper>
@@ -86,6 +88,7 @@ const Collections = () => {
           <CollectionDetails
             selectedArtist={selectedArtist}
             selectedCollection={selectedCollection}
+            setIsCollectionClicked={setIsCollectionClicked}
           />
         )}
       </s.Wrapper>
@@ -95,8 +98,8 @@ const Collections = () => {
 
 //컬렉션 카드 컴포넌트
 const CollectionCard = ({
-  // selectedCollection,
-  // setSelectedCollection,
+  selectedCollection,
+  setSelectedCollection,
   setIsCollectionClicked,
   albumJacket,
   albumName,
@@ -104,6 +107,7 @@ const CollectionCard = ({
 }) => {
   const [ismouseOver, setIsMouseOver] = useState(false);
   const [isActiveMouseOver, setIsActiveMouseOver] = useState(false);
+  const [isOpenCodeInputModal, setIsOpenCodeInputModal] = useState(false);
 
   //비활성화컬렉션
   const onHandleMouseOver = (e) => {
@@ -128,8 +132,38 @@ const CollectionCard = ({
 
   const onClickCollection = (albumName) => {
     setIsCollectionClicked(true);
+    setSelectedCollection(albumName);
   };
 
+  // 모달 스타일
+  const CodeInputModalStyle = {
+    overlay: {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: 'rgba(0,0,0, 0.7)',
+      zIndex: 999,
+    },
+    content: {
+      display: 'flex',
+      justifyContent: 'center',
+      background: 'white',
+      overflow: 'auto',
+      width: 'fit-content',
+      height: 'fit-content',
+      margin: 'auto auto',
+      WebkitOverflowScrolling: 'touch',
+      borderRadius: '15px',
+      outline: 'none',
+      zIndex: 10,
+    },
+  };
+
+  const handleClickCodeInputButton = () => {
+    setIsOpenCodeInputModal((prev) => !prev);
+  };
   return (
     <s.CollectionCardWrapper styled={{ cursor: 'pointer' }}>
       {activatedCollection.map((item) =>
@@ -137,7 +171,7 @@ const CollectionCard = ({
           // 활성화된 컬렉션
           <>
             <s.ActivatedCollectionCardWrapper
-              onClick={onClickCollection}
+              onClick={() => onClickCollection(item.albumName)}
               onMouseOver={onHandleActiveMouseOver}
               onMouseOut={onHandleActiveMouseOut}
             >
@@ -150,7 +184,7 @@ const CollectionCard = ({
                     활성일 : {item.activeDateTime}
                     <br />
                     {/* 수정요망 */}
-                    수집률 : {(1 / item.photoCardQuant) * 100}%
+                    수집률 : {Math.round((1 / item.photoCardQuant) * 100)}%
                     <br />
                     {/* 내가가진포카수 구해서 넣어야함 */}
                     포카수 : 1/
@@ -158,23 +192,6 @@ const CollectionCard = ({
                   </s.CollectionCardInfo>
                 </s.CollectionInfoWrapper>
               )}
-              {/* <s.CollectionInfoWrapper>
-                <s.CollectionInfoContainer>
-                  <s.CollectionInfo>{albumName}</s.CollectionInfo>
-                  <s.CollectionInfo>
-                    활성일 : {item.activeDateTime}
-                  </s.CollectionInfo>
-                  <s.CollectionInfo> */}
-              {/* 수정요망 */}
-              {/* 수집률 : {(1 / item.photoCardQuant) * 100}%
-                  </s.CollectionInfo>
-                  <s.CollectionInfo> */}
-              {/* 내가가진포카수 구해서 넣어야함 */}
-              {/* 포카수 : 1/
-                    {item.photoCardQuant}장
-                  </s.CollectionInfo>
-                </s.CollectionInfoContainer>
-              </s.CollectionInfoWrapper> */}
             </s.ActivatedCollectionCardWrapper>
           </>
         ) : (
@@ -186,9 +203,22 @@ const CollectionCard = ({
               onMouseOut={onHandleMouseOut}
             />
             {ismouseOver ? (
-              <s.InputCodeButton onMouseOver={onHandleMouseOver}>
-                코드 입력
-              </s.InputCodeButton>
+              <>
+                <s.InputCodeButton
+                  onMouseOver={onHandleMouseOver}
+                  onClick={handleClickCodeInputButton}
+                >
+                  코드 입력
+                </s.InputCodeButton>
+                <Modal
+                  isOpen={isOpenCodeInputModal}
+                  style={CodeInputModalStyle}
+                  onRequestClose={handleClickCodeInputButton} // 오버레이나 esc를 누르면 핸들러 동작
+                  ariaHideApp={false}
+                >
+                  <CodeInputModal albumName={albumName} />
+                </Modal>
+              </>
             ) : (
               <s.InActivatedLockWrapper>
                 <img src={Lock} alt='lock' onMouseOver={onHandleMouseOver} />

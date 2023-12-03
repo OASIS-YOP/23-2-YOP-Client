@@ -5,6 +5,7 @@ import * as s from './style';
 import HeaderIsLogOffed from '../../components/Header/HeaderIsLogOffed';
 import Header from '../../components/Header';
 import Modal from 'react-modal';
+import { saveAs } from 'file-saver';
 
 //아이콘
 import Load from '../../assets/Load';
@@ -24,7 +25,7 @@ import StickerIcon from '../../assets/StickerIcon';
 import Lock from '../../assets/editorIcons/draw/Lock';
 
 //툴
-import Image from './Tools/Image';
+import ImageTool from './Tools/Image';
 import Draw from './Tools/Draw';
 import Text from './Tools/Text';
 import Sticker from './Tools/Sticker';
@@ -94,6 +95,9 @@ const Editor = () => {
   
 
   const [isOpenUploadModal, setIsOpenUploadModal] = useState(false);
+  //한수정 편집부분
+  const userId = 1;
+  const [photocardId, setPhotocardId] = useState(0);
 
   // 로그인 여부
   const [isLogedIn, setIsLogedIn] = useState(true);
@@ -955,26 +959,42 @@ const Editor = () => {
     return new File([u8arr], fileName, { type: mime });
   };
 
-  //이미지 저장할 때
-  const handleExport = () => {
-    const uri = canvas?.toDataURL();
-    if (uri) {
-      let convertedImage = dataURLtoFile(uri, 'konva');
+  //이미지 내도안에 저장할 때
+  const handleExportToMyDesign = () => {
+    if (window.confirm('편집한 이미지를 내 도안에 저장하시겠습니까?')) {
+      const uri = canvas?.toDataURL();
+      if (uri) {
+        let convertedImage = dataURLtoFile(uri, 'konva');
 
-      const formData = new FormData();
-      console.log('File로 저장됨 : ', convertedImage);
-      convertedImage && formData.append('image', convertedImage);
+        const formData = new FormData();
+        console.log('File로 저장됨 : ', convertedImage);
+        convertedImage && formData.append('image', convertedImage);
 
-      //formdata에 잘 들어갔는지 확인하는 코드
-      for (var pair of formData.entries()) {
-        console.log(pair[0] + ', ' + pair[1]);
+        //formdata에 잘 들어갔는지 확인하는 코드
+        for (var pair of formData.entries()) {
+          console.log(pair[0] + ', ' + pair[1]);
+        }
+        editorpageAPI
+          .postDesignedPhotoCard(userId, photocardId, formData)
+          .then((data) => console.log(data));
+        window.alert('성공적으로 저장되었습니다!');
+      } else {
+        window.alert('저장할 이미지가 없습니다.');
       }
-      editorpageAPI
-        .postDesignedPhotoCard(formData)
-        .then((data) => console.log(data));
-      window.alert('성공적으로 저장되었습니다!');
-    } else {
-      window.alert('저장할 이미지가 없습니다.');
+    }
+  };
+
+  //이미지 내 데스크탑에 저장할때
+  const handleExportToDesktop = () => {
+    if (window.confirm('편집한 이미지를 내 컴퓨터에 저장하시겠습니까?')) {
+      const imageData = canvas.toDataURL({
+        format: 'png',
+        quality: 1,
+      });
+
+      const img = new Image();
+      img.src = imageData;
+      saveAs(imageData, 'YOP.png');
     }
   };
 
@@ -1010,6 +1030,7 @@ const Editor = () => {
                     setImage={setImage}
                     setIsBackImgEmpty={setIsBackImgEmpty}
                     setIsOpenUploadModal={setIsOpenUploadModal}
+                    setPhotocardId={setPhotocardId}
                   />
                 </Modal>
                 <s.TopMenuButton
@@ -1043,7 +1064,11 @@ const Editor = () => {
                   <s.TopMenuButtonLabel>앞으로</s.TopMenuButtonLabel>
                 </s.TopMenuButton>
                 <s.TopMenuButton
-                  onClick={handleExport}
+                  onClick={
+                    photocardId === 0
+                      ? handleExportToDesktop
+                      : handleExportToMyDesign
+                  }
                   isActive={!isBackImgEmpty}
                   disabled={isBackImgEmpty}
                 >
@@ -1199,7 +1224,8 @@ const Editor = () => {
             </s.ToolLabelWrapper>
             <s.ToolContentsWrapper>
               {tool === 1 && (
-                <Image
+                <ImageTool
+                  isBackImgEmpty={isBackImgEmpty}
                   setIsBackImgEmpty={setIsBackImgEmpty}
                   image={image}
                   canvas={canvas}

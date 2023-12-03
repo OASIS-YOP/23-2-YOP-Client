@@ -30,7 +30,7 @@ export const ArtistsTabWrapper = styled.div`
   width: 100%;
   height: 30px;
 
-  padding-left: 80px;
+  padding: 20px 0 0 20px;
 
   // border: 1px solid red;
 `;
@@ -94,11 +94,16 @@ export const CollectionCardWrapper = styled.div`
 `;
 
 export const ActivatedCollectionCardWrapper = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
 
   &:hover {
-    /* transform: scale(1.1);
-    transition: all linear 200ms; */
+    > img {
+      filter: brightness(30%);
+    }
   }
 `;
 
@@ -114,27 +119,189 @@ export const CollectionCardImage = styled.img`
 export const CollectionInfoWrapper = styled.div`
   display: table-cell;
   vertical-align: middle;
+  align-items: center;
   position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 30%;
   box-sizing: border-box;
-  background-color: white;
-  z-index: 999;
-`;
-export const CollectionInfoContainer = styled.div`
-  width: 85%;
-  height: 90%;
-  margin: 15px auto;
+  justify-content: center;
+
+  width: fit-content;
+  height: fit-content;
 `;
 
-export const CollectionInfo = styled.p`
-  margin: 5px;
-  font-size: 10px;
+export const CollectionCardInfo = styled.div`
+  display: absolute;
+  text-align: center;
+  font-size: 1.1em;
   font-weight: bold;
-  line-height: 10px;
-  &:first-child {
-    font-size: 16px;
-    line-height: 25px;
+  line-height: 1.5em;
+  color: white;
+`;
+
+////////////////CollectionDetail
+
+export const ModalCollectionDetailsWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+
+  width: 97%;
+  height: fit-content;
+
+  margin-top: 20px;
+
+  border-radius: 30px;
+
+  &.4 {
+    background: linear-gradient(
+      to bottom,
+      rgba(107, 119, 226, 100%),
+      rgba(173, 68, 106, 55.21%),
+      rgba(130, 127, 167, 0%)
+    );
+
+    color: white;
+  }
+
+  &.1 {
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 108, 2, 80%),
+      rgba(254, 229, 2, 70%),
+      rgba(130, 127, 167, 0%)
+    );
+    color: white;
+  }
+`;
+
+export const CollectionName = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 20px;
+  font-weight: bold;
+
+  width: 100%;
+  height: fit-content;
+`;
+
+// export const VersionContainer = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: space-around;
+//   align-items: center;
+
+//   width: 1%;
+//   height: 100%;
+
+//   padding: 80px 0;
+
+// `;
+
+// export const Version = styled.div`
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+
+//   width: 100%;
+//   height: 50%;
+
+//   font-size: 20px;
+//   font-weight: bold;
+
+// `
+
+export const PhotocardListWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: start;
+  flex-wrap: wrap;
+
+  width: 100%;
+  height: 100%;
+
+  margin: 40px 40px;
+
+  // border: 1px solid red;
+`;
+
+export const PhotoCardContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  height: 380px;
+
+  margin: 20px 20px;
+
+  /* &.4 {
+    width: 12%;
+  }
+
+  &.1 {
+  }
+
+  &.2 {
+    width: 12%;
+  } */
+`;
+export const MemberName = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 15px;
+  font-weight: bold;
+
+  margin-top: 10px;
+  margin-bottom: 15px;
+
+  /* &.뉴진스 {
+    color: white;
+  }
+
+  &.방탄소년단 {
+    color: white;
+  } */
+`;
+
+export const PhotocardImageFrame = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 200px;
+  height: 400px;
+
+  overflow: hidden;
+
+  object-fit: contain;
+
+  border-radius: 20px;
+
+  background-color: lightgray;
+
+  box-shadow: 11px 13px 25px rgba(0, 0, 0, 0.4);
+`;
+
+export const PhotocardImage = styled.img`
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  display: flex;
+  padding: 0;
+
+  background-color: lightgray;
+
+  -webkit-user-drag: none;
+
+  cursor: pointer;
+  &:hover {
+    filter: brightness(0.9);
   }
 `;

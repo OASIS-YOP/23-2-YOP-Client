@@ -2,32 +2,39 @@ import * as s from './HeaderIsLogOffed.style';
 import React from 'react';
 import Blogo from '../../../assets/Blogo.svg';
 import Avatar from '../../../assets/Avatar.svg';
+import { useNavigate } from 'react-router-dom';
 
 const HeaderIsLogOffed = () => {
+  const navigate = useNavigate();
+
   const onClickMenu = (e) => {
     const menuIndex = e.target.dataset.menuIndex;
     if (menuIndex === '1') {
-      window.location.href = '/mainpage';
-    } else if ( menuIndex === '2') {
-      window.location.href = '/editor';
+      navigate('/mainpage');
+    } else if (menuIndex === '2') {
+      navigate('/editor');
     } else if (menuIndex === '3') {
-      window.location.href = '/allartist';
+      navigate('/allartist');
     } else if (menuIndex === '4') {
-      window.location.href = '/';
+      navigate('/');
     } else if (menuIndex === '5') {
-      window.location.href = '/mypage';
+      navigate('/mypage');
     }
   };
 
   return (
     <>
-      <s.Header >
+      <s.Header>
         <s.LogoWrapper>
           <s.Logo src={Blogo} onClick={onClickMenu} data-menu-index='1' />
         </s.LogoWrapper>
         <s.MenuWrapper>
-          <s.Menu onClick={onClickMenu} data-menu-index='2'>편집기</s.Menu>
-          <s.Menu onClick={onClickMenu} data-menu-index='3'>커뮤니티</s.Menu>
+          <s.Menu onClick={onClickMenu} data-menu-index='2'>
+            편집기
+          </s.Menu>
+          <s.Menu onClick={onClickMenu} data-menu-index='3'>
+            커뮤니티
+          </s.Menu>
           <s.Menu onClick={onClickMenu} data-menu-index='4'>
             로그아웃
           </s.Menu>

@@ -60,7 +60,6 @@ const CommunityPage = () => {
   };
 
   const handleClickStar = () => {
-    setIsFavorite((prev) => !prev);
     isFavorite ? deleteFavoriteArtist() : postFavoriteArtist();
   };
 
@@ -72,19 +71,29 @@ const CommunityPage = () => {
 
   const getMemberPost = (memberName) => {
     communitypageAPI.getMemberPost(memberName).then((data) => {
-      setMemberPost(data.memberPostList);
+      setMemberPost(data?.memberPostList);
       console.log(data);
     });
   };
 
   const postFavoriteArtist = () => {
     commonAPI.postFavorite(artistId, userId).then((data) => {
-      console.log(data.message);
+      if (data) {
+        console.log('즐겨찾기 성공');
+        setIsFavorite(true);
+      } else {
+        window.alert('즐겨찾기 실패하였습니다. 다시 시도해주세요');
+      }
     });
   };
   const deleteFavoriteArtist = () => {
     commonAPI.deleteFavorite(artistId, userId).then((data) => {
-      console.log(data);
+      if (data) {
+        console.log('즐겨찾기 해제 성공');
+        setIsFavorite(false);
+      } else {
+        window.alert('즐겨찾기 해제 실패하였습니다. 다시 시도해주세요');
+      }
     });
   };
 
@@ -162,7 +171,7 @@ const CommunityPage = () => {
                     <img src={item.polaroid} alt='allPolaroid' />
                   </s.CardImageContainer>
                 ))
-              : memberPost.map((item) => (
+              : memberPost?.map((item) => (
                   <s.CardImageContainer key={`memberPost_${item.postId}`}>
                     <img src={item.polaroid} alt='Polaroid' />
                   </s.CardImageContainer>
