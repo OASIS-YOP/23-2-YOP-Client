@@ -18,7 +18,7 @@ export const ModalText = styled.div`
 `;
 
 export const CodeInput = styled.input`
-  width: 70%;
+  width: 50%;
   height: 50px;
   border: none;
   border-bottom: 2px solid black;

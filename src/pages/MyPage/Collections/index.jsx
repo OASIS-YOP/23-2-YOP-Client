@@ -98,7 +98,7 @@ const Collections = () => {
 
 //컬렉션 카드 컴포넌트
 const CollectionCard = ({
-  // selectedCollection,
+  selectedCollection,
   setSelectedCollection,
   setIsCollectionClicked,
   albumJacket,
@@ -216,7 +216,7 @@ const CollectionCard = ({
                   onRequestClose={handleClickCodeInputButton} // 오버레이나 esc를 누르면 핸들러 동작
                   ariaHideApp={false}
                 >
-                  <CodeInputModal />
+                  <CodeInputModal albumName={albumName} />
                 </Modal>
               </>
             ) : (
