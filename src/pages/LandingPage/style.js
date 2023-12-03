@@ -67,7 +67,12 @@ export const Button = styled.button`
   background-color: white;
   color: #696969;
   font-weight: 600;
+  outline: none;
+  cursor: pointer;
   &:hover {
-    cursor: pointer;
+    filter: brightness(0.8);
+  }
+  &:active {
+    filter: brightness(0.7);
   }
 `;
