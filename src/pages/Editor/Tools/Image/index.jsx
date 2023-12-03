@@ -39,7 +39,7 @@ import {
   resizeWidth,
 } from '../../../../recoil/atoms';
 
-const Image = ({
+const ImageTool = ({
   image, canvas,
   // setBrightnessValue, setSaturationValue, setContrastValue,
   // setRotationValue, setScaleValue,
@@ -152,17 +152,27 @@ const Image = ({
   }
   }, [isBackImgEmpty]);
 
+    image.set('flipX', false);
+    image.set('flipY', false);
+    image.set('angle', 0);
 
-  // useEffect(() => {
-  //   if (image) {
-  //     console.log('필터값들:', brightnessValue, saturationValue, contrastValue, rotationValue, scaleValue);
-  //   }
-  // }, [brightnessValue, saturationValue, contrastValue, rotationValue, scaleValue]);
+    // 명도 필터 초기화
+    applyFilter(1, new fabric.Image.filters.Brightness({ brightness: 0 }));
+    applyFilterValue(1, 'brightness', 0);
 
+    // 채도 필터 초기화
+    applyFilter(2, new fabric.Image.filters.Saturation({ saturation: 0 }));
+    applyFilterValue(2, 'saturation', 0);
 
+    // 대비 필터 초기화
+    applyFilter(3, new fabric.Image.filters.Contrast({ contrast: 0 }));
+    applyFilterValue(3, 'contrast', 0);
 
-  //canvas clear될때마다 inputValue 초기화
-  // canvas.on({ 'canvas:cleared': initRangeInputValues });
+    //이미지 위치 초기화
+    image.set({
+      left: 340 / 2,
+      top: 492 / 2,
+    });
 
   // 초기화 버튼 누르면
   const handleRefresh = () => {
@@ -211,7 +221,7 @@ const Image = ({
       if (refreshImage) {
         const imgWidth = image.width;
         const imgHeight = image.height;
-    
+
         // 이미지 크기 변경
         if (imgWidth > imgHeight) {
           image.scaleToHeight(492);
@@ -230,9 +240,6 @@ const Image = ({
   }, [refreshImage]);
 
 
-
-
-
   //gray toggle
   useEffect(() => {
     if (!image) return;
@@ -242,8 +249,6 @@ const Image = ({
   }, [applyGray]);
   
   
-
-
   const handleStyle = {
     width: 18,
     height: 18,
@@ -251,11 +256,9 @@ const Image = ({
     opacity: 100,
     cursor: 'pointer',
     marginTop: -7,
-    border: '1.8px solid #B7C0D8',    
+    border: '1.8px solid #B7C0D8',
   };
 
-  
-  
   const trackStyle = {
     // 트랙(바)의 스타일 정의
     border: '1.8px solid #B7C0D8',
@@ -283,7 +286,7 @@ const Image = ({
     <>
       <s.Wrapper>
         <s.TopButtonsWrapper>
-          <s.TopButton 
+          <s.TopButton
             onClick={reverseX}
             disabled={isBackImgEmpty}
           >
@@ -337,9 +340,7 @@ const Image = ({
             <s.FilterIcon>
               <Brightness />
             </s.FilterIcon>
-            <s.FilterLabel>
-              명도
-            </s.FilterLabel>
+            <s.FilterLabel>명도</s.FilterLabel>
             <s.FilterSlider>
               <Slider
                 className='image-input'
@@ -363,9 +364,7 @@ const Image = ({
             <s.FilterIcon>
               <Saturation />
             </s.FilterIcon>
-            <s.FilterLabel>
-              채도
-            </s.FilterLabel>
+            <s.FilterLabel>채도</s.FilterLabel>
             <s.FilterSlider>
               <Slider
                 className='image-input'
@@ -388,9 +387,7 @@ const Image = ({
             <s.FilterIcon>
               <Contrast />
             </s.FilterIcon>
-            <s.FilterLabel>
-              대비
-            </s.FilterLabel>
+            <s.FilterLabel>대비</s.FilterLabel>
             <s.FilterSlider>
               <Slider
                 className='image-input'
@@ -413,7 +410,7 @@ const Image = ({
           </s.Filter>
           <s.devider />
         </s.FiltersContainer>
-        <s.FiltersContainer 
+        <s.FiltersContainer
           style={{
             marginBottom: '100px',
           }}
@@ -422,9 +419,7 @@ const Image = ({
             <s.FilterIcon>
               <Rotate />
             </s.FilterIcon>
-            <s.FilterLabel>
-              회전
-            </s.FilterLabel>
+            <s.FilterLabel>회전</s.FilterLabel>
             <s.FilterSlider>
               <Slider
                 className='image-input'
@@ -450,9 +445,7 @@ const Image = ({
             <s.FilterIcon>
               <Scale />
             </s.FilterIcon>
-            <s.FilterLabel>
-              크기
-            </s.FilterLabel>
+            <s.FilterLabel>크기</s.FilterLabel>
             <s.FilterSlider>
               <Slider
                 className='image-input'
@@ -460,8 +453,8 @@ const Image = ({
                 disabled={isBackImgEmpty}
                 value = {scale}
                 onChange={(value) => {
-                  if(image.width> image.height){
-                    const scaleFactor = value * newWidth/50; 
+                  if (image.width > image.height) {
+                    const scaleFactor = (value * newWidth) / 50;
                     image.scaleToWidth(scaleFactor).setCoords();
 
                     canvas.requestRenderAll();
@@ -495,7 +488,7 @@ const Image = ({
           <s.devider />
           <s.TopButtonsWrapper
             style={{
-              marginTop: '30px'
+              marginTop: '30px',
             }}
           >
             <s.TopButton
@@ -511,11 +504,9 @@ const Image = ({
             </s.TopButton>
           </s.TopButtonsWrapper>
         </s.FiltersContainer>
-
       </s.Wrapper>
-      
     </>
   );
 };
 
-export default Image;
+export default ImageTool;

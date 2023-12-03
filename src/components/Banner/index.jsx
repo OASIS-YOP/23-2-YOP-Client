@@ -2,9 +2,9 @@ import * as s from './Banner.style';
 
 const Banner = ({ src }) => {
   return (
-    <s.BannerWrapper class='scroll'>
+    <s.BannerWrapper className='scroll'>
       <s.BannerContent>
-        <img src={src} />
+        <img src={src} alt='banner' />
       </s.BannerContent>
     </s.BannerWrapper>
   );

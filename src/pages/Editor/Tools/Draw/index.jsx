@@ -21,7 +21,6 @@ const Draw = ({
   const getRandomInt = ( min,  max ) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
-
   const x = getRandomInt(0, canvas.width); // 랜덤한 x 좌표
   const y = getRandomInt(0, canvas.height); // 랜덤한 y 좌표
 

@@ -175,6 +175,7 @@ export const likeIcon = styled.img`
   width: 23%;
   padding-top: 2%;
   margin-right: 5%;
+  cursor: pointer;
 
   &:hover {
     filter: brightness(90%);

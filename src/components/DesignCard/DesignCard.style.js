@@ -69,6 +69,10 @@ export const likeIcon = styled.img`
   height: 20px;
   padding-top: 5%;
   padding-right: 10%;
+  cursor: pointer;
+  &:hover {
+    filter: brightness(0.8);
+  }
 `;
 export const ContentText = styled.div`
   font-size: 20px;
