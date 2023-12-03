@@ -1,5 +1,5 @@
  
-import { atom } from 'recoil';
+import { atom, selector } from 'recoil';
 
 export const brightnessValue = atom({
   key: 'brightnessValue',
@@ -60,13 +60,6 @@ export const resizeHeight = atom({
   key: 'resizeHeight',
   default: 0,
 });
-
-export const imageState = atom({
-  key: 'imageState',
-  type: 'image',
-  default: '',
-});
-
 
 
 
