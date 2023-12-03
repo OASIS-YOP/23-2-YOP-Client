@@ -21,15 +21,7 @@ import 'rc-slider/assets/index.css';
 import { fabric } from 'fabric';
 // import Konva from 'konva';
 
-
-
-
-
-const Image = ({
-  image, canvas,
-  isBackImgEmpty, setIsBackImgEmpty,
-}) => {
-
+const ImageTool = ({ image, canvas, isBackImgEmpty, setIsBackImgEmpty }) => {
   // const [brightnessVlaue, setBrightnessValue] = useState(0);
   // const [saturationValue, setSaturationValue] = useState(0);
   // const [contrastValue, setContrastValue] = useState(0);
@@ -39,16 +31,16 @@ const Image = ({
   const [reverseYToggle, setReverseYToggle] = useState(true);
   const [applyGray, setApplyGray] = useState(false);
 
-  const [ refreshImage, setRefreshImage ] = useState(false);
+  const [refreshImage, setRefreshImage] = useState(false);
 
-  const [ brightnessValue, setBrightnessValue ] = useState(0);
-  const [ saturationValue, setSaturationValue ] = useState(0);
-  const [ contrastValue, setContrastValue ] = useState(0);
-  const [ rotationValue, setRotationValue ] = useState(0);
-  const [ scaleValue, setScaleValue ] = useState(1);
+  const [brightnessValue, setBrightnessValue] = useState(0);
+  const [saturationValue, setSaturationValue] = useState(0);
+  const [contrastValue, setContrastValue] = useState(0);
+  const [rotationValue, setRotationValue] = useState(0);
+  const [scaleValue, setScaleValue] = useState(1);
 
-  const [ newWidth, setNewWidth ] = useState( 0 );
-  const [ newHeight, setNewHeight ] = useState( 0 );
+  const [newWidth, setNewWidth] = useState(0);
+  const [newHeight, setNewHeight] = useState(0);
 
   //filter part
 
@@ -99,11 +91,39 @@ const Image = ({
 
   useEffect(() => {
     //필터 초기화
-    if(!image){
-    setIsBackImgEmpty(true);
+    if (!image) {
+      setIsBackImgEmpty(true);
+      setApplyGray(false);
+    } else if (image) {
+      setBrightnessValue(0);
+      setSaturationValue(0);
+      setContrastValue(0);
+      setRotationValue(0);
+      setScaleValue(50);
+
+      setReverseXToggle(true);
+      setReverseYToggle(true);
+
+      setIsBackImgEmpty(false);
+    }
+  }, [image]);
+
+  // useEffect(() => {
+  //   if (image) {
+  //     console.log('필터값들:', brightnessValue, saturationValue, contrastValue, rotationValue, scaleValue);
+  //   }
+  // }, [brightnessValue, saturationValue, contrastValue, rotationValue, scaleValue]);
+
+  //canvas clear될때마다 inputValue 초기화
+  // canvas.on({ 'canvas:cleared': initRangeInputValues });
+
+  // 초기화 버튼 누르면
+  const handleRefresh = () => {
+    //필터 초기화
+    setRefreshImage(true);
+
     setApplyGray(false);
-    } 
-    else if (image) {
+
     setBrightnessValue(0);
     setSaturationValue(0);
     setContrastValue(0);
@@ -112,73 +132,40 @@ const Image = ({
 
     setReverseXToggle(true);
     setReverseYToggle(true);
-    
-    setIsBackImgEmpty(false);
-  }
-  }, [image]);
 
+    image.set('flipX', false);
+    image.set('flipY', false);
+    image.set('angle', 0);
 
-  // useEffect(() => {
-  //   if (image) {
-  //     console.log('필터값들:', brightnessValue, saturationValue, contrastValue, rotationValue, scaleValue);
-  //   }
-  // }, [brightnessValue, saturationValue, contrastValue, rotationValue, scaleValue]);
+    // 명도 필터 초기화
+    applyFilter(1, new fabric.Image.filters.Brightness({ brightness: 0 }));
+    applyFilterValue(1, 'brightness', 0);
 
+    // 채도 필터 초기화
+    applyFilter(2, new fabric.Image.filters.Saturation({ saturation: 0 }));
+    applyFilterValue(2, 'saturation', 0);
 
+    // 대비 필터 초기화
+    applyFilter(3, new fabric.Image.filters.Contrast({ contrast: 0 }));
+    applyFilterValue(3, 'contrast', 0);
 
-  //canvas clear될때마다 inputValue 초기화
-  // canvas.on({ 'canvas:cleared': initRangeInputValues });
+    //이미지 위치 초기화
+    image.set({
+      left: 340 / 2,
+      top: 492 / 2,
+    });
 
-  // 초기화 버튼 누르면
-  const handleRefresh = () => {
-    //필터 초기화
-      setRefreshImage(true);
-
-      setApplyGray(false);
-
-      setBrightnessValue(0);
-      setSaturationValue(0);
-      setContrastValue(0);
-      setRotationValue(0);
-      setScaleValue(50);
-  
-      setReverseXToggle(true);
-      setReverseYToggle(true);
-
-      image.set('flipX', false);
-      image.set('flipY', false);
-      image.set('angle', 0);
-
-      // 명도 필터 초기화
-      applyFilter(1, new fabric.Image.filters.Brightness({ brightness: 0 }));
-      applyFilterValue(1, 'brightness', 0);
-
-      // 채도 필터 초기화
-      applyFilter(2, new fabric.Image.filters.Saturation({ saturation: 0 }));
-      applyFilterValue(2, 'saturation', 0);
-
-      // 대비 필터 초기화
-      applyFilter(3, new fabric.Image.filters.Contrast({ contrast: 0 }));
-      applyFilterValue(3, 'contrast', 0);
-
-      //이미지 위치 초기화
-      image.set({
-        left: 340/2,
-        top: 492/2,
-      });
-
-      image.setCoords();
-      canvas.renderAll();
+    image.setCoords();
+    canvas.renderAll();
   };
 
   useEffect(() => {
-
-    if(image){
-      console.log('백그라운드 이미지 초기화:', refreshImage)
+    if (image) {
+      console.log('백그라운드 이미지 초기화:', refreshImage);
       if (refreshImage) {
         const imgWidth = image.width;
         const imgHeight = image.height;
-    
+
         // 이미지 크기 변경
         if (imgWidth > imgHeight) {
           image.scaleToHeight(492);
@@ -191,14 +178,11 @@ const Image = ({
         image.setCoords();
         canvas.renderAll();
         setRefreshImage(false);
-      } else if (!refreshImage){
+      } else if (!refreshImage) {
         return;
       }
     }
   }, [image, refreshImage]);
-
-
-
 
   //gray toggle
   useEffect(() => {
@@ -207,8 +191,6 @@ const Image = ({
       ? applyGrayFilter(0, new fabric.Image.filters.Grayscale())
       : removeGrayFilter();
   }, [applyGray]);
-  
-
 
   const handleStyle = {
     width: 18,
@@ -217,11 +199,9 @@ const Image = ({
     opacity: 100,
     cursor: 'pointer',
     marginTop: -7,
-    border: '1.8px solid #B7C0D8',    
+    border: '1.8px solid #B7C0D8',
   };
 
-  
-  
   const trackStyle = {
     // 트랙(바)의 스타일 정의
     border: '1.8px solid #B7C0D8',
@@ -239,58 +219,64 @@ const Image = ({
     marginTop: -2,
   };
 
+  /////////////// 캔버스에 들어갈 이미지 사이즈 조정
 
-   /////////////// 캔버스에 들어갈 이미지 사이즈 조정
+  const resizeImage = () => {
+    if (image) {
+      const canvasWidth = 340;
+      const canvasHeight = 492;
 
-   const resizeImage = () => {
-    if (image)
-   {const canvasWidth = 340;
-   const canvasHeight = 492;
+      const imgWidth = image.width;
+      const imgHeight = image.height;
 
-   const imgWidth = image.width;
-   const imgHeight = image.height;
+      const maxWidth = canvasWidth;
+      const maxHeight = canvasHeight;
 
-   const maxWidth = canvasWidth;
-   const maxHeight = canvasHeight;
+      const aspectRatio = imgWidth / imgHeight;
 
-   const aspectRatio = imgWidth / imgHeight;
+      let newWidth = imgWidth;
+      let newHeight = imgHeight;
 
-   let newWidth = imgWidth;
-   let newHeight = imgHeight;
-
-   // 이미지의 가로가 세로보다 클 때
-   if (imgWidth > imgHeight) {
-     newHeight = maxHeight;
-     newWidth = newHeight * aspectRatio;
-   }
-   // 이미지의 세로가 가로보다 클 때
-   if (imgHeight > imgWidth) {
-     newWidth = maxWidth;
-     newHeight = newWidth / aspectRatio;
-   }
-   // 이미지의 가로와 세로가 같을 때
-   if (imgWidth === imgHeight) {
-     newHeight = maxHeight;
-     newWidth = newHeight * aspectRatio;
-   }
-    console.log('현재 백그라운드이미지 크기:', 'newWidth:', newWidth, 'newHeight:', newHeight);
-    setNewWidth(newWidth);
-    setNewHeight(newHeight);
-  }
-
+      // 이미지의 가로가 세로보다 클 때
+      if (imgWidth > imgHeight) {
+        newHeight = maxHeight;
+        newWidth = newHeight * aspectRatio;
+      }
+      // 이미지의 세로가 가로보다 클 때
+      if (imgHeight > imgWidth) {
+        newWidth = maxWidth;
+        newHeight = newWidth / aspectRatio;
+      }
+      // 이미지의 가로와 세로가 같을 때
+      if (imgWidth === imgHeight) {
+        newHeight = maxHeight;
+        newWidth = newHeight * aspectRatio;
+      }
+      console.log(
+        '현재 백그라운드이미지 크기:',
+        'newWidth:',
+        newWidth,
+        'newHeight:',
+        newHeight
+      );
+      setNewWidth(newWidth);
+      setNewHeight(newHeight);
+    }
   };
-   ////////////////////////////////////////
+  ////////////////////////////////////////
 
-   useEffect((image) => {
-    resizeImage(image);
-  }, [image]);
-
+  useEffect(
+    (image) => {
+      resizeImage(image);
+    },
+    [image]
+  );
 
   return (
     <>
       <s.Wrapper>
         <s.TopButtonsWrapper>
-          <s.TopButton 
+          <s.TopButton
             onClick={reverseX}
             disabled={isBackImgEmpty}
             // updateIsBackImgEmpty={updateIsBackImgEmpty}
@@ -299,36 +285,30 @@ const Image = ({
             <s.TopButtonIcon>
               <AlignCenterHorizontal />
             </s.TopButtonIcon>
-            <s.TopButtonLabel>
-              좌우대칭
-            </s.TopButtonLabel>
-            </s.TopButton>
-            <s.TopButton 
-              onClick={reverseY}
-              disabled={isBackImgEmpty}
-              // updateIsBackImgEmpty={updateIsBackImgEmpty}
-              isBackImgEmpty={isBackImgEmpty}
-            >
+            <s.TopButtonLabel>좌우대칭</s.TopButtonLabel>
+          </s.TopButton>
+          <s.TopButton
+            onClick={reverseY}
+            disabled={isBackImgEmpty}
+            // updateIsBackImgEmpty={updateIsBackImgEmpty}
+            isBackImgEmpty={isBackImgEmpty}
+          >
             <s.TopButtonIcon>
               <AlignCenterVertical />
             </s.TopButtonIcon>
-            <s.TopButtonLabel>
-              상하대칭
-            </s.TopButtonLabel>
+            <s.TopButtonLabel>상하대칭</s.TopButtonLabel>
           </s.TopButton>
           <s.TopButton
             id='grayscale'
             onClick={onClickGray}
-            disabled={isBackImgEmpty}  
+            disabled={isBackImgEmpty}
             // updateIsBackImgEmpty={updateIsBackImgEmpty}
             isBackImgEmpty={isBackImgEmpty}
           >
             <s.TopButtonIcon>
               <BlackWhite />
             </s.TopButtonIcon>
-            <s.TopButtonLabel>
-              흑백
-            </s.TopButtonLabel>
+            <s.TopButtonLabel>흑백</s.TopButtonLabel>
           </s.TopButton>
         </s.TopButtonsWrapper>
         <s.FiltersContainer>
@@ -336,31 +316,21 @@ const Image = ({
             <s.FilterIcon>
               <Brightness />
             </s.FilterIcon>
-            <s.FilterLabel>
-              명도
-            </s.FilterLabel>
+            <s.FilterLabel>명도</s.FilterLabel>
             <s.FilterSlider>
               <Slider
                 className='image-input'
                 id='brightness-value'
                 defaultValue={0}
                 value={isBackImgEmpty ? 0 : brightnessValue}
-                onChange={(value)=> {
+                onChange={(value) => {
                   applyFilter(
                     1,
                     new fabric.Image.filters.Brightness({
-                      brightness: parseFloat(
-                        value / 220
-                      ),
+                      brightness: parseFloat(value / 220),
                     })
                   );
-                  applyFilterValue(
-                    1,
-                    'brightness',
-                    parseFloat(
-                      value / 220
-                    )
-                  );
+                  applyFilterValue(1, 'brightness', parseFloat(value / 220));
                   setBrightnessValue(value);
                 }}
                 disabled={isBackImgEmpty}
@@ -372,15 +342,15 @@ const Image = ({
                 max={100}
               />
             </s.FilterSlider>
-            <s.FilterValue >{isBackImgEmpty ? 0 : brightnessValue}</s.FilterValue>
+            <s.FilterValue>
+              {isBackImgEmpty ? 0 : brightnessValue}
+            </s.FilterValue>
           </s.Filter>
           <s.Filter>
             <s.FilterIcon>
               <Saturation />
             </s.FilterIcon>
-            <s.FilterLabel>
-              채도
-            </s.FilterLabel>
+            <s.FilterLabel>채도</s.FilterLabel>
             <s.FilterSlider>
               <Slider
                 className='image-input'
@@ -391,18 +361,10 @@ const Image = ({
                   applyFilter(
                     2,
                     new fabric.Image.filters.Saturation({
-                      saturation: parseFloat(
-                        value / 110
-                      ),
+                      saturation: parseFloat(value / 110),
                     })
                   );
-                  applyFilterValue(
-                    2,
-                    'saturation',
-                    parseFloat(
-                      value / 110
-                    )
-                  );
+                  applyFilterValue(2, 'saturation', parseFloat(value / 110));
                   setSaturationValue(value);
                 }}
                 disabled={isBackImgEmpty}
@@ -415,15 +377,15 @@ const Image = ({
                 max={100}
               />
             </s.FilterSlider>
-            <s.FilterValue >{isBackImgEmpty ? 0 : saturationValue} </s.FilterValue>
+            <s.FilterValue>
+              {isBackImgEmpty ? 0 : saturationValue}{' '}
+            </s.FilterValue>
           </s.Filter>
           <s.Filter>
             <s.FilterIcon>
               <Contrast />
             </s.FilterIcon>
-            <s.FilterLabel>
-              대비
-            </s.FilterLabel>
+            <s.FilterLabel>대비</s.FilterLabel>
             <s.FilterSlider>
               <Slider
                 className='image-input'
@@ -434,16 +396,10 @@ const Image = ({
                   applyFilter(
                     3,
                     new fabric.Image.filters.Contrast({
-                      contrast: parseFloat(
-                        value / 230
-                      ),
+                      contrast: parseFloat(value / 230),
                     })
                   );
-                  applyFilterValue(
-                    3,
-                    'contrast',
-                    parseFloat(value / 230)
-                  );
+                  applyFilterValue(3, 'contrast', parseFloat(value / 230));
                   setContrastValue(value);
                 }}
                 disabled={isBackImgEmpty}
@@ -456,11 +412,11 @@ const Image = ({
                 max={100}
               />
             </s.FilterSlider>
-            <s.FilterValue >{isBackImgEmpty ? 0 : contrastValue} </s.FilterValue>
+            <s.FilterValue>{isBackImgEmpty ? 0 : contrastValue} </s.FilterValue>
           </s.Filter>
           <s.devider />
         </s.FiltersContainer>
-        <s.FiltersContainer 
+        <s.FiltersContainer
           style={{
             marginBottom: '100px',
           }}
@@ -469,9 +425,7 @@ const Image = ({
             <s.FilterIcon>
               <Rotate />
             </s.FilterIcon>
-            <s.FilterLabel>
-              회전
-            </s.FilterLabel>
+            <s.FilterLabel>회전</s.FilterLabel>
             <s.FilterSlider>
               <Slider
                 className='image-input'
@@ -479,10 +433,10 @@ const Image = ({
                 defaultValue={0}
                 disabled={isBackImgEmpty}
                 onChange={(value) => {
-                    const newAngle = parseInt(value);
-                    setRotationValue(value);
-                    image.set('angle', newAngle).setCoords();
-                    canvas.requestRenderAll();
+                  const newAngle = parseInt(value);
+                  setRotationValue(value);
+                  image.set('angle', newAngle).setCoords();
+                  canvas.requestRenderAll();
                 }}
                 value={isBackImgEmpty ? 0 : rotationValue}
                 handleStyle={handleStyle}
@@ -492,39 +446,37 @@ const Image = ({
                 max={180}
               />
             </s.FilterSlider>
-            <s.FilterValue >{isBackImgEmpty ? 0 : rotationValue} </s.FilterValue>
+            <s.FilterValue>{isBackImgEmpty ? 0 : rotationValue} </s.FilterValue>
           </s.Filter>
           <s.Filter>
             <s.FilterIcon>
               <Scale />
             </s.FilterIcon>
-            <s.FilterLabel>
-              크기
-            </s.FilterLabel>
+            <s.FilterLabel>크기</s.FilterLabel>
             <s.FilterSlider>
               <Slider
                 className='image-input'
                 id='scale-slider'
                 defaultValue={50}
                 disabled={isBackImgEmpty}
-                value = {isBackImgEmpty ? 50 : scaleValue}
+                value={isBackImgEmpty ? 50 : scaleValue}
                 onChange={(value) => {
-                  if(image.width> image.height){
-                    const scaleFactor = value * newWidth/50; 
+                  if (image.width > image.height) {
+                    const scaleFactor = (value * newWidth) / 50;
                     image.scaleToWidth(scaleFactor).setCoords();
 
                     canvas.requestRenderAll();
 
                     setScaleValue(value);
-                  } else if (image.width< image.height){
-                    const scaleFactor = value * newHeight/50; 
+                  } else if (image.width < image.height) {
+                    const scaleFactor = (value * newHeight) / 50;
                     image.scaleToHeight(scaleFactor).setCoords();
 
                     canvas.requestRenderAll();
 
                     setScaleValue(value);
-                  } else if (image.width === image.height){
-                    const scaleFactor = value * newHeight/50; 
+                  } else if (image.width === image.height) {
+                    const scaleFactor = (value * newHeight) / 50;
                     image.scaleToHeight(scaleFactor).setCoords();
 
                     canvas.requestRenderAll();
@@ -539,12 +491,12 @@ const Image = ({
                 max={100}
               />
             </s.FilterSlider>
-            <s.FilterValue >{isBackImgEmpty ? 50 : scaleValue} </s.FilterValue>
+            <s.FilterValue>{isBackImgEmpty ? 50 : scaleValue} </s.FilterValue>
           </s.Filter>
           <s.devider />
           <s.TopButtonsWrapper
             style={{
-              marginTop: '30px'
+              marginTop: '30px',
             }}
           >
             <s.TopButton
@@ -556,11 +508,9 @@ const Image = ({
             </s.TopButton>
           </s.TopButtonsWrapper>
         </s.FiltersContainer>
-
       </s.Wrapper>
-      
     </>
   );
 };
 
-export default Image;
+export default ImageTool;
