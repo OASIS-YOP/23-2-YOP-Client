@@ -3,10 +3,11 @@ import * as s from './style';
 import CollectionDetails from './CollectionDetails';
 import Lock from '../../../assets/Lock.svg';
 import mypageAPI from '../../../api/mypage/mypageAPI';
+import Modal from 'react-modal';
+import CodeInputModal from '../../../components/CodeInputModal';
 
 const Collections = () => {
   const [artistList, setArtistList] = useState([]);
-  const [isActivated, setIsActivated] = useState(false);
   const [selectedArtist, setSelectedArtist] = useState();
   const [allCollection, setAllCollection] = useState([]);
   const [activatedCollection, setActivatedCollection] = useState([]);
@@ -106,6 +107,7 @@ const CollectionCard = ({
 }) => {
   const [ismouseOver, setIsMouseOver] = useState(false);
   const [isActiveMouseOver, setIsActiveMouseOver] = useState(false);
+  const [isOpenCodeInputModal, setIsOpenCodeInputModal] = useState(false);
 
   //비활성화컬렉션
   const onHandleMouseOver = (e) => {
@@ -133,6 +135,35 @@ const CollectionCard = ({
     setSelectedCollection(albumName);
   };
 
+  // 모달 스타일
+  const CodeInputModalStyle = {
+    overlay: {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: 'rgba(0,0,0, 0.7)',
+      zIndex: 999,
+    },
+    content: {
+      display: 'flex',
+      justifyContent: 'center',
+      background: 'white',
+      overflow: 'auto',
+      width: 'fit-content',
+      height: 'fit-content',
+      margin: 'auto auto',
+      WebkitOverflowScrolling: 'touch',
+      borderRadius: '15px',
+      outline: 'none',
+      zIndex: 10,
+    },
+  };
+
+  const handleClickCodeInputButton = () => {
+    setIsOpenCodeInputModal((prev) => !prev);
+  };
   return (
     <s.CollectionCardWrapper styled={{ cursor: 'pointer' }}>
       {activatedCollection.map((item) =>
@@ -172,9 +203,22 @@ const CollectionCard = ({
               onMouseOut={onHandleMouseOut}
             />
             {ismouseOver ? (
-              <s.InputCodeButton onMouseOver={onHandleMouseOver}>
-                코드 입력
-              </s.InputCodeButton>
+              <>
+                <s.InputCodeButton
+                  onMouseOver={onHandleMouseOver}
+                  onClick={handleClickCodeInputButton}
+                >
+                  코드 입력
+                </s.InputCodeButton>
+                <Modal
+                  isOpen={isOpenCodeInputModal}
+                  style={CodeInputModalStyle}
+                  onRequestClose={handleClickCodeInputButton} // 오버레이나 esc를 누르면 핸들러 동작
+                  ariaHideApp={false}
+                >
+                  <CodeInputModal />
+                </Modal>
+              </>
             ) : (
               <s.InActivatedLockWrapper>
                 <img src={Lock} alt='lock' onMouseOver={onHandleMouseOver} />
