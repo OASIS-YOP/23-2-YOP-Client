@@ -21,6 +21,7 @@ import TextIcon from '../../assets/TextIcon';
 import ImageIcon from '../../assets/ImageIcon';
 import DrawIcon from '../../assets/DrawIcon';
 import StickerIcon from '../../assets/StickerIcon';
+import Lock from '../../assets/editorIcons/draw/Lock';
 
 //툴
 import Image from './Tools/Image';
@@ -32,8 +33,66 @@ import editorpageAPI from '../../api/editorpage/editorpageAPI';
 
 import ContextMenu from './ContextMenu';
 import EditorUploadModal from '../../components/EditorUploadModal';
+import { useRecoilState, useRecoilValue, useSetRecoilState, useResetRecoilState } from 'recoil';
+import { 
+  brightnessValue,
+  contrastValue,
+  saturationValue,
+  rotationValue,
+  scaleValue,
+  reverseXState,
+  reverseYState,
+  applyGrayState,
+  isBackImgEmptyState,
+  resizeHeight,
+  resizeWidth,
+} from '../../recoil/atoms';
+
 
 const Editor = () => {
+  const [ brightness , setBrightness ] = useRecoilState(brightnessValue);
+  const [ contrast , setContrast ] = useRecoilState(contrastValue);
+  const [ saturation , setSaturation ] = useRecoilState(saturationValue);
+  const [ rotation, setRotation ] = useRecoilState(rotationValue);
+  const [ scale, setScale ] = useRecoilState(scaleValue);
+  const [ reverseXToggle, setReverseXToggle ] = useRecoilState(reverseXState);
+  const [ reverseYToggle, setReverseYToggle ] = useRecoilState(reverseYState);
+  const [ applyGray, setApplyGray ] = useRecoilState(applyGrayState);
+
+  const resetBrightness = useResetRecoilState(brightnessValue);
+  const resetContrast = useResetRecoilState(contrastValue);
+  const resetSaturation = useResetRecoilState(saturationValue);
+  const resetRotation = useResetRecoilState(rotationValue);
+  const resetScale = useResetRecoilState(scaleValue);
+  const resetReverseX = useResetRecoilState(reverseXState);
+  const resetReverseY = useResetRecoilState(reverseYState);
+  const resetGray = useResetRecoilState(applyGrayState);
+
+  const currentBrightness = useRecoilValue(brightnessValue);
+  const currentContrast = useRecoilValue(contrastValue);
+  const currentSaturation = useRecoilValue(saturationValue);
+  const currentRotation = useRecoilValue(rotationValue);
+  const currentScale = useRecoilValue(scaleValue);
+
+  const [ newHeight, setNewHeight ] = useRecoilState(resizeHeight);
+  const [ newWidth, setNewWidth ] = useRecoilState(resizeWidth);
+
+
+  // const [ contrastValue , setContrastValue] = useState(0);
+  // const [ saturationValue , setSaturationValue] = useState(0);
+  // const [ rotationValue, setRotationValue ] = useState(0);
+  // const [ scaleValue, setScaleValue ] = useState(1);
+  // const [reverseXToggle, setReverseXToggle] = useState(true);
+  // const [reverseYToggle, setReverseYToggle] = useState(true);
+  // const [applyGray, setApplyGray] = useState(false);
+
+  // const [counter, setCounter] = useRecoilState(countState); 
+  // // useState와 같지만, useRecoilState을 사용하여 다른 파일에 있는 아톰을 읽을 수 있다.
+  // const currentCount = useRecoilValue(countState);  // 읽기 전용!
+  // const counterHandler = useSetRecoilState(countState); // 값만 변경 시키기 
+  // const resetCounter = useResetRecoilState(countState); // 디폴트값으로 값 변경
+  
+
   const [isOpenUploadModal, setIsOpenUploadModal] = useState(false);
 
   // 로그인 여부
@@ -50,7 +109,9 @@ const Editor = () => {
     imageTop: 246,
   });
   // 백그라운드 이미지 비워졌는지 여부
-  const [isBackImgEmpty, setIsBackImgEmpty] = useState(true);
+  // const [isBackImgEmpty, setIsBackImgEmpty] = useState(true);
+  const [isBackImgEmpty, setIsBackImgEmpty] = useRecoilState(isBackImgEmptyState);
+
   // 이미지 이동 잠금 여부
   const [imageLock, setImageLock] = useState(false);
 
@@ -183,11 +244,15 @@ const Editor = () => {
 
   // 캔버스 초기화 함수
   const removeCanvas = () => {
-    window.confirm('정말로 캔버스를 초기화하시겠습니까?');
-    canvas.clear();
-    setImage(null);
-    setIsBackImgEmpty(true);
-    console.log('캔버스 초기화');
+      if (window.confirm('정말로 캔버스를 초기화하시겠습니까?')) {
+        canvas.clear();
+        setImage(null);
+        setIsBackImgEmpty(true);
+        console.log('미안하다 싹 다 지워버렸다 저장했니?');
+        alert('캔버스가 초기화되었습니다!');
+      } else {
+        return;
+      }
   };
 
   // 추가된 이미지 조회
@@ -196,6 +261,10 @@ const Editor = () => {
       console.log('추가된 이미지 :', image);
     }
   }, [image]);
+
+  useEffect(() => {
+    console.log('꾸밀 이미지 아직임? :', isBackImgEmpty);
+  }, [isBackImgEmpty]);
 
   //이미지 잠금
   const lockImage = () => {
@@ -206,6 +275,139 @@ const Editor = () => {
     });
     canvas.renderAll();
   };
+
+  
+  /////////////// 캔버스에 들어갈 이미지 사이즈 조정
+
+  const resizeImage = () => {
+    if (image)
+   {const canvasWidth = 340;
+   const canvasHeight = 492;
+
+   const imgWidth = image.width;
+   const imgHeight = image.height;
+
+   const maxWidth = canvasWidth;
+   const maxHeight = canvasHeight;
+
+   const aspectRatio = imgWidth / imgHeight;
+
+   let newWidth = imgWidth;
+   let newHeight = imgHeight;
+
+   // 이미지의 가로가 세로보다 클 때
+   if (imgWidth > imgHeight) {
+     newHeight = maxHeight;
+     newWidth = newHeight * aspectRatio;
+   }
+   // 이미지의 세로가 가로보다 클 때
+   if (imgHeight > imgWidth) {
+     newWidth = maxWidth;
+     newHeight = newWidth / aspectRatio;
+   }
+   // 이미지의 가로와 세로가 같을 때
+   if (imgWidth === imgHeight) {
+     newHeight = maxHeight;
+     newWidth = newHeight * aspectRatio;
+   }
+    console.log('현재 백그라운드이미지 크기:', 'newWidth:', newWidth, 'newHeight:', newHeight);
+    setNewWidth(newWidth);
+    setNewHeight(newHeight);
+  }
+
+  };
+   ////////////////////////////////////////
+
+   ///////// 필터 적용 함수 //////////
+   useEffect(() => {
+    resizeImage(image);
+    setBrightness(0);
+    setContrast(0);
+    setSaturation(0);
+    setRotation(0);
+    setScale(50);
+    setReverseXToggle(true);
+    setReverseYToggle(true);
+    setApplyGray(false);
+    
+  }, [image]);
+
+  const applyFilter = (index, filter) => {
+    image.filters[index] = filter;
+    image.applyFilters();
+    canvas.requestRenderAll();
+  };
+
+  const applyFilterValue = (index, prop, value) => {
+    if (image.filters[index]) {
+      image.filters[index][prop] = value;
+      image.applyFilters();
+      canvas.renderAll();
+    }
+  };
+  
+  useEffect(() => {
+    if(image){
+      applyFilter(
+        1,
+        new fabric.Image.filters.Brightness({
+          brightness: parseFloat(
+            brightness / 220
+          ),
+        })
+      );
+      applyFilterValue(
+        1,
+        'brightness',
+        parseFloat(
+          brightness / 220
+        )
+      );
+    }
+  }, [brightness, tool]);
+
+  useEffect(() => {
+    if(image) {
+      applyFilter(
+        3,
+        new fabric.Image.filters.Contrast({
+          contrast: parseFloat(
+            contrast / 220
+          ),
+        })
+      );
+      applyFilterValue(
+        3,
+        'contrast',
+        parseFloat(
+          contrast / 220
+        )
+      );
+    }
+  }, [contrast, tool]);
+
+  useEffect(() => {
+    if(image) {
+      applyFilter(
+        2,
+        new fabric.Image.filters.Saturation({
+          saturation: parseFloat(
+            saturation / 220
+          ),
+        })
+      );
+      applyFilterValue(
+        2,
+        'saturation',
+        parseFloat(
+          saturation / 220
+        )
+      );
+    }
+  }, [saturation, tool]);
+  ////////////////////////////////////////
+
+  
 
   /////// 이미지 이동 관리 ////////
   // 이미지 좌표 조회
@@ -311,12 +513,22 @@ const Editor = () => {
       const canvasObjects = canvas
         .getObjects()
         .filter((obj) => obj.id !== 'backImg' && obj.class !== 'frame');
-      setObjects(canvasObjects);
-      if (canvasObjects.length !== 0) {
-        console.log('현재 총 오브젝트 :', canvasObjects);
+      setObjects(canvasObjects, []);
+      if (canvasObjects.length > 0) {
+        console.log('현재 총 오브젝트 :', objects);
       }
+    } else if (canvas && canvas.getObjects().length === 1) {
+      setObjects([]);
+      console.log('현재 총 오브젝트 :', objects);
     }
   };
+
+
+  useEffect (() => {
+    console.log('총 오브젝트 수:', objects);
+    setObjects(objects);
+
+  }, [objects])
   // 캔버스에 추가된 오브젝트 업데이트 이벤트 리스너 등록
   useEffect(() => {
     if (canvas) {
@@ -421,17 +633,25 @@ const Editor = () => {
     console.log('object is copied', object);
   };
 
+  // 캔버스 내의 랜덤 위치 지정
+  const getRandomInt = ( min,  max ) => {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
   // 붙여넣기 함수
-  const handlePasteObject = (x, y) => {
+  const handlePasteObject = () => {
+    const x = getRandomInt(0, canvas.width); // 랜덤한 x 좌표
+    const y = getRandomInt(0, canvas.height); // 랜덤한 y 좌표
     if (copiedObject !== null) {
       if (copiedObject.type !== 'activeSelection') {
         // 선택된 객체가 단일 객체인 경우
         if (copiedObject.type === 'image') {
           fabric.Image.fromObject(copiedObject, function (img) {
             img.set({
-              left: x / 3,
-              top: y / 3,
-
+              left: x + img.left > canvas.width+img.width ?
+              x + img.left : x + img.left - ( x + img.left - canvas.width+img.width ),
+              top: y + img.top > canvas.height+img.height ?
+              y + img.top : y + img.top - ( y + img.top - canvas.height+img.height ),
               evented: true,
               svgViewportTransformation: true,
             });
@@ -439,14 +659,57 @@ const Editor = () => {
             canvas.renderAll();
           });
         } else if (copiedObject.type === 'i-text') {
+          const textX = getRandomInt(canvas.width/6, canvas.width/3); // 랜덤한 x 좌표
+          const textY = getRandomInt(canvas.height/10, canvas.height-canvas.height/10); // 랜덤한 y 좌표
           fabric.IText.fromObject(copiedObject, function (text) {
             text.set({
-              left: x / 3,
-              top: y / 3,
+              left: textX + text.left > canvas.width+text.width ?
+              textX + text.left : textX + text.left - ( textX + text.left - canvas.width+text.width ),
+              top: textY + text.top > canvas.height+text.height ?
+              textY + text.top : textY + text.top - ( textY + text.top - canvas.height+text.height ),
               evented: true,
               svgViewportTransformation: true,
             });
             canvas.add(text);
+            canvas.renderAll();
+          });
+        } else if (copiedObject.type === 'rect') {
+          fabric.Rect.fromObject(copiedObject, function (rect) {
+            rect.set({
+              left: x + rect.left > canvas.width+rect.width ?
+              x + rect.left : x + rect.left - ( x + rect.left - canvas.width+rect.width ),
+              top: y + rect.top > canvas.height+rect.height ?
+              y + rect.top : y + rect.top - ( y + rect.top - canvas.height+rect.height ),
+              evented: true,
+              svgViewportTransformation: true,
+            });
+            canvas.add(rect);
+            canvas.renderAll();
+          });
+        } else if (copiedObject.type === 'triangle') {
+          fabric.Triangle.fromObject(copiedObject, function (triangle) {
+            triangle.set({
+              left: x + triangle.left > canvas.width+triangle.width ?
+              x + triangle.left : x + triangle.left - ( x + triangle.left - canvas.width+triangle.width ),
+              top: y + triangle.top > canvas.height+triangle.height ?
+              y + triangle.top : y + triangle.top - ( y + triangle.top - canvas.height+triangle.height ),
+              evented: true,
+              svgViewportTransformation: true,
+            });
+            canvas.add(triangle);
+            canvas.renderAll();
+          });
+        } else if (copiedObject.type === 'circle') {
+          fabric.Circle.fromObject(copiedObject, function (circle) {
+            circle.set({
+              left: x + circle.left > canvas.width+circle.width ?
+              x + circle.left : x + circle.left - ( x + circle.left - canvas.width+circle.width ),
+              top: y + circle.top > canvas.height+circle.height ?
+              y + circle.top : y + circle.top - ( y + circle.top - canvas.height+circle.height ),
+              evented: true,
+              svgViewportTransformation: true,
+            });
+            canvas.add(circle);
             canvas.renderAll();
           });
         }
@@ -457,8 +720,10 @@ const Editor = () => {
           if (copiedObject.objects[i].type === 'image') {
             fabric.Image.fromObject(copiedObject.objects[i], function (img) {
               img.set({
-                left: x / 3,
-                top: y / 3,
+                left: x + img.left > canvas.width+img.width ?
+                x + img.left : x + img.left - ( x + img.left - canvas.width+img.width ),
+                top: y + img.top > canvas.height+img.height ?
+                y + img.top : y + img.top - ( y + img.top - canvas.height+img.height ),
                 evented: true,
                 svgViewportTransformation: true,
               });
@@ -466,14 +731,58 @@ const Editor = () => {
               canvas.renderAll();
             });
           } else if (copiedObject.objects[i].type === 'i-text') {
+            const textX = getRandomInt(canvas.width/6, canvas.width/3); // 랜덤한 x 좌표
+            const textY = getRandomInt(canvas.height/10, canvas.height-canvas.height/10); // 랜덤한 y 좌표
             fabric.IText.fromObject(copiedObject.objects[i], function (text) {
               text.set({
-                left: x / 3,
-                top: y / 3,
+                left: textX + text.left > canvas.width+text.width ?
+                textX + text.left : textX + text.left,
+                top: textY + text.top > canvas.height+text.height ?
+                textY + text.top : textY + text.top,
                 evented: true,
                 svgViewportTransformation: true,
               });
               canvas.add(text);
+              canvas.renderAll();
+            });
+          } else if (copiedObject.objects[i].type === 'rect') {
+            fabric.Rect.fromObject(copiedObject.objects[i], function (rect) {
+              rect.set({
+                left: x + rect.left > canvas.width+rect.width ?
+                x + rect.left : x + rect.left - ( x + rect.left - canvas.width+rect.width ),
+                top: y + rect.top > canvas.height+rect.height ?
+                y + rect.top : y + rect.top - ( y + rect.top - canvas.height+rect.height ),
+                evented: true,
+                svgViewportTransformation: true,
+              });
+              canvas.add(rect);
+              canvas.renderAll();
+            });
+          } else if (copiedObject.objects[i].type === 'triangle') {
+            fabric.Triangle.fromObject(
+              copiedObject.objects[i],
+              function (triangle) {
+                triangle.set({
+                  left: x + triangle.left > canvas.width+triangle.width ?
+                  x + triangle.left : x + triangle.left - ( x + triangle.left - canvas.width+triangle.width ),
+                  top: y + triangle.top > canvas.height+triangle.height ?
+                  y + triangle.top : y + triangle.top - ( y + triangle.top - canvas.height+triangle.height ),
+                  evented: true,
+                  svgViewportTransformation: true,
+                });
+                canvas.add(triangle);
+                canvas.renderAll();
+              }
+            );
+          } else if (copiedObject.objects[i].type === 'circle') {
+            fabric.Circle.fromObject(copiedObject.objects[i], function (circle) {
+              circle.set({
+                left: x + circle.left,
+                top: y + circle.top,
+                evented: true,
+                svgViewportTransformation: true,
+              });
+              canvas.add(circle);
               canvas.renderAll();
             });
           }
@@ -571,7 +880,7 @@ const Editor = () => {
   /////////////////////////////////////////////
 
   //////// 키 이벤트 리스너 등록 //////////
-  let isCtrlPressed = false;
+  // let isCtrlPressed = false;
 
   useEffect(() => {
     if (canvas && image) {
@@ -590,43 +899,44 @@ const Editor = () => {
           } else {
             console.log('no object is selected');
           }
-        } else if (e.key === 'Control') {
-          // Set the flag to indicate that the Ctrl key is pressed
-          isCtrlPressed = true;
-        } else if (e.key === 'c' && isCtrlPressed) {
-          if (canvas.getActiveObject() !== null) {
-            console.log('Ctrl+C pressed');
-            // Handle copy action here
-            handleCopyObject(canvas.getActiveObject().toObject());
-          } else {
-            console.log('No object is selected');
-          }
-        } else if (e.key === 'v' && isCtrlPressed) {
-          if (copiedObject !== null) {
-            console.log('Ctrl+V pressed');
-            // Handle paste action here
-            handlePasteObject(170, 246);
-          } else {
-            console.log('No object is copied');
-          }
-        } else if (e.key === 'x' && isCtrlPressed) {
-          if (canvas.getActiveObject() !== null) {
-            console.log('Ctrl+X pressed');
-            // Handle cut action here
-            handleCutObject(canvas.getActiveObject().toObject());
-          } else {
-            console.log('No object is selected');
-          }
-        } else {
-          console.log('');
         }
+        // } else if (e.key === 'Control') {
+        //   // Set the flag to indicate that the Ctrl key is pressed
+        //   isCtrlPressed = true;
+        // } else if (e.key === 'c' && isCtrlPressed) {
+        //   if (canvas.getActiveObject() !== null) {
+        //     console.log('Ctrl+C pressed');
+        //     // Handle copy action here
+        //     handleCopyObject(canvas.getActiveObject().toObject());
+        //   } else {
+        //     console.log('No object is selected');
+        //   }
+        // } else if (e.key === 'v' && isCtrlPressed) {
+        //   if (copiedObject !== null) {
+        //     console.log('Ctrl+V pressed');
+        //     // Handle paste action here
+        //     handlePasteObject(170, 246);
+        //   } else {
+        //     console.log('No object is copied');
+        //   }
+        // } else if (e.key === 'x' && isCtrlPressed) {
+        //   if (canvas.getActiveObject() !== null) {
+        //     console.log('Ctrl+X pressed');
+        //     // Handle cut action here
+        //     handleCutObject(canvas.getActiveObject().toObject());
+        //   } else {
+        //     console.log('No object is selected');
+        //   }
+        // } else {
+        //   console.log('');
+        // }
       });
-      window.addEventListener('keyup', (e) => {
-        if (e.key === 'Control') {
-          // Set the flag to indicate that the Ctrl key is released
-          isCtrlPressed = false;
-        }
-      });
+      // window.addEventListener('keyup', (e) => {
+      //   if (e.key === 'Control') {
+      //     // Set the flag to indicate that the Ctrl key is released
+      //     isCtrlPressed = false;
+      //   }
+      // });
     }
   }, [canvas, image, copiedObject]);
 
@@ -688,6 +998,7 @@ const Editor = () => {
                   </s.TopMenuButtonLabel>
                 </s.TopMenuButton>
                 <Modal
+
                   isOpen={isOpenUploadModal}
                   style={EditorUploadModalStyle}
                   onRequestClose={onClickUploadModal} // 오버레이나 esc를 누르면 핸들러 동작
@@ -704,7 +1015,6 @@ const Editor = () => {
                 <s.TopMenuButton
                   onClick={() => {
                     removeCanvas(canvas);
-                    window.alert('캔버스가 초기화되었습니다!');
                   }}
                   isActive={!isBackImgEmpty}
                   disabled={isBackImgEmpty}
@@ -768,36 +1078,104 @@ const Editor = () => {
               )}
             </s.CanvasWrapper>
             <s.LayerButtonWrapper>
-              <s.LayerButton onClick={sendToBack}>
-                <s.LayerButtonIcon src={ToBack} />
-                <s.LayerButtonLabel>맨 뒤로</s.LayerButtonLabel>
+              <s.LayerButton 
+                onClick={sendToBack}
+                disabled={selectedObject?.length > 0 ? false : true}  
+              >
+                <s.LayerButtonIcon
+                  src={ToBack}
+                  isActive={selectedObject?.length > 0 ? true : false}
+                />
+                <s.LayerButtonLabel
+                  isActive={selectedObject?.length > 0 ? true : false}
+                >
+                  맨 뒤로
+                </s.LayerButtonLabel>
               </s.LayerButton>
-              <s.LayerButton onClick={sendBackwards}>
-                <s.LayerButtonIcon src={Backward} />
-                <s.LayerButtonLabel>뒤로</s.LayerButtonLabel>
+              <s.LayerButton 
+                onClick={sendBackwards}
+                disabled={selectedObject?.length > 0 ? false : true}
+              >
+                <s.LayerButtonIcon 
+                  src={Backward} 
+                  isActive={selectedObject?.length > 0 ? true : false}
+                />
+                <s.LayerButtonLabel
+                  isActive={selectedObject?.length > 0 ? true : false}
+                >
+                  뒤로
+                </s.LayerButtonLabel>
               </s.LayerButton>
-              <s.LayerButton onClick={bringForward}>
-                <s.LayerButtonLabel>앞으로</s.LayerButtonLabel>
-                <s.LayerButtonIcon src={Forward} />
+              <s.LayerButton 
+                onClick={bringForward}
+                disabled={selectedObject?.length > 0 ? false : true}  
+              >
+                <s.LayerButtonLabel
+                  isActive={selectedObject?.length > 0 ? true : false}
+                >
+                  앞으로
+                </s.LayerButtonLabel>
+                <s.LayerButtonIcon
+                  src={Forward}
+                  isActive={selectedObject?.length > 0 ? true : false}  
+                />
               </s.LayerButton>
-              <s.LayerButton onClick={bringToFront}>
-                <s.LayerButtonLabel>맨 앞으로</s.LayerButtonLabel>
-                <s.LayerButtonIcon src={ToFront} />
+              <s.LayerButton 
+                onClick={bringToFront}
+                disabled={selectedObject?.length > 0 ? false : true}  
+              >
+                <s.LayerButtonLabel
+                  isActive={selectedObject?.length > 0 ? true : false}
+                >
+                  맨 앞으로
+                </s.LayerButtonLabel>
+                <s.LayerButtonIcon
+                  src={ToFront}
+                  isActive={selectedObject?.length > 0 ? true : false}  
+                />
               </s.LayerButton>
             </s.LayerButtonWrapper>
-            <s.LayerButton
-              id='lock'
-              onClick={lockImage}
-              isActive={!isBackImgEmpty}
-              disabled={isBackImgEmpty}
+            <s.LayerButtonWrapper>
+              <s.LayerButton
+                id='lock'
+                onClick={lockImage}
+                isActive={!isBackImgEmpty}
+                disabled={isBackImgEmpty}
+              >
+                  { imageLock && 
+                    <s.LockIcon
+                      isActive={!isBackImgEmpty}
+                    >
+                      <Lock />
+                    </s.LockIcon>
+                  }
+                <s.LayerButtonLabel isActive={!isBackImgEmpty}>
+                  {imageLock ? '잠금해제' : '이미지 잠금'}
+                </s.LayerButtonLabel>
+              </s.LayerButton>
+            </s.LayerButtonWrapper>
+            <s.LayerButtonWrapper
+              style={{ marginTop: '20px' }}
             >
-              {imageLock ? '잠금해제' : '이미지 잠금'}
-            </s.LayerButton>
-            <s.SelectedObjects>
-              선택된 오브젝트:{' '}
-              {selectedObject?.length ? selectedObject.length : 0}/
-              {objects.length}
-            </s.SelectedObjects>
+              <s.SelectedObjects
+                style={{ marginRight: '20px' }}
+              >
+                선택된 오브젝트:{' '}
+                {selectedObject?.length ? selectedObject.length : 0}/
+                {objects?.length}
+              </s.SelectedObjects>
+              <s.DeleteButton
+                id='deleteObjects'
+                onClick={handleDeleteObject}
+                disabled={selectedObject?.length > 0 ? false : true}
+              >
+                <s.DeleteButtonLabel
+                  isActive={selectedObject?.length > 0 ? true : false}
+                >
+                  지우기
+                </s.DeleteButtonLabel>  
+              </s.DeleteButton>
+            </s.LayerButtonWrapper>
           </s.CanvasSpaceWrapper>
         </s.LeftContainer>
 
@@ -822,10 +1200,25 @@ const Editor = () => {
             <s.ToolContentsWrapper>
               {tool === 1 && (
                 <Image
-                  isBackImgEmpty={isBackImgEmpty}
                   setIsBackImgEmpty={setIsBackImgEmpty}
                   image={image}
                   canvas={canvas}
+                  // setBrightnessValue={setBrightnessValue}
+                  // setContrastValue={setContrastValue}
+                  // setSaturationValue={setSaturationValue}
+                  // brightnessValue={brightnessValue}
+                  // contrastValue={contrastValue}
+                  // saturationValue={saturationValue}
+                  // setReverseXToggle={setReverseXToggle}
+                  // setReverseYToggle={setReverseYToggle}
+                  // reverseXToggle={reverseXToggle}
+                  // reverseYToggle={reverseYToggle}
+                  // setApplyGray={setApplyGray}
+                  // applyGray={applyGray}
+                  // setRotationValue={setRotationValue}
+                  // rotationValue={rotationValue}
+                  // setScaleValue={setScaleValue}
+                  // scaleValue={scaleValue}
                 />
               )}
               {tool === 2 && (
