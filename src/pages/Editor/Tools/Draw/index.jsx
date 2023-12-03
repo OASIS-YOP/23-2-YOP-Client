@@ -22,19 +22,22 @@ const Draw = ({
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
+  const x = getRandomInt(0, canvas.width); // 랜덤한 x 좌표
+  const y = getRandomInt(0, canvas.height); // 랜덤한 y 좌표
+
   const AddObjCircle = () => {
-    const x = getRandomInt(0, canvas.width-40); // 랜덤한 x 좌표
-    const y = getRandomInt(0, canvas.height-40); // 랜덤한 y 좌표
     if (canvas) {
       let circle = new fabric.Circle({
         width: 40,
         height: 40,
         radius: 25,
         fill: color,
-        left: x,
-        top: y,
+        selectable: true,
       });
-      circle.set('selectable', true);
+      circle.set({
+        left: Math.min(Math.max(x, 0), canvas.width - circle.getScaledWidth()),
+        top: Math.min(Math.max(y, 0), canvas.height - circle.getScaledHeight()),
+      });
       if( image ){
         canvas.add(circle);
       } else {
@@ -45,17 +48,17 @@ const Draw = ({
   };
 
   const AddObjRect = () => {
-    const x = getRandomInt(0, canvas.width - 40); // 랜덤한 x 좌표
-    const y = getRandomInt(0, canvas.height-40); // 랜덤한 y 좌표
     if (canvas) {
       let rect = new fabric.Rect({
         width: 40,
         height: 40,
         fill: color,
-        left: x,
-        top: y,
+        selectable: true,
       });
-      rect.set('selectable', true);
+      rect.set({
+        left: Math.min(Math.max(x, 0), canvas.width - rect.getScaledWidth()),
+        top: Math.min(Math.max(y, 0), canvas.height - rect.getScaledHeight()),
+      });
 
       if( image ){
         canvas.add(rect);
@@ -66,17 +69,17 @@ const Draw = ({
   };
 
   const AddObjTri = () => {
-    const x = getRandomInt(0, canvas.width-40); // 랜덤한 x 좌표
-    const y = getRandomInt(0, canvas.height-40); // 랜덤한 y 좌표
     if (canvas) {
       let tri = new fabric.Triangle({
         width: 40,
         height: 40,
         fill: color,
-        left: x,
-        top: y,
+        selectable: true,
       });
-      tri.set('selectable', true);
+      tri.set({
+        left: Math.min(Math.max(x, 0), canvas.width - tri.getScaledWidth()),
+        top: Math.min(Math.max(y, 0), canvas.height - tri.getScaledHeight()),
+      });
 
       if( image ){
         canvas.add(tri);

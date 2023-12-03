@@ -15,18 +15,18 @@ const Frames = [
         type: 'image',
         fileUrl: `${process.env.PUBLIC_URL}/images/frames/WhiteFrame.svg`,
       },
-      // {
-      //   id: 3,
-      //   name: '프레임1-3',
-      //   type: 'image',
-      //   fileUrl: `${process.env.PUBLIC_URL}/images/frames/PinkFrame.svg`,
-      // },
-      // {
-      //   id: 4,
-      //   name: '프레임1-4',
-      //   type: 'image',
-      //   fileUrl: `${process.env.PUBLIC_URL}/images/frames/CheckFrame.svg`,
-      // },
+      {
+        id: 3,
+        name: '프레임1-3',
+        type: 'image',
+        fileUrl: `${process.env.PUBLIC_URL}/images/frames/PinkFrame.png`,
+      },
+      {
+        id: 4,
+        name: '프레임1-4',
+        type: 'image',
+        fileUrl: `${process.env.PUBLIC_URL}/images/frames/CheckFrame.png`,
+      },
     ]
   },
   {

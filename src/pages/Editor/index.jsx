@@ -648,10 +648,8 @@ const Editor = () => {
         if (copiedObject.type === 'image') {
           fabric.Image.fromObject(copiedObject, function (img) {
             img.set({
-              left: x + img.left > canvas.width+img.width ?
-              x + img.left : x + img.left - ( x + img.left - canvas.width+img.width ),
-              top: y + img.top > canvas.height+img.height ?
-              y + img.top : y + img.top - ( y + img.top - canvas.height+img.height ),
+              left: Math.min(Math.max(x, 0), canvas.width - img.getScaledWidth()),
+              top: Math.min(Math.max(y, 0), canvas.height - img.getScaledHeight()),
               evented: true,
               svgViewportTransformation: true,
             });
@@ -659,14 +657,10 @@ const Editor = () => {
             canvas.renderAll();
           });
         } else if (copiedObject.type === 'i-text') {
-          const textX = getRandomInt(canvas.width/6, canvas.width/3); // 랜덤한 x 좌표
-          const textY = getRandomInt(canvas.height/10, canvas.height-canvas.height/10); // 랜덤한 y 좌표
           fabric.IText.fromObject(copiedObject, function (text) {
             text.set({
-              left: textX + text.left > canvas.width+text.width ?
-              textX + text.left : textX + text.left - ( textX + text.left - canvas.width+text.width ),
-              top: textY + text.top > canvas.height+text.height ?
-              textY + text.top : textY + text.top - ( textY + text.top - canvas.height+text.height ),
+              left: Math.min(Math.max(x, 0), canvas.width - text.getScaledWidth()),
+              top: Math.min(Math.max(y, 0), canvas.height - text.getScaledHeight()),
               evented: true,
               svgViewportTransformation: true,
             });
@@ -676,10 +670,8 @@ const Editor = () => {
         } else if (copiedObject.type === 'rect') {
           fabric.Rect.fromObject(copiedObject, function (rect) {
             rect.set({
-              left: x + rect.left > canvas.width+rect.width ?
-              x + rect.left : x + rect.left - ( x + rect.left - canvas.width+rect.width ),
-              top: y + rect.top > canvas.height+rect.height ?
-              y + rect.top : y + rect.top - ( y + rect.top - canvas.height+rect.height ),
+              left: Math.min(Math.max(x, 0), canvas.width - rect.getScaledWidth()),
+              top: Math.min(Math.max(y, 0), canvas.height - rect.getScaledHeight()),
               evented: true,
               svgViewportTransformation: true,
             });
@@ -689,10 +681,8 @@ const Editor = () => {
         } else if (copiedObject.type === 'triangle') {
           fabric.Triangle.fromObject(copiedObject, function (triangle) {
             triangle.set({
-              left: x + triangle.left > canvas.width+triangle.width ?
-              x + triangle.left : x + triangle.left - ( x + triangle.left - canvas.width+triangle.width ),
-              top: y + triangle.top > canvas.height+triangle.height ?
-              y + triangle.top : y + triangle.top - ( y + triangle.top - canvas.height+triangle.height ),
+              left: Math.min(Math.max(x, 0), canvas.width - triangle.getScaledWidth()),
+              top: Math.min(Math.max(y, 0), canvas.height - triangle.getScaledHeight()),
               evented: true,
               svgViewportTransformation: true,
             });
@@ -702,10 +692,8 @@ const Editor = () => {
         } else if (copiedObject.type === 'circle') {
           fabric.Circle.fromObject(copiedObject, function (circle) {
             circle.set({
-              left: x + circle.left > canvas.width+circle.width ?
-              x + circle.left : x + circle.left - ( x + circle.left - canvas.width+circle.width ),
-              top: y + circle.top > canvas.height+circle.height ?
-              y + circle.top : y + circle.top - ( y + circle.top - canvas.height+circle.height ),
+              left: Math.min(Math.max(x, 0), canvas.width - circle.getScaledWidth()),
+              top: Math.min(Math.max(y, 0), canvas.height - circle.getScaledHeight()),
               evented: true,
               svgViewportTransformation: true,
             });
@@ -718,12 +706,14 @@ const Editor = () => {
         // 선택된 객체가 다중 객체인 경우
         for (let i = 0; i < copiedObject.objects.length; i++) {
           if (copiedObject.objects[i].type === 'image') {
+            // 복사된 객체의 원래 위치 정보를 가져옴
+            const originalLeft = copiedObject.objects[i].left;
+            const originalTop = copiedObject.objects[i].top;
             fabric.Image.fromObject(copiedObject.objects[i], function (img) {
+              // 새로운 위치에 원래 위치 정보를 더하여 붙여넣기
               img.set({
-                left: x + img.left > canvas.width+img.width ?
-                x + img.left : x + img.left - ( x + img.left - canvas.width+img.width ),
-                top: y + img.top > canvas.height+img.height ?
-                y + img.top : y + img.top - ( y + img.top - canvas.height+img.height ),
+                left: Math.min(Math.max(x + originalLeft, 0), canvas.width - img.getScaledWidth()),
+                top: Math.min(Math.max(y + originalTop, 0), canvas.height - img.getScaledHeight()),
                 evented: true,
                 svgViewportTransformation: true,
               });
@@ -731,14 +721,13 @@ const Editor = () => {
               canvas.renderAll();
             });
           } else if (copiedObject.objects[i].type === 'i-text') {
-            const textX = getRandomInt(canvas.width/6, canvas.width/3); // 랜덤한 x 좌표
-            const textY = getRandomInt(canvas.height/10, canvas.height-canvas.height/10); // 랜덤한 y 좌표
+            // 복사된 객체의 원래 위치 정보를 가져옴
+            const originalLeft = copiedObject.objects[i].left;
+            const originalTop = copiedObject.objects[i].top;
             fabric.IText.fromObject(copiedObject.objects[i], function (text) {
               text.set({
-                left: textX + text.left > canvas.width+text.width ?
-                textX + text.left : textX + text.left,
-                top: textY + text.top > canvas.height+text.height ?
-                textY + text.top : textY + text.top,
+                left: Math.min(Math.max(x + originalLeft, 0), canvas.width - text.getScaledWidth()),
+                top: Math.min(Math.max(y + originalTop, 0), canvas.height - text.getScaledHeight()),
                 evented: true,
                 svgViewportTransformation: true,
               });
@@ -746,12 +735,13 @@ const Editor = () => {
               canvas.renderAll();
             });
           } else if (copiedObject.objects[i].type === 'rect') {
+            // 복사된 객체의 원래 위치 정보를 가져옴
+            const originalLeft = copiedObject.objects[i].left;
+            const originalTop = copiedObject.objects[i].top;
             fabric.Rect.fromObject(copiedObject.objects[i], function (rect) {
               rect.set({
-                left: x + rect.left > canvas.width+rect.width ?
-                x + rect.left : x + rect.left - ( x + rect.left - canvas.width+rect.width ),
-                top: y + rect.top > canvas.height+rect.height ?
-                y + rect.top : y + rect.top - ( y + rect.top - canvas.height+rect.height ),
+                left: Math.min(Math.max(x + originalLeft, 0), canvas.width - rect.getScaledWidth()),
+                top: Math.min(Math.max(y + originalTop, 0), canvas.height - rect.getScaledHeight()),
                 evented: true,
                 svgViewportTransformation: true,
               });
@@ -759,14 +749,15 @@ const Editor = () => {
               canvas.renderAll();
             });
           } else if (copiedObject.objects[i].type === 'triangle') {
+            // 복사된 객체의 원래 위치 정보를 가져옴
+            const originalLeft = copiedObject.objects[i].left;
+            const originalTop = copiedObject.objects[i].top;
             fabric.Triangle.fromObject(
               copiedObject.objects[i],
               function (triangle) {
                 triangle.set({
-                  left: x + triangle.left > canvas.width+triangle.width ?
-                  x + triangle.left : x + triangle.left - ( x + triangle.left - canvas.width+triangle.width ),
-                  top: y + triangle.top > canvas.height+triangle.height ?
-                  y + triangle.top : y + triangle.top - ( y + triangle.top - canvas.height+triangle.height ),
+                  left: Math.min(Math.max(x + originalLeft, 0), canvas.width - triangle.getScaledWidth()),
+                  top: Math.min(Math.max(y + originalTop, 0), canvas.height - triangle.getScaledHeight()),
                   evented: true,
                   svgViewportTransformation: true,
                 });
@@ -775,10 +766,13 @@ const Editor = () => {
               }
             );
           } else if (copiedObject.objects[i].type === 'circle') {
+            // 복사된 객체의 원래 위치 정보를 가져옴
+            const originalLeft = copiedObject.objects[i].left;
+            const originalTop = copiedObject.objects[i].top;
             fabric.Circle.fromObject(copiedObject.objects[i], function (circle) {
               circle.set({
-                left: x + circle.left,
-                top: y + circle.top,
+                left: Math.min(Math.max(x + originalLeft, 0), canvas.width - circle.getScaledWidth()),
+                top: Math.min(Math.max(y + originalTop, 0), canvas.height - circle.getScaledHeight()),
                 evented: true,
                 svgViewportTransformation: true,
               });
@@ -796,7 +790,7 @@ const Editor = () => {
 
   // 삭제 함수 1
   const removeObjects = () => {
-    if (selectedObject) {
+    if (selectedObject?.length > 0) {
       canvas.remove(...selectedObject);
       canvas.renderAll();
     } else {
@@ -1063,7 +1057,7 @@ const Editor = () => {
               onClick={closeContextMenu} // 컨텍스트 메뉴 영역 외 클릭 시 컨텍스트 메뉴 닫기
               ref={canvasRef}
             >
-              <canvas id='canvas' />
+              <canvas id='canvas' width={340} height={492} />
               {isContextMenuVisible && (
                 <ContextMenu
                   canvas={canvas}
