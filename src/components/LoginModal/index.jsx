@@ -1,10 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import * as s from './modal.style.js';
 import { useState } from 'react';
+import landingpageAPI from '../../api/landingpage/landingpageAPI.js';
 
 export const Login = () => {
   const [user, setUser] = useState({
-    email: '',
+    username: '',
     password: '',
   });
   const navigate = useNavigate();
@@ -17,7 +18,14 @@ export const Login = () => {
     });
   };
   const onClickLogInToMainpage = () => {
-    navigate('/mainpage');
+    landingpageAPI.login(user).then((data) => {
+      if (data) {
+        console.log('로그인 성공');
+      } else {
+        console.log('로그인 실패');
+      }
+    });
+    // navigate('/mainpage');
   };
 
   return (
@@ -31,8 +39,8 @@ export const Login = () => {
         <form type='submit' method='post'>
           <s.Input
             type='text'
-            id='email'
-            name='email'
+            id='username'
+            name='username'
             placeholder='이메일'
             onChange={handleChange}
           />
