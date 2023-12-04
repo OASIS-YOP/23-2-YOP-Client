@@ -5,12 +5,8 @@ const accessToken = localStorage.getItem('accessToken');
 const mainpageAPI = {
   getFavArtist: async (userId) => {
     try {
-      const path = `${process.env.REACT_APP_BASE_URL}/mainpage/favArtist`;
-      const response = await HttpClient.get(
-        path,
-        {},
-        { Authorization: `Bearer ${accessToken}` }
-      );
+      const path = `${process.env.REACT_APP_BASE_URL}/mainpage/${userId}/favArtist`;
+      const response = await HttpClient.get(path);
       return response;
     } catch (e) {
       return null;

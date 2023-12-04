@@ -18,7 +18,7 @@ const CodeInputModal = ({ albumName }) => {
     try {
       const data = await mypageAPI.collectionActivate(
         userId,
-        decodeURI('<Butter>'),
+        decodeURI('<LILAC>'),
         code
       );
       if (data) {
@@ -37,7 +37,7 @@ const CodeInputModal = ({ albumName }) => {
     try {
       const data = await mypageAPI.photocardActivate(
         userId,
-        decodeURI('<Butter>')
+        decodeURI('<LILAC>')
       );
       if (data) {
         console.log(data.message);
