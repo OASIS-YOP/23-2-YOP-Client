@@ -2,9 +2,7 @@ name: "웹프로그래밍 실습 CI/CD"
 
 on:
     push:
-        branches:
-            - dev
-        # tags: Test
+        branches: [CICDTEST]
 
 jobs:
     Job-Gut-Deul:
@@ -18,4 +16,3 @@ jobs:
               with:
                 node-version: 18
             - run: npm install
-            - run: npm start
