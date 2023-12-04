@@ -1,6 +1,9 @@
-import { useNavigate } from 'react-router-dom';
 import * as s from './modal.style.js';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import { LoginState } from '../../states/LoginState.js';
+
 import landingpageAPI from '../../api/landingpage/landingpageAPI.js';
 
 export const Login = () => {
@@ -8,6 +11,8 @@ export const Login = () => {
     username: '',
     password: '',
   });
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
+  const [accessToken, setAccessToken] = useState();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -20,13 +25,19 @@ export const Login = () => {
   const onClickLogInToMainpage = () => {
     landingpageAPI.login(user).then((data) => {
       if (data) {
-        console.log('로그인 성공');
+        setAccessToken(data.token);
+        window.alert('로그인 성공했습니다.');
+        navigate('/mainpage');
       } else {
         console.log('로그인 실패');
       }
     });
-    // navigate('/mainpage');
   };
+
+  useEffect(() => {
+    if (accessToken) localStorage.setItem('accessToken', accessToken);
+    if (localStorage.getItem('accessToken')) setIsLoggedIn(true);
+  });
 
   return (
     <s.Wrapper>
