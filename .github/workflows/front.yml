@@ -2,9 +2,7 @@ name: "웹프로그래밍 실습 CI/CD"
 
 on:
     push:
-        branches:
-            - CICDTEST
-        # tags: Test
+        branches: [CICDTEST]
 
 jobs:
     Job-Gut-Deul:
