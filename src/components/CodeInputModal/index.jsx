@@ -2,7 +2,7 @@ import mypageAPI from '../../api/mypage/mypageAPI';
 import * as s from './CodeInputModal.style';
 import { useState } from 'react';
 
-const CodeInputModal = ({ albumName }) => {
+const CodeInputModal = ({ albumName, handleClickCodeInputButton }) => {
   const userId = 1;
   const [code, setCode] = useState({
     code: '',
@@ -41,6 +41,7 @@ const CodeInputModal = ({ albumName }) => {
       );
       if (data) {
         console.log(data.message);
+        handleClickCodeInputButton();
       } else {
         window.alert('포토카드활성화 실패');
       }

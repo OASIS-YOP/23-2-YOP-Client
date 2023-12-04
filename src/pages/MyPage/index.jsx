@@ -16,7 +16,7 @@ const MyPage = () => {
   const getMyProfile = () => {
     mypageAPI
       .getMyProfile(userId)
-      .then((data) => setMyProfile(data.userProfileInfo));
+      .then((data) => setMyProfile(data?.userProfileInfo));
   };
 
   useEffect(() => {

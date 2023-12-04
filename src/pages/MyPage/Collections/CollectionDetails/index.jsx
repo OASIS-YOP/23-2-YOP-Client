@@ -1,8 +1,17 @@
 import { useEffect, useState } from 'react';
 import * as s from './style';
 import mypageAPI from '../../../../api/mypage/mypageAPI';
+import Modal from 'react-modal';
+import CodeInputModal from '../../../../components/CodeInputModal';
 
-const CollectionDetails = ({ selectedArtist, selectedCollection }) => {
+const CollectionDetails = ({
+  selectedArtist,
+  selectedCollection,
+  handleClickCodeInputButton,
+  isOpenCodeInputModal,
+  CodeInputModalStyle,
+  setIsOpenCodeInputModal,
+}) => {
   const [collectionPhotocard, setCollectionPhotocard] = useState([]);
   const [activePhotocard, setActivePhotocard] = useState([]);
 
@@ -39,6 +48,21 @@ const CollectionDetails = ({ selectedArtist, selectedCollection }) => {
   return (
     <>
       <s.Wrapper className={String(selectedArtist)}>
+        <s.InputCodeButton onClick={handleClickCodeInputButton}>
+          코드 입력
+        </s.InputCodeButton>
+        <Modal
+          isOpen={isOpenCodeInputModal}
+          style={CodeInputModalStyle}
+          onRequestClose={handleClickCodeInputButton} // 오버레이나 esc를 누르면 핸들러 동작
+          ariaHideApp={false}
+        >
+          <CodeInputModal
+            albumName={selectedCollection}
+            setIsOpenCodeInputModal={setIsOpenCodeInputModal}
+          />
+        </Modal>
+
         <s.CollectionName>{selectedCollection}</s.CollectionName>
         <s.PhotocardListWrapper>
           {collectionPhotocard.map((item) => {
