@@ -49,6 +49,8 @@ const ImageTool = ({ image, canvas,}) => {
   const [ reverseYToggle, setReverseYToggle ] = useRecoilState(reverseYState);
   const [ applyGray, setApplyGray ] = useRecoilState(applyGrayState);
 
+
+//test
   const resetBrightness = useResetRecoilState(brightnessValue);
   const resetContrast = useResetRecoilState(contrastValue);
   const resetSaturation = useResetRecoilState(saturationValue);
