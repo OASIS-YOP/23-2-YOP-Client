@@ -7,16 +7,8 @@ import { fabric } from 'fabric';
 import Modal from 'react-modal';
 import MyCollectionModal from '../MyCollectionModal';
 
-import { useRecoilState, useRecoilValue, useSetRecoilState, useResetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState, } from 'recoil';
 import { 
-  brightnessValue,
-  contrastValue,
-  saturationValue,
-  rotationValue,
-  scaleValue,
-  reverseXState,
-  reverseYState,
-  applyGrayState,
   isBackImgEmptyState,
   resizeHeight,
   resizeWidth,
