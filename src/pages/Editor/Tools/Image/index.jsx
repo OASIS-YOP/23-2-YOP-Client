@@ -6,7 +6,7 @@ import AlignCenterHorizontal from '../../../../assets/AlignCenterHorizontal';
 import AlignCenterVertical from '../../../../assets/AlignCenterVertical';
 import BlackWhite from '../../../../assets/BlackWhite';
 
-// import Circle from './../../../../assets/editorIcons/draw/Circle';
+import Circle from './../../../../assets/editorIcons/draw/Circle';
 
 import Brightness from '../../../../assets/editorIcons/image/Brightness';
 import Contrast from '../../../../assets/editorIcons/image/Contrast';
