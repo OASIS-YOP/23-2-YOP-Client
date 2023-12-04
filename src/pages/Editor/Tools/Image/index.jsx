@@ -6,7 +6,7 @@ import AlignCenterHorizontal from '../../../../assets/AlignCenterHorizontal';
 import AlignCenterVertical from '../../../../assets/AlignCenterVertical';
 import BlackWhite from '../../../../assets/BlackWhite';
 
-import Circle from './../../../../assets/editorIcons/draw/Circle';
+// import Circle from './../../../../assets/editorIcons/draw/Circle';
 
 import Brightness from '../../../../assets/editorIcons/image/Brightness';
 import Contrast from '../../../../assets/editorIcons/image/Contrast';
@@ -14,8 +14,6 @@ import Saturation from '../../../../assets/editorIcons/image/Saturation';
 
 import Rotate from '../../../../assets/editorIcons/image/Rotate';
 import Scale from '../../../../assets/editorIcons/image/Scale';
-// import Horizontal from '../../../../assets/editorIcons/image/Horizontal';
-// import Vertical from '../../../../assets/editorIcons/image/Vertical';
 
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
@@ -49,8 +47,6 @@ const ImageTool = ({ image, canvas,}) => {
   const [ reverseYToggle, setReverseYToggle ] = useRecoilState(reverseYState);
   const [ applyGray, setApplyGray ] = useRecoilState(applyGrayState);
 
-
-//test
   const resetBrightness = useResetRecoilState(brightnessValue);
   const resetContrast = useResetRecoilState(contrastValue);
   const resetSaturation = useResetRecoilState(saturationValue);
