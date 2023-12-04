@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
 import * as s from './upload.style.js';
+import { useRecoilState, useRecoilValue, } from 'recoil';
 
 Modal.setAppElement('#root');
 
@@ -24,7 +25,7 @@ const UploadModalStyle = {
     height: 'fit-content',
     margin: 'auto auto',
     WebkitOverflowScrolling: 'touch',
-    border: '1px solid black',
+    border: '1px solid yellow',
     borderRadius: '15px',
     outline: 'none',
     zIndex: 10,
@@ -111,6 +112,7 @@ const SelectCollection = () => {
         isOpen={isModalOpened}
         onRequestClose={closeModal}
         ariaHideApp={false}
+        style={UploadModalStyle}
       >
         <s.Wrapper>
           <s.HeaderLabelWrapper>
@@ -121,19 +123,24 @@ const SelectCollection = () => {
             <s.HeaderLabel>업로드</s.HeaderLabel>
           </s.HeaderLabelWrapper>
           <s.CollectionCardWrapper>
-            {[1, 2, 3, 4, 5, 6].map((index) => (
-              <s.CollectionCard
-                key={index}
-                onClick={() => openModal(index - 1)}
-              >
-                <img
-                  src={`https://upload.wikimedia.org/wikipedia/en/thumb/3/33/BTS_-_Butter_CD.png/220px-BTS_-_Butter_CD${index}.png`}
-                  alt={`Collection Card ${index}`}
-                  width={100}
-                  height={100}
-                />
-              </s.CollectionCard>
-            ))}
+           <s.CollectionCard>
+              
+           </s.CollectionCard>
+           <s.CollectionCard>
+              
+           </s.CollectionCard>
+           <s.CollectionCard>
+              
+           </s.CollectionCard>
+           <s.CollectionCard>
+              
+           </s.CollectionCard>
+           <s.CollectionCard>
+              
+           </s.CollectionCard>
+           <s.CollectionCard>
+              
+           </s.CollectionCard>
           </s.CollectionCardWrapper>
         </s.Wrapper>
       </Modal>
@@ -166,7 +173,7 @@ const SelectCollection = () => {
         </s.Wrapper>
       </Modal>
 
-      <Modal
+      {/* <Modal
         isOpen={isThirdModalOpened}
         style={UploadModalStyle}
         onRequestClose={closeThirdModal}
@@ -197,7 +204,7 @@ const SelectCollection = () => {
             <button>업로드</button>
           </div>
         </s.Wrapper>
-      </Modal>
+      </Modal> */}
     </>
   );
 };
