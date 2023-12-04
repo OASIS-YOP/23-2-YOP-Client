@@ -1,0 +1,21 @@
+name: "웹프로그래밍 실습 CI/CD"
+
+on:
+    push:
+        branches:
+            - dev
+        # tags: Test
+
+jobs:
+    Job-Gut-Deul:
+        runs-on: ubuntu-latest
+        name: "NPM 시작"
+        steps:
+            - run: echo "${{ github.repository }} is running...."
+            - uses: actions/checkout@v4
+            - name: Setup
+              uses: actions/setup-node@v4
+              with:
+                node-version: 18
+            - run: npm install
+            - run: npm start
