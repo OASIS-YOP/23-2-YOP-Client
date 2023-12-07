@@ -77,7 +77,7 @@ export const CollectionCardWrapper = styled.div`
   justify-content: center;
   align-items: center;
 
-  width: 25%;
+  width: 20%;
   margin: 28px 24px;
   box-sizing: border-box;
   border-radius: 35px;
@@ -136,9 +136,9 @@ export const CollectionInfoWrapper = styled.div`
 export const CollectionCardInfo = styled.div`
   display: absolute;
   text-align: center;
-  font-size: 1.6vw;
+  font-size: 1.3vw;
   font-weight: bold;
-  line-height: 3vw;
+  line-height: 2vw;
   color: white;
 `;
 
@@ -182,13 +182,13 @@ export const AlbumName = styled.div`
   width: fit-content;
   height: fit-content;
 
-  line-height: 3vw;
+  line-height: 2vw;
 
-  margin: 10px;
+  margin: 15px;
 
   text-align: center;
 
-  font-size: 1.6vw;
+  font-size: 1.3vw;
   font-weight: bold;
 
   color: white;
