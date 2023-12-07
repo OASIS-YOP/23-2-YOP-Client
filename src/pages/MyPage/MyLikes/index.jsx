@@ -27,9 +27,10 @@ const MyLikes = () => {
             <s.NoLikes>마음에 드는 도안에 좋아요를 눌러보세요!</s.NoLikes>
           ) : (
             <>
-              {myLikePost.map((item) => (
-                <MyLikePost item={item} updateMyLike={getMyLike} />
-              ))}
+              {myLikePost &&
+                myLikePost.map((item) => (
+                  <MyLikePost item={item} updateMyLike={getMyLike} />
+                ))}
             </>
           )}
         </s.PostsWrapper>

@@ -15,14 +15,14 @@ const Posts = () => {
 
   const getMyPostArtistTab = () => {
     mypageAPI.getMyPostArtistTab(userId).then((data) => {
-      setPostArtistList(data.postArtistList);
-      setSelectedArtist(data.postArtistList[0].artistId);
+      setPostArtistList(data?.postArtistList);
+      setSelectedArtist(data?.postArtistList[0].artistId);
     });
   };
 
   const getMyPost = () => {
     mypageAPI.getMyPost(userId, selectedArtist).then((data) => {
-      setArtistPost(data.myPostList);
+      setArtistPost(data?.myPostList);
     });
   };
 
@@ -46,7 +46,7 @@ const Posts = () => {
     });
   };
 
-  const artists = postArtistList.map((item) => {
+  const artists = postArtistList?.map((item) => {
     return (
       <s.ArtistsTab
         key={`postArtist_${item.artistId}`}
@@ -87,6 +87,7 @@ const Posts = () => {
               아티스트의 도안을 꾸미고 포스트해보세요!
             </div>
           ) : (
+            artistPost &&
             artistPost?.map((item) => (
               <ArtistPosts
                 key={`post_${item.postId}`}

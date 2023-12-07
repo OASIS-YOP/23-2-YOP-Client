@@ -95,7 +95,8 @@ const Editor = () => {
   });
   // 백그라운드 이미지 비워졌는지 여부
   // const [isBackImgEmpty, setIsBackImgEmpty] = useState(true);
-  const [isBackImgEmpty, setIsBackImgEmpty] = useRecoilState(isBackImgEmptyState);
+  const [isBackImgEmpty, setIsBackImgEmpty] =
+    useRecoilState(isBackImgEmptyState);
 
   // 이미지 이동 잠금 여부
   const [imageLock, setImageLock] = useState(false);
@@ -236,15 +237,15 @@ const Editor = () => {
 
   // 캔버스 초기화 함수
   const removeCanvas = () => {
-      if (window.confirm('정말로 캔버스를 초기화하시겠습니까?')) {
-        canvas.clear();
-        setImage(null);
-        setIsBackImgEmpty(true);
-        console.log('미안하다 싹 다 지워버렸다 저장했니?');
-        alert('캔버스가 초기화되었습니다!');
-      } else {
-        return;
-      }
+    if (window.confirm('정말로 캔버스를 초기화하시겠습니까?')) {
+      canvas.clear();
+      setImage(null);
+      setIsBackImgEmpty(true);
+      console.log('미안하다 싹 다 지워버렸다 저장했니?');
+      alert('캔버스가 초기화되었습니다!');
+    } else {
+      return;
+    }
   };
 
   // 추가된 이미지 조회
@@ -268,50 +269,54 @@ const Editor = () => {
     canvas.renderAll();
   };
 
-  
   /////////////// 캔버스에 들어갈 이미지 사이즈 조정
 
   const resizeImage = () => {
-    if (image)
-   {const canvasWidth = 340;
-   const canvasHeight = 492;
+    if (image) {
+      const canvasWidth = 340;
+      const canvasHeight = 492;
 
-   const imgWidth = image.width;
-   const imgHeight = image.height;
+      const imgWidth = image.width;
+      const imgHeight = image.height;
 
-   const maxWidth = canvasWidth;
-   const maxHeight = canvasHeight;
+      const maxWidth = canvasWidth;
+      const maxHeight = canvasHeight;
 
-   const aspectRatio = imgWidth / imgHeight;
+      const aspectRatio = imgWidth / imgHeight;
 
-   let newWidth = imgWidth;
-   let newHeight = imgHeight;
+      let newWidth = imgWidth;
+      let newHeight = imgHeight;
 
-   // 이미지의 가로가 세로보다 클 때
-   if (imgWidth > imgHeight) {
-     newHeight = maxHeight;
-     newWidth = newHeight * aspectRatio;
-   }
-   // 이미지의 세로가 가로보다 클 때
-   if (imgHeight > imgWidth) {
-     newWidth = maxWidth;
-     newHeight = newWidth / aspectRatio;
-   }
-   // 이미지의 가로와 세로가 같을 때
-   if (imgWidth === imgHeight) {
-     newHeight = maxHeight;
-     newWidth = newHeight * aspectRatio;
-   }
-    console.log('현재 백그라운드이미지 크기:', 'newWidth:', newWidth, 'newHeight:', newHeight);
-    setNewWidth(newWidth);
-    setNewHeight(newHeight);
-  }
-
+      // 이미지의 가로가 세로보다 클 때
+      if (imgWidth > imgHeight) {
+        newHeight = maxHeight;
+        newWidth = newHeight * aspectRatio;
+      }
+      // 이미지의 세로가 가로보다 클 때
+      if (imgHeight > imgWidth) {
+        newWidth = maxWidth;
+        newHeight = newWidth / aspectRatio;
+      }
+      // 이미지의 가로와 세로가 같을 때
+      if (imgWidth === imgHeight) {
+        newHeight = maxHeight;
+        newWidth = newHeight * aspectRatio;
+      }
+      console.log(
+        '현재 백그라운드이미지 크기:',
+        'newWidth:',
+        newWidth,
+        'newHeight:',
+        newHeight
+      );
+      setNewWidth(newWidth);
+      setNewHeight(newHeight);
+    }
   };
-   ////////////////////////////////////////
+  ////////////////////////////////////////
 
-   ///////// 필터 적용 함수 //////////
-   useEffect(() => {
+  ///////// 필터 적용 함수 //////////
+  useEffect(() => {
     resizeImage(image);
     setBrightness(0);
     setContrast(0);
@@ -321,7 +326,6 @@ const Editor = () => {
     setReverseXToggle(true);
     setReverseYToggle(true);
     setApplyGray(false);
-
   }, [image]);
 
   const applyFilter = (index, filter) => {
@@ -337,69 +341,43 @@ const Editor = () => {
       canvas.renderAll();
     }
   };
-  
+
   useEffect(() => {
-    if(image){
+    if (image) {
       applyFilter(
         1,
         new fabric.Image.filters.Brightness({
-          brightness: parseFloat(
-            brightness / 220
-          ),
+          brightness: parseFloat(brightness / 220),
         })
       );
-      applyFilterValue(
-        1,
-        'brightness',
-        parseFloat(
-          brightness / 220
-        )
-      );
+      applyFilterValue(1, 'brightness', parseFloat(brightness / 220));
     }
   }, [brightness, tool]);
 
   useEffect(() => {
-    if(image) {
+    if (image) {
       applyFilter(
         3,
         new fabric.Image.filters.Contrast({
-          contrast: parseFloat(
-            contrast / 220
-          ),
+          contrast: parseFloat(contrast / 220),
         })
       );
-      applyFilterValue(
-        3,
-        'contrast',
-        parseFloat(
-          contrast / 220
-        )
-      );
+      applyFilterValue(3, 'contrast', parseFloat(contrast / 220));
     }
   }, [contrast, tool]);
 
   useEffect(() => {
-    if(image) {
+    if (image) {
       applyFilter(
         2,
         new fabric.Image.filters.Saturation({
-          saturation: parseFloat(
-            saturation / 220
-          ),
+          saturation: parseFloat(saturation / 220),
         })
       );
-      applyFilterValue(
-        2,
-        'saturation',
-        parseFloat(
-          saturation / 220
-        )
-      );
+      applyFilterValue(2, 'saturation', parseFloat(saturation / 220));
     }
   }, [saturation, tool]);
   ////////////////////////////////////////
-
-  
 
   /////// 이미지 이동 관리 ////////
   // 이미지 좌표 조회
@@ -515,12 +493,10 @@ const Editor = () => {
     }
   };
 
-
-  useEffect (() => {
+  useEffect(() => {
     console.log('총 오브젝트 수:', objects);
     setObjects(objects);
-
-  }, [objects])
+  }, [objects]);
   // 캔버스에 추가된 오브젝트 업데이트 이벤트 리스너 등록
   useEffect(() => {
     if (canvas) {
@@ -646,9 +622,9 @@ const Editor = () => {
   };
 
   // 캔버스 내의 랜덤 위치 지정
-  const getRandomInt = ( min,  max ) => {
+  const getRandomInt = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
+  };
 
   // 붙여넣기 함수
   const handlePasteObject = () => {
@@ -660,8 +636,14 @@ const Editor = () => {
         if (copiedObject.type === 'image') {
           fabric.Image.fromObject(copiedObject, function (img) {
             img.set({
-              left: Math.min(Math.max(x, 0), canvas.width - img.getScaledWidth()),
-              top: Math.min(Math.max(y, 0), canvas.height - img.getScaledHeight()),
+              left: Math.min(
+                Math.max(x, 0),
+                canvas.width - img.getScaledWidth()
+              ),
+              top: Math.min(
+                Math.max(y, 0),
+                canvas.height - img.getScaledHeight()
+              ),
               evented: true,
               svgViewportTransformation: true,
             });
@@ -671,8 +653,14 @@ const Editor = () => {
         } else if (copiedObject.type === 'i-text') {
           fabric.IText.fromObject(copiedObject, function (text) {
             text.set({
-              left: Math.min(Math.max(x, 0), canvas.width - text.getScaledWidth()),
-              top: Math.min(Math.max(y, 0), canvas.height - text.getScaledHeight()),
+              left: Math.min(
+                Math.max(x, 0),
+                canvas.width - text.getScaledWidth()
+              ),
+              top: Math.min(
+                Math.max(y, 0),
+                canvas.height - text.getScaledHeight()
+              ),
               evented: true,
               svgViewportTransformation: true,
             });
@@ -682,8 +670,14 @@ const Editor = () => {
         } else if (copiedObject.type === 'rect') {
           fabric.Rect.fromObject(copiedObject, function (rect) {
             rect.set({
-              left: Math.min(Math.max(x, 0), canvas.width - rect.getScaledWidth()),
-              top: Math.min(Math.max(y, 0), canvas.height - rect.getScaledHeight()),
+              left: Math.min(
+                Math.max(x, 0),
+                canvas.width - rect.getScaledWidth()
+              ),
+              top: Math.min(
+                Math.max(y, 0),
+                canvas.height - rect.getScaledHeight()
+              ),
               evented: true,
               svgViewportTransformation: true,
             });
@@ -693,8 +687,14 @@ const Editor = () => {
         } else if (copiedObject.type === 'triangle') {
           fabric.Triangle.fromObject(copiedObject, function (triangle) {
             triangle.set({
-              left: Math.min(Math.max(x, 0), canvas.width - triangle.getScaledWidth()),
-              top: Math.min(Math.max(y, 0), canvas.height - triangle.getScaledHeight()),
+              left: Math.min(
+                Math.max(x, 0),
+                canvas.width - triangle.getScaledWidth()
+              ),
+              top: Math.min(
+                Math.max(y, 0),
+                canvas.height - triangle.getScaledHeight()
+              ),
               evented: true,
               svgViewportTransformation: true,
             });
@@ -704,8 +704,14 @@ const Editor = () => {
         } else if (copiedObject.type === 'circle') {
           fabric.Circle.fromObject(copiedObject, function (circle) {
             circle.set({
-              left: Math.min(Math.max(x, 0), canvas.width - circle.getScaledWidth()),
-              top: Math.min(Math.max(y, 0), canvas.height - circle.getScaledHeight()),
+              left: Math.min(
+                Math.max(x, 0),
+                canvas.width - circle.getScaledWidth()
+              ),
+              top: Math.min(
+                Math.max(y, 0),
+                canvas.height - circle.getScaledHeight()
+              ),
               evented: true,
               svgViewportTransformation: true,
             });
@@ -724,8 +730,14 @@ const Editor = () => {
             fabric.Image.fromObject(copiedObject.objects[i], function (img) {
               // 새로운 위치에 원래 위치 정보를 더하여 붙여넣기
               img.set({
-                left: Math.min(Math.max(x + originalLeft, 0), canvas.width - img.getScaledWidth()),
-                top: Math.min(Math.max(y + originalTop, 0), canvas.height - img.getScaledHeight()),
+                left: Math.min(
+                  Math.max(x + originalLeft, 0),
+                  canvas.width - img.getScaledWidth()
+                ),
+                top: Math.min(
+                  Math.max(y + originalTop, 0),
+                  canvas.height - img.getScaledHeight()
+                ),
                 evented: true,
                 svgViewportTransformation: true,
               });
@@ -738,8 +750,14 @@ const Editor = () => {
             const originalTop = copiedObject.objects[i].top;
             fabric.IText.fromObject(copiedObject.objects[i], function (text) {
               text.set({
-                left: Math.min(Math.max(x + originalLeft, 0), canvas.width - text.getScaledWidth()),
-                top: Math.min(Math.max(y + originalTop, 0), canvas.height - text.getScaledHeight()),
+                left: Math.min(
+                  Math.max(x + originalLeft, 0),
+                  canvas.width - text.getScaledWidth()
+                ),
+                top: Math.min(
+                  Math.max(y + originalTop, 0),
+                  canvas.height - text.getScaledHeight()
+                ),
                 evented: true,
                 svgViewportTransformation: true,
               });
@@ -752,8 +770,14 @@ const Editor = () => {
             const originalTop = copiedObject.objects[i].top;
             fabric.Rect.fromObject(copiedObject.objects[i], function (rect) {
               rect.set({
-                left: Math.min(Math.max(x + originalLeft, 0), canvas.width - rect.getScaledWidth()),
-                top: Math.min(Math.max(y + originalTop, 0), canvas.height - rect.getScaledHeight()),
+                left: Math.min(
+                  Math.max(x + originalLeft, 0),
+                  canvas.width - rect.getScaledWidth()
+                ),
+                top: Math.min(
+                  Math.max(y + originalTop, 0),
+                  canvas.height - rect.getScaledHeight()
+                ),
                 evented: true,
                 svgViewportTransformation: true,
               });
@@ -768,8 +792,14 @@ const Editor = () => {
               copiedObject.objects[i],
               function (triangle) {
                 triangle.set({
-                  left: Math.min(Math.max(x + originalLeft, 0), canvas.width - triangle.getScaledWidth()),
-                  top: Math.min(Math.max(y + originalTop, 0), canvas.height - triangle.getScaledHeight()),
+                  left: Math.min(
+                    Math.max(x + originalLeft, 0),
+                    canvas.width - triangle.getScaledWidth()
+                  ),
+                  top: Math.min(
+                    Math.max(y + originalTop, 0),
+                    canvas.height - triangle.getScaledHeight()
+                  ),
                   evented: true,
                   svgViewportTransformation: true,
                 });
@@ -781,16 +811,25 @@ const Editor = () => {
             // 복사된 객체의 원래 위치 정보를 가져옴
             const originalLeft = copiedObject.objects[i].left;
             const originalTop = copiedObject.objects[i].top;
-            fabric.Circle.fromObject(copiedObject.objects[i], function (circle) {
-              circle.set({
-                left: Math.min(Math.max(x + originalLeft, 0), canvas.width - circle.getScaledWidth()),
-                top: Math.min(Math.max(y + originalTop, 0), canvas.height - circle.getScaledHeight()),
-                evented: true,
-                svgViewportTransformation: true,
-              });
-              canvas.add(circle);
-              canvas.renderAll();
-            });
+            fabric.Circle.fromObject(
+              copiedObject.objects[i],
+              function (circle) {
+                circle.set({
+                  left: Math.min(
+                    Math.max(x + originalLeft, 0),
+                    canvas.width - circle.getScaledWidth()
+                  ),
+                  top: Math.min(
+                    Math.max(y + originalTop, 0),
+                    canvas.height - circle.getScaledHeight()
+                  ),
+                  evented: true,
+                  svgViewportTransformation: true,
+                });
+                canvas.add(circle);
+                canvas.renderAll();
+              }
+            );
           }
         }
       }
@@ -1374,9 +1413,9 @@ const Editor = () => {
               )}
             </s.CanvasWrapper>
             <s.LayerButtonWrapper>
-              <s.LayerButton 
+              <s.LayerButton
                 onClick={sendToBack}
-                disabled={selectedObject?.length > 0 ? false : true}  
+                disabled={selectedObject?.length > 0 ? false : true}
               >
                 <s.LayerButtonIcon
                   src={ToBack}
@@ -1388,7 +1427,7 @@ const Editor = () => {
                   맨 뒤로
                 </s.LayerButtonLabel>
               </s.LayerButton>
-              <s.LayerButton 
+              <s.LayerButton
                 onClick={sendBackwards}
                 disabled={selectedObject?.length === 1 ? false : true}
               >
@@ -1402,7 +1441,7 @@ const Editor = () => {
                   뒤로
                 </s.LayerButtonLabel>
               </s.LayerButton>
-              <s.LayerButton 
+              <s.LayerButton
                 onClick={bringForward}
                 disabled={selectedObject?.length === 1 ? false : true}  
               >
@@ -1417,9 +1456,9 @@ const Editor = () => {
                 </s.LayerButtonLabel>
                 
               </s.LayerButton>
-              <s.LayerButton 
+              <s.LayerButton
                 onClick={bringToFront}
-                disabled={selectedObject?.length > 0 ? false : true}  
+                disabled={selectedObject?.length > 0 ? false : true}
               >
                 <s.LayerButtonIcon
                   src={ToFront}
@@ -1440,24 +1479,18 @@ const Editor = () => {
                 isActive={!isBackImgEmpty}
                 disabled={isBackImgEmpty}
               >
-                  { imageLock && 
-                    <s.LockIcon
-                      isActive={!isBackImgEmpty}
-                    >
-                      <Lock />
-                    </s.LockIcon>
-                  }
+                {imageLock && (
+                  <s.LockIcon isActive={!isBackImgEmpty}>
+                    <Lock />
+                  </s.LockIcon>
+                )}
                 <s.LayerButtonLabel isActive={!isBackImgEmpty}>
                   {imageLock ? '잠금해제' : '이미지 잠금'}
                 </s.LayerButtonLabel>
               </s.LayerButton>
             </s.LayerButtonWrapper>
-            <s.LayerButtonWrapper
-              style={{ marginTop: '20px' }}
-            >
-              <s.SelectedObjects
-                style={{ marginRight: '20px' }}
-              >
+            <s.LayerButtonWrapper style={{ marginTop: '20px' }}>
+              <s.SelectedObjects style={{ marginRight: '20px' }}>
                 선택된 오브젝트:{' '}
                 {selectedObject?.length ? selectedObject.length : 0}/
                 {objects?.length}
@@ -1471,7 +1504,7 @@ const Editor = () => {
                   isActive={selectedObject?.length > 0 ? true : false}
                 >
                   지우기
-                </s.DeleteButtonLabel>  
+                </s.DeleteButtonLabel>
               </s.DeleteButton>
             </s.LayerButtonWrapper>
           </s.CanvasSpaceWrapper>

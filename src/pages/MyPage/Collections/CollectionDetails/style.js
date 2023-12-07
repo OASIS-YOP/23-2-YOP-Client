@@ -167,3 +167,25 @@ export const PhotocardImage = styled.img`
     filter: blur(7px);
   }
 `;
+
+export const InputCodeButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 140px;
+  height: 30px;
+  border: 1px solid black;
+  border-radius: 10px;
+  background-color: white;
+  color: black;
+  font-size: 18px;
+  font-weight: 600;
+  z-index: 998;
+  cursor: pointer;
+  &:hover {
+    filter: brightness(90%);
+  }
+  &:active {
+    filter: brightness(50%);
+  }
+`;

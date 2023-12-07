@@ -65,6 +65,11 @@ export const HeaderLabelName = styled.div`
 
 `;
 
+export const NoCollectionWrapper = styled.div`
+`;
+export const NoCollectionText = styled.div`
+`;
+
 export const ArtistTabWrapper = styled.div`
   display: flex;
   justify-content: flex-start;

@@ -144,72 +144,84 @@ const SelectCollection = () => {
           </s.ArtistTabWrapper>
           : null }
           <s.ContentsWrapper>
-          { !isCollectionClicked ? (
-            <s.CollectionCardsWrapper >
-            { MyCollections.find( (item) => item.artistName === selectedArtist)?.myCollections.map((item, index) => (
-              <Collections
-                key={index}
-                selectedArtist={selectedArtist}
-                albumName={item.collectionName}
-                albumJacket={item.fileUrl}
-                thisCollection={item}
-              />
-             ))}
-            </s.CollectionCardsWrapper>
+          { MyCollections.length > 0 ? (
+            <>
+            { !isCollectionClicked ? (
+              <s.CollectionCardsWrapper >
+              { MyCollections.find( (item) => item.artistName === selectedArtist)?.myCollections.map((item, index) => (
+                <Collections
+                  key={index}
+                  selectedArtist={selectedArtist}
+                  albumName={item.collectionName}
+                  albumJacket={item.fileUrl}
+                  thisCollection={item}
+                />
+              ))}
+              </s.CollectionCardsWrapper>
+            ) : (
+              <>
+                { !isDesignClicked ? (
+                  <s.DesignsWrapper>
+                    <s.DesignListWrapper>
+                      { MyCollections.find( (item) => item.artistName === selectedArtist)?.myCollections.find( (item) => item.collectionName === selectedCollection)?.myDesigns.map((item, index) => (
+                        <DesignsForPosting
+                          key={index}
+                          thisDesign={item}
+                          design={item.fileUrl}
+                        />
+                      ))}
+                    </s.DesignListWrapper>
+                  </s.DesignsWrapper>
+                ) : (
+                  <>
+                    <s.UploadStepWrapper>
+                      <s.SelectedDesignWrapper
+                        onMouseOut={onHandleMouseOut}
+                        onMouseOver={onHandleMouseOver}
+                        ismouseOver={isMouseOver}
+                      >
+                        <s.SelectedDesignImage src={selectedDesign.fileUrl} alt='선택된 디자인' />
+                        {isMouseOver && (
+                        <s.SelectedDesignInfoWrapper>
+                            <s.SelectedDesignInfo>
+                              {selectedDesign.designCardName}
+                              <br />
+                              {selectedDesign.saveDate}
+                            </s.SelectedDesignInfo>
+                          </s.SelectedDesignInfoWrapper> 
+                        )}
+                      </s.SelectedDesignWrapper>
+                      <s.SelectedDesignContentsWrapper>
+                        <s.SelectedDesignContents>
+                          소속사 :  {MyCollections.find( (item) => item.artistName === selectedArtist)?.enterComp}
+                        </s.SelectedDesignContents>
+                        <s.SelectedDesignContents>
+                          아티스트 :  {selectedArtist}
+                        </s.SelectedDesignContents>
+                        <s.SelectedDesignContents>
+                          컬렉션 :  {selectedCollection}
+                        </s.SelectedDesignContents>
+                        <s.SelectedDesignContents>
+                          멤버 : {selectedDesign.member}
+
+                        </s.SelectedDesignContents>
+                      </s.SelectedDesignContentsWrapper>
+                    </s.UploadStepWrapper>
+                    <s.PostButton>
+                      올리기
+                    </s.PostButton>
+                  </>
+                )}
+              </>
+            )}
+            </>
           ) : (
             <>
-              { !isDesignClicked ? (
-                <s.DesignsWrapper>
-                  <s.DesignListWrapper>
-                    { MyCollections.find( (item) => item.artistName === selectedArtist)?.myCollections.find( (item) => item.collectionName === selectedCollection)?.myDesigns.map((item, index) => (
-                      <DesignsForPosting
-                        key={index}
-                        thisDesign={item}
-                        design={item.fileUrl}
-                      />
-                    ))}
-                  </s.DesignListWrapper>
-                </s.DesignsWrapper>
-              ) : (
-                <>
-                  <s.UploadStepWrapper>
-                    <s.SelectedDesignWrapper
-                      onMouseOut={onHandleMouseOut}
-                      onMouseOver={onHandleMouseOver}
-                      ismouseOver={isMouseOver}
-                    >
-                      <s.SelectedDesignImage src={selectedDesign.fileUrl} alt='선택된 디자인' />
-                      {isMouseOver && (
-                       <s.SelectedDesignInfoWrapper>
-                          <s.SelectedDesignInfo>
-                            {selectedDesign.designCardName}
-                            <br />
-                            {selectedDesign.saveDate}
-                          </s.SelectedDesignInfo>
-                        </s.SelectedDesignInfoWrapper> 
-                      )}
-                    </s.SelectedDesignWrapper>
-                    <s.SelectedDesignContentsWrapper>
-                      <s.SelectedDesignContents>
-                        소속사 :  {MyCollections.find( (item) => item.artistName === selectedArtist)?.enterComp}
-                      </s.SelectedDesignContents>
-                      <s.SelectedDesignContents>
-                        아티스트 :  {selectedArtist}
-                      </s.SelectedDesignContents>
-                      <s.SelectedDesignContents>
-                        컬렉션 :  {selectedCollection}
-                      </s.SelectedDesignContents>
-                      <s.SelectedDesignContents>
-                        멤버 : {selectedDesign.member}
-
-                      </s.SelectedDesignContents>
-                    </s.SelectedDesignContentsWrapper>
-                  </s.UploadStepWrapper>
-                  <s.PostButton>
-                    올리기
-                  </s.PostButton>
-                </>
-              )}
+              <s.NoCollectionWrapper>
+                <s.NoCollectionText>
+                  저장된 도안이 없습니다.
+                </s.NoCollectionText>
+              </s.NoCollectionWrapper>
             </>
           )}
           </s.ContentsWrapper>

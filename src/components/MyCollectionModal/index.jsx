@@ -11,6 +11,7 @@ const MyCollectionModal = ({
   setImage,
   setIsBackImgEmpty,
   setPhotocardId,
+  isOpenCollectionModal,
 }) => {
   const userId = 1;
   const [selectedArtist, setSelectedArtist] = useState();
@@ -56,7 +57,7 @@ const MyCollectionModal = ({
 
   const onClickPhotocard = (photocard) => {
     setIsOpenCollectionModal(false);
-    setIsOpenUploadModal(false);
+    isOpenCollectionModal && setIsOpenUploadModal(false);
 
     new fabric.Image.fromURL(
       photocard,
@@ -117,7 +118,7 @@ const MyCollectionModal = ({
   }, []);
 
   useEffect(() => {
-    getMyActiveCollection();
+    if (selectedArtist) getMyActiveCollection();
   }, [selectedArtist]);
   return (
     <s.Wrapper>
