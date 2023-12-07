@@ -58,6 +58,7 @@ import 'fabric-history';
 
 
 const Editor = () => {
+  fabric.textureSize = 16000;
   const [ brightness , setBrightness ] = useRecoilState(brightnessValue);
   const [ contrast , setContrast ] = useRecoilState(contrastValue);
   const [ saturation , setSaturation ] = useRecoilState(saturationValue);
@@ -371,10 +372,10 @@ const Editor = () => {
       applyFilter(
         2,
         new fabric.Image.filters.Saturation({
-          saturation: parseFloat(saturation / 220),
+          saturation: parseFloat(saturation / 100),
         })
       );
-      applyFilterValue(2, 'saturation', parseFloat(saturation / 220));
+      applyFilterValue(2, 'saturation', parseFloat(saturation / 100));
     }
   }, [saturation, tool]);
   ////////////////////////////////////////
