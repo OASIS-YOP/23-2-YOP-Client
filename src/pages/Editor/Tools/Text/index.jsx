@@ -16,14 +16,14 @@ const Text = ({
   canvas, image,
   isBackImgEmpty
 }) => {
-  const [color, setColor] = useState('#6979ffff');
+  const [color, setColor] = useState('#FFFFFF');
 
   // 폰트 변경
-  const [selectedFont, setSelectedFont] = useState('(default)Times New Roman');
+  const [selectedFont, setSelectedFont] = useState('(default)Noto Sans KR');
 
   const fonts = ['MBC1961굴림', '강원모두교육체','에스코어드림', '김정철명조', 'Neo둥근고딕Pro'];
 
-  fonts.unshift('(default)Times New Roman');
+  fonts.unshift('(default)Noto Sans KR');
 
   useEffect(() => {
     const select = document.getElementById('font-family');
@@ -65,6 +65,8 @@ const Text = ({
         selectable : true,
         left: Math.min(Math.max(x, 0), canvas.width - text.getScaledWidth()),
         top: Math.min(Math.max(y, 0), canvas.height - text.getScaledHeight()),
+        fontFamily: 'Noto Sans KR',
+        fontSize: 35,
       });
 
 
@@ -90,6 +92,8 @@ const Text = ({
         selectable : true,
         left: Math.min(Math.max(x, 0), canvas.width - text.getScaledWidth()),
         top: Math.min(Math.max(y, 0), canvas.height - text.getScaledHeight()),
+        fontFamily: 'Noto Sans KR',
+        fontSize: 35,
       });
 
       if( image ){
@@ -207,6 +211,7 @@ const Text = ({
         path: path,
         top: path.top,
         left: path.left,
+        fontFamily: 'Times New Roman',
       });
       canvas.add(textObject);
     }
@@ -255,6 +260,8 @@ const Text = ({
         fontFamily = 'Times New Roman';
       }else if(selectedFont ==='Neo둥근고딕Pro'){
         fontFamily = 'NeoDunggeunmoPro-Regular';
+      } else if ( selectedFont === '(default)Noto Sans KR' ) {
+        fontFamily = 'Noto Sans KR';
       }
 
       canvas.getActiveObject().set({

@@ -1,7 +1,7 @@
 import * as s from './style';
 // import { fabric } from 'fabric';
-// import { useEffect, useState } from 'react';
-import { stickerData1, stickerData2, stickerData3, stickerData4, stickerData5, stickerData6, stickerData7 } from './stickerData';
+import { useEffect, useState } from 'react';
+import { stickerData1, stickerData2, stickerData3, ConfettisBlue, ConfettisPurple, stickerData6, ment, maskingTapes } from './stickerData';
 // import Konva from 'konva';
 
 import { fabric } from 'fabric';
@@ -10,6 +10,23 @@ const Stickers = ({
   canvas,
   image,
 }) => {
+
+  const [ stickerTab, setStickerTab ] = useState('컨페티');
+
+  const stickerTabs = ['컨페티', '픽셀', '주접', '마스킹테이프'];
+  const [ colorTab, setColorTab ] = useState('blue');
+
+  const colorTabs = [
+    { 
+      name: 'blue',
+      color: '#82A2FF',
+    },
+    {
+      name: 'purple',
+      color: '#C4AFFF',
+    }
+  ]
+
 
   const handleImageClick = (e) => {
 
@@ -72,168 +89,286 @@ const Stickers = ({
   };
 
   return (
-    <s.StickerList> 
-      {/* <button onClick={handleDelete}>삭제</button> */}
-      {stickerData4.map( (item) => (
-          ( item.spec === 'ribbonL' ? (
-            <img
-              key={item.id}
-              src={item.fileUrl} 
-              onClick={(e) => handleImageClick(e)}
-              data-spec={item.spec}
-              alt='sticker'
-              width='150px'
-              height='auto'
-            />
-            ):( <img
+    <s.Wrapper>
+      <s.StickerTabsWrapper>
+        {stickerTabs.map((tab) => (
+          <s.StickerTab
+            key={tab}
+            onClick={() => setStickerTab(tab)}
+            className={stickerTab === tab ? 'active' : ''}
+          >
+            {tab}
+          </s.StickerTab>
+        ))}
+      </s.StickerTabsWrapper>
+        { stickerTab === '컨페티' && (
+          <>
+          <s.ColorTabWrapper>
+            {/* <s.ColorTabTitle>색상</s.ColorTabTitle> */}
+            {colorTabs.map((tab) => (
+                <s.ColorTab
+                  key={tab.name}
+                  onClick={() => setColorTab(tab.name)}
+                  className={colorTab === tab.name ? 'active' : ''}
+                  color={tab.color}
+                />
+            ))}
+          </s.ColorTabWrapper>
+          <s.StickerList>
+          { colorTab === 'blue' && (
+            <>
+              {ConfettisBlue.map( (item) => (
+                ( item.spec === 'ribbonL' ? (
+                  <img
+                    key={item.id}
+                    src={item.fileUrl} 
+                    onClick={(e) => handleImageClick(e)}
+                    data-spec={item.spec}
+                    alt='sticker'
+                    width='150px'
+                    height='auto'
+                  />
+                  ):( <img
+                        key={item.id}
+                        src={item.fileUrl} 
+                        onClick={(e) => handleImageClick(e)}
+                        data-spec={item.spec}
+                        alt='sticker'
+                        width='120px'
+                        height='120px'
+                      />
+                    ))
+                  )
+                )}
+            </>
+          )}
+          { colorTab === 'purple' && (
+            <>
+            {ConfettisPurple.map( (item) => (
+              ( item.spec === 'ribbonL' ? (
+                <img
                   key={item.id}
                   src={item.fileUrl} 
                   onClick={(e) => handleImageClick(e)}
                   data-spec={item.spec}
                   alt='sticker'
-                  width='120px'
-                  height='120px'
-              />
-          ))
-        )
-      )}
-      {stickerData5.map( (item) => (
-          ( item.spec === 'ribbonL' ? (
-            <img
-              key={item.id}
-              src={item.fileUrl} 
-              onClick={(e) => handleImageClick(e)}
-              data-spec={item.spec}
-              alt='sticker'
-              width='150px'
-              height='auto'
-            />
-            ):( <img
+                  width='150px'
+                  height='auto'
+                />
+                ):( <img
+                      key={item.id}
+                      src={item.fileUrl} 
+                      onClick={(e) => handleImageClick(e)}
+                      data-spec={item.spec}
+                      alt='sticker'
+                      width='120px'
+                      height='120px'
+                  />
+                ))
+              )
+            )}
+            </>
+          )}
+          </s.StickerList>
+          </>
+        )}
+        { stickerTab === '픽셀' && (
+          <s.StickerList>
+            
+            {stickerData2.map( (item) => (
+              ( item.spec === 'm' ? (
+                <img
                   key={item.id}
                   src={item.fileUrl} 
                   onClick={(e) => handleImageClick(e)}
                   data-spec={item.spec}
                   alt='sticker'
-                  width='120px'
-                  height='120px'
-              />
-          ))
-        )
-      )}
-      {stickerData6.map( (item) => (
-          ( item.spec === 'ribbonL' ? (
-            <img
-              key={item.id}
-              src={item.fileUrl}
-              onClick={(e) => handleImageClick(e)}
-              data-spec={item.spec}
-              alt='sticker'
-              width='150px'
-              height='auto'
-            />
-            ):( <img
+                  width='150px'
+                  height='auto'
+                />
+                ):( <img
+                      key={item.id}
+                      src={item.fileUrl} 
+                      onClick={(e) => handleImageClick(e)}
+                      data-spec={item.spec}
+                      alt='sticker'
+                      width='50px'
+                    />
+                ))
+              )
+            )}
+            {stickerData3.map( (item) => (
+              ( item.spec === 'ribbonL' ? (
+                <img
                   key={item.id}
                   src={item.fileUrl} 
                   onClick={(e) => handleImageClick(e)}
                   data-spec={item.spec}
                   alt='sticker'
-                  width='120px'
-                  height='120px'
-              />
-          ))
-        )
-      )}
-      {stickerData7.map( (item) => (
-        ( item.spec === 'particlesS' ? (          
-          <img
-            key={item.id}
-            src={item.fileUrl} 
-            onClick={(e) => handleImageClick(e)}
-            data-spec={item.spec} 
-            alt='sticker'
-            width='50px'
-            height='auto'
-          />
-          ):( <img
+                  width='150px'
+                  height='auto'
+                />
+                ):( <img
+                      key={item.id}
+                      src={item.fileUrl} 
+                      onClick={(e) => handleImageClick(e)}
+                      data-spec={item.spec}
+                      alt='sticker'
+                      width='50px'
+                    />
+                ))
+              )
+            )}
+          </s.StickerList>
+        )}
+        { stickerTab === '주접' && (
+          <s.StickerList>
+            {ment.map( (item) => (
+              ( item.spec === 'particlesS' ? (          
+                <img
+                  key={item.id}
+                  src={item.fileUrl} 
+                  onClick={(e) => handleImageClick(e)}
+                  data-spec={item.spec} 
+                  alt='sticker'
+                  width='50px'
+                  height='auto'
+                />
+                ):( <img
+                      key={item.id}
+                      src={item.fileUrl} 
+                      onClick={(e) => handleImageClick(e)}
+                      data-spec={item.spec}
+                      alt='sticker'
+                      height='auto'
+                      width='130px'
+                    />
+                ))
+              )
+            )}
+            </s.StickerList>
+        )}
+        { stickerTab === '마스킹테이프' && (
+          <s.StickerList>
+            {maskingTapes.map( (item) => (
+              ( item.spec === 'particlesS' ? (          
+                <img
+                  key={item.id}
+                  src={item.fileUrl} 
+                  onClick={(e) => handleImageClick(e)}
+                  data-spec={item.spec} 
+                  alt='sticker'
+                  width='50px'
+                  height='auto'
+                />
+                ):( <img
+                      key={item.id}
+                      src={item.fileUrl} 
+                      onClick={(e) => handleImageClick(e)}
+                      data-spec={item.spec}
+                      alt='sticker'
+                      height='auto'
+                      width='130px'
+                    />
+                ))
+              )
+            )}
+          </s.StickerList>
+        )}
+        {/* <button onClick={handleDelete}>삭제</button>
+        
+        {stickerData6.map( (item) => (
+            ( item.spec === 'ribbonL' ? (
+              <img
                 key={item.id}
-                src={item.fileUrl} 
+                src={item.fileUrl}
                 onClick={(e) => handleImageClick(e)}
                 data-spec={item.spec}
                 alt='sticker'
+                width='150px'
                 height='auto'
-                width='130px'
               />
-          ))
-        )
-      )}
-      {stickerData1.map( (item) => {
-        return (
-          (item.spec === 'particlesS' ? (
+              ):( <img
+                    key={item.id}
+                    src={item.fileUrl} 
+                    onClick={(e) => handleImageClick(e)}
+                    data-spec={item.spec}
+                    alt='sticker'
+                    width='120px'
+                    height='120px'
+                />
+            ))
+          )
+        )}
+        {stickerData7.map( (item) => (
+          ( item.spec === 'particlesS' ? (          
             <img
               key={item.id}
-              src={item.fileUrl}
+              src={item.fileUrl} 
               onClick={(e) => handleImageClick(e)}
-              data-spec={item.spec}
+              data-spec={item.spec} 
               alt='sticker'
               width='50px'
-              height='auto' />
-          ) : (<img
-            key={item.id}
-            src={item.fileUrl}
-            onClick={(e) => handleImageClick(e)}
-            data-spec={item.spec}
-            alt='sticker'
-            height='auto'
-            width='130px' />
-          ))
-        );
-      }
-      )}
-      {stickerData2.map( (item) => (
-        ( item.spec === 'm' ? (
-          <img
-            key={item.id}
-            src={item.fileUrl} 
-            onClick={(e) => handleImageClick(e)}
-            data-spec={item.spec}
-            alt='sticker'
-            width='150px'
-            height='auto'
-          />
-          ):( <img
+              height='auto'
+            />
+            ):( <img
+                  key={item.id}
+                  src={item.fileUrl} 
+                  onClick={(e) => handleImageClick(e)}
+                  data-spec={item.spec}
+                  alt='sticker'
+                  height='auto'
+                  width='130px'
+                />
+            ))
+          )
+        )}
+        {stickerData1.map( (item) => {
+          return (
+            (item.spec === 'particlesS' ? (
+              <img
                 key={item.id}
-                src={item.fileUrl} 
+                src={item.fileUrl}
                 onClick={(e) => handleImageClick(e)}
                 data-spec={item.spec}
                 alt='sticker'
                 width='50px'
-              />
-          ))
-        )
-      )}
-      {stickerData3.map( (item) => (
-        ( item.spec === '' ? (
-          <img
-            key={item.id}
-            src={item.fileUrl} 
-            onClick={(e) => handleImageClick(e)}
-            data-spec={item.spec}
-            alt='sticker'
-            width='150px'
-            height='auto'
-          />
-          ):( <img
-                key={item.id}
-                src={item.fileUrl} 
-                onClick={(e) => handleImageClick(e)}
-                data-spec={item.spec}
-                alt='sticker'
-                width='50px'
-              />
-          ))
-        )
-      )}
-    </s.StickerList>
+                height='auto' />
+            ) : (<img
+              key={item.id}
+              src={item.fileUrl}
+              onClick={(e) => handleImageClick(e)}
+              data-spec={item.spec}
+              alt='sticker'
+              height='auto'
+              width='130px' />
+            ))
+          );
+        }
+        )}
+        {stickerData2.map( (item) => (
+          ( item.spec === 'm' ? (
+            <img
+              key={item.id}
+              src={item.fileUrl} 
+              onClick={(e) => handleImageClick(e)}
+              data-spec={item.spec}
+              alt='sticker'
+              width='150px'
+              height='auto'
+            />
+            ):( <img
+                  key={item.id}
+                  src={item.fileUrl} 
+                  onClick={(e) => handleImageClick(e)}
+                  data-spec={item.spec}
+                  alt='sticker'
+                  width='50px'
+                />
+            ))
+          )
+        )} */}
+    </s.Wrapper>
   );
 };
 

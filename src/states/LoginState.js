@@ -1,10 +1,10 @@
-// import { atom } from 'recoil';
-// import { recoilPersist } from 'recoil-persist';
+import { atom } from 'recoil';
+import { recoilPersist } from 'recoil-persist';
 
-// const { persistAtom } = recoilPersist();
+const { persistAtom } = recoilPersist();
 
-// export const LoginState = atom({
-//   key: 'LoginState',
-//   default: false,
-//   effects_UNSTABLE: [persistAtom],
-// });
+export const LoginState = atom({
+  key: 'LoginState',
+  default: false,
+  effects_UNSTABLE: [persistAtom],
+});

@@ -14,7 +14,7 @@ const Draw = ({
   image,
   isBackImgEmpty,
 }) => {
-  const [color, setColor] = useState('#6979ffff');
+  const [color, setColor] = useState('#FFFFFF');
 
 
   // 캔버스 내의 랜덤 위치 지정
@@ -27,8 +27,8 @@ const Draw = ({
   const AddObjCircle = () => {
     if (canvas) {
       let circle = new fabric.Circle({
-        width: 40,
-        height: 40,
+        width: 50,
+        height: 50,
         radius: 25,
         fill: color,
         selectable: true,
@@ -49,8 +49,8 @@ const Draw = ({
   const AddObjRect = () => {
     if (canvas) {
       let rect = new fabric.Rect({
-        width: 40,
-        height: 40,
+        width: 50,
+        height: 50,
         fill: color,
         selectable: true,
       });
@@ -70,8 +70,8 @@ const Draw = ({
   const AddObjTri = () => {
     if (canvas) {
       let tri = new fabric.Triangle({
-        width: 40,
-        height: 40,
+        width: 50,
+        height: 50,
         fill: color,
         selectable: true,
       });

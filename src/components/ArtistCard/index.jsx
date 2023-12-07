@@ -8,12 +8,22 @@ const ArtistCard = ({ photo, groupName, artistId }) => {
   //   e.stopPropagation();
   // };
 
+
+  const onClickArtist = (artistID) => {
+    navigate(`/communitypage/${artistId}`);
+    window.scrollTo({
+      top: 0,
+      behavior: 'auto',
+    });
+  };
+
   useEffect(() => {
     console.log(artistId);
   });
+
   return (
     <>
-      <s.Wrapper onClick={() => navigate(`/communitypage/${artistId}`)}>
+      <s.Wrapper onClick={() => onClickArtist(artistId)}>
         <s.ImageContainer>
           <img src={photo} alt='artist' />
         </s.ImageContainer>
