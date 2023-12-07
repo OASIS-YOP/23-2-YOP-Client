@@ -176,12 +176,15 @@ const Collections = () => {
               />
               {ismouseOver ? (
                 <>
+                  <s.InputCodeWrapper>
+                  <s.AlbumName>{albumName}</s.AlbumName>
                   <s.InputCodeButton
                     onMouseOver={onHandleMouseOver}
                     onClick={handleClickCodeInputButton}
                   >
                     코드 입력
                   </s.InputCodeButton>
+                  </s.InputCodeWrapper>
                   <Modal
                     isOpen={isOpenCodeInputModal}
                     style={CodeInputModalStyle}

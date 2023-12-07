@@ -65,7 +65,7 @@ export const CollectionCardsContainer = styled.div`
   flex-wrap: wrap;
   width: 90%;
   height: 90%;
-  margin: 0 auto;
+  margin: 10px auto;
   padding-top: 20px;
 `;
 
@@ -77,7 +77,7 @@ export const CollectionCardWrapper = styled.div`
   justify-content: center;
   align-items: center;
 
-  width: 28%;
+  width: 25%;
   margin: 28px 24px;
   box-sizing: border-box;
   border-radius: 35px;
@@ -168,6 +168,34 @@ export const InActivatedLockWrapper = styled.div`
   }
 `;
 
+export const InputCodeWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const AlbumName = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  height: fit-content;
+
+  line-height: 3vw;
+
+  margin: 10px;
+
+  text-align: center;
+
+  font-size: 1.6vw;
+  font-weight: bold;
+
+  color: white;
+
+  z-index: 998;
+`;
+
 export const InputCodeButton = styled.button`
   display: flex;
   justify-content: center;
@@ -180,7 +208,7 @@ export const InputCodeButton = styled.button`
   color: black;
   font-size: 18px;
   font-weight: 600;
-  z-index: 9999;
+  z-index: 998;
   cursor: pointer;
   &:hover {
     filter: brightness(90%);
