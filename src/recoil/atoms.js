@@ -61,5 +61,3 @@ export const resizeHeight = atom({
   default: 0,
 });
 
-
-

@@ -6,8 +6,12 @@ import Header from '../../components/Header';
 import { Outlet, useNavigate } from 'react-router-dom';
 import mypageAPI from '../../api/mypage/mypageAPI';
 
+import { useRecoilState } from 'recoil';
+import { myProfileState } from '../../recoil/user';
+
 const MyPage = () => {
-  const [myProfile, setMyProfile] = useState({});
+  const [myProfile, setMyProfile] = useRecoilState(myProfileState);
+
 
   const navigate = useNavigate();
   const currentPathname = window.location.pathname;

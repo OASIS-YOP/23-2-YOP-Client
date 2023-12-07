@@ -1,6 +1,16 @@
 import styled from 'styled-components';
 
-export const Icon = styled.img``;
+export const IconWrapper = styled.div`
+  width: 40px;
+  height: 40px;
+
+  border-radius: 100%;
+
+  overflow: hidden;
+`;
+export const Icon = styled.img`
+  width: 100%;
+`;
 export const Logo = styled.img`
 width: 40px;
   cursor: pointer;
@@ -38,7 +48,7 @@ export const LogoWrapper = styled.div`
 
   padding: none;
   margin-left: 20px;
-  margin-right: 390px;
+  margin-right: 380px;
 `;
 
 export const MenuWrapper = styled.div`
@@ -87,7 +97,7 @@ export const UserWrapper = styled.div`
   height: auto;
 
   padding: 5px;
-  margin: 0 0 0 15px;
+  margin: 0 0 0 10px;
 
   cursor: pointer;
 `;
