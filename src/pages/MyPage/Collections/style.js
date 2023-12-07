@@ -77,8 +77,8 @@ export const CollectionCardWrapper = styled.div`
   justify-content: center;
   align-items: center;
 
-  width: 20%;
-  margin: 28px 24px;
+  width: 21%;
+  margin: 28px 28px;
   box-sizing: border-box;
   border-radius: 35px;
   border: 8px solid #82a2ff;
