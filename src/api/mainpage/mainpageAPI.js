@@ -1,10 +1,18 @@
 import HttpClient from '../HttpClient.js';
 
+const accessToken = localStorage.getItem('atk');
+
 const mainpageAPI = {
-  getFavArtist: async (userId) => {
+  getFavArtist: async () => {
     try {
-      const path = `${process.env.REACT_APP_BASE_URL}/mainpage/${userId}/favArtist`;
-      const response = await HttpClient.get(path);
+      const path = `${process.env.REACT_APP_BASE_URL}/mainpage/favArtist`;
+      const response = await HttpClient.get(
+        path,
+        {},
+        {
+          Authorization: accessToken,
+        }
+      );
       return response;
     } catch (e) {
       return null;

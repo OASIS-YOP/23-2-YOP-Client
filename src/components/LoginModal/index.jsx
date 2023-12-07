@@ -1,12 +1,18 @@
-import { useNavigate } from 'react-router-dom';
 import * as s from './modal.style.js';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import { LoginState } from '../../states/LoginState.js';
+
+import landingpageAPI from '../../api/landingpage/landingpageAPI.js';
 
 export const Login = () => {
   const [user, setUser] = useState({
-    email: '',
+    username: '',
     password: '',
   });
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
+  const [accessToken, setAccessToken] = useState();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -17,8 +23,24 @@ export const Login = () => {
     });
   };
   const onClickLogInToMainpage = () => {
-    navigate('/mainpage');
+    landingpageAPI.login(user).then((data) => {
+      if (data) {
+        console.log(data);
+        localStorage.setItem('atk', data.token);
+        setAccessToken(data.token);
+        // window.alert('로그인 성공했습니다.');
+        navigate('/mainpage');
+      } else {
+        console.log('로그인 실패');
+        window.alert('등록된 회원이 아닙니다.');
+      }
+    });
   };
+
+  useEffect(() => {
+    if (accessToken) localStorage.setItem('atk', accessToken);
+    if (localStorage.getItem('atk')) setIsLoggedIn(true);
+  });
 
   return (
     <s.Wrapper>
@@ -31,8 +53,8 @@ export const Login = () => {
         <form type='submit' method='post'>
           <s.Input
             type='text'
-            id='email'
-            name='email'
+            id='username'
+            name='username'
             placeholder='이메일'
             onChange={handleChange}
           />

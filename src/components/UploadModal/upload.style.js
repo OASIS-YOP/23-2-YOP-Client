@@ -1,11 +1,16 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  /* border: 1px solid black; */
-  width: 650px;
-  height: 520px;
+  //드래그 방지
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
 
-  padding: 15px 20px;
+  width: 650px;
+  height: 515px;
+
+  padding: 20px 20px;
 `;
 
 export const HeaderLabelWrapper = styled.div`
@@ -14,6 +19,8 @@ export const HeaderLabelWrapper = styled.div`
   align-items: center;
   width: 100%;
   height: 40px;
+
+  margin-bottom: 25px;
 
   > span {
     font-size: 22px;
@@ -25,7 +32,7 @@ export const HeaderLabelWrapper = styled.div`
   }
 `;
 
-export const HeaderLabel = styled.div`
+export const HeaderLabel = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -36,148 +43,245 @@ export const HeaderLabel = styled.div`
   border-radius: 20px;
   font-size: 18px;
   font-weight: 700;
+  border: none;
 
   padding: 0 15px;
+
+  &.active {
+    cursor: pointer;
+
+    &:hover {
+      filter: brightness(80%);
+    }
+  }
+
+  &#active {
+    background-color: #3f70ff;
+  }
+
 `;
 
-export const CollectionCardWrapper = styled.div`
+export const HeaderLabelName = styled.div`
+
+`;
+
+export const NoCollectionWrapper = styled.div`
+`;
+export const NoCollectionText = styled.div`
+`;
+
+export const ArtistTabWrapper = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 95%;
+  height: 35px;
+  padding-left: 23px;
+  /* border: 1px solid red; */
+  margin-top: 15px;
+`
+
+export const ArtistTab = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  height: 100%;
+  margin: 0 8px;
+  border: none;
+  background-color: transparent;
+
+  font-size: 16.5px;
+  font-weight: 700;
+  color: gray;
+
+  &:hover {
+    color: #3f70ff;
+    cursor: pointer;
+  }
+
+  &.active {
+    color: black;
+    &:hover {
+    color: #3f70ff;
+    cursor: pointer;
+  }
+  }
+`
+
+export const ContentsWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+
+  width: 100%;
+  height: fit-content;
+`;
+
+export const CollectionCardsWrapper = styled.div`
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 430px;
+  height: 420px;
   border-radius: 20px;
-  margin: 40px auto;
+  margin: auto;
   img {
     width: 100%;
     height: 100%;
   }
 
 
-  border: 1px solid black;
+//   /* border: 1px solid black; */
 `;
 
-export const CollectionCard = styled.div`
-  width: 150px;
-  height: 150px;
-  border-radius: 10px;
-  border: 1px solid #3f70ff;
-  margin: 15px;
-  overflow: hidden;
-`;
 
-export const LabelWrapper = styled.div`
+export const DesignsWrapper = styled.div`
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: space-around;
   align-items: center;
-  width: 380px;
-  height: 30px;
-  margin-top: 10px;
+  flex-wrap: nowrap;
+
+  width: 90%;
+  height: fit-content;
+
 `;
 
-export const Label = styled.div`
+export const DesignListWrapper = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100px;
-  height: 100%;
-  background-color: grey;
-  color: white;
-  border-radius: 20px;
-`;
-
-export const PolaroidWrapper = styled.div`
-  display: flex;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
+
+  background-color: white;
+
   width: 100%;
   height: fit-content;
-  border-radius: 20px;
-  justify-content: space-between;
-  align-items: center;
-  margin: 50px auto;
-  /* margin-top: 50px;
-  margin-left: 50px; */
-  img {
-    width: 100%;
-    height: 100%;
-  }
+
+  margin: 0 40px;
+
+  // border: 1px solid red;
 `;
 
-export const PolaroidCard = styled.div`
-  width: 120px;
-  height: 200x;
-  border-radius: 10px;
-  border: 1px solid #3f70ff;
-  margin: 0 15px 40px 15px;
+
+
+export const UploadStepWrapper = styled.div`
+   display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+
+  width: 90%;
+  height: 350px;
+
+`
+
+export const SelectedDesignWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin: 20px 20px;
+
   overflow: hidden;
-  img {
-    width: 120%;
-    height: 200%;
-  }
-`;
 
-export const ButtonWrappper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 380px;
-  height: 30px;
-  margin-top: 10px;
-`;
-
-export const Button = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100px;
-  height: 100%;
-  background-color: grey;
-  color: white;
   border-radius: 20px;
+
+  box-shadow: 11px 13px 25px rgba(0, 0, 0, 0.4);
+
+  &:hover {
+    > img { 
+      filter: brightness(70%);
+    }
+  }
+  
+
+`
+
+export const SelectedDesignImage = styled.img`
+  width: 200px;
+  height: 290px;
+  
+`
+
+export const SelectedDesignInfoWrapper = styled.div`
+  display: table-cell;
+  vertical-align: middle;
+  align-items: center;
+  position: absolute;
+  box-sizing: border-box;
+  justify-content: center;
+  filter: brightness(100%);
+
+  width: fit-content;
+  height: fit-content;
+
+  z-index: 998;
 `;
 
-export const ThirdModal = styled.div`
+export const SelectedDesignInfo = styled.div`
+  display: absolute;
+  text-align: center;
+  font-size: 15px;
+  font-weight: bold;
+  color: white;
+`;
+
+export const SelectedDesignContentsWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+
+  margin: 20px 40px;
+`;
+
+export const SelectedDesignContents = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  margin : 3px 0;
+
+  font-size: 18px;
+  font-weight: 700;
+  color: gray;
+
+
+`;
+
+export const PostButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+
   width: 100px;
-  height: 100%;
+  height: 40px;
+
+  border: none;
+  border-radius: 20px;
+
   background-color: gray;
+
   color: white;
-  border-radius: 20px;
+  font-size: 15px;
+  font-weight: 700;
+
+
+  &:hover {
+    cursor: pointer;
+    background-color: #3f70ff;
+  }
+
+  &:active {
+    background-color: gray;
+  }
+  
+  margin-top: 30px;
+
 `;
 
-export const EditingCardWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  width: 100%;
-  height: fit-content;
-  border-radius: 20px;
-  justify-content: space-between;
-  align-items: center;
-  margin: 50px auto;
-  /* margin-top: 50px;
-  margin-left: 50px; */
-  img {
-    width: 100%;
-    height: 100%;
-  }
-`;
-
-export const EditingCard = styled.div`
-  width: 240px;
-  height: 300px;
-  border-radius: 10px;
-  border: 1px solid #3f70ff;
-  margin: 0 15px 40px 15px;
-  overflow: hidden;
-  img {
-    width: 100%;
-    height: 100%;
-  }
-`;

@@ -1,5 +1,15 @@
 import styled from 'styled-components';
 
+export const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 100%;
+  min-width: 1000px;
+  height: 100%;
+`;
+
 export const ProfileContainer = styled.div`
   display: flex;
   align-items: center;
@@ -18,8 +28,12 @@ export const ProfileWrapper = styled.div`
   margin: auto 0;
 `;
 export const ProfileImage = styled.div`
-  width: 25%;
-  height: 88%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  width: 20%;
+  height: 80%;
   margin-left: 25px;
   margin-top: 5px;
   border-radius: 140px;
@@ -36,7 +50,6 @@ export const ProfileImage = styled.div`
 
   img {
     width: 100%;
-    height: 100%;
     object-fit: cover;
   }
 `;

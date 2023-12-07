@@ -180,7 +180,7 @@ export const InputCodeButton = styled.button`
   color: black;
   font-size: 18px;
   font-weight: 600;
-  z-index: 998;
+  z-index: 9999;
   cursor: pointer;
   &:hover {
     filter: brightness(90%);

@@ -116,8 +116,16 @@ const CommunityPage = () => {
     fetchData();
   }, [isFavorite]);
 
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'auto',
+    });
+  }, [isClickedMember]);
+
   return (
     <>
+    <s.Wrapper>
       <Header />
 
       <s.ProfileContainer>
@@ -179,6 +187,7 @@ const CommunityPage = () => {
           </s.ContentWrapper>
         </s.photoCardContainer>
       </s.BodyContainer>
+    </s.Wrapper>
     </>
   );
 };

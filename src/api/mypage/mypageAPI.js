@@ -145,19 +145,19 @@ const mypageAPI = {
   },
 
   //컬렉션활성화
-  collectionActivate: async (userId, albumName) => {
+  collectionActivate: async (userId, albumName, code) => {
     try {
       const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myCollection/${albumName}/collectionActivation`;
-      const response = await HttpClient.post(path, {}, {});
+      const response = await HttpClient.post(path, JSON.stringify(code), {});
       return response;
     } catch (e) {
       return null;
     }
   },
-  photocardActivate: async (userId, albumName, code) => {
+  photocardActivate: async (userId, albumName) => {
     try {
       const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myCollection/${albumName}/cardActivationRandomly`;
-      const response = await HttpClient.post(path, code, {});
+      const response = await HttpClient.post(path, {}, {});
       return response;
     } catch (e) {
       return null;

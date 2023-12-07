@@ -41,6 +41,7 @@ const MyDesignCollection = ({
   const onClickCollection = () => {
     setIsCollectionClicked(true);
     setSelectedCollection(albumName);
+    console.log(albumName);
   };
 
   useEffect(() => {

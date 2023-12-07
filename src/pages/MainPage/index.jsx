@@ -23,7 +23,7 @@ const MainPage = () => {
   const [userId, setUserId] = useState(1);
 
   const getFavArtist = () => {
-    mainpageAPI.getFavArtist(userId).then((data) => {
+    mainpageAPI.getFavArtist().then((data) => {
       console.log(data);
       setFavArtist(data.favArtistList);
     });
@@ -103,7 +103,7 @@ const MainPage = () => {
       </CardsSlider>
 
       {/* 실시간 도안 */}
-      <s.PageLabel>실시간 도안</s.PageLabel>
+      <s.PageLabel>실시간 포스트</s.PageLabel>
       <s.RealTimeDesignWrapper>
         <s.DesignCardContainer>
           {now5 &&

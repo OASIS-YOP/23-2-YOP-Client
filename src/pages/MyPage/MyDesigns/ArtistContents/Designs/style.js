@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-
 export const ContentsWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -10,9 +9,7 @@ export const ContentsWrapper = styled.div`
 
   width: 90%;
   height: fit-content;
-
 `;
-
 
 export const DesignListWrapper = styled.div`
   display: flex;
@@ -36,14 +33,14 @@ export const DesignImageFrame = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-
-
+  width: 250px;
+  height: 362px;
   min-width: 205px;
   min-height: 300px;
-  max-width: 280px;
+  max-width: 240px;
   max-height: 400px;
-  width: 20%;
-  height: 27vw;
+  /* width: 22%;
+  height: 27vw; */
 
   margin: 20px 20px;
 
@@ -59,7 +56,7 @@ export const DesignImageFrame = styled.div`
     > img {
       filter: brightness(110%) blur(2.5px);
     }
-  };
+  }
 `;
 
 export const DesignImage = styled.img`
@@ -69,54 +66,48 @@ export const DesignImage = styled.img`
 
   background-color: lightgray;
 
-  width: auto;
-  height: 110%;
-
-
+  width: 100%;
+  height: 100%;
 `;
 
-
 export const DesignInfoWrapper = styled.div`
-    display: table-cell;
-    vertical-align: middle;
-    align-items: center;
-    position: absolute;
-    box-sizing: border-box;
-    justify-content: center;
-    filter: brightness(100%);
+  display: table-cell;
+  vertical-align: middle;
+  align-items: center;
+  position: absolute;
+  box-sizing: border-box;
+  justify-content: center;
+  filter: brightness(100%);
 
-    width: fit-content;
-    height: fit-content;
+  width: fit-content;
+  height: fit-content;
 
-    z-index: 998;
-  `;
+  z-index: 998;
+`;
 
-  export const DesignCardInfo = styled.div`
-    display: absolute;
-    text-align: center;
-    color: white;
+export const DesignCardInfo = styled.div`
+  display: absolute;
+  text-align: center;
+  color: white;
 
-    font-size: 13px;
-    
-  
-  `;
+  font-size: 13px;
+`;
 
-  export const DeleteButton = styled.button`
-    border: none;
-    border-radius: 8px;
+export const DeleteButton = styled.button`
+  border: none;
+  border-radius: 8px;
 
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 
-    font-size: 15px;
+  font-size: 15px;
 
-    &:hover {
-      cursor: pointer;
-      background-color: lightgray;
-    }
+  &:hover {
+    cursor: pointer;
+    background-color: lightgray;
+  }
 
-    &:active {
-      /* transform: translateY(4px); */
-      background-color: gray;
-    }
-
-  `
+  &:active {
+    /* transform: translateY(4px); */
+    background-color: gray;
+  }
+`;
