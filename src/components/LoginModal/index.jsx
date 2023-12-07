@@ -25,18 +25,21 @@ export const Login = () => {
   const onClickLogInToMainpage = () => {
     landingpageAPI.login(user).then((data) => {
       if (data) {
+        console.log(data);
+        localStorage.setItem('atk', data.token);
         setAccessToken(data.token);
-        window.alert('로그인 성공했습니다.');
+        // window.alert('로그인 성공했습니다.');
         navigate('/mainpage');
       } else {
         console.log('로그인 실패');
+        window.alert('등록된 회원이 아닙니다.');
       }
     });
   };
 
   useEffect(() => {
-    if (accessToken) localStorage.setItem('accessToken', accessToken);
-    if (localStorage.getItem('accessToken')) setIsLoggedIn(true);
+    if (accessToken) localStorage.setItem('atk', accessToken);
+    if (localStorage.getItem('atk')) setIsLoggedIn(true);
   });
 
   return (
