@@ -216,7 +216,10 @@ const CommunityPage = () => {
                   </s.CardImageContainer>
                 ))
               : memberPost?.map((item) => (
-                  <s.CardImageContainer key={`memberPost_${item.postId}`}>
+                  <s.CardImageContainer
+                    onClick={openModal}
+                    key={`memberPost_${item.postId}`}
+                  >
                     <img src={item.polaroid} alt='Polaroid' />
                   </s.CardImageContainer>
                 ))}
