@@ -371,6 +371,4 @@ const Stickers = ({
     </s.Wrapper>
   );
 };
-
-
 export default Stickers;
