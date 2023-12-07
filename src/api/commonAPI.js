@@ -18,11 +18,9 @@ const commonAPI = {
   deleteFavorite: async (artistId) => {
     try {
       const path = `${process.env.REACT_APP_BASE_URL}/community/${artistId}/notFavorite`;
-      const response = await HttpClient.delete(
-        path,
-        {},
-        { Authorization: accessToken }
-      );
+      const response = await HttpClient.delete(path, {
+        Authorization: accessToken,
+      });
       return response;
     } catch (e) {
       return null;
@@ -44,11 +42,9 @@ const commonAPI = {
   deleteLike: async (postId) => {
     try {
       const path = `${process.env.REACT_APP_BASE_URL}/post/notLike/${postId}`;
-      const response = await HttpClient.delete(
-        path,
-        {},
-        { Authorization: accessToken }
-      );
+      const response = await HttpClient.delete(path, {
+        Authorization: accessToken,
+      });
       return response;
     } catch (e) {
       return null;

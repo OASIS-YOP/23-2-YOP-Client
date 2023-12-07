@@ -48,7 +48,7 @@ const mypageAPI = {
       const path = `${process.env.REACT_APP_BASE_URL}/mypage/myPost/delete/${postId}`;
       const response = await HttpClient.delete(
         path,
-        {},
+
         { Authorization: accessToken }
       );
       return response;
@@ -180,11 +180,9 @@ const mypageAPI = {
   deleteMyPolaroids: async (polaroidId) => {
     try {
       const path = `${process.env.REACT_APP_BASE_URL}/mypage/myPolaroid/delete/${polaroidId}`;
-      const response = await HttpClient.delete(
-        path,
-        {},
-        { Authorization: accessToken }
-      );
+      const response = await HttpClient.delete(path, {
+        Authorization: accessToken,
+      });
       return response;
     } catch (e) {
       return null;
