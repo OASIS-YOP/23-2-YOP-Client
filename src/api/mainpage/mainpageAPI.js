@@ -18,37 +18,49 @@ const mainpageAPI = {
       return null;
     }
   },
-  getRandomArtist: async (userId) => {
+  getRandomArtist: async () => {
     try {
-      const path = `${process.env.REACT_APP_BASE_URL}/mainpage/${userId}/randomArtist`;
-      const response = await HttpClient.get(path);
+      const path = `${process.env.REACT_APP_BASE_URL}/mainpage/randomArtist`;
+      const response = await HttpClient.get(
+        path,
+        {},
+        { Authorization: accessToken }
+      );
       return response;
     } catch (e) {
       return null;
     }
   },
-  getHot10: async (userId) => {
+  getHot10: async () => {
     try {
-      const path = `${process.env.REACT_APP_BASE_URL}/mainpage/${userId}/hot10`;
-      const response = await HttpClient.get(path);
+      const path = `${process.env.REACT_APP_BASE_URL}/mainpage/hot10`;
+      const response = await HttpClient.get(
+        path,
+        {},
+        { Authorization: accessToken }
+      );
       return response;
     } catch (e) {
       return null;
     }
   },
-  // getHot10Like: async (userId, postId) => {
+  // getHot10Like: async (, postId) => {
   //   try {
-  //     const path = `${process.env.REACT_APP_BASE_URL}/mainpage/${userId}/hot10/${postId}/like`;
+  //     const path = `${process.env.REACT_APP_BASE_URL}/mainpage/hot10/${postId}/like`;
   //     const response = await HttpClient.get(path);
   //     return response;
   //   } catch (e) {
   //     return null;
   //   }
   // },
-  getNow5: async (userId) => {
+  getNow5: async () => {
     try {
-      const path = `${process.env.REACT_APP_BASE_URL}/mainpage/${userId}/now5`;
-      const response = await HttpClient.get(path);
+      const path = `${process.env.REACT_APP_BASE_URL}/mainpage/now5`;
+      const response = await HttpClient.get(
+        path,
+        {},
+        { Authorization: accessToken }
+      );
       return response;
     } catch (e) {
       return null;

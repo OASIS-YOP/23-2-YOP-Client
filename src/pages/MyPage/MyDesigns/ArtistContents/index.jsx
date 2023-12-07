@@ -5,23 +5,26 @@ import Designs from './Designs';
 import mypageAPI from '../../../../api/mypage/mypageAPI';
 
 const ArtistContents = () => {
-  const userId = 1;
   const [artistList, setArtistList] = useState([]);
-  const [selectedArtist, setSelectedArtist] = useState();
+  const [selectedArtist, setSelectedArtist] = useState(0);
   const [myPolaroidCollection, setMyPolaroidCollection] = useState([]);
   const [selectedCollection, setSelectedCollection] = useState('');
   const [isCollectionClicked, setIsCollectionClicked] = useState(false);
 
   const getMyPolaroidArtistTab = () => {
-    mypageAPI.getMyPolaroidArtistTab(userId).then((data) => {
-      setSelectedArtist(data.polaroidArtistTabList[0].artistId);
-      setArtistList(data.polaroidArtistTabList);
-      console.log('내도안리스트', data.polaroidArtistTabList);
+    mypageAPI.getMyPolaroidArtistTab().then((data) => {
+      if (data.polaroidArtistTabList.length === 0) {
+        return;
+      } else {
+        setSelectedArtist(data?.polaroidArtistTabList[0]?.artistId);
+        setArtistList(data?.polaroidArtistTabList);
+        console.log('내도안리스트', data?.polaroidArtistTabList);
+      }
     });
   };
 
   const getMyPolaroidCollection = () => {
-    mypageAPI.getMyPolaroidCollection(userId, selectedArtist).then((data) => {
+    mypageAPI.getMyPolaroidCollection(selectedArtist).then((data) => {
       setMyPolaroidCollection(data.collectionsList);
       console.log('내도안컬렉션리스트', data.collectionsList);
     });

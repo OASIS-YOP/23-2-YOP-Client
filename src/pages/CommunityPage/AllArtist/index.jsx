@@ -8,12 +8,11 @@ import communitypageAPI from '../../../api/communitypage/communitypageAPI';
 import ArtistCard from '../../../components/ArtistCard';
 
 const AllArtist = () => {
-  const [userId, setUserId] = useState(1);
   const [allArtistList, setAllArtistList] = useState([]);
   const [favArtist, setFavArtist] = useState([]);
 
   const getFavArtist = () => {
-    mainpageAPI.getFavArtist(userId).then((data) => {
+    mainpageAPI.getFavArtist().then((data) => {
       setFavArtist(data?.favArtistList);
     });
   };

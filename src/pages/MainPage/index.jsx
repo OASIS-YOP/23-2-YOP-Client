@@ -20,7 +20,7 @@ const MainPage = () => {
   const [now5, setNow5] = useState([]);
   const navigate = useNavigate();
 
-  const [userId, setUserId] = useState(1);
+  // const [userId, setUserId] = useState(1);
 
   const getFavArtist = () => {
     mainpageAPI.getFavArtist().then((data) => {
@@ -30,20 +30,20 @@ const MainPage = () => {
   };
 
   const getRandomArtist = () => {
-    mainpageAPI.getRandomArtist(userId).then((data) => {
+    mainpageAPI.getRandomArtist().then((data) => {
       console.log(data);
       setRandomArtist(data.randomArtistList);
     });
   };
 
   const getHot10 = () => {
-    mainpageAPI.getHot10(userId).then((data) => {
+    mainpageAPI.getHot10().then((data) => {
       console.log(data);
       setHot10(data.hot10List);
     });
   };
   const getNow5 = () => {
-    mainpageAPI.getNow5(userId).then((data) => {
+    mainpageAPI.getNow5().then((data) => {
       console.log(data);
       setNow5(data.now5List);
     });
@@ -76,9 +76,9 @@ const MainPage = () => {
 
       {/* 나의 최애 아티스트 */}
       <s.PageLabel>나의 최애 아티스트</s.PageLabel>
-      <CardsSlider>
-        {favArtist &&
-          favArtist.map((item) => (
+      {favArtist ? (
+        <CardsSlider>
+          {favArtist.map((item) => (
             <ArtistCard
               key={`favArtist_${item.artistId}`}
               photo={item.photo}
@@ -86,7 +86,10 @@ const MainPage = () => {
               artistId={item.artistId}
             />
           ))}
-      </CardsSlider>
+        </CardsSlider>
+      ) : (
+        <s.TextIfEmptyArtist>아티스트를 즐겨찾기해보세요!</s.TextIfEmptyArtist>
+      )}
 
       {/* 폴꾸 Top10 */}
       <s.PageLabel>폴꾸 TOP 10</s.PageLabel>

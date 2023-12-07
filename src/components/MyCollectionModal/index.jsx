@@ -13,7 +13,6 @@ const MyCollectionModal = ({
   setPhotocardId,
   isOpenCollectionModal,
 }) => {
-  const userId = 1;
   const [selectedArtist, setSelectedArtist] = useState();
   const [artistList, setArtistList] = useState([]);
   const [activatedCollection, setActivatedCollection] = useState([]);
@@ -37,13 +36,13 @@ const MyCollectionModal = ({
   };
 
   const getMyCollectionArtistTab = () => {
-    mypageAPI.getMyCollectionArtistTab(userId).then((data) => {
+    mypageAPI.getMyCollectionArtistTab().then((data) => {
       setArtistList(data.collectionArtistList);
       setSelectedArtist(data.collectionArtistList[0].artistId);
     });
   };
   const getMyActiveCollection = () => {
-    mypageAPI.getMyActiveCollection(userId, selectedArtist).then((data) => {
+    mypageAPI.getMyActiveCollection(selectedArtist).then((data) => {
       console.log(data.activeCollectionList);
       setActivatedCollection(data.activeCollectionList);
     });
@@ -185,7 +184,7 @@ const ModalCollectionDetails = ({
 
   const getCollectionActivePhotocard = () => {
     mypageAPI
-      .getCollectionActivePhotocard(1, decodeURI(selectedCollection))
+      .getCollectionActivePhotocard(decodeURI(selectedCollection))
       .then((data) => {
         console.log('활성화된포카', data.ActivePhotocardList);
         setActivePhotocard(data.ActivePhotocardList);

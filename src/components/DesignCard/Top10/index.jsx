@@ -5,16 +5,15 @@ import LikedIcon from '../../../assets/LikedIcon.svg';
 import commonAPI from '../../../api/commonAPI';
 
 const Top10DesignCard = ({ photo, index, updateHot10 }) => {
-  const userId = 1;
   const [isLikePost, setIsLikePost] = useState();
 
   const getIfLikePost = () => {
-    commonAPI.getIfLikePost(userId, photo.postId).then((data) => {
+    commonAPI.getIfLikePost(photo.postId).then((data) => {
       setIsLikePost(data);
     });
   };
   const deleteLike = () => {
-    commonAPI.deleteLike(userId, photo.postId).then((data) => {
+    commonAPI.deleteLike(photo.postId).then((data) => {
       if (data) {
         console.log(data.message);
         updateHot10();
@@ -25,7 +24,7 @@ const Top10DesignCard = ({ photo, index, updateHot10 }) => {
   };
 
   const postLike = () => {
-    commonAPI.postLike(userId, photo.postId).then((data) => {
+    commonAPI.postLike(photo.postId).then((data) => {
       if (data) {
         console.log(data.message);
         updateHot10();

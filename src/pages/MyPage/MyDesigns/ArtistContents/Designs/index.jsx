@@ -4,18 +4,15 @@ import mypageAPI from '../../../../../api/mypage/mypageAPI.js';
 
 const Designs = ({ selectedCollection }) => {
   const [myPolaroids, setMyPolaroids] = useState([]);
-  const userId = 1;
 
   const getMyPolaroids = () => {
-    mypageAPI
-      .getMyPolaroids(userId, decodeURI(selectedCollection))
-      .then((data) => {
-        setMyPolaroids(data?.myPolariodBackupList);
-      });
+    mypageAPI.getMyPolaroids(decodeURI(selectedCollection)).then((data) => {
+      setMyPolaroids(data?.myPolariodBackupList);
+    });
   };
 
   const deleteMyPolaroids = (polaroidId) => {
-    mypageAPI.deleteMyPolaroids(userId, polaroidId).then((data) => {
+    mypageAPI.deleteMyPolaroids(polaroidId).then((data) => {
       if (data) {
         window.alert('삭제되었습니다!');
         getMyPolaroids();

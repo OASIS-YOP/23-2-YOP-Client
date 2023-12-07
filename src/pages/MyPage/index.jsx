@@ -7,7 +7,6 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import mypageAPI from '../../api/mypage/mypageAPI';
 
 const MyPage = () => {
-  const [userId, setUserId] = useState(1);
   const [myProfile, setMyProfile] = useState({});
 
   const navigate = useNavigate();
@@ -15,7 +14,7 @@ const MyPage = () => {
 
   const getMyProfile = () => {
     mypageAPI
-      .getMyProfile(userId)
+      .getMyProfile()
       .then((data) => setMyProfile(data?.userProfileInfo));
   };
 

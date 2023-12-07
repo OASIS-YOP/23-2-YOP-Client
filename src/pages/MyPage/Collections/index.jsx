@@ -8,13 +8,12 @@ import CodeInputModal from '../../../components/CodeInputModal';
 
 const Collections = () => {
   const [artistList, setArtistList] = useState([]);
-  const [selectedArtist, setSelectedArtist] = useState();
+  const [selectedArtist, setSelectedArtist] = useState(0);
   const [allCollection, setAllCollection] = useState([]);
   const [activatedCollection, setActivatedCollection] = useState([]);
   const [selectedCollection, setSelectedCollection] = useState('');
   const [photocardList, setPhotocardList] = useState([]);
   const [isCollectionClicked, setIsCollectionClicked] = useState(false);
-  const [userId, setUserId] = useState(1);
   const [isOpenCodeInputModal, setIsOpenCodeInputModal] = useState(false);
 
   const onClickArtist = (artistId) => {
@@ -23,27 +22,31 @@ const Collections = () => {
   };
 
   const getMyCollectionArtistTab = () => {
-    mypageAPI.getMyCollectionArtistTab(userId).then((data) => {
-      setSelectedArtist(data?.collectionArtistList[0].artistId);
-      setArtistList(data?.collectionArtistList);
+    mypageAPI.getMyCollectionArtistTab().then((data) => {
+      if (data.collectionArtistList.length === 0) {
+        return;
+      } else {
+        setSelectedArtist(data?.collectionArtistList[0]?.artistId);
+        setArtistList(data?.collectionArtistList);
+      }
     });
   };
 
   const getAllCollection = () => {
-    mypageAPI.getAllCollection(userId, selectedArtist).then((data) => {
+    mypageAPI.getAllCollection(selectedArtist).then((data) => {
       console.log('모든 컬렉션', data?.allCollectionList);
       setAllCollection(data?.allCollectionList);
     });
   };
   const getMyActiveCollection = () => {
-    mypageAPI.getMyActiveCollection(userId, selectedArtist).then((data) => {
+    mypageAPI.getMyActiveCollection(selectedArtist).then((data) => {
       console.log(data?.activeCollectionList);
       setActivatedCollection(data?.activeCollectionList);
     });
   };
 
   const artists = artistList.map((item) => {
-    return (
+    return artistList.length !== 0 ? (
       <s.ArtistsTab
         key={`collectionArtist_${item?.artistId}`}
         onClick={() => onClickArtist(item.artistId)}
@@ -51,6 +54,8 @@ const Collections = () => {
       >
         {item.groupName}
       </s.ArtistsTab>
+    ) : (
+      {}
     );
   });
   // 모달 스타일
@@ -87,7 +92,7 @@ const Collections = () => {
   }, []);
 
   useEffect(() => {
-    getAllCollection();
+    selectedArtist && getAllCollection();
     getMyActiveCollection();
   }, [selectedArtist]);
 
@@ -201,32 +206,36 @@ const Collections = () => {
     <>
       <s.Wrapper>
         <s.ArtistsTabWrapper>{artists}</s.ArtistsTabWrapper>
-        {!isCollectionClicked ? (
-          <s.CollectionCardsContainer>
-            {allCollection &&
-              allCollection.map((item) => {
-                return (
-                  <CollectionCard
-                    selectedCollection={selectedCollection}
-                    setSelectedCollection={setSelectedCollection}
-                    setIsCollectionClicked={setIsCollectionClicked}
-                    albumJacket={item.albumJacket}
-                    albumName={item.albumName}
-                    activatedCollection={activatedCollection}
-                  />
-                );
-              })}
-          </s.CollectionCardsContainer>
+        {selectedArtist !== 0 ? (
+          !isCollectionClicked ? (
+            <s.CollectionCardsContainer>
+              {allCollection &&
+                allCollection.map((item) => {
+                  return (
+                    <CollectionCard
+                      selectedCollection={selectedCollection}
+                      setSelectedCollection={setSelectedCollection}
+                      setIsCollectionClicked={setIsCollectionClicked}
+                      albumJacket={item.albumJacket}
+                      albumName={item.albumName}
+                      activatedCollection={activatedCollection}
+                    />
+                  );
+                })}
+            </s.CollectionCardsContainer>
+          ) : (
+            <CollectionDetails
+              selectedArtist={selectedArtist}
+              selectedCollection={selectedCollection}
+              setIsCollectionClicked={setIsCollectionClicked}
+              handleClickCodeInputButton={handleClickCodeInputButton}
+              isOpenCodeInputModal={isOpenCodeInputModal}
+              CodeInputModalStyle={CodeInputModalStyle}
+              setIsOpenCodeInputModal={setIsOpenCodeInputModal}
+            />
+          )
         ) : (
-          <CollectionDetails
-            selectedArtist={selectedArtist}
-            selectedCollection={selectedCollection}
-            setIsCollectionClicked={setIsCollectionClicked}
-            handleClickCodeInputButton={handleClickCodeInputButton}
-            isOpenCodeInputModal={isOpenCodeInputModal}
-            CodeInputModalStyle={CodeInputModalStyle}
-            setIsOpenCodeInputModal={setIsOpenCodeInputModal}
-          />
+          <p>마음에 드는 아티스트를 선택하고, 컬렉션을 확인하세요!</p>
         )}
       </s.Wrapper>
     </>

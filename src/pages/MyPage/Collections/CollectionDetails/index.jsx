@@ -17,7 +17,7 @@ const CollectionDetails = ({
 
   const getCollectionAllPhotocard = () => {
     mypageAPI
-      .getCollectionAllPhotocard(1, decodeURI(selectedCollection))
+      .getCollectionAllPhotocard(decodeURI(selectedCollection))
       .then((data) => {
         console.log('이앨범의모든포카', data.collectionPhotocardList);
         setCollectionPhotocard(data.collectionPhotocardList);
@@ -25,7 +25,7 @@ const CollectionDetails = ({
   };
   const getCollectionActivePhotocard = () => {
     mypageAPI
-      .getCollectionActivePhotocard(1, decodeURI(selectedCollection))
+      .getCollectionActivePhotocard(decodeURI(selectedCollection))
       .then((data) => {
         console.log('활성화된포카', data.ActivePhotocardList);
         setActivePhotocard(data.ActivePhotocardList);
