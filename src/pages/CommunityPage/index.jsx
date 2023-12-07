@@ -6,6 +6,8 @@ import Star from '../../assets/Star.svg';
 import EmptyStar from '../../assets/EmptyStar.svg';
 import communitypageAPI from '../../api/communitypage/communitypageAPI.js';
 import commonAPI from '../../api/commonAPI.js';
+import Modal from 'react-modal';
+import PostModal from './PostModal/index.jsx';
 
 const CommunityPage = () => {
   const params = useParams();
@@ -23,7 +25,47 @@ const CommunityPage = () => {
 
   const [isClickStar, setIsClickStar] = useState(false);
 
+  const [isOpenModal, setIsOpenModal] = useState(false);
+
+
   const fandomName = ['아미', '마이', '유애나', '버니즈'];
+
+  const openModal = () => {
+    setIsOpenModal(true);
+  };
+
+  const closeModal = () => {
+    setIsOpenModal(false);
+  };
+
+  const postModalStyle = {
+    overlay: {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: 'rgba(0,0,0, 0.5)',
+      zIndex: 999,
+    },
+    content: {
+      background: 'white',
+      overflow: 'auto',
+      width: 'fit-content',
+      height: 'fit-content',
+      margin: 'auto auto',
+      WebkitOverflowScrolling: 'touch',
+      WebkitUserSelect: 'none',
+      borderRadius: '20px',
+      outline: 'none',
+      zIndex: 10,
+    },
+  };
+
+  const onCloseModal = () => {
+    setIsOpenModal((prev) => !prev);
+  };
+
 
   const fetchData = async () => {
     try {
@@ -166,7 +208,10 @@ const CommunityPage = () => {
           <s.ContentWrapper>
             {!memberProfile
               ? allPost.map((item) => (
-                  <s.CardImageContainer key={`allPost_${item.postId}`}>
+                  <s.CardImageContainer 
+                    onClick={openModal}
+                    key={`allPost_${item.postId}`}
+                  >
                     <img src={item.polaroid} alt='allPolaroid' />
                   </s.CardImageContainer>
                 ))
@@ -178,6 +223,13 @@ const CommunityPage = () => {
           </s.ContentWrapper>
         </s.photoCardContainer>
       </s.BodyContainer>
+        <Modal
+          style={postModalStyle}
+          isOpen={isOpenModal}
+          onRequestClose={onCloseModal}
+        >
+          <PostModal />
+        </Modal>
       <s.ScrollToTopButton
         onClick={() => {
           window.scrollTo({
