@@ -63,7 +63,7 @@ export const CollectionCardsContainer = styled.div`
   justify-content: center;
   flex-direction: center;
   flex-wrap: wrap;
-  width: 90%;
+  width: 80%;
   height: 90%;
   margin: 10px auto;
   padding-top: 20px;
@@ -77,7 +77,7 @@ export const CollectionCardWrapper = styled.div`
   justify-content: center;
   align-items: center;
 
-  width: 21%;
+  width: 28%;
   margin: 28px 28px;
   box-sizing: border-box;
   border-radius: 35px;
