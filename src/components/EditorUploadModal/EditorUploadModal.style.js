@@ -20,6 +20,7 @@ export const Text = styled.p`
   width: 420px;
   height: 25px;
 
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 19px;
   font-weight: 500;
   line-height: 24px;
@@ -67,6 +68,8 @@ export const Icon = styled.img`
 export const ButtonLabel = styled.p`
   width: 115px;
   height: 20px;
+
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 18px;
   font-weight: 500;
   text-align: center;
@@ -78,6 +81,8 @@ export const BodyLabel = styled.div`
   width: 100%;
   height: fit-content;
   text-align: center;
+
+  font-family: 'Noto Sans KR', sans-serif;
   font-weight: 500;
   font-size: 13px;
   color: rgba(137, 137, 137, 1);

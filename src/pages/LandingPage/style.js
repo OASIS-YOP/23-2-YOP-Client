@@ -66,6 +66,7 @@ export const Button = styled.button`
   border-radius: 8px;
   background-color: white;
   color: #696969;
+  font-family: 'Noto Sans KR', sans-serif ;
   font-weight: 600;
   outline: none;
   cursor: pointer;

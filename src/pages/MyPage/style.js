@@ -68,14 +68,16 @@ export const ProfileTextsWrapper = styled.div`
 
 export const ProfileTexts = styled.div`
   color: white;
-  font-weight: 500;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 400;
   font-size: 25px;
 
   margin: 8px 0;
 
   &.sub {
+    font-family: 'Noto Sans KR', sans-serif;
     font-size: 15px;
-    font-weight: normal;
+    font-weight: 300;
   }
 `;
 
@@ -103,8 +105,9 @@ export const TabMenu = styled.button`
   margin: 0 13px;
   padding: 7px 4px;
 
-  font-weight: bold;
-  font-size: 18px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 600;
+  font-size: 21px;
 
   border-bottom: 3px solid white;
   border-top: none;
@@ -149,6 +152,8 @@ export const ScrollToTopButton = styled.button`
   border: none;
   background-color: #3f70ff;
   color: white;
+  
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 20px;
   cursor: pointer;
   transition: all 0.1s linear;

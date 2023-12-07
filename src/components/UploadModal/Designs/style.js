@@ -24,14 +24,14 @@ export const DesignImageFrame = styled.div`
 
   &:hover {
     > img {
-      filter: brightness(110%) blur(2.5px);
+      filter: brightness(70%) blur(2.5px);
     }
     cursor: pointer;
   };
 
   &:active {
     > img {
-      filter: brightness(90%) blur(2.5px);
+      filter: brightness(110%) blur(2.5px);
     }
   };
 `;
@@ -81,7 +81,6 @@ export const DesignInfoWrapper = styled.div`
     text-align: center;
     color: white;
 
+    font-family: 'Noto Sans KR', sans-serif;
     font-size: 15px;
-    
-  
   `;

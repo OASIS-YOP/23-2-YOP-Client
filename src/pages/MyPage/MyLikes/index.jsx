@@ -26,8 +26,9 @@ const MyLikes = () => {
             <s.NoLikes
               style={{
                 color: 'gray',
+                fontFamily: 'Noto Sans KR',
                 fontSize: '18px',
-                fontWeight: 'bold',
+                fontWeight: '600',
                 width: '100%',
                 height: '200px',
                 display: 'flex',
@@ -90,7 +91,7 @@ const MyLikePost = ({ item, updateMyLike }) => {
       <s.rightContainer>
         <s.postInfoWrapper>
           <s.nicknameWrapper>{item.nickname}</s.nicknameWrapper>
-          <s.tagsWrapper>
+          <s.tagsWrapper >
             #{item.enterComp} #{item.groupName} <br />
             {item.groupName === item.memberName ? '' : `#${item.memberName}`}#
             {item.albumName}

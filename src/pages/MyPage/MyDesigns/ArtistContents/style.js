@@ -30,8 +30,9 @@ export const ArtistsTab = styled.button`
 
   background-color: transparent;
 
-  font-size: 16px;
-  font-weight: bold;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 18px;
+  font-weight: 500;
   color: gray;
 
   cursor: pointer;

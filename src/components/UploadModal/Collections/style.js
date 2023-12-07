@@ -3,8 +3,8 @@ import styled from 'styled-components';
 
 export const CollectionCard = styled.div`
   position: relative;
-  width: 170px;
-  height: 170px;
+  width: 150px;
+  height: 150px;
   border-radius: 20px;
   border: 8px solid #82a2ff;
   margin: 15px;
@@ -78,7 +78,9 @@ export const CollectionInfoWrapper = styled.div`
 export const CollectionCardInfo = styled.div`
   display: absolute;
   text-align: center;
+
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 15px;
-  font-weight: bold;
+  font-weight: 500;
   color: white;
 `;

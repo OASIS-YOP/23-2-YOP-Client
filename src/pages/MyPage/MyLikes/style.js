@@ -113,8 +113,9 @@ export const postInfoWrapper = styled.div`
 `;
 
 export const nicknameWrapper = styled.div`
-  font-size: 30px;
-  font-weight: 700;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 35px;
+  font-weight: 900;
 `;
 
 export const tagsWrapper = styled.div`
@@ -122,22 +123,25 @@ export const tagsWrapper = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
 
-  min-width: 160px;
-  max-width: 100px;
-  width: 20%;
+  min-width: 150px;
+  max-width: 175px;
+  width: 100%;
 
   margin: 10px 0;
 
   color: #3f70ff;
 
-  font-size: 95%;
-  font-weight: 700;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 19px;
+  font-weight: 800;
 
   //한줄에 태그 두개씩만 들어가게 하기 추후 기능 필요
 `;
 
 export const dateWrapper = styled.div`
   color: #3f70ff;
+
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 90%;
 `;
 
@@ -152,7 +156,8 @@ export const likeWrapper = styled.div`
 
   margin-top: 50%;
 
-  font-size: 200%;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 180%;
   font-weight: 700;
 
   // border: 1px solid black;
@@ -206,6 +211,7 @@ export const contextBox = styled.div`
 
   margin-top: 5%;
 
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 100%;
   font-weight: 700;
 

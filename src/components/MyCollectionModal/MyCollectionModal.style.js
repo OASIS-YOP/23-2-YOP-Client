@@ -10,10 +10,13 @@ export const Wrapper = styled.div`
 `;
 
 export const ModalTitle = styled.div`
-  width: 100%;
+  width: 95%;
   height: 30px;
-  font-size: 24px;
+
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 28px;
   font-weight: 700;
+  margin: 5px
 `;
 
 export const BodyWrapper = styled.div`
@@ -27,7 +30,7 @@ export const ArtistsTabWrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
 
-  width: 100%;
+  width: 95%;
   height: 30px;
 
   padding: 20px 0 0 20px;
@@ -47,8 +50,9 @@ export const ArtistsTab = styled.button`
 
   background-color: transparent;
 
-  font-size: 16px;
-  font-weight: bold;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 18px;
+  font-weight: 500;
   color: gray;
 
   &:hover {
@@ -131,8 +135,10 @@ export const CollectionInfoWrapper = styled.div`
 export const CollectionCardInfo = styled.div`
   display: absolute;
   text-align: center;
-  font-size: 1.1em;
-  font-weight: bold;
+
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 1em;
+  font-weight: 500;
   line-height: 1.5em;
   color: white;
 `;
@@ -180,8 +186,9 @@ export const CollectionName = styled.div`
   justify-content: center;
   align-items: center;
 
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 20px;
-  font-weight: bold;
+  font-weight: 900;
 
   width: 100%;
   height: fit-content;
@@ -254,8 +261,9 @@ export const MemberName = styled.div`
   justify-content: center;
   align-items: center;
 
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 15px;
-  font-weight: bold;
+  font-weight: 600;
 
   margin-top: 10px;
   margin-bottom: 15px;

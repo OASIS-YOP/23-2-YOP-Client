@@ -63,10 +63,13 @@ export const ProfileInfo = styled.div`
 
 export const ArtistName = styled.p`
   margin-top: 10px;
+
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 25px;
   color: white;
-  font-weight: bold;
+  font-weight: 800;
 `;
+
 export const FavoriteQuantWrapper = styled.p`
   display: flex;
   justify-content: space-between;
@@ -74,9 +77,11 @@ export const FavoriteQuantWrapper = styled.p`
   width: 20px;
 
   margin-right: 20px;
+
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 18px;
   color: white;
-  font-weight: bold;
+  font-weight: 700;
 `;
 
 export const StarIcon = styled.img`
@@ -88,8 +93,10 @@ export const StarIcon = styled.img`
 `;
 export const ArtistInfoText = styled.p`
   margin-bottom: 10px;
-  font-size: 16px;
-  font-weight: bold;
+
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 15.5px;
+  font-weight: 700;
 `;
 
 export const BodyContainer = styled.div`
@@ -117,7 +124,9 @@ export const MemberCardContainer = styled.div`
 
 export const MemberNameLabel = styled.p`
   text-align: center;
-  font-weight: bold;
+
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 600;
 `;
 export const CardImageContainer = styled.div`
   width: 11vw;
@@ -179,6 +188,8 @@ export const ScrollToTopButton = styled.button`
   border: none;
   background-color: #3f70ff;
   color: white;
+
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 20px;
   cursor: pointer;
   transition: all 0.1s linear;

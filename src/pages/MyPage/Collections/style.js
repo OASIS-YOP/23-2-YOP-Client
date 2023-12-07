@@ -6,6 +6,7 @@ export const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
 
+  min-width: 1000px;
   width: 100%;
   height: 100%;
 
@@ -44,8 +45,9 @@ export const ArtistsTab = styled.button`
 
   background-color: transparent;
 
-  font-size: 16px;
-  font-weight: bold;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 18px;
+  font-weight: 500;
   color: gray;
 
   &:hover {
@@ -63,7 +65,7 @@ export const CollectionCardsContainer = styled.div`
   justify-content: center;
   flex-direction: center;
   flex-wrap: wrap;
-  width: 80%;
+  width: 85%;
   height: 90%;
   margin: 10px auto;
   padding-top: 20px;
@@ -136,9 +138,11 @@ export const CollectionInfoWrapper = styled.div`
 export const CollectionCardInfo = styled.div`
   display: absolute;
   text-align: center;
-  font-size: 1.3vw;
-  font-weight: bold;
-  line-height: 2vw;
+
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 1.4vw;
+  font-weight: 500;
+  line-height: 2.5vw;
   color: white;
 `;
 
@@ -188,8 +192,9 @@ export const AlbumName = styled.div`
 
   text-align: center;
 
-  font-size: 1.3vw;
-  font-weight: bold;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 1.4vw;
+  font-weight: 500;
 
   color: white;
 
@@ -200,14 +205,18 @@ export const InputCodeButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 140px;
-  height: 30px;
+  width: 9vw;
+  height: 2vw;
   border: none;
   border-radius: 10px;
   background-color: white;
   color: black;
-  font-size: 18px;
-  font-weight: 600;
+
+  margin-top: 10px;
+
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 1.2vw;
+  font-weight: 500;
   z-index: 998;
   cursor: pointer;
   &:hover {

@@ -227,7 +227,6 @@ const SelectCollection = () => {
           </s.ContentsWrapper>
         </s.Wrapper>
       </Modal>
-
     </>
   );
 };

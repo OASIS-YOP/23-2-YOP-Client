@@ -90,6 +90,7 @@ export const DesignCardInfo = styled.div`
   text-align: center;
   color: white;
 
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 13px;
 `;
 
@@ -99,6 +100,7 @@ export const DeleteButton = styled.button`
 
   margin-bottom: 10px;
 
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 15px;
 
   &:hover {
