@@ -79,6 +79,7 @@ const Posts = () => {
               style={{
                 color: 'gray',
                 fontWeight: 'bold',
+                fontSize: '18px',
                 width: '100%',
                 height: '200px',
                 display: 'flex',

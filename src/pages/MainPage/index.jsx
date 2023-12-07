@@ -181,5 +181,4 @@ const MainPage = () => {
     </s.Wrapper>
   );
 };
-
 export default MainPage;

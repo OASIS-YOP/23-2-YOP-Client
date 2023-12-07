@@ -30,16 +30,7 @@ export const PostsWrapper = styled.div`
 `;
 
 export const NoLikes = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 
-  width: 100%;
-  height: 200px;
-
-  color: gray;
-  font-weight: bold;
 `;
 
 export const PostFrame = styled.div`

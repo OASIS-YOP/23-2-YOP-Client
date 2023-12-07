@@ -235,7 +235,20 @@ const Collections = () => {
             />
           )
         ) : (
-          <p>마음에 드는 아티스트를 선택하고, 컬렉션을 확인하세요!</p>
+          <div
+            style={{
+              color: 'gray',
+              fontSize: '18px',
+              fontWeight: 'bold',
+              width: '100%',
+              height: '200px',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              paddingTop: '30px',
+            }}
+          >마음에 드는 아티스트를 선택하고, 컬렉션을 확인하세요!</div>
         )}
       </s.Wrapper>
     </>

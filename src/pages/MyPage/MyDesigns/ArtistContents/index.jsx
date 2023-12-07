@@ -71,7 +71,19 @@ const ArtistContents = () => {
         {!isCollectionClicked ? (
           <s.CollectionListWrapper>
             {myPolaroidCollection.length === 0 ? (
-              <div>아티스트의 도안을 꾸미고 저장해보세요!</div>
+              <div
+                style={{
+                  color: 'gray',
+                  fontSize: '18px',
+                  fontWeight: 'bold',
+                  width: '100%',
+                  height: '200px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >아티스트의 도안을 꾸미고 저장해보세요!</div>
             ) : (
               myPolaroidCollection.map((item) => (
                 <s.MyCollectionWrapper
