@@ -117,7 +117,7 @@ export const stickerData3 = [
   },
 ];
 
-export const stickerData4 = [
+export const ConfettisBlue = [
   {
     id: 1,
     fileUrl: `${process.env.PUBLIC_URL}/images/stickers/RBPC1.png`,
@@ -185,7 +185,7 @@ export const stickerData4 = [
   },
 ];
 
-export const stickerData5 = [ 
+export const ConfettisPurple = [ 
   {
     id: 1,
     fileUrl: `${process.env.PUBLIC_URL}/images/stickers/RBP1.png`,
@@ -267,7 +267,35 @@ export const stickerData6 = [
 ];
 
 // 주접스티커
-export const stickerData7 = [
+export const ment = [
+  {
+    id: 1,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/주접1.svg`,
+    spec: '',
+  },
+  {
+    id: 2,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/주접2.svg`,
+    spec: 'L',
+  },
+  {
+    id: 3,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/주접3.svg`,
+    spec: '',
+  },
+  {
+    id: 4,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/주접4.svg`,
+    spec: 'L',
+  },
+  {
+    id: 5,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/주접5.svg`,
+    spec: 'L',
+  },
+];
+
+export const maskingTapes = [
   {
     id: 1,
     fileUrl: `${process.env.PUBLIC_URL}/images/stickers/MTChY.png`,
@@ -276,31 +304,6 @@ export const stickerData7 = [
   {
     id: 2,
     fileUrl: `${process.env.PUBLIC_URL}/images/stickers/MTChB.png`,
-    spec: 'L',
-  },
-  {
-    id: 3,
-    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/주접1.svg`,
-    spec: '',
-  },
-  {
-    id: 4,
-    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/주접2.svg`,
-    spec: 'L',
-  },
-  {
-    id: 5,
-    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/주접3.svg`,
-    spec: '',
-  },
-  {
-    id: 6,
-    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/주접4.svg`,
-    spec: 'L',
-  },
-  {
-    id: 7,
-    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/주접5.svg`,
     spec: 'L',
   },
 ];

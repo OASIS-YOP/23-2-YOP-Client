@@ -70,6 +70,13 @@ const MyPage = () => {
         <s.ContentsWrapper>
           <Outlet />
         </s.ContentsWrapper>
+        <s.ScrollToTopButton
+          onClick={() => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+        >
+          ▲
+        </s.ScrollToTopButton>
       </s.Wrapper>
     </>
   );

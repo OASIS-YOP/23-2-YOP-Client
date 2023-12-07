@@ -233,3 +233,21 @@ export const ContentText = styled.div`
     color: #3563e9;
   }
 `;
+
+export const ScrollToTopButton = styled.button`
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: none;
+  background-color: #3f70ff;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.1s linear;
+  &:hover {
+    transform: scale(1.1);
+  }
+`;

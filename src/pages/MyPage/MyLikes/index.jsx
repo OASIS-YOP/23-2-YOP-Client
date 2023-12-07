@@ -23,7 +23,19 @@ const MyLikes = () => {
       <s.Wrapper>
         <s.PostsWrapper>
           {myLikePost.length === 0 ? (
-            <s.NoLikes>마음에 드는 도안에 좋아요를 눌러보세요!</s.NoLikes>
+            <s.NoLikes
+              style={{
+                color: 'gray',
+                fontSize: '18px',
+                fontWeight: 'bold',
+                width: '100%',
+                height: '200px',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >마음에 드는 도안에 좋아요를 눌러보세요!</s.NoLikes>
           ) : (
             <>
               {myLikePost &&

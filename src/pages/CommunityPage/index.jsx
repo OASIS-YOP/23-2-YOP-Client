@@ -115,18 +115,10 @@ const CommunityPage = () => {
     fetchData();
   }, [isFavorite]);
 
-  useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'auto',
-    });
-  }, [isClickedMember]);
-
   return (
     <>
     <s.Wrapper>
       <Header />
-
       <s.ProfileContainer>
         <s.ProfileWrapper>
           <s.ProfileImage>
@@ -186,6 +178,16 @@ const CommunityPage = () => {
           </s.ContentWrapper>
         </s.photoCardContainer>
       </s.BodyContainer>
+      <s.ScrollToTopButton
+        onClick={() => {
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+          });
+        }}
+      >
+        ▲
+      </s.ScrollToTopButton>
     </s.Wrapper>
     </>
   );
