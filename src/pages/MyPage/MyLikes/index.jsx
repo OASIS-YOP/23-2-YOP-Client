@@ -6,11 +6,10 @@ import mypageAPI from '../../../api/mypage/mypageAPI';
 import commonAPI from '../../../api/commonAPI';
 
 const MyLikes = () => {
-  const userId = 1;
   const [myLikePost, setMyLikePost] = useState([]);
 
   const getMyLike = () => {
-    mypageAPI.getMyLike(userId).then((data) => {
+    mypageAPI.getMyLike().then((data) => {
       setMyLikePost(data.myLikeList);
       console.log(data.myLikeList);
     });
@@ -40,12 +39,11 @@ const MyLikes = () => {
 };
 
 const MyLikePost = ({ item, updateMyLike }) => {
-  const userId = 1;
   const [isLikePost, setIsLikePost] = useState();
 
   //여긴 postLike가 필요없음.
   const deleteLike = () => {
-    commonAPI.deleteLike(userId, item.postId).then((data) => {
+    commonAPI.deleteLike(item.postId).then((data) => {
       if (data) {
         console.log(data.message);
         updateMyLike();
@@ -56,7 +54,7 @@ const MyLikePost = ({ item, updateMyLike }) => {
   };
 
   const getIfLikePost = () => {
-    commonAPI.getIfLikePost(userId, item.postId).then((data) => {
+    commonAPI.getIfLikePost(item.postId).then((data) => {
       setIsLikePost(data);
     });
   };

@@ -3,7 +3,6 @@ import * as s from './CodeInputModal.style';
 import { useState } from 'react';
 
 const CodeInputModal = ({ albumName, handleClickCodeInputButton }) => {
-  const userId = 1;
   const [code, setCode] = useState({
     code: '',
   });
@@ -17,8 +16,7 @@ const CodeInputModal = ({ albumName, handleClickCodeInputButton }) => {
   const collectionActivate = async () => {
     try {
       const data = await mypageAPI.collectionActivate(
-        userId,
-        decodeURI('<LILAC>'),
+        decodeURI(albumName),
         code
       );
       if (data) {
@@ -35,10 +33,7 @@ const CodeInputModal = ({ albumName, handleClickCodeInputButton }) => {
 
   const photocardActivate = async () => {
     try {
-      const data = await mypageAPI.photocardActivate(
-        userId,
-        decodeURI('<LILAC>')
-      );
+      const data = await mypageAPI.photocardActivate(decodeURI(albumName));
       if (data) {
         console.log(data.message);
         handleClickCodeInputButton();

@@ -98,7 +98,7 @@ const Editor = () => {
 
   const [isOpenUploadModal, setIsOpenUploadModal] = useState(false);
   //한수정 편집부분
-  const userId = 1;
+  // const userId = 1;
   const [photocardId, setPhotocardId] = useState(0);
 
   // 로그인 여부
@@ -1010,7 +1010,7 @@ const Editor = () => {
           console.log(pair[0] + ', ' + pair[1]);
         }
         editorpageAPI
-          .postDesignedPhotoCard(userId, photocardId, formData)
+          .postDesignedPhotoCard(photocardId, formData)
           .then((data) => console.log(data));
         window.alert('성공적으로 저장되었습니다!');
       } else {

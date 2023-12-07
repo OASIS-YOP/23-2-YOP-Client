@@ -1,10 +1,15 @@
 import HttpClient from '../HttpClient';
+const accessToken = localStorage.getItem('atk');
 
 const mypageAPI = {
-  getMyProfile: async (userId) => {
+  getMyProfile: async () => {
     try {
-      const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myProfile`;
-      const response = await HttpClient.get(path);
+      const path = `${process.env.REACT_APP_BASE_URL}/mypage/myProfile`;
+      const response = await HttpClient.get(
+        path,
+        {},
+        { Authorization: accessToken }
+      );
       return response;
     } catch (e) {
       return null;
@@ -12,28 +17,40 @@ const mypageAPI = {
   },
 
   //내 포스트
-  getMyPostArtistTab: async (userId) => {
+  getMyPostArtistTab: async () => {
     try {
-      const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myPost/artistTab`;
-      const response = await HttpClient.get(path);
+      const path = `${process.env.REACT_APP_BASE_URL}/mypage/myPost/artistTab`;
+      const response = await HttpClient.get(
+        path,
+        {},
+        { Authorization: accessToken }
+      );
       return response;
     } catch (e) {
       return null;
     }
   },
-  getMyPost: async (userId, artistId) => {
+  getMyPost: async (artistId) => {
     try {
-      const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myPost/${artistId}/Post`;
-      const response = await HttpClient.get(path);
+      const path = `${process.env.REACT_APP_BASE_URL}/mypage/myPost/${artistId}/Post`;
+      const response = await HttpClient.get(
+        path,
+        {},
+        { Authorization: accessToken }
+      );
       return response;
     } catch (e) {
       return null;
     }
   },
-  deleteMyPost: async (userId, postId) => {
+  deleteMyPost: async (postId) => {
     try {
-      const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myPost/delete/${postId}`;
-      const response = await HttpClient.delete(path, {}, {});
+      const path = `${process.env.REACT_APP_BASE_URL}/mypage/myPost/delete/${postId}`;
+      const response = await HttpClient.delete(
+        path,
+        {},
+        { Authorization: accessToken }
+      );
       return response;
     } catch (e) {
       return null;
@@ -41,46 +58,66 @@ const mypageAPI = {
   },
 
   //내 컬렉션
-  getMyCollectionArtistTab: async (userId) => {
+  getMyCollectionArtistTab: async () => {
     try {
-      const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myCollection/artistTab`;
-      const response = await HttpClient.get(path);
+      const path = `${process.env.REACT_APP_BASE_URL}/mypage/myCollection/artistTab`;
+      const response = await HttpClient.get(
+        path,
+        {},
+        { Authorization: accessToken }
+      );
       return response;
     } catch (e) {
       return null;
     }
   },
-  getAllCollection: async (userId, artistId) => {
+  getAllCollection: async (artistId) => {
     try {
-      const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myCollection/${artistId}/allCollection`;
-      const response = await HttpClient.get(path);
+      const path = `${process.env.REACT_APP_BASE_URL}/mypage/myCollection/${artistId}/allCollection`;
+      const response = await HttpClient.get(
+        path,
+        {},
+        { Authorization: accessToken }
+      );
       return response;
     } catch (e) {
       return null;
     }
   },
-  getMyActiveCollection: async (userId, artistId) => {
+  getMyActiveCollection: async (artistId) => {
     try {
-      const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myCollection/${artistId}/active`;
-      const response = await HttpClient.get(path);
+      const path = `${process.env.REACT_APP_BASE_URL}/mypage/myCollection/${artistId}/active`;
+      const response = await HttpClient.get(
+        path,
+        {},
+        { Authorization: accessToken }
+      );
       return response;
     } catch (e) {
       return null;
     }
   },
-  getCollectionAllPhotocard: async (userId, albumName) => {
+  getCollectionAllPhotocard: async (albumName) => {
     try {
-      const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myCollection/${albumName}/allPhotocard`;
-      const response = await HttpClient.get(path);
+      const path = `${process.env.REACT_APP_BASE_URL}/mypage/myCollection/${albumName}/allPhotocard`;
+      const response = await HttpClient.get(
+        path,
+        {},
+        { Authorization: accessToken }
+      );
       return response;
     } catch (e) {
       return null;
     }
   },
-  getCollectionActivePhotocard: async (userId, albumName) => {
+  getCollectionActivePhotocard: async (albumName) => {
     try {
-      const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myCollection/${albumName}/activePhotocard`;
-      const response = await HttpClient.get(path);
+      const path = `${process.env.REACT_APP_BASE_URL}/mypage/myCollection/${albumName}/activePhotocard`;
+      const response = await HttpClient.get(
+        path,
+        {},
+        { Authorization: accessToken }
+      );
       return response;
     } catch (e) {
       return null;
@@ -88,56 +125,80 @@ const mypageAPI = {
   },
 
   //내 도안
-  getMyPolaroidArtistTab: async (userId) => {
+  getMyPolaroidArtistTab: async () => {
     try {
-      const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myPolaroid/artistTab`;
-      const response = await HttpClient.get(path);
+      const path = `${process.env.REACT_APP_BASE_URL}/mypage/myPolaroid/artistTab`;
+      const response = await HttpClient.get(
+        path,
+        {},
+        { Authorization: accessToken }
+      );
       return response;
     } catch (e) {
       return null;
     }
   },
-  getMyPolaroidCollection: async (userId, artistId) => {
+  getMyPolaroidCollection: async (artistId) => {
     try {
-      const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myPolaroid/${artistId}/collection`;
-      const response = await HttpClient.get(path);
+      const path = `${process.env.REACT_APP_BASE_URL}/mypage/myPolaroid/${artistId}/collection`;
+      const response = await HttpClient.get(
+        path,
+        {},
+        { Authorization: accessToken }
+      );
       return response;
     } catch (e) {
       return null;
     }
   },
-  getMyPolaroidQuant: async (userId, albumName) => {
+  getMyPolaroidQuant: async (albumName) => {
     try {
-      const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myPolaroid/${albumName}/polaroidQuant`;
-      const response = await HttpClient.get(path);
+      const path = `${process.env.REACT_APP_BASE_URL}/mypage/myPolaroid/${albumName}/polaroidQuant`;
+      const response = await HttpClient.get(
+        path,
+        {},
+        { Authorization: accessToken }
+      );
       return response;
     } catch (e) {
       return null;
     }
   },
-  getMyPolaroids: async (userId, albumName) => {
+  getMyPolaroids: async (albumName) => {
     try {
-      const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myPolaroid/${albumName}/polaroids`;
-      const response = await HttpClient.get(path);
+      const path = `${process.env.REACT_APP_BASE_URL}/mypage/myPolaroid/${albumName}/polaroids`;
+      const response = await HttpClient.get(
+        path,
+        {},
+        { Authorization: accessToken }
+      );
       return response;
     } catch (e) {
       return null;
     }
   },
-  deleteMyPolaroids: async (userId, polaroidId) => {
+  deleteMyPolaroids: async (polaroidId) => {
     try {
-      const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myPolaroid/delete/${polaroidId}`;
-      const response = await HttpClient.delete(path);
+      const path = `${process.env.REACT_APP_BASE_URL}/mypage/myPolaroid/delete/${polaroidId}`;
+      const response = await HttpClient.delete(
+        path,
+        {},
+        { Authorization: accessToken }
+      );
       return response;
     } catch (e) {
       return null;
     }
   },
   //내 좋아요
-  getMyLike: async (userId) => {
+  getMyLike: async () => {
     try {
-      const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myLike`;
-      const response = await HttpClient.get(path);
+      const path = `${process.env.REACT_APP_BASE_URL}/mypage/myLike`;
+      const response = await HttpClient.get(
+        path,
+        {},
+        { Authorization: accessToken }
+      );
       return response;
     } catch (e) {
       return null;
@@ -145,19 +206,25 @@ const mypageAPI = {
   },
 
   //컬렉션활성화
-  collectionActivate: async (userId, albumName, code) => {
+  collectionActivate: async (albumName, code) => {
     try {
-      const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myCollection/${albumName}/collectionActivation`;
-      const response = await HttpClient.post(path, JSON.stringify(code), {});
+      const path = `${process.env.REACT_APP_BASE_URL}/mypage/myCollection/${albumName}/collectionActivation`;
+      const response = await HttpClient.post(path, JSON.stringify(code), {
+        Authorization: accessToken,
+      });
       return response;
     } catch (e) {
       return null;
     }
   },
-  photocardActivate: async (userId, albumName) => {
+  photocardActivate: async (albumName) => {
     try {
-      const path = `${process.env.REACT_APP_BASE_URL}/mypage/${userId}/myCollection/${albumName}/cardActivationRandomly`;
-      const response = await HttpClient.post(path, {}, {});
+      const path = `${process.env.REACT_APP_BASE_URL}/mypage/myCollection/${albumName}/cardActivationRandomly`;
+      const response = await HttpClient.post(
+        path,
+        {},
+        { Authorization: accessToken }
+      );
       return response;
     } catch (e) {
       return null;

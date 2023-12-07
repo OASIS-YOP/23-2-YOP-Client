@@ -7,21 +7,24 @@ import LikedIcon from '../../../assets/LikedIcon.svg';
 import commonAPI from '../../../api/commonAPI';
 
 const Posts = () => {
-  const [userId, setUserId] = useState(1);
   const [postArtistList, setPostArtistList] = useState([]);
-  const [selectedArtist, setSelectedArtist] = useState();
+  const [selectedArtist, setSelectedArtist] = useState(0);
   const [artistPost, setArtistPost] = useState([]);
   const [isClickDot, setIsClickDot] = useState(false);
 
   const getMyPostArtistTab = () => {
-    mypageAPI.getMyPostArtistTab(userId).then((data) => {
-      setPostArtistList(data?.postArtistList);
-      setSelectedArtist(data?.postArtistList[0].artistId);
+    mypageAPI.getMyPostArtistTab().then((data) => {
+      if (data.postArtistList.length === 0) {
+        return;
+      } else {
+        setPostArtistList(data?.postArtistList);
+        setSelectedArtist(data?.postArtistList[0]?.artistId);
+      }
     });
   };
 
   const getMyPost = () => {
-    mypageAPI.getMyPost(userId, selectedArtist).then((data) => {
+    mypageAPI.getMyPost(selectedArtist).then((data) => {
       setArtistPost(data?.myPostList);
     });
   };
@@ -34,14 +37,14 @@ const Posts = () => {
     setIsClickDot((prev) => !prev);
   };
 
-  const handleClickDel = (userId, postId) => {
+  const handleClickDel = (postId) => {
     setIsClickDot(false);
-    deleteMyPost(userId, postId);
-    getMyPost(userId, selectedArtist);
+    deleteMyPost(postId);
+    getMyPost(selectedArtist);
   };
 
   const deleteMyPost = (postId) => {
-    mypageAPI.deleteMyPost(userId, postId).then((data) => {
+    mypageAPI.deleteMyPost(postId).then((data) => {
       console.log(data);
     });
   };
@@ -113,11 +116,10 @@ const ArtistPosts = ({
   handleClickDel,
   updateMyPost,
 }) => {
-  const userId = 1;
   const [isLikePost, setIsLikePost] = useState();
 
   const postLike = () => {
-    commonAPI.postLike(userId, post.postId).then((data) => {
+    commonAPI.postLike(post.postId).then((data) => {
       if (data) {
         console.log(data.message);
         updateMyPost();
@@ -128,7 +130,7 @@ const ArtistPosts = ({
   };
 
   const deleteLike = () => {
-    commonAPI.deleteLike(userId, post.postId).then((data) => {
+    commonAPI.deleteLike(post.postId).then((data) => {
       if (data) {
         console.log(data.message);
         updateMyPost();
@@ -139,7 +141,7 @@ const ArtistPosts = ({
   };
 
   const getIfLikePost = () => {
-    commonAPI.getIfLikePost(userId, post.postId).then((data) => {
+    commonAPI.getIfLikePost(post.postId).then((data) => {
       setIsLikePost(data);
       console.log(`${post.postId}의 좋아요여부: ${data}`);
     });

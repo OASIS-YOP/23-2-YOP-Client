@@ -50,6 +50,11 @@ export const PageLabel = styled.p`
   }
 `;
 
+export const TextIfEmptyArtist = styled.div`
+  width: 800px;
+  height: 30px;
+  font-size: 25px;
+`;
 export const RealTimeDesignWrapper = styled.div`
   display: flex;
   justify-content: row;

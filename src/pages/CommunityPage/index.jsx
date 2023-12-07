@@ -9,7 +9,6 @@ import commonAPI from '../../api/commonAPI.js';
 
 const CommunityPage = () => {
   const params = useParams();
-  const userId = 1;
   const artistId = Number(params.artistId);
 
   const [artistInfo, setArtistInfo] = useState({});
@@ -40,10 +39,9 @@ const CommunityPage = () => {
       setAllPost(allArtistPostData?.allPostList);
 
       const myCollectionQuantData = await communitypageAPI.getMyCollectionQuant(
-        artistId,
-        userId
+        artistId
       );
-      setMyCollectionQuant(myCollectionQuantData.collectionQuant);
+      setMyCollectionQuant(myCollectionQuantData?.collectionQuant);
 
       const artistFavoriteQuantData =
         await communitypageAPI.getArtistFavoriteQuant(artistId);
@@ -54,6 +52,7 @@ const CommunityPage = () => {
         artistId
       );
       setMemberProfile(memberProfileData.memberPhoto);
+      console.log(memberProfileData);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -77,7 +76,7 @@ const CommunityPage = () => {
   };
 
   const postFavoriteArtist = () => {
-    commonAPI.postFavorite(artistId, userId).then((data) => {
+    commonAPI.postFavorite(artistId).then((data) => {
       if (data) {
         console.log('즐겨찾기 성공');
         setIsFavorite(true);
@@ -87,7 +86,7 @@ const CommunityPage = () => {
     });
   };
   const deleteFavoriteArtist = () => {
-    commonAPI.deleteFavorite(artistId, userId).then((data) => {
+    commonAPI.deleteFavorite(artistId).then((data) => {
       if (data) {
         console.log('즐겨찾기 해제 성공');
         setIsFavorite(false);
@@ -99,7 +98,7 @@ const CommunityPage = () => {
 
   const getIfFavoriteArtist = () => {
     communitypageAPI
-      .getIfFavoriteArtist(userId, artistId)
+      .getIfFavoriteArtist(artistId)
       .then((data) => setIsFavorite(data));
   };
 

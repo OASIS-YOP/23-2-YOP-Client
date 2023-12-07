@@ -1,6 +1,5 @@
 import * as s from './myDesignCollectionStyle.js';
 import { useEffect, useState } from 'react';
-import MyCollections from '../../Temp/mypage/mydesign/MyCollections';
 import mypageAPI from '../../api/mypage/mypageAPI.js';
 
 const MyDesignCollection = ({
@@ -9,7 +8,6 @@ const MyDesignCollection = ({
   setSelectedCollection,
   setIsCollectionClicked,
 }) => {
-  const [userId, setUserId] = useState(1);
   const [ismouseOver, setIsMouseOver] = useState(false);
   const [myPolaroidQuant, setMyPolaroidQuant] = useState();
 
@@ -24,7 +22,7 @@ const MyDesignCollection = ({
 
   const getMyPolaroidQuant = () => {
     mypageAPI
-      .getMyPolaroidQuant(userId, decodeURI(albumName))
+      .getMyPolaroidQuant(decodeURI(albumName))
       .then((data) => setMyPolaroidQuant(data.polaroidBackupQuant));
   };
   // const artist = MyCollections.find((artist) => artist.artistId === artistId);

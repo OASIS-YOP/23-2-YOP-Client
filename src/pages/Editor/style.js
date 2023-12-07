@@ -113,7 +113,6 @@ export const TopMenuButton = styled.button`
   &:hover {
     cursor: ${({ isActive }) => (isActive ? 'pointer' : 'not-allowed')};
   }
-
 `;
 
 export const TopMenuButtonIcon = styled.div`
@@ -207,25 +206,22 @@ export const LayerButton = styled.button`
   margin: 0 2px;
 
   &:hover {
-    background-color: ${({ disabled }) => ( disabled ? 'white' : '#CCD0DD')};
-    cursor: ${({ disabled }) => ( disabled ? 'not-allowed' : 'pointer')};
-
+    background-color: ${({ disabled }) => (disabled ? 'white' : '#CCD0DD')};
+    cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   }
 
   &:active {
     background-color: white;
-  };
+  }
 
   font-size: 11px;
   font-weight: 700;
-
 `;
 
 export const LayerButtonIcon = styled.img`
   width: 18px;
 
   margin: 0 1.5%;
-
 `;
 
 export const LockIcon = styled.div`
@@ -234,8 +230,7 @@ export const LockIcon = styled.div`
   margin: 0 1.5%;
 
   fill: ${({ isActive }) => (isActive ? '#898989' : '#CCCCCC')};
-`
-
+`;
 
 export const LayerButtonLabel = styled.div`
   font-size: 11px;
@@ -252,14 +247,13 @@ export const SelectedObjects = styled.div`
   justify-content: center;
   align-items: center;
 
-
   font-size: 12px;
   font-weight: 700;
 
   color: #898989;
 `;
 
-export const DeleteButton = styled.button`\
+export const DeleteButton = styled.button`
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -276,21 +270,18 @@ export const DeleteButton = styled.button`\
 
   margin: 0 2px;
 
-
   &:hover {
-    background-color: ${({ disabled }) => ( disabled ? 'white' : '#CCD0DD' )};
-    cursor: ${({ disabled }) => ( disabled ? ' not-allowed ' : ' pointer ')};
+    background-color: ${({ disabled }) => (disabled ? 'white' : '#CCD0DD')};
+    cursor: ${({ disabled }) => (disabled ? ' not-allowed ' : ' pointer ')};
   }
 
   &:active {
     background-color: white;
-  };
+  }
 
   font-size: 11px;
   font-weight: 700;
-
-
-`
+`;
 
 export const DeleteButtonLabel = styled.div`
   font-size: 11px;
@@ -299,8 +290,7 @@ export const DeleteButtonLabel = styled.div`
   color: ${({ isActive }) => (isActive ? '#898989' : '#CCCCCC')};
 
   margin: 0 1.5%;
-`
-
+`;
 
 //툴박스 공간
 export const RightContainer = styled.div`
@@ -355,7 +345,6 @@ export const ToolLabel = styled.button`
 
   cursor: pointer;
 
-
   /* background-color: white; */
   background-color: ${({ isActive }) => (isActive ? 'white' : '#F0F0F0')};
 `;
@@ -394,4 +383,4 @@ export const ToolContentsWrapper = styled.div`
   border-bottom-right-radius: 20px;
 
   background-color: white;
-`
+`;
