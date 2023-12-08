@@ -55,7 +55,38 @@ export const StickerTab = styled.div`
 
 `;
 
+export const StickerListC = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: flex-start;
 
+  overflow-y: scroll;
+  
+  width: 97%;
+  height: 500px;
+  
+  padding: 10px 10px;
+
+  //스크롤바 커스텀 기능 조사중...
+
+    & img {
+      vertical-align: middle;
+      align-self: center;
+      margin: 15px; /* 각 요소 사이에 간격 */
+      padding: 10px;
+      width: 110px;
+      height: auto;
+      
+      &:hover {
+        cursor: pointer;
+        opacity: 0.85;
+      }
+
+    }
+
+`;
 
 export const StickerList = styled.div`
   display: flex;
@@ -78,7 +109,7 @@ export const StickerList = styled.div`
       align-self: center;
       margin: 15px; /* 각 요소 사이에 간격 */
       padding: 10px;
-      width: 100px;
+      width: 150px;
       height: auto;
       
       &:hover {

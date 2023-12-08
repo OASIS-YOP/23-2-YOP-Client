@@ -2,8 +2,8 @@ import * as s from './style';
 // import { fabric } from 'fabric';
 import { useEffect, useState } from 'react';
 import { 
-  stickerData1, stickerData2, stickerData3, ConfettisBlue, ConfettisPurple, stickerData6, ment, maskingTapes,
-  CSv,CGd
+  stickerData1, stickerData2, stickerData3, ConfettisBlue, CP, stickerData6, ment, maskingTapes,
+  CSv, CGd, CXmas, CYo, Holograms,
 } from './stickerData';
 // import Konva from 'konva';
 
@@ -16,17 +16,21 @@ const Stickers = ({
 
   const [ stickerTab, setStickerTab ] = useState('컨페티');
 
-  const stickerTabs = ['컨페티', '픽셀', '주접', '마스킹테이프'];
-  const [ colorTab, setColorTab ] = useState('blue');
+  const stickerTabs = ['컨페티', '픽셀', '텍스트', '마스킹테이프',];
+  const [ colorTab, setColorTab ] = useState('yo');
 
   const colorTabs = [
     { 
-      name: 'blue',
-      color: '#82A2FF',
+      name: 'yo',
+      color: '#ff7700',
     },
     {
       name: 'purple',
       color: '#C4AFFF',
+    },
+    {
+      name: 'xmas',
+      color: '#00870b',
     },
     {
       name: 'silver',
@@ -34,8 +38,8 @@ const Stickers = ({
     },
     {
       name: 'gold',
-      color: '#FFD700',
-    }
+      color: '#ddbc01',
+    },
   ]
 
 
@@ -73,11 +77,11 @@ const Stickers = ({
     } else if(isPrticlesM) {
       img.scaleToWidth(50);
     } else if(isRibbonL) {
-      img.scaleToWidth(250);
+      img.scaleToWidth(170);
     } else if(isRibbonM) {
-      img.scaleToWidth(180);
+      img.scaleToWidth(120);
     } else if(isRibbonS) {
-      img.scaleToWidth(100);
+      img.scaleToWidth(75);
     } else if(isL) {
       img.scaleToWidth(150);
     } else{
@@ -125,10 +129,10 @@ const Stickers = ({
                 />
             ))}
           </s.ColorTabWrapper>
-          <s.StickerList>
-          { colorTab === 'blue' && (
+          <s.StickerListC>
+          { colorTab === 'yo' && (
             <>
-              {ConfettisBlue.map( (item) => (
+              {CYo.map( (item) => (
                 ( item.spec === 'ribbonL' ? (
                   <img
                     key={item.id}
@@ -155,7 +159,34 @@ const Stickers = ({
           )}
           { colorTab === 'purple' && (
             <>
-            {ConfettisPurple.map( (item) => (
+            {CP.map( (item) => (
+              ( item.spec === 'ribbonL' ? (
+                <img
+                  key={item.id}
+                  src={item.fileUrl} 
+                  onClick={(e) => handleImageClick(e)}
+                  data-spec={item.spec}
+                  alt='sticker'
+                  width='150px'
+                  height='auto'
+                />
+                ):( <img
+                      key={item.id}
+                      src={item.fileUrl} 
+                      onClick={(e) => handleImageClick(e)}
+                      data-spec={item.spec}
+                      alt='sticker'
+                      width='120px'
+                      height='120px'
+                  />
+                ))
+              )
+            )}
+            </>
+          )}
+          { colorTab === 'xmas' && (
+            <>
+            {CXmas.map( (item) => (
               ( item.spec === 'ribbonL' ? (
                 <img
                   key={item.id}
@@ -234,7 +265,7 @@ const Stickers = ({
             )}
             </>
           )}
-          </s.StickerList>
+          </s.StickerListC>
           </>
         )}
         { stickerTab === '픽셀' && (
@@ -286,7 +317,7 @@ const Stickers = ({
             )}
           </s.StickerList>
         )}
-        { stickerTab === '주접' && (
+        { stickerTab === '텍스트' && (
           <s.StickerList>
             {ment.map( (item) => (
               ( item.spec === 'particlesS' ? (          
@@ -316,6 +347,33 @@ const Stickers = ({
         { stickerTab === '마스킹테이프' && (
           <s.StickerList>
             {maskingTapes.map( (item) => (
+              ( item.spec === 'particlesS' ? (          
+                <img
+                  key={item.id}
+                  src={item.fileUrl} 
+                  onClick={(e) => handleImageClick(e)}
+                  data-spec={item.spec} 
+                  alt='sticker'
+                  width='50px'
+                  height='auto'
+                />
+                ):( <img
+                      key={item.id}
+                      src={item.fileUrl} 
+                      onClick={(e) => handleImageClick(e)}
+                      data-spec={item.spec}
+                      alt='sticker'
+                      height='auto'
+                      width='130px'
+                    />
+                ))
+              )
+            )}
+          </s.StickerList>
+        )}
+        { stickerTab === '홀로그램' && (
+          <s.StickerList>
+            {Holograms.map( (item) => (
               ( item.spec === 'particlesS' ? (          
                 <img
                   key={item.id}
