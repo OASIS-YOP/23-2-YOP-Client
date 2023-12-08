@@ -9,8 +9,10 @@ export const Wrapper = styled.div`
 
 export const IndexNumber = styled.div`
   width: 100%;
+
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 25px;
-  font-weight: bold;
+  font-weight: 700;
   margin-bottom: 5px;
 `;
 export const ImageContainer = styled.div`
@@ -54,6 +56,8 @@ export const likeWrapper = styled.div`
   height: fit-content;
 
   margin: 15px 0;
+
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 20px;
   font-weight: 700;
 
@@ -75,8 +79,9 @@ export const likeIcon = styled.img`
   }
 `;
 export const ContentText = styled.div`
-  font-size: 20px;
-  font-weight: bold;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 19px;
+  font-weight: 600;
   &:last-child {
     color: #3563e9;
   }

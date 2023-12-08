@@ -7,10 +7,10 @@ export const Wrapper = styled.div`
   -webkit-user-select: none;
   user-select: none;
 
-  width: 650px;
-  height: 515px;
+  width: 660px;
+  height: 510px;
 
-  padding: 20px 20px;
+  padding: 23px 23px;
 `;
 
 export const HeaderLabelWrapper = styled.div`
@@ -18,15 +18,16 @@ export const HeaderLabelWrapper = styled.div`
   justify-content: flex-satrt;
   align-items: center;
   width: 100%;
-  height: 40px;
+  height: 43px;
 
-  margin-bottom: 25px;
+  margin-bottom: 30px;
 
   > span {
+    font-family: 'Noto Sans KR', sans-serif ;
     font-size: 22px;
     font-weight: 700;
 
-    margin: 0 10px;
+    margin: 0 15px;
     
     color : #515151;
   }
@@ -41,11 +42,13 @@ export const HeaderLabel = styled.button`
   background-color: gray;
   color: white;
   border-radius: 20px;
-  font-size: 18px;
-  font-weight: 700;
+
+  font-family: 'Noto Sans KR', sans-serif ;
+  font-size: 18.5px;
+  font-weight: 600;
   border: none;
 
-  padding: 0 15px;
+  padding: 0 20px;
 
   &.active {
     cursor: pointer;
@@ -91,8 +94,9 @@ export const ArtistTab = styled.button`
   border: none;
   background-color: transparent;
 
+  font-family: 'Noto Sans KR', sans-serif ;
   font-size: 16.5px;
-  font-weight: 700;
+  font-weight: 500;
   color: gray;
 
   &:hover {
@@ -124,7 +128,7 @@ export const CollectionCardsWrapper = styled.div`
   flex-flow: row wrap;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  width: 98%;
   height: 420px;
   border-radius: 20px;
   margin: auto;
@@ -227,8 +231,10 @@ export const SelectedDesignInfoWrapper = styled.div`
 export const SelectedDesignInfo = styled.div`
   display: absolute;
   text-align: center;
+
+  font-family: 'Noto Sans KR', sans-serif ;
   font-size: 15px;
-  font-weight: bold;
+  font-weight: 500;
   color: white;
 `;
 
@@ -247,9 +253,10 @@ export const SelectedDesignContents = styled.div`
   align-items: start;
   margin : 3px 0;
 
+  font-family: 'Noto Sans KR', sans-serif ;
   font-size: 18px;
-  font-weight: 700;
-  color: gray;
+  font-weight: 800;
+  color: black;
 
 
 `;
@@ -259,17 +266,19 @@ export const PostButton = styled.button`
   justify-content: center;
   align-items: center;
 
-  width: 100px;
+  width: 90px;
   height: 40px;
 
   border: none;
-  border-radius: 20px;
+  border-radius: 30px;
 
   background-color: gray;
 
   color: white;
-  font-size: 15px;
-  font-weight: 700;
+
+  font-family: 'Noto Sans KR', sans-serif ;
+  font-size: 18px;
+  font-weight: 600;
 
 
   &:hover {

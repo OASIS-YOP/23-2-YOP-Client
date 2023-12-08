@@ -74,8 +74,9 @@ const ArtistContents = () => {
               <div
                 style={{
                   color: 'gray',
+                  fontFamily: 'Noto Sans KR',
                   fontSize: '18px',
-                  fontWeight: 'bold',
+                  fontWeight: '600',
                   width: '100%',
                   height: '200px',
                   display: 'flex',

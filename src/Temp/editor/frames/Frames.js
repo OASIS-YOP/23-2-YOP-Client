@@ -17,17 +17,59 @@ const Frames = [
       },
       {
         id: 3,
+        name: '홀로그램1',
+        type: 'image',
+        fileUrl: `${process.env.PUBLIC_URL}/images/frames/HF1.png`,
+      },
+      {
+        id: 4,
+        name: '홀로그램2',
+        type: 'image',
+        fileUrl: `${process.env.PUBLIC_URL}/images/frames/HF2.png`,
+      },
+      {
+        id: 5,
+        name: '홀로그램3',
+        type: 'image',
+        fileUrl: `${process.env.PUBLIC_URL}/images/frames/HF3.png`,
+      },
+      {
+        id: 6,
         name: '프레임1-3',
         type: 'image',
         fileUrl: `${process.env.PUBLIC_URL}/images/frames/PinkFrame.png`,
       },
       {
-        id: 4,
+        id: 7,
         name: '프레임1-4',
         type: 'image',
         fileUrl: `${process.env.PUBLIC_URL}/images/frames/CheckFrame.png`,
       },
-    ]
+      {
+        id: 8,
+        name: '레드그린라인',
+        type: 'image',
+        fileUrl: `${process.env.PUBLIC_URL}/images/frames/f_rg.png`,
+      },
+      {
+        id: 9,
+        name: '블루체크',
+        type: 'image',
+        fileUrl: `${process.env.PUBLIC_URL}/images/frames/blue_ch.png`,
+      },
+      {
+        id: 10,
+        name: '노랑물감',
+        type: 'image',
+        fileUrl: `${process.env.PUBLIC_URL}/images/frames/f_y.png`,
+      },
+      {
+        id: 11,
+        name: '핑크2',
+        type: 'image',
+        fileUrl: `${process.env.PUBLIC_URL}/images/frames/pink2.png`,
+      },
+      ]
   },
   {
     id: 2,

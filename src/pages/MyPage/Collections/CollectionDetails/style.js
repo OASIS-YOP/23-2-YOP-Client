@@ -7,6 +7,7 @@ export const Wrapper = styled.div`
   align-items: center;
   flex-wrap: nowrap;
 
+  min-width: 1000px;
   width: 97%;
   height: fit-content;
 
@@ -43,8 +44,9 @@ export const CollectionName = styled.div`
 
   margin-top: 30px;
 
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 30px;
-  font-weight: bold;
+  font-weight: 900;
 
   width: 100%;
   height: fit-content;
@@ -84,7 +86,7 @@ export const PhotocardListWrapper = styled.div`
   flex-wrap: wrap;
 
   width: 100%;
-  height: 800px;
+  height: fit-content;
 
   margin: 40px 40px;
 
@@ -117,8 +119,9 @@ export const MemberName = styled.div`
   justify-content: center;
   align-items: center;
 
-  font-size: 20px;
-  font-weight: bold;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 18.5px;
+  font-weight: 600;
 
   margin-top: 10px;
   margin-bottom: 30px;
@@ -178,6 +181,8 @@ export const InputCodeButton = styled.button`
   border-radius: 10px;
   background-color: white;
   color: black;
+
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 18px;
   font-weight: 600;
   z-index: 998;

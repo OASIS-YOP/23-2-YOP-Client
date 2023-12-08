@@ -78,7 +78,8 @@ const Posts = () => {
             <div
               style={{
                 color: 'gray',
-                fontWeight: 'bold',
+                fontFamily: 'Noto Sans KR',
+                fontWeight: '600',
                 fontSize: '18px',
                 width: '100%',
                 height: '200px',

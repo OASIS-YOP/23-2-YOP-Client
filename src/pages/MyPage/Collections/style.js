@@ -6,6 +6,7 @@ export const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
 
+  min-width: 1000px;
   width: 100%;
   height: 100%;
 
@@ -44,8 +45,9 @@ export const ArtistsTab = styled.button`
 
   background-color: transparent;
 
-  font-size: 16px;
-  font-weight: bold;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 18px;
+  font-weight: 500;
   color: gray;
 
   &:hover {
@@ -63,9 +65,9 @@ export const CollectionCardsContainer = styled.div`
   justify-content: center;
   flex-direction: center;
   flex-wrap: wrap;
-  width: 90%;
+  width: 85%;
   height: 90%;
-  margin: 0 auto;
+  margin: 10px auto;
   padding-top: 20px;
 `;
 
@@ -78,7 +80,7 @@ export const CollectionCardWrapper = styled.div`
   align-items: center;
 
   width: 28%;
-  margin: 28px 24px;
+  margin: 28px 28px;
   box-sizing: border-box;
   border-radius: 35px;
   border: 8px solid #82a2ff;
@@ -136,9 +138,11 @@ export const CollectionInfoWrapper = styled.div`
 export const CollectionCardInfo = styled.div`
   display: absolute;
   text-align: center;
-  font-size: 1.6vw;
-  font-weight: bold;
-  line-height: 3vw;
+
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 1.4vw;
+  font-weight: 500;
+  line-height: 2.5vw;
   color: white;
 `;
 
@@ -168,19 +172,52 @@ export const InActivatedLockWrapper = styled.div`
   }
 `;
 
+export const InputCodeWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const AlbumName = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  height: fit-content;
+
+  line-height: 2vw;
+
+  margin: 15px;
+
+  text-align: center;
+
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 1.4vw;
+  font-weight: 500;
+
+  color: white;
+
+  z-index: 998;
+`;
+
 export const InputCodeButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 140px;
-  height: 30px;
+  width: 9vw;
+  height: 2vw;
   border: none;
   border-radius: 10px;
   background-color: white;
   color: black;
-  font-size: 18px;
-  font-weight: 600;
-  z-index: 9999;
+
+  margin-top: 10px;
+
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 1.2vw;
+  font-weight: 500;
+  z-index: 998;
   cursor: pointer;
   &:hover {
     filter: brightness(90%);

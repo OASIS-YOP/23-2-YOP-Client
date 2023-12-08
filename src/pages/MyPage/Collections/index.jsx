@@ -176,12 +176,15 @@ const Collections = () => {
               />
               {ismouseOver ? (
                 <>
-                  <s.InputCodeButton
-                    onMouseOver={onHandleMouseOver}
-                    onClick={handleClickCodeInputButton}
-                  >
-                    코드 입력
-                  </s.InputCodeButton>
+                  <s.InputCodeWrapper>
+                    <s.AlbumName>{albumName}</s.AlbumName>
+                    <s.InputCodeButton
+                      onMouseOver={onHandleMouseOver}
+                      onClick={handleClickCodeInputButton}
+                    >
+                      코드 입력
+                    </s.InputCodeButton>
+                  </s.InputCodeWrapper>
                   <Modal
                     isOpen={isOpenCodeInputModal}
                     style={CodeInputModalStyle}
@@ -239,7 +242,7 @@ const Collections = () => {
             style={{
               color: 'gray',
               fontSize: '18px',
-              fontWeight: 'bold',
+              fontWeight: '600',
               width: '100%',
               height: '200px',
               display: 'flex',

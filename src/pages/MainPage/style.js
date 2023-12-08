@@ -30,6 +30,8 @@ export const BannerContent = styled.div`
   height: auto;
   color: white;
   margin: 0 auto;
+
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 30px;
   font-weight: 800;
 `;
@@ -38,13 +40,18 @@ export const PageLabel = styled.p`
   height: fit-content;
   margin: 40px 20px 40px 20px;
   padding: 15px;
+
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 25px;
-  font-weight: bold;
+  font-weight: 800;
 
   & span {
     float: right;
     margin-right: 50px;
+    
+    font-family: 'Noto Sans KR', sans-serif;
     font-size: 15px;
+    font-weight: 700;
     color: gray;
     cursor: pointer;
   }
@@ -53,6 +60,8 @@ export const PageLabel = styled.p`
 export const TextIfEmptyArtist = styled.div`
   width: 800px;
   height: 30px;
+
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 25px;
 `;
 export const RealTimeDesignWrapper = styled.div`
@@ -96,8 +105,9 @@ export const CollectionRowContainer = styled.div`
 `;
 
 export const IndexNumber = styled.span`
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 20px;
-  font-weight: bold;
+  font-weight: 800;
   margin: 0 15px 0 30px;
 `;
 
@@ -119,7 +129,8 @@ export const CollectionText = styled.div`
   height: fit-content;
   line-height: 40px;
 
-  font-weight: bold;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 700;
   &:first-child {
     font-size: 23px;
   }
@@ -146,8 +157,10 @@ export const AllArtistBox = styled.div`
 `;
 export const EnterCompanyLabel = styled.div`
   margin: 0 20px 20px 30px;
+
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 20px;
-  font-weight: bold;
+  font-weight: 800;
 `;
 
 ////Top10DesignCard
@@ -160,8 +173,10 @@ export const Top10CardWrapper = styled.div`
 
 export const Top10CardIndexNumber = styled.div`
   width: 100%;
+
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 25px;
-  font-weight: bold;
+  font-weight: 800;
   margin-bottom: 5px;
 `;
 export const ImageContainer = styled.div`
@@ -205,6 +220,8 @@ export const likeWrapper = styled.div`
   height: fit-content;
 
   margin: 15px 0;
+
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 20px;
   font-weight: 700;
 
@@ -227,8 +244,9 @@ export const likeIcon = styled.img`
 `;
 
 export const ContentText = styled.div`
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 20px;
-  font-weight: bold;
+  font-weight: 700;
   &:last-child {
     color: #3563e9;
   }
@@ -244,6 +262,8 @@ export const ScrollToTopButton = styled.button`
   border: none;
   background-color: #3f70ff;
   color: white;
+
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 20px;
   cursor: pointer;
   transition: all 0.1s linear;

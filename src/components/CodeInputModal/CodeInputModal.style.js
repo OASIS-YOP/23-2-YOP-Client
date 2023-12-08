@@ -12,6 +12,8 @@ export const Wrapper = styled.div`
 export const ModalText = styled.div`
   width: 80%;
   height: 40px;
+
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 25px;
   font-weight: 500;
   text-align: center;
@@ -24,6 +26,8 @@ export const CodeInput = styled.input`
   border-bottom: 2px solid black;
   margin: 0 auto;
   outline: none;
+
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 80px;
   text-align: center;
 `;
@@ -36,6 +40,8 @@ export const SubmitButton = styled.button`
   border-radius: 8px;
   background-color: #3f70ff;
   color: white;
+  
+  font-family: 'Noto Sans KR', sans-serif;
   font-weight: 600;
   &:hover {
     cursor: pointer;

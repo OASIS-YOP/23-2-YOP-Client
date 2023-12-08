@@ -27,6 +27,7 @@ export const Header = styled.div`
 
   width: 100%;
   height: 60px;
+  min-width: 1000px;
   /* padding: 20px; */
 
   background-color: white;
@@ -38,6 +39,7 @@ export const Header = styled.div`
   user-select: none;
 
   // border: 1px solid black;
+  
 `;
 
 export const LogoWrapper = styled.div`
@@ -72,7 +74,9 @@ export const Menu = styled.button`
 
   cursor: pointer;
 
-  font-weight: bold;
+  font-weight: 500;
+  font-size: 14px;
+  font-family: 'Noto Sans KR', sans-serif;
 
   background-color: transparent;
   &:after {
@@ -107,7 +111,7 @@ export const NicknameWrapper = styled.div`
   padding: 4px;
   margin-left: 8px;
 
-  font-weight: bold;
+  font-weight: 500;
   &:after {
     display: block;
     content: '';

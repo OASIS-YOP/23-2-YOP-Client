@@ -84,8 +84,10 @@ export const CollectionInfoWrapper = styled.div`
 export const CollectionCardInfo = styled.div`
   display: absolute;
   text-align: center;
+
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 25px;
-  font-weight: bold;
+  font-weight: 700;
   color: white;
 `;
 

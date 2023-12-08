@@ -132,8 +132,9 @@ export const TopMenuButtonLabel = styled.div`
   justify-content: center;
   align-items: center;
 
-  font-size: 15px;
-  font-weight: bold;
+  font-family: 'Noto Sans KR', sans-serif ;
+  font-size: 17px;
+  font-weight: 600;
 
   text-align: center;
 
@@ -194,7 +195,7 @@ export const LayerButton = styled.button`
   justify-content: center;
   align-items: center;
 
-  width: 87px;
+  width: 100px;
   height: 27px;
 
   background-color: white;
@@ -214,8 +215,6 @@ export const LayerButton = styled.button`
     background-color: white;
   }
 
-  font-size: 11px;
-  font-weight: 700;
 `;
 
 export const LayerButtonIcon = styled.img`
@@ -233,8 +232,9 @@ export const LockIcon = styled.div`
 `;
 
 export const LayerButtonLabel = styled.div`
-  font-size: 11px;
-  font-weight: 700;
+  font-family: 'Noto Sans KR', sans-serif ;
+  font-size: 14px;
+  font-weight: 600;
 
   color: ${({ isActive }) => (isActive ? '#898989' : '#CCCCCC')};
 
@@ -247,7 +247,8 @@ export const SelectedObjects = styled.div`
   justify-content: center;
   align-items: center;
 
-  font-size: 12px;
+  font-family: 'Noto Sans KR', sans-serif ;
+  font-size: 15px;
   font-weight: 700;
 
   color: #898989;
@@ -259,7 +260,7 @@ export const DeleteButton = styled.button`
   justify-content: center;
   align-items: center;
 
-  width: 50px;
+  width: 55px;
   height: 27px;
 
   background-color: white;
@@ -278,14 +279,12 @@ export const DeleteButton = styled.button`
   &:active {
     background-color: white;
   }
-
-  font-size: 11px;
-  font-weight: 700;
 `;
 
 export const DeleteButtonLabel = styled.div`
-  font-size: 11px;
-  font-weight: 700;
+  font-family: 'Noto Sans KR', sans-serif ;
+  font-size: 14px;
+  font-weight: 600;
 
   color: ${({ isActive }) => (isActive ? '#898989' : '#CCCCCC')};
 
@@ -364,8 +363,9 @@ export const ToolLabelText = styled.div`
   justify-content: center;
   align-items: center;
 
-  font-size: 12px;
-  font-weight: 700;
+  font-family: 'Noto Sans KR', sans-serif ;
+  font-size: 14px;
+  font-weight: 600;
 
   color: ${({ isActive }) => (isActive ? 'black' : 'rgba(137, 137, 137, 1)')};
 `;

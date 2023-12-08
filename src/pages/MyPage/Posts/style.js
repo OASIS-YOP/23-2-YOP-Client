@@ -42,8 +42,9 @@ export const ArtistsTab = styled.button`
 
   background-color: transparent;
 
-  font-size: 16px;
-  font-weight: bold;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 18px;
+  font-weight: 500;
   color: gray;
 
   cursor: pointer;
@@ -81,6 +82,7 @@ export const contextBox = styled.div`
 
   margin-top: 5%;
 
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 100%;
   font-weight: 700;
 `;
@@ -167,6 +169,7 @@ export const postInfoWrapper = styled.div`
 `;
 
 export const nicknameWrapper = styled.div`
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 30px;
   font-weight: 700;
 `;
@@ -184,6 +187,7 @@ export const tagsWrapper = styled.div`
 
   color: #3f70ff;
 
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 95%;
   font-weight: 700;
 
@@ -192,6 +196,7 @@ export const tagsWrapper = styled.div`
 
 export const dateWrapper = styled.div`
   color: #3f70ff;
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 90%;
 `;
 
@@ -206,6 +211,7 @@ export const likeWrapper = styled.div`
 
   margin-top: 50%;
 
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 200%;
   font-weight: 700;
 
