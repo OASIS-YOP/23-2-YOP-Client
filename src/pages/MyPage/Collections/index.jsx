@@ -106,6 +106,7 @@ const Collections = () => {
     albumJacket,
     albumName,
     activatedCollection,
+    myPhotocardQuant,
   }) => {
     const [ismouseOver, setIsMouseOver] = useState(false);
     const [isActiveMouseOver, setIsActiveMouseOver] = useState(false);
@@ -168,7 +169,7 @@ const Collections = () => {
                     %
                     <br />
                     {/* 내가가진포카수 구해서 넣어야함 */}
-                    포카수 : 1/
+                    포카수 : {myPhotocardQuant}/
                     {activeCollectionData.photoCardQuant}장
                   </s.CollectionCardInfo>
                 </s.CollectionInfoWrapper>
@@ -226,6 +227,7 @@ const Collections = () => {
                     albumJacket={item.albumJacket}
                     albumName={item.albumName}
                     activatedCollection={activatedCollection}
+                    myPhotocardQuant={myPhotocardQuant}
                   />
                 ))}
             </s.CollectionCardsContainer>
