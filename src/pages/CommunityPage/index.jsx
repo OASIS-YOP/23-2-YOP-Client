@@ -22,20 +22,22 @@ const CommunityPage = () => {
   const [clickedMember, setClickedMember] = useState(null);
   const [isClickMember, setIsClickMember] = useState(false);
 
+  const [clickedPost, setClickedPost] = useState(0);
+
   const [isFavorite, setIsFavorite] = useState();
 
   const [isClickStar, setIsClickStar] = useState(false);
 
-  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isOpenPostModal, setIsOpenPostModal] = useState(false);
 
   const fandomName = ['아미', '마이', '유애나', '버니즈'];
 
-  const openModal = () => {
-    setIsOpenModal(true);
+  const openPostModal = () => {
+    setIsOpenPostModal(true);
   };
 
-  const closeModal = () => {
-    setIsOpenModal(false);
+  const closePostModal = () => {
+    setIsOpenPostModal(false);
   };
 
   const postModalStyle = {
@@ -49,6 +51,8 @@ const CommunityPage = () => {
       zIndex: 999,
     },
     content: {
+      justifyContent: 'center',
+      alignItems: 'center',
       background: 'white',
       overflow: 'auto',
       width: 'fit-content',
@@ -56,15 +60,16 @@ const CommunityPage = () => {
       margin: 'auto auto',
       WebkitOverflowScrolling: 'touch',
       WebkitUserSelect: 'none',
-      borderRadius: '20px',
+      borderRadius: '48px',
       outline: 'none',
-      zIndex: 10,
+      border: '0',
+      padding: '0',
     },
   };
 
-  const onCloseModal = () => {
-    setIsOpenModal((prev) => !prev);
-  };
+  // const on = () => {
+  //   setIsOpenPostModal((prev) => !prev);
+  // };
 
   const fetchData = async () => {
     try {
@@ -148,7 +153,10 @@ const CommunityPage = () => {
   //     .getPostLikeQuant(artistId,postId)
   //     .then((data) => console.log(data));
   // };
-
+  const getClickedPostInfo = (postId) => {
+    const postInfo = allPost.filter((item) => item.postId === postId);
+    return postInfo[0];
+  };
   useEffect(() => {
     getIfFavoriteArtist();
   }, []);
@@ -209,32 +217,43 @@ const CommunityPage = () => {
             <s.ContentWrapper>
               {!isClickMember
                 ? allPost.map((item) => (
-                    <s.CardImageContainer
-                      onClick={openModal}
-                      key={`allPost_${item.postId}`}
-                    >
-                      <img src={item.polaroid} alt='allPolaroid' />
-                    </s.CardImageContainer>
+                    <>
+                      <s.CardImageContainer
+                        onClick={() => {
+                          openPostModal();
+                          setClickedPost(item.postId);
+                        }}
+                        key={`allPost_${item.postId}`}
+                      >
+                        <img src={item.polaroid} alt='allPolaroid' />
+                      </s.CardImageContainer>
+                    </>
                   ))
                 : memberPost &&
                   memberPost?.map((item) => (
-                    <s.CardImageContainer
-                      onClick={openModal}
-                      key={`memberPost_${item.postId}`}
-                    >
-                      <img src={item.polaroid} alt='Polaroid' />
-                    </s.CardImageContainer>
+                    <>
+                      <s.CardImageContainer
+                        onClick={() => {
+                          openPostModal();
+                          setClickedPost(item.postId);
+                        }}
+                        key={`memberPost_${item.postId}`}
+                      >
+                        <img src={item.polaroid} alt='Polaroid' />
+                      </s.CardImageContainer>
+                    </>
                   ))}
             </s.ContentWrapper>
           </s.photoCardContainer>
         </s.BodyContainer>
         <Modal
           style={postModalStyle}
-          isOpen={isOpenModal}
-          onRequestClose={onCloseModal}
+          isOpen={isOpenPostModal}
+          onRequestClose={closePostModal}
         >
-          <PostModal />
+          <PostModal item={getClickedPostInfo(clickedPost)} />
         </Modal>
+
         <s.ScrollToTopButton
           onClick={() => {
             window.scrollTo({
