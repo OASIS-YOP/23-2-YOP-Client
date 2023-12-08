@@ -56,6 +56,7 @@ const MainPage = () => {
       })
       .catch((error) => console.error('Error in API calls', error));
   }, []);
+  
 
   return (
     <s.Wrapper>
@@ -71,6 +72,7 @@ const MainPage = () => {
           />
           <Banner src={`${process.env.PUBLIC_URL}/images/artist/bts.jpg`} />
           <Banner src={`${process.env.PUBLIC_URL}/images/artist/aespa.jpeg`} />
+          <Banner src={`${process.env.PUBLIC_URL}/images/banners/txt배너.png`} />
         </BannerSlider>
       </s.BannerWrapper>
 
