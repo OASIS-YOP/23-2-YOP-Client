@@ -7,8 +7,10 @@ export const FrameList = styled.div`
   justify-content: center;
   
   width: 100%;
-  height: 100%;
+  height: 480px;
   text-align: center;
+
+  overflow-y: scroll;
 
   & img {
     display: inline-block;

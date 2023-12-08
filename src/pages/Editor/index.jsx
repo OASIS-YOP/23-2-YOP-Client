@@ -205,11 +205,15 @@ const Editor = () => {
 
   // 오브젝트 트랜스포머 스타일 설정
   fabric.Object.prototype.set({
-    transparentCorners: 'false',
-    borderColor: 'lightgrey', //컨트롤 박스 색깔
-    cornerColor: 'grey',
+    transparentCorners: 'true',
+    borderColor: 'white', //컨트롤 박스 색깔
+    cornerColor: 'white',
     cornerStyle: 'circle',
-    cornerSize: 9.3,
+    cornerSize: 10,
+    perPixelTargetFind: true,
+    borderDashArray: [3, 3],
+
+
   });
 
   ////// 캔버스 관리 ///////
@@ -619,6 +623,7 @@ const Editor = () => {
   // 복사한 객체를 저장하는 함수
   const handleCopyObject = (object) => {
     setCopiedObject(object);
+    deselectObject();
     console.log('object is copied', object);
   };
 
@@ -845,6 +850,7 @@ const Editor = () => {
     if (selectedObject?.length > 0) {
       canvas.remove(...selectedObject);
       canvas.renderAll();
+      deselectObject();
     } else {
       console.log('no object is selected');
     }
@@ -860,6 +866,7 @@ const Editor = () => {
   const handleCutObject = (object) => {
     setCopiedObject(object);
     removeObjects(object);
+    deselectObject();
     console.log('object is cut', object);
     canvas.renderAll();
   };
@@ -1132,6 +1139,30 @@ const Editor = () => {
   };
   /////////////////////////////////////////////
 
+  // 트랜스포머 안 보이게 하기
+  const hideTransformer = () => {
+    canvas.selection = false;
+    canvas.forEachObject((o) => {
+      if( o.class !== 'frame' && o.id !== 'backImg' ) {
+      o.selectable = false;
+      }
+    });
+    canvas.forEachObject((o) => {
+      if ( o.class !== 'frame' && o.id !== 'backImg' ) {
+      o.selectable = true;
+      }
+    });
+    canvas.selection = true;
+    canvas.renderAll();
+  };
+
+  // 선택된 객체 해제 함수
+  const deselectObject = () => {
+    canvas.discardActiveObject();
+    setSelectedObject(null);
+    hideTransformer();
+  };
+
   //////// 키 이벤트 리스너 등록 //////////
   // let isCtrlPressed = false;
 
@@ -1149,6 +1180,7 @@ const Editor = () => {
               canvas.remove(canvas.getActiveObject());
             }
             canvas.renderAll();
+            deselectObject();
           } else {
             console.log('no object is selected');
           }

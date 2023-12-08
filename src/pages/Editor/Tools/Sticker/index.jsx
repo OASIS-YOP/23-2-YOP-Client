@@ -1,7 +1,10 @@
 import * as s from './style';
 // import { fabric } from 'fabric';
 import { useEffect, useState } from 'react';
-import { stickerData1, stickerData2, stickerData3, ConfettisBlue, ConfettisPurple, stickerData6, ment, maskingTapes } from './stickerData';
+import { 
+  stickerData1, stickerData2, stickerData3, ConfettisBlue, ConfettisPurple, stickerData6, ment, maskingTapes,
+  CSv,CGd
+} from './stickerData';
 // import Konva from 'konva';
 
 import { fabric } from 'fabric';
@@ -24,6 +27,14 @@ const Stickers = ({
     {
       name: 'purple',
       color: '#C4AFFF',
+    },
+    {
+      name: 'silver',
+      color: '#E0E0E0',
+    },
+    {
+      name: 'gold',
+      color: '#FFD700',
     }
   ]
 
@@ -62,11 +73,11 @@ const Stickers = ({
     } else if(isPrticlesM) {
       img.scaleToWidth(50);
     } else if(isRibbonL) {
-      img.scaleToWidth(150);
+      img.scaleToWidth(250);
     } else if(isRibbonM) {
-      img.scaleToWidth(65);
+      img.scaleToWidth(180);
     } else if(isRibbonS) {
-      img.scaleToWidth(50);
+      img.scaleToWidth(100);
     } else if(isL) {
       img.scaleToWidth(150);
     } else{
@@ -145,6 +156,60 @@ const Stickers = ({
           { colorTab === 'purple' && (
             <>
             {ConfettisPurple.map( (item) => (
+              ( item.spec === 'ribbonL' ? (
+                <img
+                  key={item.id}
+                  src={item.fileUrl} 
+                  onClick={(e) => handleImageClick(e)}
+                  data-spec={item.spec}
+                  alt='sticker'
+                  width='150px'
+                  height='auto'
+                />
+                ):( <img
+                      key={item.id}
+                      src={item.fileUrl} 
+                      onClick={(e) => handleImageClick(e)}
+                      data-spec={item.spec}
+                      alt='sticker'
+                      width='120px'
+                      height='120px'
+                  />
+                ))
+              )
+            )}
+            </>
+          )}
+          { colorTab === 'silver' && (
+            <>
+            {CSv.map( (item) => (
+              ( item.spec === 'ribbonL' ? (
+                <img
+                  key={item.id}
+                  src={item.fileUrl} 
+                  onClick={(e) => handleImageClick(e)}
+                  data-spec={item.spec}
+                  alt='sticker'
+                  width='150px'
+                  height='auto'
+                />
+                ):( <img
+                      key={item.id}
+                      src={item.fileUrl} 
+                      onClick={(e) => handleImageClick(e)}
+                      data-spec={item.spec}
+                      alt='sticker'
+                      width='120px'
+                      height='120px'
+                  />
+                ))
+              )
+            )}
+            </>
+          )}
+          { colorTab === 'gold' && (
+            <>
+            {CGd.map( (item) => (
               ( item.spec === 'ribbonL' ? (
                 <img
                   key={item.id}
