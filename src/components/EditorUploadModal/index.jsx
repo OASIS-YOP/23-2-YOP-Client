@@ -14,6 +14,8 @@ import {
   resizeWidth,
 } from '../../recoil/atoms';
 
+import { LoginState } from '../../states/LoginState';
+
 const EditorUploadModal = ({
   canvas,
   image,
@@ -24,6 +26,8 @@ const EditorUploadModal = ({
 }) => {
   const [myPhotocard, setMyPhotoCard] = useState();
   const [isOpenCollectionModal, setIsOpenCollectionModal] = useState(false);
+
+  const [ isLogin, setIsLogin ] = useRecoilState(LoginState);
 
   const [isBackImgEmpty, setIsBackImgEmpty] =
     useRecoilState(isBackImgEmptyState);
@@ -204,6 +208,9 @@ const EditorUploadModal = ({
           <s.ButtonBox
             bg={'rgba(63, 112, 255, 1)'}
             onClick={() => {
+              if(!isLogin)
+                alert('회원에게만 제공되는 서비스입니다.');
+              else
               setIsOpenCollectionModal(true);
             }}
           >

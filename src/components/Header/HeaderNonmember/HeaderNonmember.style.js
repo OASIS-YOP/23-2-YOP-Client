@@ -1,6 +1,16 @@
 import styled from 'styled-components';
 
-export const Icon = styled.img``;
+export const IconWrapper = styled.div`
+  width: 40px;
+  height: 40px;
+
+  border-radius: 100%;
+
+  overflow: hidden;
+`;
+export const Icon = styled.img`
+  width: 100%;
+`;
 export const Logo = styled.img`
 width: 40px;
   cursor: pointer;
@@ -17,6 +27,7 @@ export const Header = styled.div`
 
   width: 100%;
   height: 60px;
+  min-width: 1000px;
   /* padding: 20px; */
 
   background-color: white;
@@ -28,6 +39,7 @@ export const Header = styled.div`
   user-select: none;
 
   // border: 1px solid black;
+  
 `;
 
 export const LogoWrapper = styled.div`
@@ -38,21 +50,35 @@ export const LogoWrapper = styled.div`
 
   padding: none;
   margin-left: 20px;
-  margin-right: 390px;
+  margin-right: 380px;
 `;
 
 export const MenuWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
+  align-items: center;
 
   width: 100%;
   height: 100%;
 
   padding: none;
-  margin-right: 15px;
+  margin-right: 5px;
 
   // border: 1px solid black;
+`;
+
+export const Description = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+    text-align: center;
+    font-size: 12px;
+    color: #898989;
+
+    margin: 0 15px;
 `;
 
 export const Menu = styled.button`
@@ -62,9 +88,12 @@ export const Menu = styled.button`
 
   cursor: pointer;
 
-  font-weight: bold;
+  font-weight: 500;
+  font-size: 14px;
+  font-family: 'Noto Sans KR', sans-serif;
 
   background-color: transparent;
+  
   &:after {
     display: block;
     content: '';
@@ -77,6 +106,43 @@ export const Menu = styled.button`
   }
 `;
 
+export const JoinButton = styled.button`
+  border: none;
+
+  cursor: pointer;
+
+  font-weight: 500;
+  font-size: 14px;
+  font-family: 'Noto Sans KR', sans-serif;
+
+  background-color: #3F70FF;
+  color: white;
+
+  border-radius: 20px;
+
+  width: 108px;
+  height: 30px;
+
+  &:hover {
+    filter: brightness(0.8);
+  }
+
+  &:active {
+    filter: brightness(1);
+  }
+  /* &:after {
+    display: block;
+    content: '';
+    border-bottom: 2px solid black;
+    transform: scaleX(0);
+    transition: transform 250ms ease-in-out;
+  }
+  &:hover:after {
+    transform: scaleX(1);
+  } */
+
+`;
+
 export const UserWrapper = styled.div`
   display: flex;
   flex-direction: row;
@@ -87,7 +153,7 @@ export const UserWrapper = styled.div`
   height: auto;
 
   padding: 5px;
-  margin: 0 0 0 15px;
+  margin: 0 0 0 10px;
 
   cursor: pointer;
 `;
@@ -97,7 +163,7 @@ export const NicknameWrapper = styled.div`
   padding: 4px;
   margin-left: 8px;
 
-  font-weight: bold;
+  font-weight: 500;
   &:after {
     display: block;
     content: '';
