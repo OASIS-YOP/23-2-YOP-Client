@@ -67,12 +67,10 @@ const MainPage = () => {
       <s.BannerWrapper>
         {/* <s.BannerContent>프로모션 및 이벤트 배너 슬라이드 공간</s.BannerContent> */}
         <BannerSlider>
-          <Banner
-            src={`${process.env.PUBLIC_URL}/images/artist/NewJeans.jpeg`}
-          />
-          <Banner src={`${process.env.PUBLIC_URL}/images/artist/bts.jpg`} />
-          <Banner src={`${process.env.PUBLIC_URL}/images/artist/aespa.jpeg`} />
-          <Banner src={`${process.env.PUBLIC_URL}/images/banners/txt배너.png`} />
+          <Banner src={`${process.env.PUBLIC_URL}/images/banners/newjeans_banner3.jpg`} />
+          <Banner src={`${process.env.PUBLIC_URL}/images/banners/aespa_banner.png`} />
+          <Banner src={`${process.env.PUBLIC_URL}/images/banners/txt_banner.png`} />
+          <Banner src={`${process.env.PUBLIC_URL}/images/banners/jk_banner.jpg`} />
         </BannerSlider>
       </s.BannerWrapper>
 

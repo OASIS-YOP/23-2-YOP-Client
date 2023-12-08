@@ -4,9 +4,9 @@ export const BannerWrapper = styled.div`
   display: flex;
   align-items: center;
   width: 1800px;
-  background-color: black;
+  background-color: white;
   margin-bottom: 0;
-  /* padding-top: 400px; */
+  padding-left: 120px;
   scroll-snap-align: center;
 `;
 
@@ -15,7 +15,7 @@ export const BannerContent = styled.div`
   color: white;
 
   & > img {
-    width: 1800px;
+    width: 1500px;
     object-fit: fill;
   }
 `;
