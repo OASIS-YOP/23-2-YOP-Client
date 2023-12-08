@@ -11,6 +11,7 @@ const CollectionDetails = ({
   isOpenCodeInputModal,
   CodeInputModalStyle,
   setIsOpenCodeInputModal,
+  setMyPhotocardQuant,
 }) => {
   const [collectionPhotocard, setCollectionPhotocard] = useState([]);
   const [activePhotocard, setActivePhotocard] = useState([]);
@@ -29,6 +30,7 @@ const CollectionDetails = ({
       .then((data) => {
         console.log('활성화된포카', data.ActivePhotocardList);
         setActivePhotocard(data.ActivePhotocardList);
+        setMyPhotocardQuant(activePhotocard.length);
       });
   };
 
