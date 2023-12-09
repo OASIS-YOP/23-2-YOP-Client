@@ -34,10 +34,10 @@ const router = createBrowserRouter([
     path: '/upload',
     element: <UploadModal />,
   },
-  {
-    path: '/uploadModal2/:uploadId',
-    element: <CollectionCard />,
-  },
+  // {
+  //   path: '/uploadModal2/:uploadId',
+  //   element: <CollectionCard />,
+  // },
   {
     path: '/mypage',
     element: <MyPage />,
