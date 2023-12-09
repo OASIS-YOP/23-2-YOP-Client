@@ -20,7 +20,7 @@ export const Join = () => {
   const handleRegister = () => {
     landingpageAPI.register(user).then((data) => {
       if (data) {
-        console.log('회원가입 성공');
+        window.alert('회원가입이 완료되었습니다.');
       } else {
         console.log('회원가입 실패');
       }

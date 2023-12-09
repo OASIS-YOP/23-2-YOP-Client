@@ -63,6 +63,19 @@ const commonAPI = {
       return null;
     }
   },
+  getPostLikeQuant: async (postId) => {
+    try {
+      const path = `${process.env.REACT_APP_BASE_URL}/postLikeQuant/${postId}`;
+      const response = await HttpClient.get(
+        path,
+        {},
+        { Authorization: accessToken }
+      );
+      return response;
+    } catch (e) {
+      return null;
+    }
+  },
 };
 
 export default commonAPI;

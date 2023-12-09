@@ -7,14 +7,14 @@ import { fabric } from 'fabric';
 import Modal from 'react-modal';
 import MyCollectionModal from '../MyCollectionModal';
 
-import { useRecoilState, useSetRecoilState, } from 'recoil';
-import { 
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import {
   isBackImgEmptyState,
   resizeHeight,
   resizeWidth,
 } from '../../recoil/atoms';
 
-import { LoginState } from '../../states/LoginState';
+import { LoginState } from '../../recoil/user';
 
 const EditorUploadModal = ({
   canvas,
@@ -27,7 +27,7 @@ const EditorUploadModal = ({
   const [myPhotocard, setMyPhotoCard] = useState();
   const [isOpenCollectionModal, setIsOpenCollectionModal] = useState(false);
 
-  const [ isLogin, setIsLogin ] = useRecoilState(LoginState);
+  const [isLogin, setIsLogin] = useRecoilState(LoginState);
 
   const [isBackImgEmpty, setIsBackImgEmpty] =
     useRecoilState(isBackImgEmptyState);
@@ -124,10 +124,12 @@ const EditorUploadModal = ({
           canvas.add(imgFile);
           canvas.sendToBack(imgFile);
           
-          setImage(imgFile);
+          
           setIsBackImgEmpty(false);
 
           canvas.renderAll();
+
+          setImage(imgFile);
 
           // canvasHistory.recordState(canvas);
         });
@@ -139,56 +141,56 @@ const EditorUploadModal = ({
 
   /////////////// 캔버스에 들어갈 이미지 사이즈 조정
 
-  const resizeImage = () => {
-    if (image) {
-      const canvasWidth = 340;
-      const canvasHeight = 492;
+  // const resizeImage = () => {
+  //   if (image) {
+  //     const canvasWidth = 340;
+  //     const canvasHeight = 492;
 
-      const imgWidth = image.width;
-      const imgHeight = image.height;
+  //     const imgWidth = image.width;
+  //     const imgHeight = image.height;
 
-      const maxWidth = canvasWidth;
-      const maxHeight = canvasHeight;
+  //     const maxWidth = canvasWidth;
+  //     const maxHeight = canvasHeight;
 
-      const aspectRatio = imgWidth / imgHeight;
+  //     const aspectRatio = imgWidth / imgHeight;
 
-      let newWidth = imgWidth;
-      let newHeight = imgHeight;
+  //     let newWidth = imgWidth;
+  //     let newHeight = imgHeight;
 
-      // 이미지의 가로가 세로보다 클 때
-      if (imgWidth > imgHeight) {
-        newHeight = maxHeight;
-        newWidth = newHeight * aspectRatio;
-      }
-      // 이미지의 세로가 가로보다 클 때
-      if (imgHeight > imgWidth) {
-        newWidth = maxWidth;
-        newHeight = newWidth / aspectRatio;
-      }
-      // 이미지의 가로와 세로가 같을 때
-      if (imgWidth === imgHeight) {
-        newHeight = maxHeight;
-        newWidth = newHeight * aspectRatio;
-      }
-      console.log(
-        '현재 백그라운드이미지 크기:',
-        'newWidth:',
-        newWidth,
-        'newHeight:',
-        newHeight
-      );
-      setNewWidth(newWidth);
-      setNewHeight(newHeight);
-    }
-  };
-  ////////////////////////////////////////
+  //     // 이미지의 가로가 세로보다 클 때
+  //     if (imgWidth > imgHeight) {
+  //       newHeight = maxHeight;
+  //       newWidth = newHeight * aspectRatio;
+  //     }
+  //     // 이미지의 세로가 가로보다 클 때
+  //     if (imgHeight > imgWidth) {
+  //       newWidth = maxWidth;
+  //       newHeight = newWidth / aspectRatio;
+  //     }
+  //     // 이미지의 가로와 세로가 같을 때
+  //     if (imgWidth === imgHeight) {
+  //       newHeight = maxHeight;
+  //       newWidth = newHeight * aspectRatio;
+  //     }
+  //     console.log(
+  //       '현재 백그라운드이미지 크기:',
+  //       'newWidth:',
+  //       newWidth,
+  //       'newHeight:',
+  //       newHeight
+  //     );
+  //     setNewWidth(newWidth);
+  //     setNewHeight(newHeight);
+  //   }
+  // };
+  // ////////////////////////////////////////
 
-  useEffect(
-    (image) => {
-      resizeImage(image);
-    },
-    [image]
-  );
+  // useEffect(
+  //   (image) => {
+  //     resizeImage(image);
+  //   },
+  //   [image]
+  // );
 
   return (
     <s.Wrapper>
@@ -208,10 +210,8 @@ const EditorUploadModal = ({
           <s.ButtonBox
             bg={'rgba(63, 112, 255, 1)'}
             onClick={() => {
-              if(!isLogin)
-                alert('회원에게만 제공되는 서비스입니다.');
-              else
-              setIsOpenCollectionModal(true);
+              if (!isLogin) alert('회원에게만 제공되는 서비스입니다.');
+              else setIsOpenCollectionModal(true);
             }}
           >
             <s.Icon src={MyPage} width={50} height={50}></s.Icon>

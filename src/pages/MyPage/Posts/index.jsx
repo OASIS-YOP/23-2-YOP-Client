@@ -169,9 +169,18 @@ const ArtistPosts = ({
           <s.postInfoWrapper>
             <s.nicknameWrapper>{post.nickname}</s.nicknameWrapper>
             <s.tagsWrapper>
-              #{post.enterComp} #{post.groupName} <br />
-              {post.groupName === post.memberName ? '' : `#${post.memberName}`}#
-              {post.albumName}
+              <s.tag>
+                #{post.enterComp}
+              </s.tag>
+              <s.tag>
+                #{post.groupName}
+              </s.tag>
+              <s.tag>
+                {post.groupName === post.memberName ? '' : `#${post.memberName}`}
+              </s.tag>
+              <s.tag>
+                #{post.albumName}
+              </s.tag>
             </s.tagsWrapper>
             <s.dateWrapper>
               {post.postDateTime?.slice(0, post.postDateTime?.indexOf('T'))}

@@ -8,7 +8,7 @@ export const ArtistsTabWrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
 
-  width: 100%;
+  width: 90%;
   height: 30px;
 
   padding-left: 80px;
@@ -52,7 +52,7 @@ export const ContentsWrapper = styled.div`
   align-items: center;
   flex-wrap: nowrap;
 
-  width: 100%;
+  width: 95%;
   height: fit-content;
 
   margin: 0 13px;

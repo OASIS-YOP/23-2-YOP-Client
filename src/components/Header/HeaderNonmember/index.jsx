@@ -3,22 +3,27 @@ import React from 'react';
 import Blogo from '../../../assets/Blogo.svg';
 import Avatar from '../../../assets/Avatar.svg';
 
+import Modal from 'react-modal';
+import { Join } from '../../JoinModal';
+import { LoginInEditor } from '../../LoginModal/InEditor';
+
 import { useRecoilState } from 'recoil';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { myProfileState } from '../../../recoil/user';
 
 const HeaderNonmember = () => {
   const onClickMenu = (e) => {
-    if (window.confirm('변경사항이 저장되지 않습니다. 저장하지 않고 계속 하시겠습니까?')) {
-      const menuIndex = e.target.dataset.menuIndex;
+    const menuIndex = e.target.dataset.menuIndex;
         if (menuIndex === '1') {
-          window.location.href = '/';
+         
         } else if ( menuIndex === '2') {
           
         }
-    } else {
-      return;
-    }
+    // if (window.confirm('변경사항이 저장되지 않습니다. 저장하지 않고 계속 하시겠습니까?')) {
+
+    // } else {
+    //   return;
+    // }
   };
 
   const adPhrases = [ 
@@ -30,6 +35,41 @@ const HeaderNonmember = () => {
 
   const randomPhrases = adPhrases[Math.floor(Math.random() * adPhrases.length)];
 
+  const [isClickedLogin, setIsClickedLogin] = useState(false);
+  const [isClickedJoin, setIsClickedJoin] = useState(false);
+
+  const onClickLogin = () => {
+    setIsClickedLogin((prev) => !prev);
+  };
+  const onClickJoin = () => {
+    setIsClickedJoin((prev) => !prev);
+  };
+  // 모달 스타일
+  const LoginModalStyle = {
+    overlay: {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: 'rgba(0,0,0, 0.7)',
+      zIndex: 998,
+    },
+    content: {
+      display: 'flex',
+      justifyContent: 'center',
+      backgroundColor: 'white',
+      overflow: 'auto',
+      width: 'fit-content',
+      height: 'fit-content',
+      margin: 'auto auto',
+      WebkitOverflowScrolling: 'touch',
+      borderRadius: '15px',
+      outline: 'none',
+      zIndex: 10,
+    },
+  };
+  
   return (
     <>
       <s.Header >
@@ -39,9 +79,30 @@ const HeaderNonmember = () => {
         <s.MenuWrapper>
           <s.Description>{ randomPhrases }</s.Description>
           <s.JoinButton 
-            onClick={onClickMenu} data-menu-index='4'>
-            회원가입하기
+            onClick={onClickJoin} data-menu-index='2'>
+            회원가입
           </s.JoinButton>
+          <Modal
+                isOpen={isClickedJoin}
+                style={LoginModalStyle}
+                onRequestClose={onClickJoin} // 오버레이나 esc를 누르면 핸들러 동작
+                ariaHideApp={false}
+              >
+                <Join />
+              </Modal>
+          <s.LogInButton
+            onClick={onClickLogin} data-menu-index='3'
+          >
+            로그인
+          </s.LogInButton>
+          <Modal
+            isOpen={isClickedLogin}
+            style={LoginModalStyle}
+            onRequestClose={onClickLogin} // 오버레이나 esc를 누르면 핸들러 동작
+            ariaHideApp={false}
+          >
+            <LoginInEditor />
+          </Modal>
           <s.UserWrapper>
           </s.UserWrapper>
         </s.MenuWrapper>

@@ -37,14 +37,18 @@ const MyCollectionModal = ({
 
   const getMyCollectionArtistTab = () => {
     mypageAPI.getMyCollectionArtistTab().then((data) => {
-      setArtistList(data.collectionArtistList);
-      setSelectedArtist(data.collectionArtistList[0].artistId);
+      setArtistList(data?.collectionArtistList);
+      setSelectedArtist(data?.collectionArtistList[0]?.artistId);
+      setArtistList(data?.collectionArtistList);
+      setSelectedArtist(data?.collectionArtistList[0]?.artistId);
     });
   };
   const getMyActiveCollection = () => {
     mypageAPI.getMyActiveCollection(selectedArtist).then((data) => {
-      console.log(data.activeCollectionList);
-      setActivatedCollection(data.activeCollectionList);
+      console.log(data?.activeCollectionList);
+      setActivatedCollection(data?.activeCollectionList);
+      console.log(data?.activeCollectionList);
+      setActivatedCollection(data?.activeCollectionList);
     });
   };
 
@@ -55,8 +59,10 @@ const MyCollectionModal = ({
   };
 
   const onClickPhotocard = (photocard) => {
+    // setImage(photocard);
+    // console.log(photocard);
     setIsOpenCollectionModal(false);
-    isOpenCollectionModal && setIsOpenUploadModal(false);
+    setIsOpenUploadModal(false);
 
     new fabric.Image.fromURL(
       photocard,
@@ -90,12 +96,15 @@ const MyCollectionModal = ({
         if (image) {
           canvas.remove(image);
         }
-
         canvas.add(imgFile);
-        setImage(imgFile);
         setIsBackImgEmpty(false);
 
-        canvas.renderAll();
+        // 이미지가 캔버스에 추가된 후 모달을 닫습니다.
+        setIsOpenCollectionModal(false);
+        setIsOpenUploadModal(false);
+
+        // canvas.renderAll();
+        setImage(imgFile);
       },
       { crossOrigin: 'anonymous' }
     );
@@ -104,10 +113,10 @@ const MyCollectionModal = ({
     return (
       <s.ArtistsTab
         key={`collectionArtist_${item?.artistId}`}
-        onClick={() => onClickArtist(item.artistId)}
-        className={item.artistId === selectedArtist ? 'active' : ''}
+        onClick={() => onClickArtist(item?.artistId)}
+        className={item?.artistId === selectedArtist ? 'active' : ''}
       >
-        {item.groupName}
+        {item?.groupName}
       </s.ArtistsTab>
     );
   });
@@ -123,43 +132,55 @@ const MyCollectionModal = ({
     <s.Wrapper>
       <s.ModalTitle>내 컬렉션</s.ModalTitle>
       <s.BodyWrapper>
+        { artists.length === 0 ? (
+          <>
+            최애 아티스트를 추가해주세요!
+          </>
+        ): (
+          <>
         <s.ArtistsTabWrapper>{artists}</s.ArtistsTabWrapper>
         {!isCollectionClicked ? (
           <s.CollectionCardsContainer>
-            {activatedCollection &&
+            {activatedCollection.length !== 0 ? (
               activatedCollection.map((item) => {
                 return (
                   <s.CollectionCardWrapper styled={{ cursor: 'pointer' }}>
                     <s.ActivatedCollectionCardWrapper
-                      onClick={() => onClickCollection(item.albumName)}
+                      onClick={() => onClickCollection(item?.albumName)}
                       onMouseOut={onHandleMouseOut}
                       onMouseOver={onHandleMouseOver}
                     >
                       <s.CollectionCardImage
-                        src={item.albumJacket}
+                        src={item?.albumJacket}
                         alt='collection'
                       />
                       {isMouseOver && (
                         <s.CollectionInfoWrapper>
                           <s.CollectionCardInfo>
-                            {item.albumName}
+                            {item?.albumName}
                             <br />
-                            활성일 : {item.activeDateTime}
+                            활성일 : {item?.activeDateTime}
                             <br />
                             {/* 수정요망 */}
                             수집률 :{' '}
-                            {Math.round((1 / item.photoCardQuant) * 100)}%
+                            {Math.round((1 / item?.photoCardQuant) * 100)}%
                             <br />
                             {/* 내가가진포카수 구해서 넣어야함 */}
                             포카수 : 1/
-                            {item.photoCardQuant}장
+                            {item?.photoCardQuant}장
                           </s.CollectionCardInfo>
                         </s.CollectionInfoWrapper>
                       )}
                     </s.ActivatedCollectionCardWrapper>
                   </s.CollectionCardWrapper>
                 );
-              })}
+              })
+            ) : (
+              <>
+                컬렉션을 활성화해주세요!
+              </>
+            )
+            }
           </s.CollectionCardsContainer>
         ) : (
           <ModalCollectionDetails
@@ -169,6 +190,8 @@ const MyCollectionModal = ({
             setPhotocardId={setPhotocardId}
           />
         )}
+        </>
+        )}  
       </s.BodyWrapper>
     </s.Wrapper>
   );
@@ -186,8 +209,8 @@ const ModalCollectionDetails = ({
     mypageAPI
       .getCollectionActivePhotocard(decodeURI(selectedCollection))
       .then((data) => {
-        console.log('활성화된포카', data.ActivePhotocardList);
-        setActivePhotocard(data.ActivePhotocardList);
+        console.log('활성화된포카', data?.ActivePhotocardList);
+        setActivePhotocard(data?.ActivePhotocardList);
       });
   };
 
@@ -204,18 +227,18 @@ const ModalCollectionDetails = ({
             return (
               <s.PhotoCardContainer className={selectedArtist}>
                 <s.MemberName className={selectedArtist}>
-                  {item.memberName}
+                  {item?.memberName}
                 </s.MemberName>
                 <s.PhotocardImageFrame
                   className={String(selectedArtist)}
                   onClick={() => {
-                    onClickPhotocard(item.photocard);
-                    setPhotocardId(item.photocardId);
+                    onClickPhotocard(item?.photocard);
+                    setPhotocardId(item?.photocardId);
                   }}
                 >
                   <s.PhotocardImage
-                    key={`Modalphotocard_${item.photocardId}`}
-                    src={item.photocard}
+                    key={`Modalphotocard_${item?.photocardId}`}
+                    src={item?.photocard}
                     alt='photocard'
                   />
                 </s.PhotocardImageFrame>

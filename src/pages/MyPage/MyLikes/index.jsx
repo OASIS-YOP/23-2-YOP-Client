@@ -35,6 +35,7 @@ const MyLikes = () => {
                 flexDirection: 'column',
                 justifyContent: 'center',
                 alignItems: 'center',
+                paddingTop: '30px',
               }}
             >마음에 드는 도안에 좋아요를 눌러보세요!</s.NoLikes>
           ) : (
@@ -92,9 +93,18 @@ const MyLikePost = ({ item, updateMyLike }) => {
         <s.postInfoWrapper>
           <s.nicknameWrapper>{item.nickname}</s.nicknameWrapper>
           <s.tagsWrapper >
-            #{item.enterComp} #{item.groupName} <br />
-            {item.groupName === item.memberName ? '' : `#${item.memberName}`}#
-            {item.albumName}
+            <s.tag>
+            #{item.enterComp}
+            </s.tag>
+            <s.tag>
+              #{item.groupName}
+            </s.tag>
+            <s.tag>
+              {item.groupName === item.memberName ? '' : `#${item.memberName}`}
+            </s.tag>
+            <s.tag>
+              #{item.albumName}
+            </s.tag>
           </s.tagsWrapper>
           <s.dateWrapper>
             {item?.postDateTime?.slice(0, item?.postDateTime.indexOf('T'))}

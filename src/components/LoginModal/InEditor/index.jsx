@@ -2,16 +2,15 @@ import * as s from './modal.style.js';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { LoginState, myProfileState } from '../../recoil/user.js';
+import { LoginState } from '../../../recoil/user.js';
 
-import landingpageAPI from '../../api/landingpage/landingpageAPI.js';
+import landingpageAPI from '../../../api/landingpage/landingpageAPI.js';
 
-export const Login = () => {
+export const LoginInEditor = () => {
   const [user, setUser] = useState({
     username: '',
     password: '',
   });
-
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
   const [accessToken, setAccessToken] = useState();
   const navigate = useNavigate();
@@ -28,9 +27,8 @@ export const Login = () => {
       if (data) {
         console.log(data);
         localStorage.setItem('atk', data.token);
-        window.alert('회원님, 환영합니다!');
         setAccessToken(data.token);
-        navigate('/mainpage');
+        // window.alert('로그인 성공했습니다.');
         setIsLoggedIn(true);
       } else {
         console.log('로그인 실패');

@@ -123,19 +123,30 @@ export const tagsWrapper = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
 
-  min-width: 150px;
-  max-width: 175px;
+  min-width: 160px;
+  max-width: 200px;
   width: 100%;
 
   margin: 10px 0;
 
   color: #3f70ff;
+/* 
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 19px;
+  font-weight: 800; */
 
+  //한줄에 태그 두개씩만 들어가게 하기 추후 기능 필요
+`;
+
+export const tag = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: fit-content;
   font-family: 'Noto Sans KR', sans-serif;
   font-size: 19px;
   font-weight: 800;
-
-  //한줄에 태그 두개씩만 들어가게 하기 추후 기능 필요
 `;
 
 export const dateWrapper = styled.div`

@@ -146,19 +146,18 @@ export const ScrollToTopButton = styled.button`
   position: fixed;
   bottom: 20px;
   right: 20px;
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   border: none;
   background-color: #3f70ff;
   color: white;
-  
+
   font-family: 'Noto Sans KR', sans-serif;
-  font-size: 20px;
+  font-size: 13px;
   cursor: pointer;
   transition: all 0.1s linear;
   &:hover {
     transform: scale(1.1);
   }
 `;
-

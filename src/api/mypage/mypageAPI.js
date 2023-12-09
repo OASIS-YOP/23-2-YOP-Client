@@ -46,11 +46,9 @@ const mypageAPI = {
   deleteMyPost: async (postId) => {
     try {
       const path = `${process.env.REACT_APP_BASE_URL}/mypage/myPost/delete/${postId}`;
-      const response = await HttpClient.delete(
-        path,
-
-        { Authorization: accessToken }
-      );
+      const response = await HttpClient.delete(path, {
+        Authorization: accessToken,
+      });
       return response;
     } catch (e) {
       return null;
@@ -113,6 +111,19 @@ const mypageAPI = {
   getCollectionActivePhotocard: async (albumName) => {
     try {
       const path = `${process.env.REACT_APP_BASE_URL}/mypage/myCollection/${albumName}/activePhotocard`;
+      const response = await HttpClient.get(
+        path,
+        {},
+        { Authorization: accessToken }
+      );
+      return response;
+    } catch (e) {
+      return null;
+    }
+  },
+  getActivePhotocardQuant: async (albumName) => {
+    try {
+      const path = `${process.env.REACT_APP_BASE_URL}/${albumName}/activePhotocardQuant`;
       const response = await HttpClient.get(
         path,
         {},
@@ -207,12 +218,12 @@ const mypageAPI = {
   collectionActivate: async (albumName, code) => {
     try {
       const path = `${process.env.REACT_APP_BASE_URL}/mypage/myCollection/${albumName}/collectionActivation`;
-      const response = await HttpClient.post(path, JSON.stringify(code), {
+      const response = await HttpClient.post(path, code, {
         Authorization: accessToken,
       });
       return response;
     } catch (e) {
-      return null;
+      return e;
     }
   },
   photocardActivate: async (albumName) => {
