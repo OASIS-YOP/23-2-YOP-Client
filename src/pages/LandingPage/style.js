@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const Wrapper = styled.div`
   width: 100%;
   height: 100%;
+  min-width: 1000px;
   display: flex;
 `;
 
@@ -49,13 +50,32 @@ export const ContentWrapper = styled.div`
 export const TextWrapper = styled.div`
   width: 100%;
   height: 70%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: flex-start;
+`;
+
+export const TextWrapperRight = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  height: 70%;
 `;
 
 export const ButtonContainer = styled.div`
-  margin: 0 auto;
-  padding: 10px;
+  margin: 30px auto 0 auto;
   width: 50%;
-  height: 20vh;
+  height: fit-content;
+`;
+
+export const ButtonContainerBottom = styled.div`
+  margin: 0 auto;
+  width: 50%;
+  height: fit-content;
 `;
 
 export const Button = styled.button`

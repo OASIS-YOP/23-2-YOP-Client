@@ -63,7 +63,7 @@ const LandingPage = () => {
       <s.RightContainer>
         <s.Header></s.Header>
         <s.ContentWrapper>
-          <s.TextWrapper style={{ textAlign: 'center' }}>
+          <s.TextWrapperRight style={{ textAlign: 'center' }}>
             <h1>
               나만의 폴꾸에서
               <br />
@@ -89,7 +89,8 @@ const LandingPage = () => {
               >
                 <Join />
               </Modal>
-
+              </s.ButtonContainer>
+              <s.ButtonContainerBottom>
               <s.Button
                 style={{
                   width: 150,
@@ -102,8 +103,8 @@ const LandingPage = () => {
               >
                 로그인 없이 폴꾸하기
               </s.Button>
-            </s.ButtonContainer>
-          </s.TextWrapper>
+            </s.ButtonContainerBottom>
+          </s.TextWrapperRight>
         </s.ContentWrapper>
       </s.RightContainer>
     </s.Wrapper>
