@@ -6,6 +6,7 @@ import commonAPI from '../../../api/commonAPI';
 
 const PostModal = ({ item }) => {
   const [isLikePost, setIsLikePost] = useState();
+  const [postLikeQuant, setPostLikeQuant] = useState();
 
   const postLike = () => {
     commonAPI.postLike(item.postId).then((data) => {
@@ -31,6 +32,10 @@ const PostModal = ({ item }) => {
       setIsLikePost(data);
       console.log(`${item.postId}의 좋아요여부: ${data}`);
     });
+  };
+
+  const getPostLikeQuant = () => {
+    commonAPI.getPostLikeQuant(item.postId).then(() => {});
   };
 
   const handleClickLikeIcon = () => {
