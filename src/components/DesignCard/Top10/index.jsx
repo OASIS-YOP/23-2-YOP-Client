@@ -61,12 +61,20 @@ const Top10DesignCard = ({ photo, index, updateHot10 }) => {
           </s.likeWrapper>
         </s.ContentLiked>
         <s.ContentText>{photo.nickname}</s.ContentText>
-        <s.ContentText>
-          #{photo.enterComp}#{photo.groupName}
-          <br />
-          {photo.groupName === photo.memberName ? '' : photo.memberName}#
-          {photo.albumName}
-        </s.ContentText>
+        <s.tagsWrapper>
+        <s.tag>
+          #{photo.enterComp}
+        </s.tag>
+        <s.tag>
+          #{photo.groupName}
+        </s.tag>
+        <s.tag>
+         {photo.groupName === photo.memberName ? '' : photo.memberName}
+        </s.tag>
+        <s.tag>
+          #{photo.albumName}
+        </s.tag>
+        </s.tagsWrapper>
       </s.ContentContainer>
     </s.Wrapper>
   );

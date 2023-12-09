@@ -8,7 +8,7 @@ export const Wrapper = styled.div`
 
   width: 100%;
   min-width: 1200px;
-  height: 100%;
+  height: 90%;
 
   //드래그 방지
   -webkit-user-select: none;
@@ -42,7 +42,7 @@ export const LeftContainer = styled.div`
   background-color: transparent;
 
   width: 70%;
-  height: 100%;
+  height: fit-content;
 `;
 
 export const TopMenuWrapper = styled.div`
@@ -155,7 +155,7 @@ export const CanvasSpaceWrapper = styled.div`
   width: 100%;
   height: 100%;
 
-  padding: 7vh 0;
+  padding: 10px 0;
 
   background-color: #f5f5f5;
 `;
@@ -300,7 +300,7 @@ export const RightContainer = styled.div`
 
   width: 30%;
   min-width: 450px;
-  height: 100%;
+  height: fit-content;
 
   /* border: 1px solid blue; */
 
@@ -340,7 +340,7 @@ export const ToolLabel = styled.button`
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
 
-  padding: 15px;
+  padding: 10px;
 
   cursor: pointer;
 

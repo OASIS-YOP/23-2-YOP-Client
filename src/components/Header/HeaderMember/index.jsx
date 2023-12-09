@@ -11,6 +11,9 @@ import mypageAPI from '../../../api/mypage/mypageAPI';
 
 const HeaderMember = () => {
   const [ isLogin, setLogin ] = useRecoilState(LoginState);
+  const [myProfile, setMyProfile] = useRecoilState(myProfileState);
+  const resetMyProfile = useResetRecoilState(myProfileState);
+
   const getMyProfile = () => {
     mypageAPI
       .getMyProfile()
@@ -21,8 +24,11 @@ const HeaderMember = () => {
     getMyProfile();
   }, []);
 
-  const [myProfile, setMyProfile] = useRecoilState(myProfileState);
-  const resetMyProfile = useResetRecoilState(myProfileState);
+  const onClickLogOut = () => {
+    setLogin(false);
+    resetMyProfile(myProfileState);
+    localStorage.removeItem('atk');
+  };
 
   const onClickMenu = (e) => {
     if (window.confirm('변경사항이 저장되지 않습니다. 저장하지 않고 계속 하시겠습니까?')) {
@@ -34,7 +40,7 @@ const HeaderMember = () => {
       } else if (menuIndex === '3') {
         window.location.href = '/allartist';
       } else if (menuIndex === '4') {
-        setLogin(false)
+        onClickLogOut();
         window.location.href = '/editor';
       } else if (menuIndex === '5') {
         window.location.href = '/mypage';
@@ -42,11 +48,6 @@ const HeaderMember = () => {
     } else {
       return;
     }
-  };
-
-  const onClickLogOut = () => {
-    setLogin(false);
-    resetMyProfile();
   };
 
   return (

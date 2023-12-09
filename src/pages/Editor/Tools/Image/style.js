@@ -112,8 +112,6 @@ export const Filter = styled.div`
 
   margin: 5px 0;
 
-  margin-collase: collapse;
-
 `;
 
 export const FilterIcon = styled.div`

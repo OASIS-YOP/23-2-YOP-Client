@@ -119,8 +119,47 @@ export const JoinButton = styled.button`
   color: white;
 
   border-radius: 20px;
+  
+  margin-right: 10px;
 
-  width: 108px;
+  width: 100px;
+  height: 30px;
+
+  &:hover {
+    filter: brightness(0.8);
+  }
+
+  &:active {
+    filter: brightness(1);
+  }
+  /* &:after {
+    display: block;
+    content: '';
+    border-bottom: 2px solid black;
+    transform: scaleX(0);
+    transition: transform 250ms ease-in-out;
+  }
+  &:hover:after {
+    transform: scaleX(1);
+  } */
+
+`;
+
+export const LogInButton = styled.button`
+  border: none;
+
+  cursor: pointer;
+
+  font-weight: 500;
+  font-size: 14px;
+  font-family: 'Noto Sans KR', sans-serif;
+
+  background-color: rgba(204, 208, 221, 1);
+  color: white;
+
+  border-radius: 20px;
+
+  width: 100px;
   height: 30px;
 
   &:hover {

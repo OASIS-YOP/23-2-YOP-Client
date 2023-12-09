@@ -3,19 +3,20 @@ import styled from 'styled-components';
 export const BannerWrapper = styled.div`
   display: flex;
   align-items: center;
-  width: 1800px;
+  width: 100vw;
   background-color: white;
-  margin-bottom: 0;
-  padding-left: 120px;
   scroll-snap-align: center;
 `;
 
 export const BannerContent = styled.div`
-  width: 100%;
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
   color: white;
 
+
   & > img {
-    width: 1500px;
+    width: 100%;
     object-fit: fill;
   }
 `;

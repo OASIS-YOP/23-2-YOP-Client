@@ -1439,6 +1439,24 @@ const Editor = () => {
             </s.TopMenuGroupWrapper>
           </s.TopMenuWrapper>
           <s.CanvasSpaceWrapper>
+          <s.LayerButtonWrapper style={{ marginTop: '10px' }}>
+              <s.SelectedObjects style={{ marginRight: '20px' }}>
+                선택된 오브젝트:{' '}
+                {selectedObject?.length ? selectedObject.length : 0}/
+                {objects?.length}
+              </s.SelectedObjects>
+              <s.DeleteButton
+                id='deleteObjects'
+                onClick={handleDeleteObject}
+                disabled={selectedObject?.length > 0 ? false : true}
+              >
+                <s.DeleteButtonLabel
+                  isActive={selectedObject?.length > 0 ? true : false}
+                >
+                  지우기
+                </s.DeleteButtonLabel>
+              </s.DeleteButton>
+            </s.LayerButtonWrapper>
             <s.CanvasWrapper
               onContextMenu={handleContextMenu} // 컨텍스트 메뉴 표시 이벤트
               onClick={closeContextMenu} // 컨텍스트 메뉴 영역 외 클릭 시 컨텍스트 메뉴 닫기
@@ -1534,24 +1552,6 @@ const Editor = () => {
                   {imageLock ? '잠금해제' : '이미지 잠금'}
                 </s.LayerButtonLabel>
               </s.LayerButton>
-            </s.LayerButtonWrapper>
-            <s.LayerButtonWrapper style={{ marginTop: '20px' }}>
-              <s.SelectedObjects style={{ marginRight: '20px' }}>
-                선택된 오브젝트:{' '}
-                {selectedObject?.length ? selectedObject.length : 0}/
-                {objects?.length}
-              </s.SelectedObjects>
-              <s.DeleteButton
-                id='deleteObjects'
-                onClick={handleDeleteObject}
-                disabled={selectedObject?.length > 0 ? false : true}
-              >
-                <s.DeleteButtonLabel
-                  isActive={selectedObject?.length > 0 ? true : false}
-                >
-                  지우기
-                </s.DeleteButtonLabel>
-              </s.DeleteButton>
             </s.LayerButtonWrapper>
           </s.CanvasSpaceWrapper>
         </s.LeftContainer>

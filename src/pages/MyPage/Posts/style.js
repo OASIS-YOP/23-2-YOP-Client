@@ -7,6 +7,7 @@ export const Wrapper = styled.div`
   width: 100%;
   height: 100%;
 
+
   min-width: 1000px;
 
   //드래그 방지
@@ -22,7 +23,7 @@ export const ArtistsTabWrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
 
-  width: 100%;
+  width: 95%;
   height: 30px;
 
   padding-left: 40px;
@@ -180,18 +181,29 @@ export const tagsWrapper = styled.div`
   flex-wrap: wrap;
 
   min-width: 160px;
-  max-width: 100px;
-  width: 20%;
+  max-width: 200px;
+  width: 100%;
 
   margin: 10px 0;
 
   color: #3f70ff;
-
+/* 
   font-family: 'Noto Sans KR', sans-serif;
-  font-size: 95%;
-  font-weight: 700;
+  font-size: 19px;
+  font-weight: 800; */
 
   //한줄에 태그 두개씩만 들어가게 하기 추후 기능 필요
+`;
+
+export const tag = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: fit-content;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 19px;
+  font-weight: 800;
 `;
 
 export const dateWrapper = styled.div`

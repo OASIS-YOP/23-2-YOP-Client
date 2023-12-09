@@ -27,7 +27,7 @@ export const ContentWrapper = styled.div`
 
 export const CardWrapper = styled.div`
   display: flex;
-  width: fit-content;
+  width: 100vw;
   flex-direction: row;
 `;
 
