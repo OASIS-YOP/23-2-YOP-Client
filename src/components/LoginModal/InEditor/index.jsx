@@ -2,7 +2,7 @@ import * as s from './modal.style.js';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { LoginState } from '../../../states/LoginState.js';
+import { LoginState } from '../../../recoil/user.js';
 
 import landingpageAPI from '../../../api/landingpage/landingpageAPI.js';
 

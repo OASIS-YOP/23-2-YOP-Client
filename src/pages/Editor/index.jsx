@@ -35,7 +35,7 @@ import editorpageAPI from '../../api/editorpage/editorpageAPI';
 import ContextMenu from './ContextMenu';
 import EditorUploadModal from '../../components/EditorUploadModal';
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
-import { 
+import {
   brightnessValue,
   contrastValue,
   saturationValue,
@@ -50,27 +50,26 @@ import {
   // historyState,
   // currentStateIndexState,
 } from '../../recoil/atoms';
-import { LoginState } from '../../states/LoginState';
-import { myProfileState } from '../../recoil/user';
+import { myProfileState, LoginState } from '../../recoil/user';
 import { active } from 'sortablejs';
 
 import 'fabric-history';
 
-// import CanvasHistory from './utils/CanvasHistory'; 
+// import CanvasHistory from './utils/CanvasHistory';
 const Editor = () => {
   fabric.textureSize = 16000;
-  const [ brightness , setBrightness ] = useRecoilState(brightnessValue);
-  const [ contrast , setContrast ] = useRecoilState(contrastValue);
-  const [ saturation , setSaturation ] = useRecoilState(saturationValue);
-  const [ rotation, setRotation ] = useRecoilState(rotationValue);
-  const [ scale, setScale ] = useRecoilState(scaleValue);
-  const [ reverseXToggle, setReverseXToggle ] = useRecoilState(reverseXState);
-  const [ reverseYToggle, setReverseYToggle ] = useRecoilState(reverseYState);
-  const [ applyGray, setApplyGray ] = useRecoilState(applyGrayState);
+  const [brightness, setBrightness] = useRecoilState(brightnessValue);
+  const [contrast, setContrast] = useRecoilState(contrastValue);
+  const [saturation, setSaturation] = useRecoilState(saturationValue);
+  const [rotation, setRotation] = useRecoilState(rotationValue);
+  const [scale, setScale] = useRecoilState(scaleValue);
+  const [reverseXToggle, setReverseXToggle] = useRecoilState(reverseXState);
+  const [reverseYToggle, setReverseYToggle] = useRecoilState(reverseYState);
+  const [applyGray, setApplyGray] = useRecoilState(applyGrayState);
 
-  const [ newHeight, setNewHeight ] = useRecoilState(resizeHeight);
-  const [ newWidth, setNewWidth ] = useRecoilState(resizeWidth);
-  
+  const [newHeight, setNewHeight] = useRecoilState(resizeHeight);
+  const [newWidth, setNewWidth] = useRecoilState(resizeWidth);
+
   // const canvasHistory = useMemo(() => new CanvasHistory(), []);
 
   const [undoButtonDisabled, setUndoButtonDisabled] = useState(true);
@@ -85,7 +84,6 @@ const Editor = () => {
   const [isLogedIn, setIsLogedIn] = useRecoilState(LoginState);
   const resetProfile = useResetRecoilState(myProfileState);
 
-
   // 우선은 항상 로그인 상태로 설정
   useEffect(() => {
     // if (isLogedIn) {
@@ -95,7 +93,6 @@ const Editor = () => {
     // }
     // setIsLogedIn(true);
   }, []);
-      
 
   // 캔버스 스테이트
   const [canvas, setCanvas] = useState();
@@ -225,8 +222,6 @@ const Editor = () => {
     cornerSize: 10,
     perPixelTargetFind: true,
     borderDashArray: [3, 3],
-
-
   });
 
   ////// 캔버스 관리 ///////
@@ -546,9 +541,7 @@ const Editor = () => {
 
       canvas.off('object:removed', (e) => {
         updateObjects();
-      }
-      );
-
+      });
     }
   }, [canvas]);
 
@@ -584,7 +577,7 @@ const Editor = () => {
       canvas.on('selection:cleared', (e) => {
         setSelectedObject();
       });
-      image.on('mousedown', (e) => {
+      image?.on('mousedown', (e) => {
         canvas.discardActiveObject();
         setSelectedObject(null);
       });
@@ -889,32 +882,41 @@ const Editor = () => {
   /////// 오브젝트 z-index 관리 ////////
   // 맨 뒤로 보내기
 
-  const isFrame = canvas?.getObjects()?.find((object) => object.class === 'frame');
-  const isBackImg = canvas?.getObjects()?.find((object) => object.id === 'backImg');
+  const isFrame = canvas
+    ?.getObjects()
+    ?.find((object) => object.class === 'frame');
+  const isBackImg = canvas
+    ?.getObjects()
+    ?.find((object) => object.id === 'backImg');
   const sendToBack = () => {
     if (selectedObject) {
       const index = canvas.getObjects().indexOf(canvas.getActiveObject());
       //프레임 없을 때
-      if(!isFrame) {
+      if (!isFrame) {
         // 이미지 제외 오브젝트 수가 1개보다 많을 때
-        if(canvas?.getObjects().length > 2) {
+        if (canvas?.getObjects().length > 2) {
           // 선택된 오브젝트가 다중 객체일 때
-          if(canvas?.getActiveObject().type === 'activeSelection') {
+          if (canvas?.getActiveObject().type === 'activeSelection') {
             // 선택된 오브젝트 리스트
             const activeObjects = canvas?.getActiveObject()?.getObjects();
             console.log('선택된 오브젝트 리스트: ', activeObjects);
             // 선택되지 않은 오브젝트 리스트
-            const nonActiveObjects = canvas?.getObjects().filter((obj) => !activeObjects.includes(obj));
+            const nonActiveObjects = canvas
+              ?.getObjects()
+              .filter((obj) => !activeObjects.includes(obj));
             console.log('선택되지 않은 오브젝트 리스트:', nonActiveObjects);
 
             // 선택되지 않은 오브젝트 수가 이미지 제외 없을 때
-            if( nonActiveObjects.length < 2 ) {
+            if (nonActiveObjects.length < 2) {
               console.log('이미 맨 뒤에 있음');
             } else {
               // 선택되지 않은 오브젝트 수가 이미지 제외 1개 이상일 때
-              const allZIndicesLessThanOthers = activeObjects.every(obj => canvas.getObjects().indexOf(obj) <= nonActiveObjects.length );
-              if(allZIndicesLessThanOthers) {
-                console.log('전부 맨 뒤에 있음?:', allZIndicesLessThanOthers)
+              const allZIndicesLessThanOthers = activeObjects.every(
+                (obj) =>
+                  canvas.getObjects().indexOf(obj) <= nonActiveObjects.length
+              );
+              if (allZIndicesLessThanOthers) {
+                console.log('전부 맨 뒤에 있음?:', allZIndicesLessThanOthers);
                 // 선택된 오브젝트의 z-index가 선택되지 않은 오브젝트들의 z-index보다 작거나 같을 때
                 console.log('이미 맨 뒤에 있음');
               } else {
@@ -924,8 +926,10 @@ const Editor = () => {
 
                 console.log('다중객체 인덱스 수정중');
                 console.log(activeObjects);
-                activeObjects.reverse().forEach(obj => canvas.sendToBack(obj));
-                canvas.sendToBack( isBackImg );  
+                activeObjects
+                  .reverse()
+                  .forEach((obj) => canvas.sendToBack(obj));
+                canvas.sendToBack(isBackImg);
                 canvas.renderAll();
 
                 console.log(canvas.getObjects());
@@ -934,55 +938,62 @@ const Editor = () => {
           } else {
             // 선택된 객체가 단일 객체일 때
 
-            if( index > 1 ) {
+            if (index > 1) {
               // 선택된 객체의 z-index가 이미지 제외 오브젝트의 z-index보다 클 때
               console.log('단일객체 인덱스 수정중');
-              console.log('인덱스: ',index);
+              console.log('인덱스: ', index);
               canvas?.sendToBack(canvas.getActiveObject());
-              canvas.sendToBack( isBackImg );  
+              canvas.sendToBack(isBackImg);
               canvas.renderAll();
 
               console.log('모든 오브젝트 리스트 :', canvas.getObjects());
             } else {
               // 선택된 객체의 z-index가 이미지 제외 오브젝트의 z-index보다 작거나 같을 때
               console.log('이미 맨 뒤에 있음');
-              console.log('인덱스: ',index);
+              console.log('인덱스: ', index);
             }
           }
         } else {
           // 이미지 제외 오브젝트 수가 1개일 때
-            console.log('이미 맨 뒤에 있음');
-            console.log('인덱스: ',index);
+          console.log('이미 맨 뒤에 있음');
+          console.log('인덱스: ', index);
         }
       } else {
         // 프레임 있을 때
         // 프레임과 이미지 제외 오브젝트 수가 1개보다 많을 때
-        if(canvas?.getObjects().length > 3 ) {
+        if (canvas?.getObjects().length > 3) {
           // 선택된 오브젝트가 다중 객체일 때
-          if(canvas?.getActiveObject().type === 'activeSelection') {
+          if (canvas?.getActiveObject().type === 'activeSelection') {
             // 선택된 오브젝트 리스트
             const activeObjects = canvas?.getActiveObject()?.getObjects();
             console.log('선택된 오브젝트 리스트: ', activeObjects);
             // 선택되지 않은 오브젝트 리스트
-            const nonActiveObjects = canvas?.getObjects().filter((obj) => !activeObjects.includes(obj));
+            const nonActiveObjects = canvas
+              ?.getObjects()
+              .filter((obj) => !activeObjects.includes(obj));
             console.log('선택되지 않은 오브젝트 리스트:', nonActiveObjects);
             // 선택되지 않은 오브젝트 수가 이미지와 프레임 제외 없을 때
-            if( nonActiveObjects.length < 3 ) {
+            if (nonActiveObjects.length < 3) {
               console.log('이미 맨 뒤에 있음');
             } else {
               // 선택되지 않은 오브젝트 수가 이미지 제외 1개 이상일 때
-              const allZIndicesLessThanOthers = activeObjects.every(obj => canvas.getObjects().indexOf(obj) <= nonActiveObjects.length );
-              if(allZIndicesLessThanOthers) {
+              const allZIndicesLessThanOthers = activeObjects.every(
+                (obj) =>
+                  canvas.getObjects().indexOf(obj) <= nonActiveObjects.length
+              );
+              if (allZIndicesLessThanOthers) {
                 // 선택된 오브젝트의 z-index가 선택되지 않은 오브젝트들의 z-index보다 작거나 같을 때
-                console.log('전부 맨 뒤에 있음?:', allZIndicesLessThanOthers)
+                console.log('전부 맨 뒤에 있음?:', allZIndicesLessThanOthers);
                 console.log('이미 맨 뒤에 있음');
               } else {
                 // 선택된 오브젝트의 z-index가 선택되지 않은 오브젝트들의 z-index보다 하나라도 클 때
                 console.log('다중객체 인덱스 수정중');
                 console.log('선택된 오브젝트 리스트 :', activeObjects);
-                activeObjects.reverse().forEach(obj => canvas.sendToBack(obj));
-                canvas.sendToBack( isFrame );
-                canvas.sendToBack( isBackImg );  
+                activeObjects
+                  .reverse()
+                  .forEach((obj) => canvas.sendToBack(obj));
+                canvas.sendToBack(isFrame);
+                canvas.sendToBack(isBackImg);
                 canvas.renderAll();
 
                 console.log('모든 오브젝트 리스트 :', canvas.getObjects());
@@ -990,26 +1001,26 @@ const Editor = () => {
             }
           } else {
             // 선택된 객체가 단일 객체일 때
-            if(index > 2 ) {
+            if (index > 2) {
               // 선택된 객체의 z-index가 이미지와 프레임 제외 오브젝트의 z-index보다 클 때
               console.log('단일객체 인덱스 수정중');
-              console.log('인덱스: ',index);
+              console.log('인덱스: ', index);
               canvas?.sendToBack(canvas.getActiveObject());
-              canvas.sendToBack( isFrame );
-              canvas.sendToBack( isBackImg );  
+              canvas.sendToBack(isFrame);
+              canvas.sendToBack(isBackImg);
               canvas.renderAll();
 
               console.log('모든 오브젝트 리스트 :', canvas.getObjects());
             } else {
               // 선택된 객체의 z-index가 이미지와 프레임 제외 오브젝트의 z-index보다 작거나 같을 때
               console.log('이미 맨 뒤에 있음');
-              console.log('인덱스: ',index);
+              console.log('인덱스: ', index);
             }
           }
         } else {
           // 이미지 제외 오브젝트 수가 1개일 때
-            console.log('이미 맨 뒤에 있음');
-            console.log('인덱스: ',index);
+          console.log('이미 맨 뒤에 있음');
+          console.log('인덱스: ', index);
         }
       }
     } else {
@@ -1024,40 +1035,40 @@ const Editor = () => {
       // 선택된 객체가 있을 때
       const index = canvas.getObjects().indexOf(canvas.getActiveObject());
       //프레임 없을 때
-      if(!isFrame) {
-        if(canvas?.getObjects().length > 2) {
+      if (!isFrame) {
+        if (canvas?.getObjects().length > 2) {
           // 이미지 제외 오브젝트 수가 1개보다 많을 때
-          if( index > 1 ) {
+          if (index > 1) {
             // 선택된 객체의 z-index가 이미지 제외 오브젝트의 z-index보다 클 때
             canvas?.sendBackwards(canvas.getActiveObject());
             console.log('단일객체 인덱스 수정중');
-            console.log('인덱스: ',index);
+            console.log('인덱스: ', index);
           } else {
             console.log('이미 맨 뒤에 있음');
-            console.log('인덱스: ',index);
+            console.log('인덱스: ', index);
           }
         } else {
           // 이미지 제외 오브젝트 수가 1개일 때
-            console.log('이미 맨 뒤에 있음');
-            console.log('인덱스: ',index);
+          console.log('이미 맨 뒤에 있음');
+          console.log('인덱스: ', index);
         }
       } else {
         // 프레임 있을 때
         // 프레임과 이미지 제외 오브젝트 수가 1개보다 많을 때
-        if(canvas?.getObjects().length > 3 ) {
-          if(index > 2 ) {
+        if (canvas?.getObjects().length > 3) {
+          if (index > 2) {
             // 선택된 객체의 z-index가 이미지와 프레임 제외 오브젝트의 z-index보다 클 때
             canvas?.sendBackwards(canvas.getActiveObject());
             console.log('단일객체 인덱스 수정중');
-            console.log('인덱스: ',index);
+            console.log('인덱스: ', index);
           } else {
             console.log('이미 맨 뒤에 있음');
-            console.log('인덱스: ',index);
+            console.log('인덱스: ', index);
           }
         } else {
           // 프레임과 이미지 제외 오브젝트 수가 1개일 때
-            console.log('이미 맨 뒤에 있음');
-            console.log('인덱스: ',index);
+          console.log('이미 맨 뒤에 있음');
+          console.log('인덱스: ', index);
         }
       }
     } else {
@@ -1069,26 +1080,34 @@ const Editor = () => {
   const bringForward = () => {
     if (selectedObject) {
       // 선택된 오브젝트 있음
-      if( canvas?.getActiveObject().type === 'activeSelection' ) {
+      if (canvas?.getActiveObject().type === 'activeSelection') {
         // 선택된 오브젝트가 다중 객체일 때
         // 선택된 오브젝트 리스트
         const activeObjects = canvas?.getActiveObject()?.getObjects();
         // 선택되지 않은 오브젝트 리스트
-        const nonActiveObjects = canvas?.getObjects().filter((obj) => !activeObjects.includes(obj));
+        const nonActiveObjects = canvas
+          ?.getObjects()
+          .filter((obj) => !activeObjects.includes(obj));
         // 선택된 오브젝트 리스트의 모든 z-index가 다른 오브젝트들의 z-index보다 클 때
-        const allZIndicesMoreThanOthers = activeObjects.every(obj => canvas.getObjects().indexOf(obj) > nonActiveObjects.length - 1 );
-        if(!allZIndicesMoreThanOthers) {        
+        const allZIndicesMoreThanOthers = activeObjects.every(
+          (obj) =>
+            canvas.getObjects().indexOf(obj) > nonActiveObjects.length - 1
+        );
+        if (!allZIndicesMoreThanOthers) {
           // canvas?.forEach(obj => canvas.bringForward(obj));
           // canvas.renderAll();
           // console.log('모든 오브젝트 리스트 :', canvas.getObjects());
           // 선택된 오브젝트들을 z-index 내림차순으로 정렬
-          const sortedActiveObjects = activeObjects.sort((a, b) => canvas.getObjects().indexOf(b) - canvas.getObjects().indexOf(a));
+          const sortedActiveObjects = activeObjects.sort(
+            (a, b) =>
+              canvas.getObjects().indexOf(b) - canvas.getObjects().indexOf(a)
+          );
 
           // 정렬된 순서대로 한 단계씩 앞으로 가져오기
           sortedActiveObjects.forEach((obj, index) => {
             const currentIndex = canvas.getObjects().indexOf(obj);
             const targetIndex = nonActiveObjects.length + index;
-            
+
             // 선택된 오브젝트가 이미 최상위에 있는 경우 skip
             if (currentIndex >= targetIndex) return;
 
@@ -1101,7 +1120,10 @@ const Editor = () => {
         }
       } else {
         // 선택된 오브젝트가 단일 객체일 때
-        if (canvas?.getObjects().indexOf(canvas.getActiveObject()) < canvas?.getObjects().length - 1 ) {
+        if (
+          canvas?.getObjects().indexOf(canvas.getActiveObject()) <
+          canvas?.getObjects().length - 1
+        ) {
           canvas?.bringForward(canvas.getActiveObject());
           canvas.renderAll();
           console.log('모든 오브젝트 리스트 :', canvas.getObjects());
@@ -1118,18 +1140,23 @@ const Editor = () => {
   const bringToFront = () => {
     if (selectedObject) {
       // 선택된 오브젝트 있음
-      if ( canvas?.getActiveObject().type === 'activeSelection' ) {
+      if (canvas?.getActiveObject().type === 'activeSelection') {
         // 선택된 오브젝트가 다중 객체일 때
         // 선택된 오브젝트 리스트
         const activeObjects = canvas?.getActiveObject()?.getObjects();
         // 선택되지 않은 오브젝트 리스트
-        const nonActiveObjects = canvas?.getObjects().filter((obj) => !activeObjects.includes(obj));
+        const nonActiveObjects = canvas
+          ?.getObjects()
+          .filter((obj) => !activeObjects.includes(obj));
         // 선택된 오브젝트 리스트의 모든 z-index가 다른 오브젝트들의 z-index보다 클 때
-        const allZIndicesMoreThanOthers = activeObjects.every(obj => canvas.getObjects().indexOf(obj) > nonActiveObjects.length - 1 );
+        const allZIndicesMoreThanOthers = activeObjects.every(
+          (obj) =>
+            canvas.getObjects().indexOf(obj) > nonActiveObjects.length - 1
+        );
 
-        if(!allZIndicesMoreThanOthers) {
+        if (!allZIndicesMoreThanOthers) {
           console.log('선택된 오브젝트 리스트: ', activeObjects);
-          activeObjects.forEach(obj => canvas.bringToFront(obj));
+          activeObjects.forEach((obj) => canvas.bringToFront(obj));
           canvas.renderAll();
           console.log('모든 오브젝트 리스트 :', canvas.getObjects());
         } else {
@@ -1138,7 +1165,10 @@ const Editor = () => {
         }
       } else {
         // 선택된 오브젝트가 단일 객체일 때
-        if (canvas?.getObjects().indexOf(canvas.getActiveObject()) < canvas?.getObjects().length - 1 ) {
+        if (
+          canvas?.getObjects().indexOf(canvas.getActiveObject()) <
+          canvas?.getObjects().length - 1
+        ) {
           canvas?.bringToFront(canvas.getActiveObject());
           canvas.renderAll();
           console.log('모든 오브젝트 리스트 :', canvas.getObjects());
@@ -1156,13 +1186,13 @@ const Editor = () => {
   const hideTransformer = () => {
     canvas.selection = false;
     canvas.forEachObject((o) => {
-      if( o.class !== 'frame' && o.id !== 'backImg' ) {
-      o.selectable = false;
+      if (o.class !== 'frame' && o.id !== 'backImg') {
+        o.selectable = false;
       }
     });
     canvas.forEachObject((o) => {
-      if ( o.class !== 'frame' && o.id !== 'backImg' ) {
-      o.selectable = true;
+      if (o.class !== 'frame' && o.id !== 'backImg') {
+        o.selectable = true;
       }
     });
     canvas.selection = true;
@@ -1253,7 +1283,6 @@ const Editor = () => {
     return new File([u8arr], fileName, { type: mime });
   };
 
-  
   //이미지 내도안에 저장할 때
   const handleExportToMyDesign = () => {
     if (window.confirm('편집한 이미지를 내 도안에 저장하시겠습니까?')) {
@@ -1293,30 +1322,29 @@ const Editor = () => {
     }
   };
 
-
   // useEffect(() => {
   //   const handleObjectModified = () => {
   //     canvasHistory.recordState(canvas);
   //     setUndoButtonDisabled(false);
   //     setRedoButtonDisabled(true);
   //   };
-  
+
   //   const handleObjectAdded = () => {
   //     canvasHistory.recordState(canvas);
   //     setUndoButtonDisabled(false);
   //     setRedoButtonDisabled(true);
   //   };
-  
+
   //   const handleObjectRemoved = () => {
   //     canvasHistory.recordState(canvas);
   //     setUndoButtonDisabled(false);
   //     setRedoButtonDisabled(true);
   //   };
-  
+
   //   canvas?.on('object:modified', handleObjectModified);
   //   canvas?.on('object:added', handleObjectAdded);
   //   canvas?.on('object:removed', handleObjectRemoved);
-  
+
   //   // Cleanup 함수 등록
   //   return () => {
   //     canvas?.off('object:modified', handleObjectModified);
@@ -1439,7 +1467,7 @@ const Editor = () => {
             </s.TopMenuGroupWrapper>
           </s.TopMenuWrapper>
           <s.CanvasSpaceWrapper>
-          <s.LayerButtonWrapper style={{ marginTop: '10px' }}>
+            <s.LayerButtonWrapper style={{ marginTop: '10px' }}>
               <s.SelectedObjects style={{ marginRight: '20px' }}>
                 선택된 오브젝트:{' '}
                 {selectedObject?.length ? selectedObject.length : 0}/
@@ -1495,8 +1523,8 @@ const Editor = () => {
                 onClick={sendBackwards}
                 disabled={selectedObject?.length === 1 ? false : true}
               >
-                <s.LayerButtonIcon 
-                  src={Backward} 
+                <s.LayerButtonIcon
+                  src={Backward}
                   isActive={selectedObject?.length === 1 ? true : false}
                 />
                 <s.LayerButtonLabel
@@ -1507,18 +1535,17 @@ const Editor = () => {
               </s.LayerButton>
               <s.LayerButton
                 onClick={bringForward}
-                disabled={selectedObject?.length === 1 ? false : true}  
+                disabled={selectedObject?.length === 1 ? false : true}
               >
                 <s.LayerButtonIcon
                   src={Forward}
-                  isActive={selectedObject?.length === 1 ? true : false}  
+                  isActive={selectedObject?.length === 1 ? true : false}
                 />
                 <s.LayerButtonLabel
                   isActive={selectedObject?.length === 1 ? true : false}
                 >
                   앞으로
                 </s.LayerButtonLabel>
-                
               </s.LayerButton>
               <s.LayerButton
                 onClick={bringToFront}
@@ -1526,14 +1553,13 @@ const Editor = () => {
               >
                 <s.LayerButtonIcon
                   src={ToFront}
-                  isActive={selectedObject?.length > 0 ? true : false}  
+                  isActive={selectedObject?.length > 0 ? true : false}
                 />
                 <s.LayerButtonLabel
                   isActive={selectedObject?.length > 0 ? true : false}
                 >
                   맨 앞으로
                 </s.LayerButtonLabel>
-                
               </s.LayerButton>
             </s.LayerButtonWrapper>
             <s.LayerButtonWrapper>

@@ -25,7 +25,7 @@ const Header = () => {
     const menuIndex = e.target.dataset.menuIndex;
     if (menuIndex === '1') {
       window.location.href = '/mainpage';
-    } else if ( menuIndex === '2') {
+    } else if (menuIndex === '2') {
       window.location.href = '/editor';
     } else if (menuIndex === '3') {
       window.location.href = '/allartist';
@@ -38,22 +38,30 @@ const Header = () => {
 
   return (
     <>
-      <s.Header >
+      <s.Header>
         <s.LogoWrapper>
           <s.Logo src={Blogo} onClick={onClickMenu} data-menu-index='1' />
         </s.LogoWrapper>
         <s.MenuWrapper>
-          <s.Menu onClick={onClickMenu} data-menu-index='2'>편집기</s.Menu>
-          <s.Menu onClick={onClickMenu} data-menu-index='3'>커뮤니티</s.Menu>
+          <s.Menu onClick={onClickMenu} data-menu-index='2'>
+            편집기
+          </s.Menu>
+          <s.Menu onClick={onClickMenu} data-menu-index='3'>
+            커뮤니티
+          </s.Menu>
           <s.Menu onClick={onClickMenu} data-menu-index='4'>
             로그아웃
           </s.Menu>
           <s.UserWrapper>
             <s.IconWrapper>
-              <s.Icon src={myProfile.avatar} onClick={onClickMenu} data-menu-index='5' />
+              <s.Icon
+                src={myProfile?.avatar}
+                onClick={onClickMenu}
+                data-menu-index='5'
+              />
             </s.IconWrapper>
             <s.NicknameWrapper onClick={onClickMenu} data-menu-index='5'>
-              {myProfile.nickname}
+              {myProfile?.nickname}
             </s.NicknameWrapper>
           </s.UserWrapper>
         </s.MenuWrapper>
