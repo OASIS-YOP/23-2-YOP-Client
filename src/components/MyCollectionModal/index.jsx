@@ -39,10 +39,14 @@ const MyCollectionModal = ({
     mypageAPI.getMyCollectionArtistTab().then((data) => {
       setArtistList(data?.collectionArtistList);
       setSelectedArtist(data?.collectionArtistList[0]?.artistId);
+      setArtistList(data?.collectionArtistList);
+      setSelectedArtist(data?.collectionArtistList[0]?.artistId);
     });
   };
   const getMyActiveCollection = () => {
     mypageAPI.getMyActiveCollection(selectedArtist).then((data) => {
+      console.log(data?.activeCollectionList);
+      setActivatedCollection(data?.activeCollectionList);
       console.log(data?.activeCollectionList);
       setActivatedCollection(data?.activeCollectionList);
     });
@@ -55,8 +59,10 @@ const MyCollectionModal = ({
   };
 
   const onClickPhotocard = (photocard) => {
+    // setImage(photocard);
+    // console.log(photocard);
     setIsOpenCollectionModal(false);
-    isOpenCollectionModal && setIsOpenUploadModal(false);
+    setIsOpenUploadModal(false);
 
     new fabric.Image.fromURL(
       photocard,
@@ -90,12 +96,15 @@ const MyCollectionModal = ({
         if (image) {
           canvas.remove(image);
         }
-
         canvas.add(imgFile);
-        setImage(imgFile);
         setIsBackImgEmpty(false);
 
-        canvas.renderAll();
+        // 이미지가 캔버스에 추가된 후 모달을 닫습니다.
+        setIsOpenCollectionModal(false);
+        setIsOpenUploadModal(false);
+
+        // canvas.renderAll();
+        setImage(imgFile);
       },
       { crossOrigin: 'anonymous' }
     );

@@ -1,6 +1,6 @@
 import * as s from './style';
 
-import React, { useState, useEffect } from 'react';
+import React, { useMemo, useEffect } from 'react';
 
 import AlignCenterHorizontal from '../../../../assets/AlignCenterHorizontal';
 import AlignCenterVertical from '../../../../assets/AlignCenterVertical';
@@ -70,6 +70,10 @@ const ImageTool = ({ image, canvas,}) => {
   const newHeight = useRecoilValue(resizeHeight);
 
   //filter part
+
+  const brightnessFilter = useMemo(() => new fabric.Image.filters.Brightness(), []);
+const saturationFilter = useMemo(() => new fabric.Image.filters.Saturation(), []);
+const contrastFilter = useMemo(() => new fabric.Image.filters.Contrast(), []);
 
   const applyFilter = (index, filter) => {
     image.filters[index] = filter;
