@@ -58,11 +58,19 @@ export const PageLabel = styled.p`
 `;
 
 export const TextIfEmptyArtist = styled.div`
-  width: 800px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 90%;
   height: 30px;
 
+  margin: 0 auto;
+
   font-family: 'Noto Sans KR', sans-serif;
-  font-size: 25px;
+  font-size: 20px;
+
+  color: gray;
 `;
 export const RealTimeDesignWrapper = styled.div`
   display: flex;
@@ -72,7 +80,7 @@ export const RealTimeDesignWrapper = styled.div`
   margin: 0 auto;
 
   width: 95%;
-  height: 300px;
+  height: 350px;
 
   border-radius: 15px;
   background-color: #d7d7d7;
@@ -90,6 +98,7 @@ export const ContentRowBox = styled.div`
   justify-content: space-between;
   width: 100%;
   height: 100%;
+
 `;
 
 export const CollectionBox = styled.div`

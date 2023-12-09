@@ -76,7 +76,7 @@ const MainPage = () => {
 
       {/* 나의 최애 아티스트 */}
       <s.PageLabel>나의 최애 아티스트</s.PageLabel>
-      {favArtist ? (
+      {favArtist.length !==0 ? (
         <CardsSlider>
           {favArtist.map((item) => (
             <ArtistCard
@@ -90,7 +90,6 @@ const MainPage = () => {
       ) : (
         <s.TextIfEmptyArtist>아티스트를 즐겨찾기해보세요!</s.TextIfEmptyArtist>
       )}
-
       {/* 폴꾸 Top10 */}
       <s.PageLabel>폴꾸 TOP 10</s.PageLabel>
       <CardsSlider>
