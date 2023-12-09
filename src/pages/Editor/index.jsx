@@ -577,7 +577,7 @@ const Editor = () => {
       canvas.on('selection:cleared', (e) => {
         setSelectedObject();
       });
-      image.on('mousedown', (e) => {
+      image?.on('mousedown', (e) => {
         canvas.discardActiveObject();
         setSelectedObject(null);
       });
@@ -1467,7 +1467,7 @@ const Editor = () => {
             </s.TopMenuGroupWrapper>
           </s.TopMenuWrapper>
           <s.CanvasSpaceWrapper>
-          <s.LayerButtonWrapper style={{ marginTop: '10px' }}>
+            <s.LayerButtonWrapper style={{ marginTop: '10px' }}>
               <s.SelectedObjects style={{ marginRight: '20px' }}>
                 선택된 오브젝트:{' '}
                 {selectedObject?.length ? selectedObject.length : 0}/

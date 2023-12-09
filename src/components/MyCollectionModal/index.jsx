@@ -55,12 +55,15 @@ const MyCollectionModal = ({
   };
 
   const onClickPhotocard = (photocard) => {
+    // setImage(photocard);
+    // console.log(photocard);
     setIsOpenCollectionModal(false);
-    isOpenCollectionModal && setIsOpenUploadModal(false);
+    setIsOpenUploadModal(false);
 
     new fabric.Image.fromURL(
       photocard,
       (imgFile) => {
+        console.log('fabric.Image.fromURL callback called');
         imgFile.set({
           id: 'backImg',
           left: 340 / 2,
@@ -90,12 +93,15 @@ const MyCollectionModal = ({
         if (image) {
           canvas.remove(image);
         }
-
         canvas.add(imgFile);
-        setImage(imgFile);
         setIsBackImgEmpty(false);
 
+        // 이미지가 캔버스에 추가된 후 모달을 닫습니다.
+        setIsOpenCollectionModal(false);
+        setIsOpenUploadModal(false);
+
         canvas.renderAll();
+        setImage(imgFile);
       },
       { crossOrigin: 'anonymous' }
     );
