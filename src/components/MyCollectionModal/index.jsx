@@ -63,7 +63,6 @@ const MyCollectionModal = ({
     new fabric.Image.fromURL(
       photocard,
       (imgFile) => {
-        console.log('fabric.Image.fromURL callback called');
         imgFile.set({
           id: 'backImg',
           left: 340 / 2,
@@ -120,6 +119,7 @@ const MyCollectionModal = ({
 
   useEffect(() => {
     getMyCollectionArtistTab();
+    //  console.log(photocard);
   }, []);
 
   useEffect(() => {
@@ -225,6 +225,7 @@ const ModalCollectionDetails = ({
                   className={String(selectedArtist)}
                   onClick={() => {
                     onClickPhotocard(item?.photocard);
+                    console.log(item?.photocard);
                     setPhotocardId(item?.photocardId);
                   }}
                 >
