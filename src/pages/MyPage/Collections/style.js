@@ -79,7 +79,7 @@ export const CollectionCardWrapper = styled.div`
   justify-content: center;
   align-items: center;
 
-  width: 28%;
+  width: 25%;
   margin: 28px 28px;
   box-sizing: border-box;
   border-radius: 35px;
@@ -185,21 +185,15 @@ export const AlbumName = styled.div`
   align-items: center;
   width: fit-content;
   height: fit-content;
-
-  line-height: 2vw;
-
-  margin: 15px;
-
+  line-height: 3vw;
+  margin: 10px;
   text-align: center;
-
-  font-family: 'Noto Sans KR', sans-serif;
-  font-size: 1.4vw;
-  font-weight: 500;
-
+  font-size: 1.6vw;
+  font-weight: bold;
   color: white;
-
   z-index: 998;
 `;
+
 
 export const InputCodeButton = styled.button`
   display: flex;

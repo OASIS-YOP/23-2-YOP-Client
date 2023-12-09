@@ -84,8 +84,8 @@ const Collections = () => {
     },
   };
 
-  const openCodeInputButton = () => {
-    setIsOpenCodeInputModal(true);
+  const handleClickCodeInputButton = () => {
+    setIsOpenCodeInputModal((prev) => !prev);
   };
 
   const closeCodeInputButton = () => {
@@ -205,16 +205,19 @@ const Collections = () => {
             />
             {ismouseOver ? (
               <>
-                <s.InputCodeButton
-                  onMouseOver={onHandleMouseOver}
-                  onClick={openCodeInputButton}
-                >
-                  코드 입력
-                </s.InputCodeButton>
+                 <s.InputCodeWrapper>
+                  <s.AlbumName>{albumName}</s.AlbumName>
+                  <s.InputCodeButton
+                    onMouseOver={onHandleMouseOver}
+                    onClick={handleClickCodeInputButton}
+                  >
+                    코드 입력
+                  </s.InputCodeButton>
+                  </s.InputCodeWrapper>
                 <Modal
                   isOpen={isOpenCodeInputModal}
                   style={CodeInputModalStyle}
-                  onRequestClose={closeCodeInputButton} // 오버레이나 esc를 누르면 핸들러 동작
+                  onRequestClose={handleClickCodeInputButton} // 오버레이나 esc를 누르면 핸들러 동작
                   ariaHideApp={false}
                 >
                   <CodeInputModal
@@ -257,7 +260,7 @@ const Collections = () => {
               selectedArtist={selectedArtist}
               selectedCollection={selectedCollection}
               setIsCollectionClicked={setIsCollectionClicked}
-              openCodeInputButton={openCodeInputButton}
+              openCodeInputButton={handleClickCodeInputButton}
               isOpenCodeInputModal={isOpenCodeInputModal}
               CodeInputModalStyle={CodeInputModalStyle}
               setIsOpenCodeInputModal={setIsOpenCodeInputModal}
