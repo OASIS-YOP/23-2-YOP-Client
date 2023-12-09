@@ -123,6 +123,7 @@ const MyCollectionModal = ({
 
   useEffect(() => {
     getMyCollectionArtistTab();
+    //  console.log(photocard);
   }, []);
 
   useEffect(() => {
@@ -233,6 +234,7 @@ const ModalCollectionDetails = ({
                   className={String(selectedArtist)}
                   onClick={() => {
                     onClickPhotocard(item?.photocard);
+                    console.log(item?.photocard);
                     setPhotocardId(item?.photocardId);
                   }}
                 >

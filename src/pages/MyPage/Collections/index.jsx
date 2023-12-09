@@ -183,7 +183,8 @@ const Collections = () => {
                     {/* 수정요망 */}
                     수집률 :{' '}
                     {Math.round(
-                      (1 / activeCollectionData.photoCardQuant) * 100
+                      (myPhotocardQuant / activeCollectionData.photoCardQuant) *
+                        100
                     )}
                     %
                     <br />
