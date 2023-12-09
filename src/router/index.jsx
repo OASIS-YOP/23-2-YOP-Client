@@ -30,14 +30,14 @@ const router = createBrowserRouter([
     path: '/allartist',
     element: <AllArtist />,
   },
-  {
-    path: '/upload',
-    element: <UploadModal />,
-  },
-  {
-    path: '/uploadModal2/:uploadId',
-    element: <CollectionCard />,
-  },
+  // {
+  //   path: '/upload',
+  //   element: <UploadModal />,
+  // },
+  // {
+  //   path: '/uploadModal2/:uploadId',
+  //   element: <CollectionCard />,
+  // },
   {
     path: '/mypage',
     element: <MyPage />,
