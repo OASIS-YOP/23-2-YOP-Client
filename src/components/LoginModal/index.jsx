@@ -28,8 +28,8 @@ export const Login = () => {
       if (data) {
         console.log(data);
         localStorage.setItem('atk', data.token);
+        window.alert('회원님, 환영합니다!');
         setAccessToken(data.token);
-        window.alert(`${myProfile.nickname}님, 환영합니다!`);
         navigate('/mainpage');
         setIsLoggedIn(true);
       } else {
