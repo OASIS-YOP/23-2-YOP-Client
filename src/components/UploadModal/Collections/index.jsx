@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as s from './style';
 import { useRecoilState } from 'recoil';
 import {
@@ -7,6 +7,7 @@ import {
   stepIndexState,
 } from '../../../recoil/postingAtoms';
 import MyCollections from '../../../Temp/mypage/mydesign/MyCollections.js';
+import mypageAPI from '../../../api/mypage/mypageAPI.js';
 
 const Collections = ({
   thisCollection,
@@ -39,6 +40,17 @@ const Collections = ({
     console.log(albumName);
   };
 
+  const [myPolaroidQuant, setMyPolaroidQuant] = useState();
+  const getMyPolaroidQuant = () => {
+    mypageAPI
+      .getMyPolaroidQuant(decodeURI(albumName))
+      .then((data) => setMyPolaroidQuant(data.polaroidBackupQuant));
+  };
+
+  useEffect(() => {
+    getMyPolaroidQuant();
+  }, []);
+
   return (
     <>
       <s.CollectionCard
@@ -56,7 +68,7 @@ const Collections = ({
               <s.CollectionCardInfo>
                 {albumName}
                 <br />
-                {thisCollection.myDesigns.length}/30
+                {myPolaroidQuant}/30
               </s.CollectionCardInfo>
             </s.CollectionInfoWrapper>
           )}

@@ -19,8 +19,7 @@ import {
 } from '../../recoil/postingAtoms.js';
 import DesignsForPosting from './Designs/index.jsx';
 
-const SelectCollection = () => {
-  const [isModalOpened, setIsModalOpened] = useState(true);
+const SelectCollection = ({ closeUploadModal }) => {
   const [isSecondaryModalOpened, setIsSecondaryModalOpened] = useState(false);
 
   const [isCollectionClicked, setIsCollectionClicked] = useRecoilState(
@@ -79,27 +78,51 @@ const SelectCollection = () => {
   /////////수정//////////
 
   const [artistTabList, setArtistTabList] = useState([]);
-  const [activatedCollection, setActivatedCollection] = useState([]);
-  const getMyCollectionArtistTab = () => {
-    mypageAPI.getMyCollectionArtistTab().then((data) => {
-      setArtistTabList(data.collectionArtistList);
-      console.log(data);
+  const [myPolaroidCollection, setMyPolaroidCollection] = useState([]);
+  // const getMyCollectionArtistTab = () => {
+  //   mypageAPI.getMyCollectionArtistTab().then((data) => {
+  //     setArtistTabList(data.collectionArtistList);
+  //     console.log(data);
+  //   });
+  // };
+  const getMyPolaroidArtistTab = () => {
+    mypageAPI.getMyPolaroidArtistTab().then((data) => {
+      if (data.polaroidArtistTabList.length === 0) {
+        return;
+      } else {
+        setSelectedArtist(data?.polaroidArtistTabList[0]?.artistId);
+        setArtistTabList(data?.polaroidArtistTabList);
+        console.log('내도안탭리스트', data?.polaroidArtistTabList);
+      }
     });
   };
 
-  const getMyActiveCollection = () => {
-    mypageAPI.getMyActiveCollection(selectedArtist).then((data) => {
-      console.log(data?.activeCollectionList);
-      setActivatedCollection(data?.activeCollectionList);
+  const getMyPolaroidCollection = () => {
+    mypageAPI.getMyPolaroidCollection(selectedArtist).then((data) => {
+      setMyPolaroidCollection(data?.collectionsList);
+      console.log('내도안컬렉션리스트', data?.collectionsList);
+    });
+  };
+
+  const onClickPost = () => {
+    mypageAPI.uploadPost(selectedDesign.polaroidId).then((data) => {
+      console.log(data);
+      if (data) {
+        window.alert('포스팅되었습니다.');
+        closeUploadModal();
+      } else {
+        window.alert('failed');
+      }
     });
   };
 
   useEffect(() => {
-    getMyCollectionArtistTab();
+    getMyPolaroidArtistTab();
+    console.log(selectedDesign);
   }, []);
 
   useEffect(() => {
-    if (selectedArtist) getMyActiveCollection();
+    if (selectedArtist) getMyPolaroidCollection();
   }, [selectedArtist]);
   return (
     <>
@@ -141,13 +164,15 @@ const SelectCollection = () => {
           </s.ArtistTabWrapper>
         ) : null}
         <s.ContentsWrapper>
-          {activatedCollection.length > 0 ? (
+          {myPolaroidCollection?.length > 0 ? (
             <>
               {!isCollectionClicked ? (
                 <s.CollectionCardsWrapper>
-                  {activatedCollection
-                    .find((item) => item.groupName === selectedArtist)
-                    ?.activatedCollection.map((item, index) => (
+                  {
+                    // activatedCollection
+                    //   .find((item) => item.groupName === selectedArtist)
+                    //   ?.
+                    myPolaroidCollection.map((item, index) => (
                       <Collections
                         key={index}
                         selectedArtist={selectedArtist}
@@ -155,29 +180,30 @@ const SelectCollection = () => {
                         albumJacket={item.albumJacket}
                         thisCollection={item}
                       />
-                    ))}
+                    ))
+                  }
                 </s.CollectionCardsWrapper>
               ) : (
                 <>
                   {!isDesignClicked ? (
-                    <s.DesignsWrapper>
-                      <s.DesignListWrapper>
-                        {MyCollections.find(
-                          (item) => item.artistName === selectedArtist
-                        )
-                          ?.myCollections.find(
-                            (item) => item.collectionName === selectedCollection
-                          )
-                          ?.myDesigns.map((item, index) => (
-                            <DesignsForPosting
-                              key={index}
-                              thisDesign={item}
-                              design={item.fileUrl}
-                            />
-                          ))}
-                      </s.DesignListWrapper>
-                    </s.DesignsWrapper>
+                    // <s.DesignsWrapper>
+                    //   <s.DesignListWrapper>
+                    //     {MyCollections.find(
+                    //       (item) => item.artistName === selectedArtist
+                    //     )
+                    //       ?.myCollections.find(
+                    //         (item) => item.collectionName === selectedCollection
+                    //       )
+                    //       ?.myDesigns.map((item, index) => (
+                    <DesignsForPosting
+                    // key={index}
+                    // thisDesign={item}
+                    // design={item.fileUrl}
+                    />
                   ) : (
+                    //       ))}
+                    //   </s.DesignListWrapper>
+                    // </s.DesignsWrapper>
                     <>
                       <s.UploadStepWrapper>
                         <s.SelectedDesignWrapper
@@ -186,7 +212,7 @@ const SelectCollection = () => {
                           ismouseOver={isMouseOver}
                         >
                           <s.SelectedDesignImage
-                            src={selectedDesign.fileUrl}
+                            src={selectedDesign.polaroid}
                             alt='선택된 디자인'
                           />
                           {isMouseOver && (
@@ -199,7 +225,7 @@ const SelectCollection = () => {
                             </s.SelectedDesignInfoWrapper>
                           )}
                         </s.SelectedDesignWrapper>
-                        <s.SelectedDesignContentsWrapper>
+                        {/* <s.SelectedDesignContentsWrapper>
                           <s.SelectedDesignContents>
                             소속사 :{' '}
                             {
@@ -217,9 +243,9 @@ const SelectCollection = () => {
                           <s.SelectedDesignContents>
                             멤버 : {selectedDesign.member}
                           </s.SelectedDesignContents>
-                        </s.SelectedDesignContentsWrapper>
+                        </s.SelectedDesignContentsWrapper> */}
                       </s.UploadStepWrapper>
-                      <s.PostButton>올리기</s.PostButton>
+                      <s.PostButton onClick={onClickPost}>올리기</s.PostButton>
                     </>
                   )}
                 </>

@@ -20,7 +20,7 @@ const CollectionDetails = ({
       .getCollectionAllPhotocard(decodeURI(selectedCollection))
       .then((data) => {
         console.log('이앨범의모든포카', data.collectionPhotocardList);
-        setCollectionPhotocard(data.collectionPhotocardList);
+        setCollectionPhotocard(data?.collectionPhotocardList);
       });
   };
   const getCollectionActivePhotocard = () => {
@@ -43,6 +43,7 @@ const CollectionDetails = ({
 
   useEffect(() => {
     console.log(activePhotocardId);
+    console.log(collectionPhotocard);
   }, [activePhotocard]);
 
   return (
@@ -65,27 +66,28 @@ const CollectionDetails = ({
 
         <s.CollectionName>{selectedCollection}</s.CollectionName>
         <s.PhotocardListWrapper>
-          {collectionPhotocard.map((item) => {
-            return (
-              <s.PhotoCardContainer className={selectedArtist}>
-                <s.MemberName className={selectedArtist}>
-                  {item.memberName}
-                </s.MemberName>
-                <s.PhotocardImageFrame className={String(selectedArtist)}>
-                  <s.PhotocardImage
-                    key={`photocared_${item.photocardId}`}
-                    src={item.photocard}
-                    alt='photocard'
-                    className={
-                      activePhotocardId.find((id) => id === item.photocardId)
-                        ? ''
-                        : 'locked'
-                    }
-                  />
-                </s.PhotocardImageFrame>
-              </s.PhotoCardContainer>
-            );
-          })}
+          {collectionPhotocard &&
+            collectionPhotocard.map((item) => {
+              return (
+                <s.PhotoCardContainer className={selectedArtist}>
+                  <s.MemberName className={selectedArtist}>
+                    {item.memberName}
+                  </s.MemberName>
+                  <s.PhotocardImageFrame className={String(selectedArtist)}>
+                    <s.PhotocardImage
+                      key={`photocared_${item.photocardId}`}
+                      src={item.photocard}
+                      alt='photocard'
+                      className={
+                        activePhotocardId.find((id) => id === item.photocardId)
+                          ? ''
+                          : 'locked'
+                      }
+                    />
+                  </s.PhotocardImageFrame>
+                </s.PhotoCardContainer>
+              );
+            })}
         </s.PhotocardListWrapper>
       </s.Wrapper>
     </>
