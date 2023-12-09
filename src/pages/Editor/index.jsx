@@ -57,7 +57,7 @@ import 'fabric-history';
 
 // import CanvasHistory from './utils/CanvasHistory';
 const Editor = () => {
-  fabric.textureSize = 16000;
+  fabric.textureSize = 5000;
   const [brightness, setBrightness] = useRecoilState(brightnessValue);
   const [contrast, setContrast] = useRecoilState(contrastValue);
   const [saturation, setSaturation] = useRecoilState(saturationValue);
@@ -262,15 +262,15 @@ const Editor = () => {
   };
 
   // 추가된 이미지 조회
-  useEffect(() => {
-    if (image) {
-      console.log('추가된 이미지 :', image);
-    }
-  }, [image]);
+  // useEffect(() => {
+  //   if (image) {
+  //     console.log('추가된 이미지 :', image);
+  //   }
+  // }, [image]);
 
-  useEffect(() => {
-    console.log('꾸밀 이미지 아직임? :', isBackImgEmpty);
-  }, [isBackImgEmpty]);
+  // useEffect(() => {
+  //   console.log('꾸밀 이미지 아직임? :', isBackImgEmpty);
+  // }, [isBackImgEmpty]);
 
   //이미지 잠금
   const lockImage = () => {
@@ -341,6 +341,19 @@ const Editor = () => {
     setApplyGray(false);
   }, [image]);
 
+
+  const memoizedBrightnessFilter = useMemo(() => {
+    return new fabric.Image.filters.Brightness({ brightness: parseFloat(brightness / 220) });
+  }, [brightness]);
+
+  const memoizedContrastFilter = useMemo(() => {
+    return new fabric.Image.filters.Contrast({ contrast: parseFloat(contrast / 220) });
+  }, [contrast]);
+
+  const memoizedSaturationFilter = useMemo(() => {
+    return new fabric.Image.filters.Saturation({ saturation: parseFloat(saturation / 100) });
+  }, [saturation]);
+
   const applyFilter = (index, filter) => {
     image.filters[index] = filter;
     image.applyFilters();
@@ -355,41 +368,39 @@ const Editor = () => {
     }
   };
 
+  const applyBrightness = () => {
+    applyFilter(1, memoizedBrightnessFilter);
+    applyFilterValue(1, 'brightness', parseFloat(brightness / 220));
+  };
+
+  const applyContrast = () => {
+    applyFilter(3, memoizedContrastFilter);
+    applyFilterValue(3, 'contrast', parseFloat(contrast / 220));
+  };
+
+  const applySaturation = () => {
+    applyFilter(2, memoizedSaturationFilter);
+    applyFilterValue(2, 'saturation', parseFloat(saturation / 100));
+  };
+
   useEffect(() => {
     if (image) {
-      applyFilter(
-        1,
-        new fabric.Image.filters.Brightness({
-          brightness: parseFloat(brightness / 220),
-        })
-      );
-      applyFilterValue(1, 'brightness', parseFloat(brightness / 220));
+      applyBrightness();
     }
   }, [brightness, tool]);
 
   useEffect(() => {
     if (image) {
-      applyFilter(
-        3,
-        new fabric.Image.filters.Contrast({
-          contrast: parseFloat(contrast / 220),
-        })
-      );
-      applyFilterValue(3, 'contrast', parseFloat(contrast / 220));
+      applyContrast();
     }
   }, [contrast, tool]);
 
   useEffect(() => {
     if (image) {
-      applyFilter(
-        2,
-        new fabric.Image.filters.Saturation({
-          saturation: parseFloat(saturation / 100),
-        })
-      );
-      applyFilterValue(2, 'saturation', parseFloat(saturation / 100));
+      applySaturation();
     }
   }, [saturation, tool]);
+
   ////////////////////////////////////////
 
   /////// 이미지 이동 관리 ////////

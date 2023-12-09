@@ -12,11 +12,15 @@ const Header = () => {
   const getMyProfile = () => {
     mypageAPI
       .getMyProfile()
-      .then((data) => setMyProfile(data?.userProfileInfo));
+      .then((data) =>{
+        setMyProfile(data?.userProfileInfo);
+        console.log(data?.userProfileInfo);
+      } );
   };
 
   useEffect(() => {
     getMyProfile();
+    console.log(myProfile);
   }, []);
 
   const [myProfile, setMyProfile] = useRecoilState(myProfileState);

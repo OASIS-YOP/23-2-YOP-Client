@@ -1,6 +1,6 @@
 import * as s from './style';
 
-import React, { useState, useEffect } from 'react';
+import React, { useMemo, useEffect } from 'react';
 
 import AlignCenterHorizontal from '../../../../assets/AlignCenterHorizontal';
 import AlignCenterVertical from '../../../../assets/AlignCenterVertical';
@@ -71,6 +71,10 @@ const ImageTool = ({ image, canvas,}) => {
 
   //filter part
 
+  const brightnessFilter = useMemo(() => new fabric.Image.filters.Brightness(), []);
+const saturationFilter = useMemo(() => new fabric.Image.filters.Saturation(), []);
+const contrastFilter = useMemo(() => new fabric.Image.filters.Contrast(), []);
+
   const applyFilter = (index, filter) => {
     image.filters[index] = filter;
     image.applyFilters();
@@ -116,21 +120,21 @@ const ImageTool = ({ image, canvas,}) => {
     canvas.renderAll();
   };
 
-  useEffect(() => {
-    //필터 초기화
-    if (isBackImgEmpty) {
-      resetBrightness();
-      resetContrast();
-      resetSaturation();
-      resetRotation();
-      resetScale();
-      resetReverseX();
-      resetReverseY();
-      resetGray();
-    } else {
-      return;
-    }
-  }, [isBackImgEmpty]);
+  // useEffect(() => {
+  //   //필터 초기화
+  //   if (isBackImgEmpty) {
+  //     resetBrightness();
+  //     resetContrast();
+  //     resetSaturation();
+  //     resetRotation();
+  //     resetScale();
+  //     resetReverseX();
+  //     resetReverseY();
+  //     resetGray();
+  //   } else {
+  //     return;
+  //   }
+  // }, [isBackImgEmpty]);
 
   //canvas clear될때마다 inputValue 초기화
   // canvas.on({ 'canvas:cleared': initRangeInputValues });
@@ -235,18 +239,18 @@ const ImageTool = ({ image, canvas,}) => {
     marginTop: -2,
   };
 
-  useEffect(() => {
-    if (image) {
-      console.log(
-        '이미지탭 마운트:',
-        brightness,
-        saturation,
-        contrast,
-        rotation,
-        scale
-      );
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (image) {
+  //     console.log(
+  //       '이미지탭 마운트:',
+  //       brightness,
+  //       saturation,
+  //       contrast,
+  //       rotation,
+  //       scale
+  //     );
+  //   }
+  // }, []);
 
   return (
     <>

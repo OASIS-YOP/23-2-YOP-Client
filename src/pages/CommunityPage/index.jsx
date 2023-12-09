@@ -264,6 +264,11 @@ const CommunityPage = () => {
         >
           ▲
         </s.ScrollToTopButton>
+        <s.PostingButton
+          
+        >
+          포스팅
+        </s.PostingButton>
       </s.Wrapper>
     </>
   );
