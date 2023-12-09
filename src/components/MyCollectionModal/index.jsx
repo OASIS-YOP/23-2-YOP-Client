@@ -3,6 +3,7 @@ import mypageAPI from '../../api/mypage/mypageAPI';
 import { useEffect, useState } from 'react';
 import { fabric } from 'fabric';
 
+
 const MyCollectionModal = ({
   setIsOpenCollectionModal,
   setIsOpenUploadModal,
@@ -234,7 +235,7 @@ const ModalCollectionDetails = ({
                   className={String(selectedArtist)}
                   onClick={() => {
                     onClickPhotocard(item?.photocard);
-                    console.log(item?.photocard);
+                    console.log('내가 누른 거 뭐야?',item?.photocard);
                     setPhotocardId(item?.photocardId);
                   }}
                 >

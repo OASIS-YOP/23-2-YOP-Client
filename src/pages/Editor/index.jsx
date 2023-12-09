@@ -45,8 +45,6 @@ import {
   reverseYState,
   applyGrayState,
   isBackImgEmptyState,
-  resizeHeight,
-  resizeWidth,
   // historyState,
   // currentStateIndexState,
 } from '../../recoil/atoms';
@@ -57,7 +55,7 @@ import 'fabric-history';
 
 // import CanvasHistory from './utils/CanvasHistory';
 const Editor = () => {
-  fabric.textureSize = 5000;
+  fabric.textureSize = 16000;
   const [brightness, setBrightness] = useRecoilState(brightnessValue);
   const [contrast, setContrast] = useRecoilState(contrastValue);
   const [saturation, setSaturation] = useRecoilState(saturationValue);
@@ -66,9 +64,6 @@ const Editor = () => {
   const [reverseXToggle, setReverseXToggle] = useRecoilState(reverseXState);
   const [reverseYToggle, setReverseYToggle] = useRecoilState(reverseYState);
   const [applyGray, setApplyGray] = useRecoilState(applyGrayState);
-
-  const [newHeight, setNewHeight] = useRecoilState(resizeHeight);
-  const [newWidth, setNewWidth] = useRecoilState(resizeWidth);
 
   // const canvasHistory = useMemo(() => new CanvasHistory(), []);
 
@@ -284,53 +279,12 @@ const Editor = () => {
 
   /////////////// 캔버스에 들어갈 이미지 사이즈 조정
 
-  const resizeImage = () => {
-    if (image) {
-      const canvasWidth = 340;
-      const canvasHeight = 492;
-
-      const imgWidth = image.width;
-      const imgHeight = image.height;
-
-      const maxWidth = canvasWidth;
-      const maxHeight = canvasHeight;
-
-      const aspectRatio = imgWidth / imgHeight;
-
-      let newWidth = imgWidth;
-      let newHeight = imgHeight;
-
-      // 이미지의 가로가 세로보다 클 때
-      if (imgWidth > imgHeight) {
-        newHeight = maxHeight;
-        newWidth = newHeight * aspectRatio;
-      }
-      // 이미지의 세로가 가로보다 클 때
-      if (imgHeight > imgWidth) {
-        newWidth = maxWidth;
-        newHeight = newWidth / aspectRatio;
-      }
-      // 이미지의 가로와 세로가 같을 때
-      if (imgWidth === imgHeight) {
-        newHeight = maxHeight;
-        newWidth = newHeight * aspectRatio;
-      }
-      console.log(
-        '현재 백그라운드이미지 크기:',
-        'newWidth:',
-        newWidth,
-        'newHeight:',
-        newHeight
-      );
-      setNewWidth(newWidth);
-      setNewHeight(newHeight);
-    }
-  };
+  
   ////////////////////////////////////////
 
   ///////// 필터 적용 함수 //////////
   useEffect(() => {
-    resizeImage(image);
+    if(image){
     setBrightness(0);
     setContrast(0);
     setSaturation(0);
@@ -339,6 +293,7 @@ const Editor = () => {
     setReverseXToggle(true);
     setReverseYToggle(true);
     setApplyGray(false);
+  }
   }, [image]);
 
 
