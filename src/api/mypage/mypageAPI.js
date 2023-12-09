@@ -121,6 +121,19 @@ const mypageAPI = {
       return null;
     }
   },
+  getActivePhotocardQuant: async (albumName) => {
+    try {
+      const path = `${process.env.REACT_APP_BASE_URL}/${albumName}/activePhotocardQuant`;
+      const response = await HttpClient.get(
+        path,
+        {},
+        { Authorization: accessToken }
+      );
+      return response;
+    } catch (e) {
+      return null;
+    }
+  },
 
   //내 도안
   getMyPolaroidArtistTab: async () => {
@@ -205,12 +218,12 @@ const mypageAPI = {
   collectionActivate: async (albumName, code) => {
     try {
       const path = `${process.env.REACT_APP_BASE_URL}/mypage/myCollection/${albumName}/collectionActivation`;
-      const response = await HttpClient.post(path, JSON.stringify(code), {
+      const response = await HttpClient.post(path, code, {
         Authorization: accessToken,
       });
       return response;
     } catch (e) {
-      return null;
+      return e;
     }
   },
   photocardActivate: async (albumName) => {

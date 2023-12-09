@@ -15,7 +15,6 @@ const Collections = () => {
   const [photocardList, setPhotocardList] = useState([]);
   const [isCollectionClicked, setIsCollectionClicked] = useState(false);
   const [isOpenCodeInputModal, setIsOpenCodeInputModal] = useState(false);
-  const [myPhotocardQuant, setMyPhotocardQuant] = useState(0);
 
   const onClickArtist = (artistId) => {
     setSelectedArtist(artistId);
@@ -85,8 +84,12 @@ const Collections = () => {
     },
   };
 
-  const handleClickCodeInputButton = () => {
-    setIsOpenCodeInputModal((prev) => !prev);
+  const openCodeInputButton = () => {
+    setIsOpenCodeInputModal(true);
+  };
+
+  const closeCodeInputButton = () => {
+    setIsOpenCodeInputModal(false);
   };
   useEffect(() => {
     getMyCollectionArtistTab();
@@ -97,7 +100,9 @@ const Collections = () => {
     getMyActiveCollection();
   }, [selectedArtist]);
 
-  // useEffect(() => {}, [selectedCollection]);
+  useEffect(() => {
+    getMyActiveCollection();
+  }, [isOpenCodeInputModal]);
 
   //컬렉션 카드 컴포넌트
   const CollectionCard = ({
@@ -106,11 +111,19 @@ const Collections = () => {
     albumJacket,
     albumName,
     activatedCollection,
-    myPhotocardQuant,
   }) => {
     const [ismouseOver, setIsMouseOver] = useState(false);
     const [isActiveMouseOver, setIsActiveMouseOver] = useState(false);
+    const [myPhotocardQuant, setMyPhotocardQuant] = useState(null);
 
+    const fetchPhotocardQuant = async (album) => {
+      try {
+        const data = await mypageAPI.getActivePhotocardQuant(decodeURI(album));
+        setMyPhotocardQuant(data.activeCardQuant);
+      } catch (error) {
+        console.error('Failed to fetch photocard quantity', error);
+      }
+    };
     //비활성화컬렉션
     const onHandleMouseOver = (e) => {
       e.preventDefault();
@@ -142,6 +155,12 @@ const Collections = () => {
     );
 
     const isActive = Boolean(activeCollectionData);
+    useEffect(() => {
+      // 마우스 오버 시 API 호출
+      if (isActiveMouseOver) {
+        fetchPhotocardQuant(albumName);
+      }
+    }, [isActiveMouseOver, albumName]); // 의존성 배열에 ismouseOver와 albumName을 추가
 
     return (
       <s.CollectionCardWrapper styled={{ cursor: 'pointer' }}>
@@ -188,17 +207,20 @@ const Collections = () => {
               <>
                 <s.InputCodeButton
                   onMouseOver={onHandleMouseOver}
-                  onClick={handleClickCodeInputButton}
+                  onClick={openCodeInputButton}
                 >
                   코드 입력
                 </s.InputCodeButton>
                 <Modal
                   isOpen={isOpenCodeInputModal}
                   style={CodeInputModalStyle}
-                  onRequestClose={handleClickCodeInputButton} // 오버레이나 esc를 누르면 핸들러 동작
+                  onRequestClose={closeCodeInputButton} // 오버레이나 esc를 누르면 핸들러 동작
                   ariaHideApp={false}
                 >
-                  <CodeInputModal albumName={albumName} />
+                  <CodeInputModal
+                    albumName={albumName}
+                    closeCodeInputButton={closeCodeInputButton}
+                  />
                 </Modal>
               </>
             ) : (
@@ -227,7 +249,6 @@ const Collections = () => {
                     albumJacket={item.albumJacket}
                     albumName={item.albumName}
                     activatedCollection={activatedCollection}
-                    myPhotocardQuant={myPhotocardQuant}
                   />
                 ))}
             </s.CollectionCardsContainer>
@@ -236,11 +257,10 @@ const Collections = () => {
               selectedArtist={selectedArtist}
               selectedCollection={selectedCollection}
               setIsCollectionClicked={setIsCollectionClicked}
-              handleClickCodeInputButton={handleClickCodeInputButton}
+              openCodeInputButton={openCodeInputButton}
               isOpenCodeInputModal={isOpenCodeInputModal}
               CodeInputModalStyle={CodeInputModalStyle}
               setIsOpenCodeInputModal={setIsOpenCodeInputModal}
-              setMyPhotocardQuant={setMyPhotocardQuant}
             />
           )
         ) : (
