@@ -51,13 +51,3 @@ export const refreshImageState = atom({
   default: false,
 });
 
-export const resizeWidth = atom({
-  key: 'resizeWidth',
-  default: 0,
-});
-
-export const resizeHeight = atom({
-  key: 'resizeHeight',
-  default: 0,
-});
-

@@ -35,8 +35,6 @@ import {
   applyGrayState,
   refreshImageState,
   isBackImgEmptyState,
-  resizeHeight,
-  resizeWidth,
 } from '../../../../recoil/atoms';
 
 const ImageTool = ({ image, canvas,}) => {
@@ -66,14 +64,7 @@ const ImageTool = ({ image, canvas,}) => {
   // const [ saturationValue, setSaturationValue ] = useState(0);
   // const [ contrastValue, setContrastValue ] = useState(0);
 
-  const newWidth = useRecoilValue(resizeWidth);
-  const newHeight = useRecoilValue(resizeHeight);
-
   //filter part
-
-  const brightnessFilter = useMemo(() => new fabric.Image.filters.Brightness(), []);
-const saturationFilter = useMemo(() => new fabric.Image.filters.Saturation(), []);
-const contrastFilter = useMemo(() => new fabric.Image.filters.Contrast(), []);
 
   const applyFilter = (index, filter) => {
     image.filters[index] = filter;
@@ -181,8 +172,6 @@ const contrastFilter = useMemo(() => new fabric.Image.filters.Contrast(), []);
   };
 
   useEffect(() => {
-    if (refreshImage) {
-      console.log('백그라운드 이미지 초기화:', refreshImage);
       if (refreshImage) {
         const imgWidth = image.width;
         const imgHeight = image.height;
@@ -201,7 +190,6 @@ const contrastFilter = useMemo(() => new fabric.Image.filters.Contrast(), []);
       } else if (!refreshImage) {
         return;
       }
-    }
   }, [refreshImage]);
 
   //gray toggle
@@ -401,20 +389,51 @@ const contrastFilter = useMemo(() => new fabric.Image.filters.Contrast(), []);
                 disabled={isBackImgEmpty}
                 value={scale}
                 onChange={(value) => {
+
+                  const canvasWidth = 340;
+                  const canvasHeight = 492;
+
+                  const imgWidth = image.width;
+                  const imgHeight = image.height;
+
+                  const maxWidth = canvasWidth;
+                  const maxHeight = canvasHeight;
+
+                  const aspectRatio = imgWidth / imgHeight;
+
+                  let resizedWidth = imgWidth;
+                  let resizedHeight = imgHeight;
+
+                  // 이미지의 가로가 세로보다 클 때
+                  if (imgWidth > imgHeight) {
+                    resizedHeight = maxHeight;
+                    resizedWidth = resizedHeight * aspectRatio;
+                  }
+                  // 이미지의 세로가 가로보다 클 때
+                  if (imgHeight > imgWidth) {
+                    resizedWidth = maxWidth;
+                    resizedHeight = resizedWidth / aspectRatio;
+                  }
+                  // 이미지의 가로와 세로가 같을 때
+                  if (imgWidth === imgHeight) {
+                    resizedHeight = maxHeight;
+                    resizedWidth = resizedHeight * aspectRatio;
+                  }
+                  
                   if (image.width > image.height) {
-                    const scaleFactor = (value * newWidth) / 50;
+                    const scaleFactor = (value * resizedWidth) / 50;
                     image.scaleToWidth(scaleFactor).setCoords();
 
                     canvas.requestRenderAll();
                     setScale(value);
                   } else if (image.width < image.height) {
-                    const scaleFactor = (value * newHeight) / 50;
+                    const scaleFactor = (value * resizedHeight) / 50;
                     image.scaleToHeight(scaleFactor).setCoords();
 
                     canvas.requestRenderAll();
                     setScale(value);
                   } else if (image.width === image.height) {
-                    const scaleFactor = (value * newHeight) / 50;
+                    const scaleFactor = (value * resizedHeight) / 50;
                     image.scaleToHeight(scaleFactor).setCoords();
 
                     canvas.requestRenderAll();
