@@ -326,7 +326,27 @@ export const CP = [
     id: 32,
     fileUrl: `${process.env.PUBLIC_URL}/images/stickers/c_p/c_p32.png`,
     spec: 'ribbonL',
-  }
+  },
+  {
+    id: 33,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/RBP8.png`,
+    spec: 'ribbonS',
+  },
+  {
+    id: 34,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/RBP9.png`,
+    spec: 'ribbonS',
+  },
+  {
+    id: 35,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/RBP12.png`,
+    spec: 'ribbonS',
+  },
+  {
+    id: 36,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/RBP13.png`,
+    spec: 'ribbonS',
+  },
 ];
 
 export const CXmas = [

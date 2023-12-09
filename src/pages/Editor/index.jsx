@@ -219,8 +219,8 @@ const Editor = () => {
   // 오브젝트 트랜스포머 스타일 설정
   fabric.Object.prototype.set({
     transparentCorners: 'true',
-    borderColor: 'white', //컨트롤 박스 색깔
-    cornerColor: 'white',
+    borderColor: 'lightgrey', //컨트롤 박스 색깔
+    cornerColor: 'lightgrey',
     cornerStyle: 'circle',
     cornerSize: 10,
     perPixelTargetFind: true,

@@ -52,7 +52,12 @@ const Frame = ({
         const canvasHeight = canvas.getHeight();
          // 이미지를 캔버스 크기에 맞게 조절
         // img.scaleToWidth(canvasWidth);
-        img.scaleToHeight(canvasHeight + 2);
+        if(img.name === '라이트퍼플' || '그린' || '라이트퍼플' ){
+          img.scaleToHeight(canvasHeight + 2);
+          img.scaleToWidth(canvasWidth);
+        } else {
+          img.scaleToHeight(canvasHeight + 2);
+        }
         img.set({
           originX: 'center',
           originY: 'center',
