@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as s from './style';
 import { useRecoilState } from 'recoil';
 import {
@@ -10,18 +10,19 @@ import {
   stepIndexState,
 } from '../../../recoil/postingAtoms';
 import MyCollections from '../../../Temp/mypage/mydesign/MyCollections.js';
+import mypageAPI from '../../../api/mypage/mypageAPI.js';
 
-
-const DesignsForPosting = ({
-  thisDesign,
-  design,
-}) => {
-
-  const [ isMouseOver, setIsMouseOver] = useState(false);
-  const [ selectedDesign, setSelectedDesign ] = useRecoilState(selectedDesignState);
-  const [ isDesignClicked, setIsDesignClicked ] = useRecoilState(isDesignClickedState);
-  const [ stepIndex, setStepIndex ] = useRecoilState(stepIndexState);
-
+const DesignsForPosting = () => {
+  const [isMouseOver, setIsMouseOver] = useState(false);
+  const [selectedDesign, setSelectedDesign] =
+    useRecoilState(selectedDesignState);
+  const [isDesignClicked, setIsDesignClicked] =
+    useRecoilState(isDesignClickedState);
+  const [stepIndex, setStepIndex] = useRecoilState(stepIndexState);
+  const [selectedCollection, setSelectedCollection] = useRecoilState(
+    selectedCollectionState
+  );
+  const [myPolaroids, setMyPolaroids] = useState([]);
 
   const onHandleMouseOver = (e) => {
     e.preventDefault();
@@ -32,37 +33,53 @@ const DesignsForPosting = ({
     setIsMouseOver(false);
   };
 
-  const onClickDesign = () => {
-    setSelectedDesign(thisDesign);
+  const onClickDesign = (item) => {
+    setSelectedDesign(item);
     setIsDesignClicked(true);
     setStepIndex(3);
-    console.log(thisDesign);
-  }
+    console.log(selectedCollection);
+  };
+  const getMyPolaroids = () => {
+    mypageAPI
+      .getMyPolaroids(decodeURI(String(selectedCollection)))
+      .then((data) => {
+        setMyPolaroids(data?.myPolariodBackupList);
+      });
+  };
 
+  useEffect(() => {
+    getMyPolaroids();
+  }, []);
 
-
-return(
-        <s.DesignImageFrame
-          onMouseOut={onHandleMouseOut}
-          onMouseOver={onHandleMouseOver}
-          ismouseOver={isMouseOver}
-          onClick={() => onClickDesign(design)}
-        >
-          <s.DesignImage 
-            src={design}
-            alt='polaroid'
-          />
-          {isMouseOver && (
-            <s.DesignInfoWrapper>
-              <s.DesignCardInfo>
-                {thisDesign.designCardName}
-                <br/>
-                {thisDesign.saveDate}
-              </s.DesignCardInfo>
-            </s.DesignInfoWrapper>
-          )}
-        </s.DesignImageFrame>
-)
-
-}
+  return (
+    <s.DesignsWrapper>
+      <s.DesignListWrapper>
+        {myPolaroids.map((item) => (
+          <s.DesignImageFrame
+            onMouseOut={onHandleMouseOut}
+            onMouseOver={onHandleMouseOver}
+            ismouseOver={isMouseOver}
+            onClick={() => {
+              onClickDesign(item);
+              console.log(item);
+            }}
+          >
+            <s.DesignImage src={item.polaroid} alt='polaroid' />
+            {isMouseOver && (
+              <s.DesignInfoWrapper>
+                <s.DesignCardInfo>
+                  {/* {thisDesign.designCardName}
+                  <br /> */}
+                  활성일:
+                  <br />
+                  {item.saveDateTime?.slice(0, item.saveDateTime?.indexOf('T'))}
+                </s.DesignCardInfo>
+              </s.DesignInfoWrapper>
+            )}
+          </s.DesignImageFrame>
+        ))}
+      </s.DesignListWrapper>
+    </s.DesignsWrapper>
+  );
+};
 export default DesignsForPosting;

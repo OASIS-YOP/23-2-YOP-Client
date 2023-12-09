@@ -22,16 +22,18 @@ const CodeInputModal = ({ albumName, closeCodeInputButton }) => {
   };
 
   const photocardActivate = () => {
-    mypageAPI.photocardActivate(decodeURI(albumName)).then((data) => {
-      // if (data) {
-      //   console.log(data);
-      //   closeCodeInputButton();
-      // } else {
-      //   window.alert('Photocard activation failed');
-      // }
-      window.alert(data.message);
-      closeCodeInputButton();
-    });
+    mypageAPI
+      .photocardActivate(decodeURI(`<NewJeans 2nd EP 'GET UP'>`))
+      .then((data) => {
+        // if (data) {
+        //   console.log(data);
+        //   closeCodeInputButton();
+        // } else {
+        //   window.alert('Photocard activation failed');
+        // }
+        window.alert(data.message);
+        closeCodeInputButton();
+      });
   };
   const handleSubmit = () => {
     // First, execute collectionActivate and wait for it to complete

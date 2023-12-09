@@ -239,6 +239,19 @@ const mypageAPI = {
       return null;
     }
   },
+  uploadPost: async (polaroidId) => {
+    try {
+      const path = `${process.env.REACT_APP_BASE_URL}/community/uploadPost/${polaroidId}/upload`;
+      const response = await HttpClient.post(
+        path,
+        {},
+        { Authorization: accessToken }
+      );
+      return response;
+    } catch (e) {
+      return null;
+    }
+  },
 };
 
 export default mypageAPI;

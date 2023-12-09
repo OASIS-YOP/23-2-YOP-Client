@@ -307,7 +307,7 @@ const CommunityPage = () => {
           ariaHideApp={false}
           style={UploadModalStyle}
         >
-          <SelectCollection />
+          <SelectCollection closeUploadModal={closeUploadModal} />
         </Modal>
       </s.Wrapper>
     </>

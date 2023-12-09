@@ -23,13 +23,13 @@ export const HeaderLabelWrapper = styled.div`
   margin-bottom: 30px;
 
   > span {
-    font-family: 'Noto Sans KR', sans-serif ;
+    font-family: 'Noto Sans KR', sans-serif;
     font-size: 22px;
     font-weight: 700;
 
     margin: 0 15px;
-    
-    color : #515151;
+
+    color: #515151;
   }
 `;
 
@@ -43,7 +43,7 @@ export const HeaderLabel = styled.button`
   color: white;
   border-radius: 20px;
 
-  font-family: 'Noto Sans KR', sans-serif ;
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 18.5px;
   font-weight: 600;
   border: none;
@@ -61,17 +61,12 @@ export const HeaderLabel = styled.button`
   &#active {
     background-color: #3f70ff;
   }
-
 `;
 
-export const HeaderLabelName = styled.div`
+export const HeaderLabelName = styled.div``;
 
-`;
-
-export const NoCollectionWrapper = styled.div`
-`;
-export const NoCollectionText = styled.div`
-`;
+export const NoCollectionWrapper = styled.div``;
+export const NoCollectionText = styled.div``;
 
 export const ArtistTabWrapper = styled.div`
   display: flex;
@@ -82,7 +77,7 @@ export const ArtistTabWrapper = styled.div`
   padding-left: 23px;
   /* border: 1px solid red; */
   margin-top: 15px;
-`
+`;
 
 export const ArtistTab = styled.button`
   display: flex;
@@ -94,7 +89,7 @@ export const ArtistTab = styled.button`
   border: none;
   background-color: transparent;
 
-  font-family: 'Noto Sans KR', sans-serif ;
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 16.5px;
   font-weight: 500;
   color: gray;
@@ -107,11 +102,11 @@ export const ArtistTab = styled.button`
   &.active {
     color: black;
     &:hover {
-    color: #3f70ff;
-    cursor: pointer;
+      color: #3f70ff;
+      cursor: pointer;
+    }
   }
-  }
-`
+`;
 
 export const ContentsWrapper = styled.div`
   display: flex;
@@ -137,44 +132,40 @@ export const CollectionCardsWrapper = styled.div`
     height: 100%;
   }
 
-
-//   /* border: 1px solid black; */
+  //   /* border: 1px solid black; */
 `;
 
+// export const DesignsWrapper = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: space-around;
+//   align-items: center;
+//   flex-wrap: nowrap;
 
-export const DesignsWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  flex-wrap: nowrap;
+//   width: 90%;
+//   height: fit-content;
 
-  width: 90%;
-  height: fit-content;
+// `;
 
-`;
+// export const DesignListWrapper = styled.div`
+//   display: flex;
+//   flex-direction: row;
+//   justify-content: center;
+//   align-items: center;
+//   flex-wrap: wrap;
 
-export const DesignListWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
+//   background-color: white;
 
-  background-color: white;
+//   width: 100%;
+//   height: fit-content;
 
-  width: 100%;
-  height: fit-content;
+//   margin: 0 40px;
 
-  margin: 0 40px;
-
-  // border: 1px solid red;
-`;
-
-
+//   // border: 1px solid red;
+// `;
 
 export const UploadStepWrapper = styled.div`
-   display: flex;
+  display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
@@ -182,8 +173,7 @@ export const UploadStepWrapper = styled.div`
 
   width: 90%;
   height: 350px;
-
-`
+`;
 
 export const SelectedDesignWrapper = styled.div`
   display: flex;
@@ -199,19 +189,16 @@ export const SelectedDesignWrapper = styled.div`
   box-shadow: 11px 13px 25px rgba(0, 0, 0, 0.4);
 
   &:hover {
-    > img { 
+    > img {
       filter: brightness(70%);
     }
   }
-  
-
-`
+`;
 
 export const SelectedDesignImage = styled.img`
   width: 200px;
   height: 290px;
-  
-`
+`;
 
 export const SelectedDesignInfoWrapper = styled.div`
   display: table-cell;
@@ -232,7 +219,7 @@ export const SelectedDesignInfo = styled.div`
   display: absolute;
   text-align: center;
 
-  font-family: 'Noto Sans KR', sans-serif ;
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 15px;
   font-weight: 500;
   color: white;
@@ -251,14 +238,12 @@ export const SelectedDesignContents = styled.div`
   display: flex;
   justify-content: center;
   align-items: start;
-  margin : 3px 0;
+  margin: 3px 0;
 
-  font-family: 'Noto Sans KR', sans-serif ;
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 18px;
   font-weight: 800;
   color: black;
-
-
 `;
 
 export const PostButton = styled.button`
@@ -276,10 +261,9 @@ export const PostButton = styled.button`
 
   color: white;
 
-  font-family: 'Noto Sans KR', sans-serif ;
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 18px;
   font-weight: 600;
-
 
   &:hover {
     cursor: pointer;
@@ -289,8 +273,6 @@ export const PostButton = styled.button`
   &:active {
     background-color: gray;
   }
-  
+
   margin-top: 30px;
-
 `;
-
