@@ -30,6 +30,7 @@ export const Login = () => {
         setAccessToken(data.token);
         // window.alert('로그인 성공했습니다.');
         navigate('/mainpage');
+        setIsLoggedIn(true);
       } else {
         console.log('로그인 실패');
         window.alert('등록된 회원이 아닙니다.');

@@ -20,7 +20,7 @@ export const BannerWrapper = styled.div`
   flex-direction: center;
   align-items: center;
   width: 100%;
-  height: 60vh;
+  height: 55.5vh;
   position: relative;
   background-color: #3f70ff;
 `;

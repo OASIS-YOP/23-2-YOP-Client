@@ -96,6 +96,9 @@ const LandingPage = () => {
                   backgroundColor: ' #696969',
                   color: 'white',
                 }}
+                onClick={() => {
+                  window.location.href = '/editor';
+                }}
               >
                 로그인 없이 폴꾸하기
               </s.Button>

@@ -2,8 +2,8 @@ import React, { useState, useRef, useEffect, useMemo } from 'react';
 // import Konva from 'konva';
 import { fabric } from 'fabric';
 import * as s from './style';
-import HeaderIsLogOffed from '../../components/Header/HeaderIsLogOffed';
-import Header from '../../components/Header';
+import HeaderMember from '../../components/Header/HeaderMember';
+import HeaderNonmember from '../../components/Header/HeaderNonmember';
 import Modal from 'react-modal';
 import { saveAs } from 'file-saver';
 
@@ -50,13 +50,13 @@ import {
   // historyState,
   // currentStateIndexState,
 } from '../../recoil/atoms';
+import { LoginState } from '../../states/LoginState';
+import { myProfileState } from '../../recoil/user';
 import { active } from 'sortablejs';
 
 import 'fabric-history';
 
-// import CanvasHistory from './utils/CanvasHistory';
-
-
+// import CanvasHistory from './utils/CanvasHistory'; 
 const Editor = () => {
   fabric.textureSize = 16000;
   const [ brightness , setBrightness ] = useRecoilState(brightnessValue);
@@ -82,7 +82,20 @@ const Editor = () => {
   const [photocardId, setPhotocardId] = useState(0);
 
   // 로그인 여부
-  const [isLogedIn, setIsLogedIn] = useState(true);
+  const [isLogedIn, setIsLogedIn] = useRecoilState(LoginState);
+  const resetProfile = useResetRecoilState(myProfileState);
+
+
+  // 우선은 항상 로그인 상태로 설정
+  useEffect(() => {
+    // if (isLogedIn) {
+    //   console.log('로그인 상태임');
+    // } else {
+    //   console.log('로그인 안됨');
+    // }
+    // setIsLogedIn(true);
+  }, []);
+      
 
   // 캔버스 스테이트
   const [canvas, setCanvas] = useState();
@@ -1334,7 +1347,7 @@ const Editor = () => {
 
   return (
     <s.Wrapper onClick={closeContextMenu}>
-      {isLogedIn ? <Header /> : <HeaderIsLogOffed />}
+      {isLogedIn ? <HeaderMember /> : <HeaderNonmember />}
       <s.EditorWrapper>
         <s.LeftContainer>
           <s.TopMenuWrapper>
@@ -1388,7 +1401,7 @@ const Editor = () => {
             </s.TopMenuGroupWrapper>
             <s.TopMenuGroupWrapper>
               <s.TopMenuButtonRight>
-                <s.TopMenuButton
+                {/* <s.TopMenuButton
                   isActive={!undoButtonDisabled}
                   // onClick={handleUndo}
                 >
@@ -1405,7 +1418,7 @@ const Editor = () => {
                     <Redo />
                   </s.TopMenuButtonIcon>
                   <s.TopMenuButtonLabel>앞으로</s.TopMenuButtonLabel>
-                </s.TopMenuButton>
+                </s.TopMenuButton> */}
                 <s.TopMenuButton
                   onClick={
                     photocardId === 0
