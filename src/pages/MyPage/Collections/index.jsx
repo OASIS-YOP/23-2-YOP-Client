@@ -84,8 +84,12 @@ const Collections = () => {
     },
   };
 
-  const handleClickCodeInputButton = () => {
-    setIsOpenCodeInputModal((prev) => !prev);
+  const openCodeInputButton = () => {
+    setIsOpenCodeInputModal(true);
+  };
+
+  const closeCodeInputButton = () => {
+    setIsOpenCodeInputModal(false);
   };
   useEffect(() => {
     getMyCollectionArtistTab();
@@ -96,11 +100,12 @@ const Collections = () => {
     getMyActiveCollection();
   }, [selectedArtist]);
 
-  // useEffect(() => {}, [selectedCollection]);
+  useEffect(() => {
+    getMyActiveCollection();
+  }, [isOpenCodeInputModal]);
 
   //컬렉션 카드 컴포넌트
   const CollectionCard = ({
-    selectedCollection,
     setSelectedCollection,
     setIsCollectionClicked,
     albumJacket,
@@ -109,7 +114,16 @@ const Collections = () => {
   }) => {
     const [ismouseOver, setIsMouseOver] = useState(false);
     const [isActiveMouseOver, setIsActiveMouseOver] = useState(false);
+    const [myPhotocardQuant, setMyPhotocardQuant] = useState(null);
 
+    const fetchPhotocardQuant = async (album) => {
+      try {
+        const data = await mypageAPI.getActivePhotocardQuant(decodeURI(album));
+        setMyPhotocardQuant(data.activeCardQuant);
+      } catch (error) {
+        console.error('Failed to fetch photocard quantity', error);
+      }
+    };
     //비활성화컬렉션
     const onHandleMouseOver = (e) => {
       e.preventDefault();
@@ -136,75 +150,90 @@ const Collections = () => {
       setSelectedCollection(albumName);
     };
 
+    const activeCollectionData = activatedCollection.find(
+      (item) => item.albumName === albumName
+    );
+
+    const isActive = Boolean(activeCollectionData);
+    useEffect(() => {
+      // 마우스 오버 시 API 호출
+      if (isActiveMouseOver) {
+        fetchPhotocardQuant(albumName);
+      }
+    }, [isActiveMouseOver, albumName]); // 의존성 배열에 ismouseOver와 albumName을 추가
+
     return (
       <s.CollectionCardWrapper styled={{ cursor: 'pointer' }}>
-        {activatedCollection.map((item) =>
-          albumName === item.albumName ? (
-            // 활성화된 컬렉션
-            <>
-              <s.ActivatedCollectionCardWrapper
-                onClick={() => onClickCollection(item.albumName)}
-                onMouseOver={onHandleActiveMouseOver}
-                onMouseOut={onHandleActiveMouseOut}
-              >
-                <s.CollectionCardImage src={albumJacket} alt='collection' />
-                {isActiveMouseOver && (
-                  <s.CollectionInfoWrapper>
-                    <s.CollectionCardInfo>
-                      {albumName}
-                      <br />
-                      활성일 : {item.activeDateTime}
-                      <br />
-                      {/* 수정요망 */}
-                      수집률 : {Math.round((1 / item.photoCardQuant) * 100)}%
-                      <br />
-                      {/* 내가가진포카수 구해서 넣어야함 */}
-                      포카수 : 1/
-                      {item.photoCardQuant}장
-                    </s.CollectionCardInfo>
-                  </s.CollectionInfoWrapper>
-                )}
-              </s.ActivatedCollectionCardWrapper>
-            </>
-          ) : (
-            //비활성화된 컬렉션
-            <>
-              <s.InActivatedCollectionCardImage
-                src={albumJacket}
-                alt='collection'
-                onMouseOut={onHandleMouseOut}
-              />
-              {ismouseOver ? (
-                <>
-                  <s.InputCodeWrapper>
-                    <s.AlbumName>{albumName}</s.AlbumName>
-                    <s.InputCodeButton
-                      onMouseOver={onHandleMouseOver}
-                      onClick={handleClickCodeInputButton}
-                    >
-                      코드 입력
-                    </s.InputCodeButton>
-                  </s.InputCodeWrapper>
-                  <Modal
-                    isOpen={isOpenCodeInputModal}
-                    style={CodeInputModalStyle}
-                    onRequestClose={handleClickCodeInputButton} // 오버레이나 esc를 누르면 핸들러 동작
-                    ariaHideApp={false}
-                  >
-                    <CodeInputModal albumName={albumName} />
-                  </Modal>
-                </>
-              ) : (
-                <s.InActivatedLockWrapper>
-                  <img src={Lock} alt='lock' onMouseOver={onHandleMouseOver} />
-                </s.InActivatedLockWrapper>
+        {isActive ? (
+          // 활성화된 컬렉션
+          <>
+            <s.ActivatedCollectionCardWrapper
+              onClick={() => onClickCollection(albumName)}
+              onMouseOver={onHandleActiveMouseOver}
+              onMouseOut={onHandleActiveMouseOut}
+            >
+              <s.CollectionCardImage src={albumJacket} alt='collection' />
+              {isActiveMouseOver && (
+                <s.CollectionInfoWrapper>
+                  <s.CollectionCardInfo>
+                    {albumName}
+                    <br />
+                    활성일 : {activeCollectionData.activeDateTime}
+                    <br />
+                    {/* 수정요망 */}
+                    수집률 :{' '}
+                    {Math.round(
+                      (1 / activeCollectionData.photoCardQuant) * 100
+                    )}
+                    %
+                    <br />
+                    {/* 내가가진포카수 구해서 넣어야함 */}
+                    포카수 : {myPhotocardQuant}/
+                    {activeCollectionData.photoCardQuant}장
+                  </s.CollectionCardInfo>
+                </s.CollectionInfoWrapper>
               )}
-            </>
-          )
+            </s.ActivatedCollectionCardWrapper>
+          </>
+        ) : (
+          //비활성화된 컬렉션
+          <>
+            <s.InActivatedCollectionCardImage
+              src={albumJacket}
+              alt='collection'
+              onMouseOut={onHandleMouseOut}
+            />
+            {ismouseOver ? (
+              <>
+                <s.InputCodeButton
+                  onMouseOver={onHandleMouseOver}
+                  onClick={openCodeInputButton}
+                >
+                  코드 입력
+                </s.InputCodeButton>
+                <Modal
+                  isOpen={isOpenCodeInputModal}
+                  style={CodeInputModalStyle}
+                  onRequestClose={closeCodeInputButton} // 오버레이나 esc를 누르면 핸들러 동작
+                  ariaHideApp={false}
+                >
+                  <CodeInputModal
+                    albumName={albumName}
+                    closeCodeInputButton={closeCodeInputButton}
+                  />
+                </Modal>
+              </>
+            ) : (
+              <s.InActivatedLockWrapper>
+                <img src={Lock} alt='lock' onMouseOver={onHandleMouseOver} />
+              </s.InActivatedLockWrapper>
+            )}
+          </>
         )}
       </s.CollectionCardWrapper>
     );
   };
+
   return (
     <>
       <s.Wrapper>
@@ -213,25 +242,22 @@ const Collections = () => {
           !isCollectionClicked ? (
             <s.CollectionCardsContainer>
               {allCollection &&
-                allCollection.map((item) => {
-                  return (
-                    <CollectionCard
-                      selectedCollection={selectedCollection}
-                      setSelectedCollection={setSelectedCollection}
-                      setIsCollectionClicked={setIsCollectionClicked}
-                      albumJacket={item.albumJacket}
-                      albumName={item.albumName}
-                      activatedCollection={activatedCollection}
-                    />
-                  );
-                })}
+                allCollection.map((item) => (
+                  <CollectionCard
+                    setSelectedCollection={setSelectedCollection}
+                    setIsCollectionClicked={setIsCollectionClicked}
+                    albumJacket={item.albumJacket}
+                    albumName={item.albumName}
+                    activatedCollection={activatedCollection}
+                  />
+                ))}
             </s.CollectionCardsContainer>
           ) : (
             <CollectionDetails
               selectedArtist={selectedArtist}
               selectedCollection={selectedCollection}
               setIsCollectionClicked={setIsCollectionClicked}
-              handleClickCodeInputButton={handleClickCodeInputButton}
+              openCodeInputButton={openCodeInputButton}
               isOpenCodeInputModal={isOpenCodeInputModal}
               CodeInputModalStyle={CodeInputModalStyle}
               setIsOpenCodeInputModal={setIsOpenCodeInputModal}
@@ -251,7 +277,9 @@ const Collections = () => {
               alignItems: 'center',
               paddingTop: '30px',
             }}
-          >마음에 드는 아티스트를 선택하고, 컬렉션을 확인하세요!</div>
+          >
+            마음에 드는 아티스트를 선택하고, 컬렉션을 확인하세요!
+          </div>
         )}
       </s.Wrapper>
     </>

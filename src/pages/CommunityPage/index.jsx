@@ -19,23 +19,25 @@ const CommunityPage = () => {
   const [memberProfile, setMemberProfile] = useState([]);
   const [allPost, setAllPost] = useState([]);
   const [memberPost, setMemberPost] = useState([]);
-  const [isClickedMember, setIsClickedMember] = useState(null);
+  const [clickedMember, setClickedMember] = useState(null);
+  const [isClickMember, setIsClickMember] = useState(false);
+
+  const [clickedPost, setClickedPost] = useState(0);
 
   const [isFavorite, setIsFavorite] = useState();
 
   const [isClickStar, setIsClickStar] = useState(false);
 
-  const [isOpenModal, setIsOpenModal] = useState(false);
-
+  const [isOpenPostModal, setIsOpenPostModal] = useState(false);
 
   const fandomName = ['아미', '마이', '유애나', '버니즈'];
 
-  const openModal = () => {
-    setIsOpenModal(true);
+  const openPostModal = () => {
+    setIsOpenPostModal(true);
   };
 
-  const closeModal = () => {
-    setIsOpenModal(false);
+  const closePostModal = () => {
+    setIsOpenPostModal(false);
   };
 
   const postModalStyle = {
@@ -49,6 +51,8 @@ const CommunityPage = () => {
       zIndex: 999,
     },
     content: {
+      justifyContent: 'center',
+      alignItems: 'center',
       background: 'white',
       overflow: 'auto',
       width: 'fit-content',
@@ -56,16 +60,16 @@ const CommunityPage = () => {
       margin: 'auto auto',
       WebkitOverflowScrolling: 'touch',
       WebkitUserSelect: 'none',
-      borderRadius: '20px',
+      borderRadius: '48px',
       outline: 'none',
-      zIndex: 10,
+      border: '0',
+      padding: '0',
     },
   };
 
-  const onCloseModal = () => {
-    setIsOpenModal((prev) => !prev);
-  };
-
+  // const on = () => {
+  //   setIsOpenPostModal((prev) => !prev);
+  // };
 
   const fetchData = async () => {
     try {
@@ -93,7 +97,7 @@ const CommunityPage = () => {
       const memberProfileData = await communitypageAPI.getMemberProfile(
         artistId
       );
-      setMemberProfile(memberProfileData.memberPhoto);
+      setMemberProfile(memberProfileData?.memberPhoto);
       console.log(memberProfileData);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -106,7 +110,7 @@ const CommunityPage = () => {
 
   const handleClickMember = (memberName) => {
     if (artistId === 3) return;
-    setIsClickedMember(memberName);
+    setClickedMember(memberName);
     getMemberPost(memberName);
   };
 
@@ -149,7 +153,10 @@ const CommunityPage = () => {
   //     .getPostLikeQuant(artistId,postId)
   //     .then((data) => console.log(data));
   // };
-
+  const getClickedPostInfo = (postId) => {
+    const postInfo = allPost.filter((item) => item.postId === postId);
+    return postInfo[0];
+  };
   useEffect(() => {
     getIfFavoriteArtist();
   }, []);
@@ -159,91 +166,105 @@ const CommunityPage = () => {
 
   return (
     <>
-    <s.Wrapper>
-      <Header />
-      <s.ProfileContainer>
-        <s.ProfileWrapper>
-          <s.ProfileImage>
-            {artistInfo && <img src={artistInfo?.photo} alt='artistPhoto' />}
-          </s.ProfileImage>
-          <s.ProfileInfo>
-            {artistInfo && <s.ArtistName>{artistInfo?.groupName}</s.ArtistName>}
-            <s.FavoriteQuantWrapper>
-              <s.StarIcon
-                onClick={handleClickStar}
-                src={isFavorite ? Star : EmptyStar}
-                alt='star'
-              />
-              {artistFavoriteQuant && artistFavoriteQuant}
-            </s.FavoriteQuantWrapper>
-            <s.ArtistInfoText>
-              팬덤명 : {fandomName[artistId - 1]} <br />
-              {artistInfo && `소속 : ${artistInfo?.enterComp}`}
-            </s.ArtistInfoText>
-            <s.ArtistInfoText>
-              내가 가진 컬렉션 : {myCollectionQuant && myCollectionQuant}
-              {artistInfo && `/${artistInfo?.collectionQuant}`}
-            </s.ArtistInfoText>
-          </s.ProfileInfo>
-        </s.ProfileWrapper>
-      </s.ProfileContainer>
-      <s.BodyContainer>
-        {!memberProfile ? (
-          ''
-        ) : (
-          <s.MemberCardsWrapper>
-            {memberProfile?.map((item, index) => (
-              <s.MemberCardContainer key={`member_${index + 1}`}>
-                <s.MemberNameLabel>{item?.name}</s.MemberNameLabel>
-                <s.CardImageContainer
-                  onClick={() => handleClickMember(item.name)}
-                >
-                  <img src={item?.memphoto} alt='memberPhoto' />
-                </s.CardImageContainer>
-              </s.MemberCardContainer>
-            ))}
-          </s.MemberCardsWrapper>
-        )}
-        <s.photoCardContainer>
-          <s.ContentWrapper>
-            {!memberProfile
-              ? allPost.map((item) => (
-                  <s.CardImageContainer 
-                    onClick={openModal}
-                    key={`allPost_${item.postId}`}
-                  >
-                    <img src={item.polaroid} alt='allPolaroid' />
-                  </s.CardImageContainer>
-                ))
-              : memberPost?.map((item) => (
+      <s.Wrapper>
+        <Header />
+        <s.ProfileContainer>
+          <s.ProfileWrapper>
+            <s.ProfileImage>
+              {artistInfo && <img src={artistInfo?.photo} alt='artistPhoto' />}
+            </s.ProfileImage>
+            <s.ProfileInfo>
+              {artistInfo && (
+                <s.ArtistName>{artistInfo?.groupName}</s.ArtistName>
+              )}
+              <s.FavoriteQuantWrapper>
+                <s.StarIcon
+                  onClick={handleClickStar}
+                  src={isFavorite ? Star : EmptyStar}
+                  alt='star'
+                />
+                {artistFavoriteQuant && artistFavoriteQuant}
+              </s.FavoriteQuantWrapper>
+              <s.ArtistInfoText>
+                팬덤명 : {fandomName[artistId - 1]} <br />
+                {artistInfo && `소속 : ${artistInfo?.enterComp}`}
+              </s.ArtistInfoText>
+              <s.ArtistInfoText>
+                내가 가진 컬렉션 : {myCollectionQuant && myCollectionQuant}
+                {artistInfo && `/${artistInfo?.collectionQuant}`}
+              </s.ArtistInfoText>
+            </s.ProfileInfo>
+          </s.ProfileWrapper>
+        </s.ProfileContainer>
+        <s.BodyContainer>
+          {!memberProfile ? (
+            ''
+          ) : (
+            <s.MemberCardsWrapper>
+              {memberProfile?.map((item, index) => (
+                <s.MemberCardContainer key={`member_${index + 1}`}>
+                  <s.MemberNameLabel>{item?.name}</s.MemberNameLabel>
                   <s.CardImageContainer
-                    onClick={openModal}
-                    key={`memberPost_${item.postId}`}
+                    onClick={() => handleClickMember(item.name)}
                   >
-                    <img src={item.polaroid} alt='Polaroid' />
+                    <img src={item?.memphoto} alt='memberPhoto' />
                   </s.CardImageContainer>
-                ))}
-          </s.ContentWrapper>
-        </s.photoCardContainer>
-      </s.BodyContainer>
+                </s.MemberCardContainer>
+              ))}
+            </s.MemberCardsWrapper>
+          )}
+          <s.photoCardContainer>
+            <s.ContentWrapper>
+              {!isClickMember
+                ? allPost.map((item) => (
+                    <>
+                      <s.CardImageContainer
+                        onClick={() => {
+                          openPostModal();
+                          setClickedPost(item.postId);
+                        }}
+                        key={`allPost_${item.postId}`}
+                      >
+                        <img src={item.polaroid} alt='allPolaroid' />
+                      </s.CardImageContainer>
+                    </>
+                  ))
+                : memberPost &&
+                  memberPost?.map((item) => (
+                    <>
+                      <s.CardImageContainer
+                        onClick={() => {
+                          openPostModal();
+                          setClickedPost(item.postId);
+                        }}
+                        key={`memberPost_${item.postId}`}
+                      >
+                        <img src={item.polaroid} alt='Polaroid' />
+                      </s.CardImageContainer>
+                    </>
+                  ))}
+            </s.ContentWrapper>
+          </s.photoCardContainer>
+        </s.BodyContainer>
         <Modal
           style={postModalStyle}
-          isOpen={isOpenModal}
-          onRequestClose={onCloseModal}
+          isOpen={isOpenPostModal}
+          onRequestClose={closePostModal}
         >
-          <PostModal />
+          <PostModal item={getClickedPostInfo(clickedPost)} />
         </Modal>
-      <s.ScrollToTopButton
-        onClick={() => {
-          window.scrollTo({
-            top: 0,
-            behavior: 'smooth',
-          });
-        }}
-      >
-        ▲
-      </s.ScrollToTopButton>
-    </s.Wrapper>
+
+        <s.ScrollToTopButton
+          onClick={() => {
+            window.scrollTo({
+              top: 0,
+              behavior: 'smooth',
+            });
+          }}
+        >
+          ▲
+        </s.ScrollToTopButton>
+      </s.Wrapper>
     </>
   );
 };

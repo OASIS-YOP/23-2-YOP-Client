@@ -2,7 +2,7 @@ import mypageAPI from '../../api/mypage/mypageAPI';
 import * as s from './CodeInputModal.style';
 import { useState } from 'react';
 
-const CodeInputModal = ({ albumName, handleClickCodeInputButton }) => {
+const CodeInputModal = ({ albumName, closeCodeInputButton }) => {
   const [code, setCode] = useState({
     code: '',
   });
@@ -10,48 +10,35 @@ const CodeInputModal = ({ albumName, handleClickCodeInputButton }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setCode({ ...code, [name]: value });
-    console.log(`code: ${e.target.value}`);
   };
 
-  const collectionActivate = async () => {
-    try {
-      const data = await mypageAPI.collectionActivate(
-        decodeURI(albumName),
-        code
-      );
-      if (data) {
-        console.log(data.message);
-      } else {
-        window.alert('코드를 다시 확인해주세요.');
-      }
-    } catch (error) {
-      // Handle any errors that occur during the API call
-      console.error('Error during collection activation:', error);
-      window.alert('Collection activation failed');
-    }
+  const collectionActivate = () => {
+    mypageAPI.collectionActivate(decodeURI(albumName), code).then((data) => {
+      window.alert(data.message);
+      // console.log(data.message);
+      // window.alert('Collection activation failed');
+      closeCodeInputButton();
+    });
   };
 
-  const photocardActivate = async () => {
-    try {
-      const data = await mypageAPI.photocardActivate(decodeURI(albumName));
-      if (data) {
-        console.log(data.message);
-        handleClickCodeInputButton();
-      } else {
-        window.alert('포토카드활성화 실패');
-      }
-    } catch (error) {
-      // Handle any errors that occur during the API call
-      console.error('Error during photocard activation:', error);
-      window.alert('Photocard activation failed');
-    }
+  const photocardActivate = () => {
+    mypageAPI.photocardActivate(decodeURI(albumName)).then((data) => {
+      // if (data) {
+      //   console.log(data);
+      //   closeCodeInputButton();
+      // } else {
+      //   window.alert('Photocard activation failed');
+      // }
+      window.alert(data.message);
+      closeCodeInputButton();
+    });
   };
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     // First, execute collectionActivate and wait for it to complete
-    await collectionActivate();
+    collectionActivate();
 
     // Then, execute photocardActivate and wait for it to complete
-    await photocardActivate();
+    photocardActivate();
   };
   return (
     <s.Wrapper>
