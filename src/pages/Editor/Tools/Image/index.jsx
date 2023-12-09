@@ -116,21 +116,21 @@ const ImageTool = ({ image, canvas,}) => {
     canvas.renderAll();
   };
 
-  useEffect(() => {
-    //필터 초기화
-    if (isBackImgEmpty) {
-      resetBrightness();
-      resetContrast();
-      resetSaturation();
-      resetRotation();
-      resetScale();
-      resetReverseX();
-      resetReverseY();
-      resetGray();
-    } else {
-      return;
-    }
-  }, [isBackImgEmpty]);
+  // useEffect(() => {
+  //   //필터 초기화
+  //   if (isBackImgEmpty) {
+  //     resetBrightness();
+  //     resetContrast();
+  //     resetSaturation();
+  //     resetRotation();
+  //     resetScale();
+  //     resetReverseX();
+  //     resetReverseY();
+  //     resetGray();
+  //   } else {
+  //     return;
+  //   }
+  // }, [isBackImgEmpty]);
 
   //canvas clear될때마다 inputValue 초기화
   // canvas.on({ 'canvas:cleared': initRangeInputValues });
@@ -235,18 +235,18 @@ const ImageTool = ({ image, canvas,}) => {
     marginTop: -2,
   };
 
-  useEffect(() => {
-    if (image) {
-      console.log(
-        '이미지탭 마운트:',
-        brightness,
-        saturation,
-        contrast,
-        rotation,
-        scale
-      );
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (image) {
+  //     console.log(
+  //       '이미지탭 마운트:',
+  //       brightness,
+  //       saturation,
+  //       contrast,
+  //       rotation,
+  //       scale
+  //     );
+  //   }
+  // }, []);
 
   return (
     <>

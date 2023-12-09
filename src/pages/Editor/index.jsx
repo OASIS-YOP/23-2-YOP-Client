@@ -267,15 +267,15 @@ const Editor = () => {
   };
 
   // 추가된 이미지 조회
-  useEffect(() => {
-    if (image) {
-      console.log('추가된 이미지 :', image);
-    }
-  }, [image]);
+  // useEffect(() => {
+  //   if (image) {
+  //     console.log('추가된 이미지 :', image);
+  //   }
+  // }, [image]);
 
-  useEffect(() => {
-    console.log('꾸밀 이미지 아직임? :', isBackImgEmpty);
-  }, [isBackImgEmpty]);
+  // useEffect(() => {
+  //   console.log('꾸밀 이미지 아직임? :', isBackImgEmpty);
+  // }, [isBackImgEmpty]);
 
   //이미지 잠금
   const lockImage = () => {
@@ -584,7 +584,7 @@ const Editor = () => {
       canvas.on('selection:cleared', (e) => {
         setSelectedObject();
       });
-      image.on('mousedown', (e) => {
+      image?.on('mousedown', (e) => {
         canvas.discardActiveObject();
         setSelectedObject(null);
       });
