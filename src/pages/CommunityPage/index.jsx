@@ -251,7 +251,25 @@ const CommunityPage = () => {
         </s.ProfileContainer>
         <s.BodyContainer>
           {!memberProfile ? (
-            ''
+            // ''
+            <s.MemberCardsWrapper>
+              {/* {memberProfile?.map((item, index) => (
+                <s.MemberCardContainer key={`member_${index + 1}`}>
+                  <s.MemberNameLabel>{item?.name}</s.MemberNameLabel>
+                  <s.CardImageContainer
+                    onClick={() => {
+                      setClickedMember(item?.name);
+                      console.log(memberPost);
+                      console.log(clickedMember);
+                    }}
+                  >
+                    <s.MemberCardImageWrapper>
+                      <img src={item?.memphoto} alt='memberPhoto' />
+                    </s.MemberCardImageWrapper>
+                  </s.CardImageContainer>
+                </s.MemberCardContainer>
+              ))} */}
+            </s.MemberCardsWrapper>
           ) : (
             <s.MemberCardsWrapper>
               {memberProfile?.map((item, index) => (

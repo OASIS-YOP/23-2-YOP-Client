@@ -263,7 +263,20 @@ const SelectCollection = ({ closeUploadModal }) => {
             </>
           ) : (
             <>
-              <s.NoCollectionWrapper>
+              <s.NoCollectionWrapper
+                style={{
+                  color: 'gray',
+                  fontFamily: 'Noto Sans KR',
+                  fontWeight: '600',
+                  fontSize: '18px',
+                  width: '100%',
+                  height: '80%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
                 <s.NoCollectionText>저장된 도안이 없습니다.</s.NoCollectionText>
               </s.NoCollectionWrapper>
             </>

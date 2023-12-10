@@ -16,14 +16,8 @@ const Text = ({
   canvas, image,
   isBackImgEmpty
 }) => {
-  const [color, setColor] = useState('#FFFFFF');
+  const [color, setColor] = useState('#3F70FF');
 
-  // 폰트 변경
-  const [selectedFont, setSelectedFont] = useState('(default)Noto Sans KR');
-
-  const fonts = ['MBC1961굴림', '강원모두교육체','에스코어드림', '김정철명조', 'Neo둥근고딕Pro'];
-
-  fonts.unshift('(default)Noto Sans KR');
 
   useEffect(() => {
     const select = document.getElementById('font-family');
@@ -66,6 +60,7 @@ const Text = ({
         left: Math.min(Math.max(x, 0), canvas.width - text.getScaledWidth()),
         top: Math.min(Math.max(y, 0), canvas.height - text.getScaledHeight()),
         fontFamily: 'Noto Sans KR',
+        fontWeight: 700,
         fontSize: 35,
       });
 
@@ -93,6 +88,7 @@ const Text = ({
         left: Math.min(Math.max(x, 0), canvas.width - text.getScaledWidth()),
         top: Math.min(Math.max(y, 0), canvas.height - text.getScaledHeight()),
         fontFamily: 'Noto Sans KR',
+        fontWeight: 700,
         fontSize: 35,
       });
 
@@ -211,7 +207,8 @@ const Text = ({
         path: path,
         top: path.top,
         left: path.left,
-        fontFamily: 'Times New Roman',
+        fontFamily: 'Noto Sans KR',
+        fontWeight: 800,
       });
       canvas.add(textObject);
     }
@@ -238,6 +235,17 @@ const Text = ({
     }
   };
 
+  // 폰트 변경
+  const [selectedFont, setSelectedFont] = useState('(default)Noto Sans KR');
+
+  const fonts = ['MBC1961굴림', '강원모두교육체','에스코어드림', '김정철명조', 'Neo둥근고딕Pro',
+    '나눔명조ExtraBold', '나눔명조Bold', '나눔명조Regular',
+    '선플라워Bold', '선플라워Medium', '선플라워Light',
+    '하이멜로디',
+  ];
+
+  fonts.unshift('(default)Noto Sans KR');
+
   const TextFonts = () => {
     if (
       canvas.getActiveObject() instanceof fabric.Text ||
@@ -252,8 +260,7 @@ const Text = ({
         fontFamily = 'GangwonEdu_OTFBoldA';
       } else if(selectedFont ==='에스코어드림') {
         fontFamily = 'S-CoreDream-3Light';
-      }
-      else if(selectedFont ==='김정철명조') {
+      } else if(selectedFont ==='김정철명조') {
         fontFamily = 'KimjungchulMyungjo-Bold';
         fontWeight  = 700;
       }else if(selectedFont ==='(default)Times New Roman'){
@@ -262,7 +269,28 @@ const Text = ({
         fontFamily = 'NeoDunggeunmoPro-Regular';
       } else if ( selectedFont === '(default)Noto Sans KR' ) {
         fontFamily = 'Noto Sans KR';
-      }
+        fontWeight = 700;
+      } else if ( selectedFont === '나눔명조ExtraBold' ) {
+        fontFamily = 'Nanum Myeongjo';
+        fontWeight = 800;
+      } else if ( selectedFont === '나눔명조Bold' ) {
+        fontFamily = 'Nanum Myeongjo';
+        fontWeight = 700;
+      } else if ( selectedFont === '나눔명조Regular' ) {
+        fontFamily = 'Nanum Myeongjo';
+        fontWeight = 400;
+      } else if ( selectedFont === '선플라워Bold' ) {
+        fontFamily = 'Sunflower';
+        fontWeight = 700;
+      } else if ( selectedFont === '선플라워Medium' ) {
+        fontFamily = 'Sunflower';
+        fontWeight = 500;
+      } else if ( selectedFont === '선플라워Light' ) {
+        fontFamily = 'Sunflower';
+        fontWeight = 300;
+      } else if ( selectedFont === '하이멜로디' ) {
+        fontFamily = 'HIMelody';
+      } 
 
       canvas.getActiveObject().set({
         fontFamily,
