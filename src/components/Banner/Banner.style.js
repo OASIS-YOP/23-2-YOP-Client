@@ -12,6 +12,7 @@ export const BannerContent = styled.div`
   display: flex;
   flex-direction: row;
   width: 100vw;
+  min-width: 1000px;
   color: white;
 
 

@@ -20,9 +20,12 @@ export const BannerWrapper = styled.div`
   flex-direction: center;
   align-items: center;
   width: 100%;
+  min-width: 1000px;
   height: 55.5vh;
   position: relative;
   background-color: #3f70ff;
+
+  margin-bottom: 25px;
 `;
 
 export const BannerContent = styled.div`
@@ -30,15 +33,18 @@ export const BannerContent = styled.div`
   height: auto;
   color: white;
   margin: 0 auto;
+  
+  min-width: 1000px;
 
   font-family: 'Noto Sans KR', sans-serif;
   font-size: 30px;
   font-weight: 800;
+
 `;
 
 export const PageLabel = styled.p`
   height: fit-content;
-  margin: 40px 20px 40px 20px;
+  margin: 40px 20px 15px 20px;
   padding: 15px;
 
   font-family: 'Noto Sans KR', sans-serif;
@@ -80,6 +86,7 @@ export const RealTimeDesignWrapper = styled.div`
   margin: 0 auto;
 
   width: 95%;
+  min-width: 1300px;
   height: 350px;
 
   border-radius: 15px;
@@ -124,6 +131,10 @@ export const AlbumImage = styled.img`
   width: 150px;
   height: 150px;
   border-radius: 15px;
+
+  &:hover {
+    filter: brightness(70%);
+  }
 `;
 
 export const CollectionTextBox = styled.div`
