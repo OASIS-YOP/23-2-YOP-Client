@@ -9,12 +9,7 @@ import {
 import MyCollections from '../../../Temp/mypage/mydesign/MyCollections.js';
 import mypageAPI from '../../../api/mypage/mypageAPI.js';
 
-const Collections = ({
-  thisCollection,
-  selectedArtist,
-  albumName,
-  albumJacket,
-}) => {
+const Collections = ({ albumName, albumJacket }) => {
   const [isMouseOver, setIsMouseOver] = useState(false);
   const [isCollectionClicked, setIsCollectionClicked] = useRecoilState(
     isCollectionClickedState
@@ -49,7 +44,7 @@ const Collections = ({
 
   useEffect(() => {
     getMyPolaroidQuant();
-  }, []);
+  }, [isMouseOver]);
 
   return (
     <>

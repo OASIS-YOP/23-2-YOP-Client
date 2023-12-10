@@ -15,7 +15,7 @@ export const PostFrame = styled.div`
   max-width: 900px;
   max-height: 600px;
   width: 65%;
-  height: 35vw;
+  height: 32vw;
   box-sizing: border-box;
   // border: 9px solid #3F70FF;
 `;
@@ -40,7 +40,7 @@ export const PostImageFrame = styled.div`
   max-width: 280px;
   max-height: 400px;
   width: 60%;
-  height: 23vw;
+  height: 22vw;
 
   overflow: hidden;
 
@@ -120,7 +120,7 @@ export const likeWrapper = styled.div`
   width: 50%;
   height: fit-content;
 
-  margin-top: 50%;
+  margin-top: 40%;
 
   font-family: 'Noto Sans KR', sans-serif;
   font-size: 180%;

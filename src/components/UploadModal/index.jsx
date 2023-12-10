@@ -87,7 +87,7 @@ const SelectCollection = ({ closeUploadModal }) => {
   // };
   const getMyPolaroidArtistTab = () => {
     mypageAPI.getMyPolaroidArtistTab().then((data) => {
-      if (data.polaroidArtistTabList.length === 0) {
+      if (data?.polaroidArtistTabList.length === 0) {
         return;
       } else {
         setSelectedArtist(data?.polaroidArtistTabList[0]?.artistId);
@@ -109,6 +109,7 @@ const SelectCollection = ({ closeUploadModal }) => {
       console.log(data);
       if (data) {
         window.alert('포스팅되었습니다.');
+        onClickStep1();
         closeUploadModal();
       } else {
         window.alert('failed');
@@ -152,15 +153,16 @@ const SelectCollection = ({ closeUploadModal }) => {
         </s.HeaderLabelWrapper>
         {!isCollectionClicked ? (
           <s.ArtistTabWrapper>
-            {artistTabList.map((item, index) => (
-              <s.ArtistTab
-                key={index}
-                onClick={() => onClickArtist(item.artistId)}
-                className={item.artistId === selectedArtist ? 'active' : ''}
-              >
-                {item.groupName}
-              </s.ArtistTab>
-            ))}
+            {artistTabList &&
+              artistTabList.map((item, index) => (
+                <s.ArtistTab
+                  key={index}
+                  onClick={() => onClickArtist(item.artistId)}
+                  className={item.artistId === selectedArtist ? 'active' : ''}
+                >
+                  {item.groupName}
+                </s.ArtistTab>
+              ))}
           </s.ArtistTabWrapper>
         ) : null}
         <s.ContentsWrapper>

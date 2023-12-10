@@ -144,16 +144,20 @@ const CommunityPage = () => {
     isFavorite ? deleteFavoriteArtist() : postFavoriteArtist();
   };
 
-  const handleClickMember = (memberName) => {
+  const handleClickMember = () => {
     if (artistId === 3) return;
-    setClickedMember(memberName);
-    getMemberPost(memberName);
+
+    getMemberPost();
   };
 
-  const getMemberPost = (memberName) => {
-    communitypageAPI.getMemberPost(memberName).then((data) => {
-      setMemberPost(data?.memberPostList);
-      console.log(data);
+  const getMemberPost = () => {
+    communitypageAPI.getMemberPost(decodeURI(clickedMember)).then((data) => {
+      if (data?.memberPostList) {
+        setMemberPost(data?.memberPostList);
+        setIsClickMember(true);
+      } else {
+        console.log('업서이자식아');
+      }
     });
   };
 
@@ -193,6 +197,7 @@ const CommunityPage = () => {
     const postInfo = allPost.filter((item) => item.postId === postId);
     return postInfo[0];
   };
+
   useEffect(() => {
     getIfFavoriteArtist();
   }, []);
@@ -241,7 +246,10 @@ const CommunityPage = () => {
                 <s.MemberCardContainer key={`member_${index + 1}`}>
                   <s.MemberNameLabel>{item?.name}</s.MemberNameLabel>
                   <s.CardImageContainer
-                    onClick={() => handleClickMember(item.name)}
+                    onClick={() => {
+                      setClickedMember(item?.name);
+                      handleClickMember();
+                    }}
                   >
                     <img src={item?.memphoto} alt='memberPhoto' />
                   </s.CardImageContainer>
@@ -250,6 +258,11 @@ const CommunityPage = () => {
             </s.MemberCardsWrapper>
           )}
           <s.photoCardContainer>
+            <>
+              <s.showAllPostButton onClick={() => setIsClickMember(false)}>
+                전체보기
+              </s.showAllPostButton>
+            </>
             <s.ContentWrapper>
               {!isClickMember
                 ? allPost.map((item) => (
@@ -265,8 +278,9 @@ const CommunityPage = () => {
                       </s.CardImageContainer>
                     </>
                   ))
-                : memberPost &&
-                  memberPost?.map((item) => (
+                : memberPost.length === 0
+                ? ''
+                : memberPost?.map((item) => (
                     <>
                       <s.CardImageContainer
                         onClick={() => {
@@ -286,6 +300,7 @@ const CommunityPage = () => {
           style={postModalStyle}
           isOpen={isOpenPostModal}
           onRequestClose={closePostModal}
+          ariaHideApp={false}
         >
           <PostModal item={getClickedPostInfo(clickedPost)} />
         </Modal>

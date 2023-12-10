@@ -6,7 +6,7 @@ import commonAPI from '../../../api/commonAPI';
 
 const PostModal = ({ item }) => {
   const [isLikePost, setIsLikePost] = useState();
-  const [postLikeQuant, setPostLikeQuant] = useState();
+  const [postLikeQuant, setPostLikeQuant] = useState(item.likeQuant);
 
   const postLike = () => {
     commonAPI.postLike(item.postId).then((data) => {
@@ -35,17 +35,32 @@ const PostModal = ({ item }) => {
   };
 
   const getPostLikeQuant = () => {
-    commonAPI.getPostLikeQuant(item.postId).then(() => {});
+    commonAPI.getPostLikeQuant(item.postId).then((data) => {
+      console.log(data);
+      setPostLikeQuant(data.postLikeQuant);
+    });
   };
 
-  const handleClickLikeIcon = () => {
-    setIsLikePost((prev) => !prev);
-    isLikePost ? deleteLike() : postLike();
+  const handleClickLikeIcon = async () => {
+    try {
+      setIsLikePost((prev) => !prev);
+
+      if (isLikePost) {
+        deleteLike(); // 좋아요 삭제 API 호출
+      } else {
+        postLike(); // 좋아요 추가 API 호출
+      }
+
+      getPostLikeQuant(); // 좋아요 수 업데이트
+    } catch (e) {
+      console.log('Error in handleClickLikeIcon:', e);
+    }
   };
 
   useEffect(() => {
+    console.log('좋아요수 업뎃됨');
     getIfLikePost();
-  }, []);
+  }, [postLikeQuant]);
 
   return (
     <s.PostFrame key={item.postId}>
@@ -70,7 +85,7 @@ const PostModal = ({ item }) => {
               src={isLikePost ? LikedIcon : UnLikedIcon}
               onClick={handleClickLikeIcon}
             />
-            <s.likeCount>{item.likeQuant}</s.likeCount>
+            <s.likeCount>{postLikeQuant}</s.likeCount>
           </s.likeWrapper>
         </s.postInfoWrapper>
       </s.rightContainer>
