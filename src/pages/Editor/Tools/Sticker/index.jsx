@@ -3,7 +3,7 @@ import * as s from './style';
 import { useEffect, useState } from 'react';
 import { 
   stickerData1, stickerData2, stickerData3, ConfettisBlue, CP, stickerData6, ment, maskingTapes,
-  CSv, CGd, CXmas, CYo, Holograms,
+  CSv, CGd, CXmas, CYo, Holograms, vintage
 } from './stickerData';
 // import Konva from 'konva';
 
@@ -16,7 +16,7 @@ const Stickers = ({
 
   const [ stickerTab, setStickerTab ] = useState('컨페티');
 
-  const stickerTabs = ['컨페티', '픽셀', '텍스트', '마스킹테이프',];
+  const stickerTabs = ['컨페티', '픽셀', '텍스트', '빈티지', '보석', '마스킹테이프','기타',];
   const [ colorTab, setColorTab ] = useState('yo');
 
   const colorTabs = [
@@ -396,6 +396,60 @@ const Stickers = ({
                 ))
               )
             )}
+          </s.StickerList>
+        )}
+        { stickerTab === '기타' && (
+          <s.StickerList>
+            {stickerData1.map( (item) => {
+          return (
+            (item.spec === 'particlesS' ? (
+              <img
+                key={item.id}
+                src={item.fileUrl}
+                onClick={(e) => handleImageClick(e)}
+                data-spec={item.spec}
+                alt='sticker'
+                width='50px'
+                height='auto' />
+            ) : (<img
+              key={item.id}
+              src={item.fileUrl}
+              onClick={(e) => handleImageClick(e)}
+              data-spec={item.spec}
+              alt='sticker'
+              height='auto'
+              width='130px' />
+            ))
+          );
+        }
+        )}
+          </s.StickerList>
+        )}
+        { stickerTab === '빈티지' && (
+          <s.StickerList>
+            {vintage.map( (item) => {
+          return (
+            (item.spec === 'particlesS' ? (
+              <img
+                key={item.id}
+                src={item.fileUrl}
+                onClick={(e) => handleImageClick(e)}
+                data-spec={item.spec}
+                alt='sticker'
+                width='50px'
+                height='auto' />
+            ) : (<img
+              key={item.id}
+              src={item.fileUrl}
+              onClick={(e) => handleImageClick(e)}
+              data-spec={item.spec}
+              alt='sticker'
+              height='auto'
+              width='130px' />
+            ))
+          );
+        }
+        )}
           </s.StickerList>
         )}
         {/* <button onClick={handleDelete}>삭제</button>

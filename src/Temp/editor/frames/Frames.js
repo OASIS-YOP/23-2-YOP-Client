@@ -93,6 +93,18 @@ const Frames = [
         type: 'image',
         fileUrl: `${process.env.PUBLIC_URL}/images/frames/pink2.png`,
       },
+      {
+        id: 13,
+        name: '장미',
+        type: 'image',
+        fileUrl: `${process.env.PUBLIC_URL}/images/frames/rose.png`,
+      },
+      {
+        id: 14,
+        name: '골드',
+        type: 'image',
+        fileUrl: `${process.env.PUBLIC_URL}/images/frames/gold.png`,
+      },
       ]
   },
   {
