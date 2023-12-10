@@ -7,6 +7,7 @@ const editorpageAPI = {
       const response = await HttpClient.post(path, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
+          'Cache-Control': 'no-store',
         },
         Authorization: accessToken,
       });

@@ -126,7 +126,6 @@ const Draw = ({
   };
 
   return (
-    <>
       <s.PaintContainer>
         <s.Margin />
         <s.BtnAddObjWrapper>
@@ -198,7 +197,6 @@ const Draw = ({
         </s.BtnChangeColorWrapper>
         <s.Margin />
       </s.PaintContainer>
-    </>
   );
 }
 

@@ -122,16 +122,16 @@ export const MemberCardContainer = styled.div`
   height: fit-content;
 `;
 
-export const MemberNameLabel = styled.p`
-  text-align: center;
-
-  font-family: 'Noto Sans KR', sans-serif;
-  font-weight: 600;
-`;
 export const CardImageContainer = styled.div`
-  width: 11vw;
-  height: 35vh;
-  min-width: 120px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  
+  width: 180px;
+  height: 261px;
+  /* min-width: 120px; */
   margin: 0 15px 0 15px;
   border-radius: 20px;
   outline: #d7d7d7 1px solid;
@@ -147,8 +147,8 @@ export const CardImageContainer = styled.div`
   transition: all 0.1s linear;
 
   img {
-    width: 100%;
     height: 100%;
+    width: 100%;
 
     object-fit: cover;
   }
@@ -156,6 +156,24 @@ export const CardImageContainer = styled.div`
     transform: scale(1.1);
   }
 `;
+
+export const MemberCardImageWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 180px;
+  height: 261px;
+
+`;
+
+export const MemberNameLabel = styled.p`
+  text-align: center;
+
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 600;
+`;
+
 
 export const photoCardContainer = styled.div`
   width: 95%;

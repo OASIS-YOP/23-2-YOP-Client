@@ -19,26 +19,28 @@ const CollectionDetails = ({
     mypageAPI
       .getCollectionAllPhotocard(decodeURI(selectedCollection))
       .then((data) => {
-        console.log('이앨범의모든포카', data.collectionPhotocardList);
-        setCollectionPhotocard(data.collectionPhotocardList);
+        console.log('이앨범의모든포카', data?.collectionPhotocardList);
+        setCollectionPhotocard(data?.collectionPhotocardList);
       });
   };
   const getCollectionActivePhotocard = () => {
     mypageAPI
       .getCollectionActivePhotocard(decodeURI(selectedCollection))
       .then((data) => {
-        console.log('활성화된포카', data.ActivePhotocardList);
-        setActivePhotocard(data.ActivePhotocardList);
+        console.log('활성화된포카', data?.ActivePhotocardList);
+        setActivePhotocard(data?.ActivePhotocardList);
       });
   };
 
-  const activePhotocardId = activePhotocard.map((item) => {
+  const activePhotocardId = activePhotocard?.map((item) => {
     return item.photocardId;
   });
 
   useEffect(() => {
     getCollectionAllPhotocard();
     getCollectionActivePhotocard();
+
+    console.log('컬렉션디테일', selectedCollection);
   }, []);
 
   useEffect(() => {
@@ -64,20 +66,27 @@ const CollectionDetails = ({
         </Modal>
 
         <s.CollectionName>{selectedCollection}</s.CollectionName>
+        <s.ContentsContainer>
         <s.PhotocardListWrapper>
-          {collectionPhotocard.map((item) => {
+          <s.VersionLabel>
+            Ver. A
+          </s.VersionLabel>
+          {collectionPhotocard['verA']?.map((item) => {
             return (
               <s.PhotoCardContainer className={selectedArtist}>
-                <s.MemberName className={selectedArtist}>
+                { item.memberName === '아이유(IU)'
+                  ? '' :
+                  <s.MemberName className={selectedArtist}>                  
                   {item.memberName}
                 </s.MemberName>
+                }
                 <s.PhotocardImageFrame className={String(selectedArtist)}>
                   <s.PhotocardImage
                     key={`photocared_${item.photocardId}`}
                     src={item.photocard}
                     alt='photocard'
                     className={
-                      activePhotocardId.find((id) => id === item.photocardId)
+                      activePhotocardId?.find((id) => id === item.photocardId)
                         ? ''
                         : 'locked'
                     }
@@ -87,6 +96,65 @@ const CollectionDetails = ({
             );
           })}
         </s.PhotocardListWrapper>
+        <s.PhotocardListWrapper>
+          <s.VersionLabel>
+            Ver. B
+          </s.VersionLabel>
+          {collectionPhotocard['verB']?.map((item) => {
+            return (
+              <s.PhotoCardContainer className={selectedArtist}>
+                { item.memberName === '아이유(IU)'
+                  ? '' :
+                  <s.MemberName className={selectedArtist}>                  
+                  {item.memberName}
+                </s.MemberName>
+                }
+                <s.PhotocardImageFrame className={String(selectedArtist)}>
+                  <s.PhotocardImage
+                    key={`photocared_${item.photocardId}`}
+                    src={item.photocard}
+                    alt='photocard'
+                    className={
+                      activePhotocardId?.find((id) => id === item.photocardId)
+                        ? ''
+                        : 'locked'
+                    }
+                  />
+                </s.PhotocardImageFrame>
+              </s.PhotoCardContainer>
+            );
+          })}
+        </s.PhotocardListWrapper>
+        <s.PhotocardListWrapper>
+          <s.VersionLabel>
+            Ver. C
+          </s.VersionLabel>
+          {collectionPhotocard['verC']?.map((item) => {
+            return (
+              <s.PhotoCardContainer className={selectedArtist}>
+                { item.memberName === '아이유(IU)'
+                  ? '' :
+                  <s.MemberName className={selectedArtist}>                  
+                  {item.memberName}
+                </s.MemberName>
+                }
+                <s.PhotocardImageFrame className={String(selectedArtist)}>
+                  <s.PhotocardImage
+                    key={`photocared_${item.photocardId}`}
+                    src={item.photocard}
+                    alt='photocard'
+                    className={
+                      activePhotocardId?.find((id) => id === item.photocardId)
+                        ? ''
+                        : 'locked'
+                    }
+                  />
+                </s.PhotocardImageFrame>
+              </s.PhotoCardContainer>
+            );
+          })}
+        </s.PhotocardListWrapper>
+        </s.ContentsContainer>
       </s.Wrapper>
     </>
   );

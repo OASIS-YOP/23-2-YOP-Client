@@ -73,13 +73,13 @@ const HeaderMember = () => {
           <s.UserWrapper>
             <s.IconWrapper>
               <s.Icon
-                src={myProfile.avatar}
+                src={myProfile?.avatar}
                 onClick={onClickMenu}
                 data-menu-index='5'
               />
             </s.IconWrapper>
             <s.NicknameWrapper onClick={onClickMenu} data-menu-index='5'>
-              {myProfile.nickname}
+              {myProfile?.nickname}
             </s.NicknameWrapper>
           </s.UserWrapper>
         </s.MenuWrapper>

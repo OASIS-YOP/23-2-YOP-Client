@@ -241,7 +241,10 @@ const Collections = () => {
   return (
     <>
       <s.Wrapper>
-        <s.ArtistsTabWrapper>{artists}</s.ArtistsTabWrapper>
+        <s.ArtistsTabWrapper>
+          <s.ArtistsTab></s.ArtistsTab>  
+          {artists}
+        </s.ArtistsTabWrapper>
         {selectedArtist !== 0 ? (
           !isCollectionClicked ? (
             <s.CollectionCardsContainer>

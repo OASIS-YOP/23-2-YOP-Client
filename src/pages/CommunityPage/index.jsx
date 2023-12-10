@@ -207,7 +207,9 @@ const CommunityPage = () => {
                   <s.CardImageContainer
                     onClick={() => handleClickMember(item.name)}
                   >
-                    <img src={item?.memphoto} alt='memberPhoto' />
+                    <s.MemberCardImageWrapper>
+                      <img src={item?.memphoto} alt='memberPhoto' />
+                    </s.MemberCardImageWrapper>
                   </s.CardImageContainer>
                 </s.MemberCardContainer>
               ))}

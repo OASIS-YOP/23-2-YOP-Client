@@ -54,7 +54,7 @@ export const DesignImageFrame = styled.div`
 
   &:hover {
     > img {
-      filter: brightness(110%) blur(2.5px);
+      filter: brightness(65%) blur(2.5px);
     }
   }
 `;

@@ -66,7 +66,10 @@ const ArtistContents = () => {
   }, [selectedArtist]);
   return (
     <>
-      <s.ArtistsTabWrapper>{artists}</s.ArtistsTabWrapper>
+      <s.ArtistsTabWrapper>
+        <s.ArtistsTab></s.ArtistsTab>  
+        {artists}
+      </s.ArtistsTabWrapper>
       <s.ContentsWrapper>
         {!isCollectionClicked ? (
           <s.CollectionListWrapper>

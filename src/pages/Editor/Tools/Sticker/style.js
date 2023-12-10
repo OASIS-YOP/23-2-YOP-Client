@@ -65,7 +65,7 @@ export const StickerListC = styled.div`
   overflow-y: scroll;
   
   width: 97%;
-  height: 500px;
+  height: 400px;
   
   padding: 10px 10px;
 
@@ -98,7 +98,7 @@ export const StickerList = styled.div`
   overflow-y: scroll;
   
   width: 97%;
-  height: 500px;
+  height: 460px;
   
   padding: 10px 10px;
 

@@ -72,7 +72,10 @@ const Posts = () => {
   return (
     <>
       <s.Wrapper>
-        <s.ArtistsTabWrapper>{artists}</s.ArtistsTabWrapper>
+        <s.ArtistsTabWrapper>
+          <s.ArtistsTab></s.ArtistsTab>  
+          {artists}
+        </s.ArtistsTabWrapper>
         <s.PostsWrapper>
           {selectedArtist === 0 ? (
             <div
