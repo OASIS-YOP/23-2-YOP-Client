@@ -5,18 +5,18 @@ export const PostFrame = styled.div`
   align-items: center; */
   display: flex;
   flex-direction: row;
-  width: 100%;
-  height: 100%;
+  /* width: 100%;
+  height: 100%; */
 
   overflow: hidden;
 
   /* border-radius: 48px; */
 
-  min-width: 650px;
-  min-height: 450px;
+  min-width: 740px;
+  min-height: 530px;
   max-width: 900px;
   max-height: 600px;
-  width: 65%;
+  width: 70%;
   height: 32vw;
   box-sizing: border-box;
   // border: 9px solid #3F70FF;
@@ -45,8 +45,8 @@ export const PostImageFrame = styled.div`
   min-height: 300px;
   max-width: 280px;
   max-height: 400px; */
-  width: 200px;
-  height: 290px;
+  width: 250px;
+  height: 362px;
   max-height: 400px;
 
   overflow: hidden;
