@@ -100,7 +100,7 @@ export const VersionLabel = styled.div`
   justify-content: center;
   align-items: center;
 
-  width: 100px;
+  width: 5vw;
   height: fit-content;
 
   margin-top: 60px;
@@ -120,7 +120,7 @@ export const PhotoCardContainer = styled.div`
 
   margin: 20px 20px; */
 
-  width: 210px;
+  width: 12vw;
   height: fit-content;
   /* &.4 {
     width: 12%;
@@ -184,8 +184,8 @@ export const PhotocardImageFrame = styled.div`
 
     background-color: lightgray;
 
-  width: 200px;
-  height: 290px;
+  width: 11vw;
+  height: 16vw;
   /* min-width: 120px; */
   margin: 0 15px 0 15px;
   border-radius: 20px;
