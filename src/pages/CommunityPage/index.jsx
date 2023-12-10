@@ -161,6 +161,11 @@ const CommunityPage = () => {
     });
   };
 
+
+  useEffect(() => {
+    console.log(memberPost);
+  }, [memberPost]);
+
   const postFavoriteArtist = () => {
     commonAPI.postFavorite(artistId).then((data) => {
       if (data) {
@@ -205,6 +210,12 @@ const CommunityPage = () => {
     fetchData();
   }, [isFavorite]);
 
+  useEffect(() => {
+    console.log(clickedMember);
+    handleClickMember();
+
+  }, [clickedMember]);
+
   return (
     <>
       <s.Wrapper>
@@ -248,7 +259,8 @@ const CommunityPage = () => {
                   <s.CardImageContainer
                     onClick={() => {
                       setClickedMember(item?.name);
-                      handleClickMember();
+                      console.log(memberPost);
+                      console.log(clickedMember);
                     }}
                   >
                     <s.MemberCardImageWrapper>
