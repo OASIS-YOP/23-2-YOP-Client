@@ -58,6 +58,7 @@ const PostModal = ({ item }) => {
   };
 
   useEffect(() => {
+    console.log('좋아요수 업뎃됨');
     getIfLikePost();
   }, [postLikeQuant]);
 
