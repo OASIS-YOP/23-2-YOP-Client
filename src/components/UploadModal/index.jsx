@@ -119,6 +119,13 @@ const SelectCollection = ({ closeUploadModal }) => {
   };
 
   useEffect(() => {
+    if (closeUploadModal) {
+      onClickStep1();
+    }
+  }, [closeUploadModal]);
+  
+
+  useEffect(() => {
     getMyPolaroidArtistTab();
     console.log(selectedDesign);
   }, []);
