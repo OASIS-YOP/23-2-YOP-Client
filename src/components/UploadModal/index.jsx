@@ -87,7 +87,7 @@ const SelectCollection = ({ closeUploadModal }) => {
   // };
   const getMyPolaroidArtistTab = () => {
     mypageAPI.getMyPolaroidArtistTab().then((data) => {
-      if (data.polaroidArtistTabList.length === 0) {
+      if (data?.polaroidArtistTabList.length === 0) {
         return;
       } else {
         setSelectedArtist(data?.polaroidArtistTabList[0]?.artistId);

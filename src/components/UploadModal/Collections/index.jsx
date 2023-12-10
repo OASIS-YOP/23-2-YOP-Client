@@ -49,7 +49,7 @@ const Collections = ({
 
   useEffect(() => {
     getMyPolaroidQuant();
-  }, []);
+  }, [isMouseOver]);
 
   return (
     <>
