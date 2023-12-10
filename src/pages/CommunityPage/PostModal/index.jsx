@@ -73,9 +73,18 @@ const PostModal = ({ item }) => {
         <s.postInfoWrapper>
           <s.nicknameWrapper>{item.nickname}</s.nicknameWrapper>
           <s.tagsWrapper>
-            #{item.enterComp} #{item.groupName} <br />
-            {item.groupName === item.memberName ? '' : `#${item.memberName}`}#
-            {item.albumName}
+            <s.tag>
+              #{item.enterComp}
+            </s.tag>
+            <s.tag>
+              #{item.groupName}
+            </s.tag>
+            <s.tag>
+              {item.groupName === item.memberName ? '' : `#${item.memberName}`}
+            </s.tag>
+            <s.tag>  
+              #{item.albumName}
+            </s.tag>
           </s.tagsWrapper>
           <s.dateWrapper>
             {item?.postDateTime?.slice(0, item?.postDateTime.indexOf('T'))}

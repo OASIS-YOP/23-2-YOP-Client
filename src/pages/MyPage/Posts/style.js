@@ -23,10 +23,9 @@ export const ArtistsTabWrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
 
-  width: 95%;
+  width: 100%;
   height: 30px;
 
-  padding-left: 40px;
 `;
 
 export const ArtistsTab = styled.button`

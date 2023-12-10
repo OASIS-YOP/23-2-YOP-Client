@@ -251,7 +251,9 @@ const CommunityPage = () => {
                       handleClickMember();
                     }}
                   >
-                    <img src={item?.memphoto} alt='memberPhoto' />
+                    <s.MemberCardImageWrapper>
+                      <img src={item?.memphoto} alt='memberPhoto' />
+                    </s.MemberCardImageWrapper>
                   </s.CardImageContainer>
                 </s.MemberCardContainer>
               ))}

@@ -8,10 +8,9 @@ export const ArtistsTabWrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
 
-  width: 90%;
+  width: 100%;
   height: 30px;
 
-  padding-left: 80px;
 
   // border: 1px solid red;
 `;

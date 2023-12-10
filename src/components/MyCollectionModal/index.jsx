@@ -252,9 +252,9 @@ const ModalCollectionDetails = ({
           {activePhotocard.map((item) => {
             return (
               <s.PhotoCardContainer className={selectedArtist}>
-                <s.MemberName className={selectedArtist}>
+                {/* <s.MemberName className={selectedArtist}>
                   {item?.memberName}
-                </s.MemberName>
+                </s.MemberName> */}
                 <s.PhotocardImageFrame
                   className={String(selectedArtist)}
                   onClick={() => {

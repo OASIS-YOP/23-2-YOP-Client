@@ -11,6 +11,8 @@ export const Wrapper = styled.div`
   width: 97%;
   height: fit-content;
 
+  padding-bottom: 100px;
+
   margin-top: 40px;
 
   border-radius: 30px;
@@ -42,7 +44,8 @@ export const CollectionName = styled.div`
   justify-content: center;
   align-items: center;
 
-  margin-top: 30px;
+  margin-top: 5px;
+  margin-bottom: 20px;
 
   font-family: 'Noto Sans KR', sans-serif;
   font-size: 30px;
@@ -52,34 +55,24 @@ export const CollectionName = styled.div`
   height: fit-content;
 `;
 
-// export const VersionContainer = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: space-around;
-//   align-items: center;
 
-//   width: 1%;
-//   height: 100%;
+export const ContentsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 
-//   padding: 80px 0;
+  width: fit-content;
+  height: fit-content;
 
-// `;
+  padding-right: 20px;
 
-// export const Version = styled.div`
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
 
-//   width: 100%;
-//   height: 50%;
-
-//   font-size: 20px;
-//   font-weight: bold;
-
-// `
+`;
 
 export const PhotocardListWrapper = styled.div`
-  display: flex;
+  /* display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: start;
@@ -88,21 +81,47 @@ export const PhotocardListWrapper = styled.div`
   width: 100%;
   height: fit-content;
 
-  margin: 40px 40px;
+  margin: 40px 40px; */
 
-  // border: 1px solid red;
+  display: flex;
+  flex-direction: row;
+  width: fit-content;
+  height: 45vh;
+  justify-content: center;
+  align-items: center;
+
+  margin: 0 40px;
+  margin-bottom: 40px;
+
+`;
+
+export const VersionLabel = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100px;
+  height: fit-content;
+
+  margin-top: 60px;
+  margin-right: 30px;
+
+  font-size: 22px;
+  font-weight: 800;
 `;
 
 export const PhotoCardContainer = styled.div`
-  display: flex;
+  /* display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 200px;
   height: 400px;
 
-  margin: 20px 20px;
+  margin: 20px 20px; */
 
+  width: 210px;
+  height: fit-content;
   /* &.4 {
     width: 12%;
   }
@@ -113,6 +132,11 @@ export const PhotoCardContainer = styled.div`
   &.2 {
     width: 12%;
   } */
+
+  &:hover {
+    transform: scale(1.1);
+    filter: brightness(100%);
+  }
 `;
 export const MemberName = styled.div`
   display: flex;
@@ -120,8 +144,10 @@ export const MemberName = styled.div`
   align-items: center;
 
   font-family: 'Noto Sans KR', sans-serif;
-  font-size: 18.5px;
-  font-weight: 600;
+  font-size: 15px;
+  font-weight: 400;
+
+  color: #898989;
 
   margin-top: 10px;
   margin-bottom: 30px;
@@ -133,10 +159,12 @@ export const MemberName = styled.div`
   &.방탄소년단 {
     color: white;
   } */
+
+ 
 `;
 
 export const PhotocardImageFrame = styled.div`
-  display: flex;
+  /* display: flex;
   justify-content: center;
   align-items: center;
 
@@ -149,33 +177,65 @@ export const PhotocardImageFrame = styled.div`
 
   border-radius: 20px;
 
-  background-color: lightgray;
+  background-color: lightgray; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-  box-shadow: 11px 13px 25px rgba(0, 0, 0, 0.4);
+    background-color: lightgray;
+
+  width: 200px;
+  height: 290px;
+  /* min-width: 120px; */
+  margin: 0 15px 0 15px;
+  border-radius: 20px;
+  outline: #d7d7d7 1px solid;
+  border-collapse: collapse;
+  overflow: hidden;
+
+  box-shadow: 11px 13px 20px 3px rgba(0, 0, 0, 0.2);
+
+  overflow: hidden;
+
+  background-color: #d7d7d7;
+  cursor: pointer;
+  transition: all 0.1s linear;
+
+  
+  
+
+  /* box-shadow: 11px 13px 25px rgba(0, 0, 0, 0.4); */
 `;
 
 export const PhotocardImage = styled.img`
+  /* width: 100%; */
+  /* height: 100%; */
+
+  object-fit: cover;
+  /* display: flex; */
+  /* padding: 0; */
+
+
   width: 100%;
   height: 100%;
 
-  object-fit: cover;
-  display: flex;
-  padding: 0;
-
-  background-color: lightgray;
-
-  -webkit-user-drag: none;
 
   &.locked {
-    filter: blur(7px);
+    filter: blur(8px) brightness(90%);
   }
 `;
 
 export const InputCodeButton = styled.button`
+  position: absolute;
+  right: 80px;
+  top: 430px;
+  margin: auto;
+
+
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 140px;
+  width: 115px;
   height: 30px;
   border: 1px solid black;
   border-radius: 10px;
@@ -183,7 +243,7 @@ export const InputCodeButton = styled.button`
   color: black;
 
   font-family: 'Noto Sans KR', sans-serif;
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 600;
   z-index: 998;
   cursor: pointer;

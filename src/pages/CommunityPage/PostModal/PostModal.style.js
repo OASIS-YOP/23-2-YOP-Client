@@ -8,6 +8,8 @@ export const PostFrame = styled.div`
   width: 100%;
   height: 100%;
 
+  overflow: hidden;
+
   /* border-radius: 48px; */
 
   min-width: 650px;
@@ -35,12 +37,22 @@ export const leftContainer = styled.div`
 `;
 
 export const PostImageFrame = styled.div`
-  min-width: 205px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* min-width: 205px;
   min-height: 300px;
   max-width: 280px;
+<<<<<<< HEAD
+  max-height: 400px; */
+  width: 200px;
+  height: 290px;
+=======
   max-height: 400px;
   width: 60%;
   height: 22vw;
+>>>>>>> 1451086fb2dcb5e554a566ffcd864eaead2c5814
 
   overflow: hidden;
 
@@ -52,7 +64,7 @@ export const PostImageFrame = styled.div`
 `;
 
 export const PostImage = styled.img`
-  width: 100%;
+  height: 100%;
 `;
 
 export const rightContainer = styled.div`
@@ -89,17 +101,17 @@ export const tagsWrapper = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
 
-  min-width: 150px;
-  max-width: 175px;
+  min-width: 160px;
+  max-width: 200px;
   width: 100%;
 
   margin: 10px 0;
 
   color: #3f70ff;
-
+/* 
   font-family: 'Noto Sans KR', sans-serif;
   font-size: 19px;
-  font-weight: 800;
+  font-weight: 800; */
 
   //한줄에 태그 두개씩만 들어가게 하기 추후 기능 필요
 `;
@@ -182,4 +194,17 @@ export const contextBox = styled.div`
   font-weight: 700;
 
   // border: 1px solid black;
+`;
+
+
+
+export const tag = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: fit-content;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 19px;
+  font-weight: 800;
 `;

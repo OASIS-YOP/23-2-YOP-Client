@@ -10,7 +10,7 @@ export const Wrapper = styled.div`
 
   width: 100%;
   height: fit-content;
-  min-height: 550px;
+  min-height: 400px;
 
   background-color: transparent;
 

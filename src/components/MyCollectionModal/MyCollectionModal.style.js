@@ -31,7 +31,7 @@ export const ArtistsTabWrapper = styled.div`
   align-items: center;
 
   width: 95%;
-  height: 30px;
+  height: 35px;
 
   padding: 20px 0 0 20px;
 
@@ -44,14 +44,15 @@ export const ArtistsTab = styled.button`
   width: fit-content;
   height: 100%;
 
-  margin: 0 10px;
+  margin-left: 25px;
+  margin-top: 15px;
 
   border: none;
 
   background-color: transparent;
 
   font-family: 'Noto Sans KR', sans-serif;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
   color: gray;
 
@@ -70,7 +71,7 @@ export const CollectionCardsContainer = styled.div`
   flex-direction: center;
   flex-wrap: wrap;
   width: 90%;
-  height: 90%;
+  height: 88%;
   margin: 0 auto;
   padding-top: 20px;
 `;
@@ -81,7 +82,7 @@ export const CollectionCardWrapper = styled.div`
   justify-content: center;
   align-items: center;
 
-  width: 28%;
+  width: 27.5%;
   height: fit-content;
   margin: 28px 24px;
   box-sizing: border-box;
@@ -188,7 +189,7 @@ export const CollectionName = styled.div`
 
   font-family: 'Noto Sans KR', sans-serif;
   font-size: 20px;
-  font-weight: 900;
+  font-weight: 800;
 
   width: 100%;
   height: fit-content;
@@ -230,7 +231,7 @@ export const PhotocardListWrapper = styled.div`
   width: 100%;
   height: 100%;
 
-  margin: 40px 40px;
+  margin: auto 40px;
 
   // border: 1px solid red;
 `;
@@ -243,7 +244,7 @@ export const PhotoCardContainer = styled.div`
   width: 200px;
   height: 380px;
 
-  margin: 20px 20px;
+  margin: 0 20px;
 
   /* &.4 {
     width: 12%;
@@ -262,7 +263,7 @@ export const MemberName = styled.div`
   align-items: center;
 
   font-family: 'Noto Sans KR', sans-serif;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
 
   margin-top: 10px;
@@ -283,7 +284,7 @@ export const PhotocardImageFrame = styled.div`
   align-items: center;
 
   width: 200px;
-  height: 400px;
+  height: 290px;
 
   overflow: hidden;
 
