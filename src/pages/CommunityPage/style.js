@@ -173,16 +173,20 @@ export const MemberNameLabel = styled.p`
 
 
 export const showAllPostButton = styled.button`
-  width: 70px;
-  height: 30px;
-  border-radius: 15px;
+  position: absolute;
+  top: 755px;
+  right: 30px;
+
+  width: 80px;
+  height: 35px;
+  border-radius: 18px;
   border: none;
   margin-right: 20px;
   background-color: #3f70ff;
   color: white;
   float: right;
   font-family: 'Noto Sans KR', sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   cursor: pointer;
   transition: all 0.1s linear;
   &:hover {
@@ -193,11 +197,13 @@ export const showAllPostButton = styled.button`
 
 export const photoCardContainer = styled.div`
   width: 95%;
-  height: 100vh;
+  height: fit-content;
   background-color: #ede5e5;
   margin-top: 50px;
+  margin-bottom: 50px;
   border-radius: 15px;
-  padding: 30px 0 30px 0;
+  /* padding: 30px 0 30px 0; */
+  padding: 120px 0;
 `;
 
 export const ContentWrapper = styled.div`
@@ -241,11 +247,14 @@ export const PostingButton = styled.button`
   background-color: #898989;
   color: white;
 
+  opacity: 0.4;
+
   font-family: 'Noto Sans KR', sans-serif;
   font-size: 20px;
   cursor: pointer;
   transition: all 0.1s linear;
   &:hover {
     transform: scale(1.1);
+    opacity: 1;
   }
 `;

@@ -69,30 +69,30 @@ const Frames = [
         type: 'image',
         fileUrl: `${process.env.PUBLIC_URL}/images/frames/CheckFrame.png`,
       },
-      // {
-      //   id: 9,
-      //   name: '레드그린라인',
-      //   type: 'image',
-      //   fileUrl: `${process.env.PUBLIC_URL}/images/frames/f_rg.png`,
-      // },
-      // {
-      //   id: 10,
-      //   name: '블루체크',
-      //   type: 'image',
-      //   fileUrl: `${process.env.PUBLIC_URL}/images/frames/blue_ch.png`,
-      // },
-      // {
-      //   id: 11,
-      //   name: '노랑물감',
-      //   type: 'image',
-      //   fileUrl: `${process.env.PUBLIC_URL}/images/frames/f_y.png`,
-      // },
-      // {
-      //   id: 12,
-      //   name: '핑크2',
-      //   type: 'image',
-      //   fileUrl: `${process.env.PUBLIC_URL}/images/frames/pink2.png`,
-      // },
+      {
+        id: 9,
+        name: '레드그린라인',
+        type: 'image',
+        fileUrl: `${process.env.PUBLIC_URL}/images/frames/f_rg.png`,
+      },
+      {
+        id: 10,
+        name: '블루체크',
+        type: 'image',
+        fileUrl: `${process.env.PUBLIC_URL}/images/frames/blue_ch.png`,
+      },
+      {
+        id: 11,
+        name: '노랑물감',
+        type: 'image',
+        fileUrl: `${process.env.PUBLIC_URL}/images/frames/f_y.png`,
+      },
+      {
+        id: 12,
+        name: '핑크2',
+        type: 'image',
+        fileUrl: `${process.env.PUBLIC_URL}/images/frames/pink2.png`,
+      },
       ]
   },
   {

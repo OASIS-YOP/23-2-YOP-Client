@@ -22,7 +22,7 @@ const CodeInputModal = ({ albumName, closeCodeInputButton }) => {
   };
 
   const photocardActivate = () => {
-    mypageAPI.photocardActivate(decodeURI('<Butter>')).then((data) => {
+    mypageAPI.photocardActivate(decodeURI(albumName)).then((data) => {
       // if (data) {
       //   console.log(data);
       //   closeCodeInputButton();
@@ -31,11 +31,12 @@ const CodeInputModal = ({ albumName, closeCodeInputButton }) => {
       // }
       window.alert(data.message);
       closeCodeInputButton();
+      // window.location.reload();//
     });
   };
   const handleSubmit = () => {
     // First, execute collectionActivate and wait for it to complete
-    collectionActivate();
+    // collectionActivate();/
 
     // Then, execute photocardActivate and wait for it to complete
     photocardActivate();

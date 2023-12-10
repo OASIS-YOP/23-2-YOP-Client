@@ -111,6 +111,7 @@ const SelectCollection = ({ closeUploadModal }) => {
         window.alert('포스팅되었습니다.');
         onClickStep1();
         closeUploadModal();
+        window.location.reload();
       } else {
         window.alert('failed');
       }

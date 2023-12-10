@@ -187,6 +187,7 @@ const CommunityPage = () => {
     });
   };
 
+
   const getIfFavoriteArtist = () => {
     communitypageAPI
       .getIfFavoriteArtist(artistId)
@@ -273,12 +274,16 @@ const CommunityPage = () => {
           )}
           <s.photoCardContainer>
             <>
-              <s.showAllPostButton onClick={() => setIsClickMember(false)}>
+              <s.showAllPostButton onClick={() => {
+                setIsClickMember(false);
+                setClickedMember(null);
+              }
+              }>
                 전체보기
               </s.showAllPostButton>
             </>
             <s.ContentWrapper>
-              {!isClickMember
+              { clickedMember === null
                 ? allPost.map((item) => (
                     <>
                       <s.CardImageContainer
@@ -293,7 +298,19 @@ const CommunityPage = () => {
                     </>
                   ))
                 : memberPost.length === 0
-                ? ''
+                ? <div
+                    style={{
+                      color: 'gray',
+                      fontSize: '20px',
+                      fontWeight: '600',
+                      width: '100%',
+                      height: '100px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
+                >업로드된 포스트가 없습니다!</div>
                 : memberPost?.map((item) => (
                     <>
                       <s.CardImageContainer

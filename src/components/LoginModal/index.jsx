@@ -32,6 +32,7 @@ export const Login = () => {
         setAccessToken(data.token);
         navigate('/mainpage');
         setIsLoggedIn(true);
+        window.location.reload();
       } else {
         console.log('로그인 실패');
         window.alert('등록된 회원이 아닙니다.');
