@@ -250,25 +250,22 @@ const CommunityPage = () => {
           </s.ProfileWrapper>
         </s.ProfileContainer>
         <s.BodyContainer>
-          {!memberProfile ? (
+          { Array.isArray(memberProfile) === false ? (
             // ''
             <s.MemberCardsWrapper>
-              {/* {memberProfile?.map((item, index) => (
-                <s.MemberCardContainer key={`member_${index + 1}`}>
-                  <s.MemberNameLabel>{item?.name}</s.MemberNameLabel>
+              <s.MemberCardContainer key={`member`}>
+                  <s.MemberNameLabel>{memberProfile?.name}</s.MemberNameLabel>
                   <s.CardImageContainer
                     onClick={() => {
-                      setClickedMember(item?.name);
                       console.log(memberPost);
                       console.log(clickedMember);
                     }}
                   >
                     <s.MemberCardImageWrapper>
-                      <img src={item?.memphoto} alt='memberPhoto' />
+                      <img src={memberProfile?.memphoto} alt='memberPhoto' />
                     </s.MemberCardImageWrapper>
                   </s.CardImageContainer>
                 </s.MemberCardContainer>
-              ))} */}
             </s.MemberCardsWrapper>
           ) : (
             <s.MemberCardsWrapper>

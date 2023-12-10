@@ -56,6 +56,9 @@ export const ContentsWrapper = styled.div`
 
   margin: 0 13px;
 
+  padding: 60px 0;
+
+
 `;
 
 export const CollectionListWrapper = styled.div`

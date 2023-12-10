@@ -130,7 +130,7 @@ export const CardImageContainer = styled.div`
   width: 180px;
   height: 261px;
   /* min-width: 120px; */
-  margin: 18px 15px;
+  margin: 10px 15px;
   border-radius: 20px;
   outline: #d7d7d7 1px solid;
   border-collapse: collapse;
