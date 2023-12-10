@@ -171,6 +171,7 @@ export const MemberNameLabel = styled.p`
   font-weight: 600;
 `;
 
+
 export const showAllPostButton = styled.button`
   width: 70px;
   height: 30px;
@@ -188,6 +189,7 @@ export const showAllPostButton = styled.button`
     filter: brightness(0.9);
   }
 `;
+
 
 export const photoCardContainer = styled.div`
   width: 95%;
