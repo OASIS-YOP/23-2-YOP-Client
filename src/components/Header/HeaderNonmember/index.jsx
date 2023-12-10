@@ -40,9 +40,11 @@ const HeaderNonmember = () => {
 
   const onClickLogin = () => {
     setIsClickedLogin((prev) => !prev);
+    setIsClickedJoin(false);
   };
   const onClickJoin = () => {
     setIsClickedJoin((prev) => !prev);
+    setIsClickedLogin(false);
   };
   // 모달 스타일
   const LoginModalStyle = {
@@ -91,7 +93,8 @@ const HeaderNonmember = () => {
                 <Join />
               </Modal>
           <s.LogInButton
-            onClick={onClickLogin} data-menu-index='3'
+            onClick={ onClickLogin }
+            data-menu-index='3'
           >
             로그인
           </s.LogInButton>

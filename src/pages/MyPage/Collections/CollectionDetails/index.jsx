@@ -7,13 +7,14 @@ import CodeInputModal from '../../../../components/CodeInputModal';
 const CollectionDetails = ({
   selectedArtist,
   selectedCollection,
-  handleClickCodeInputButton,
-  isOpenCodeInputModal,
+  // // handleClickCodeInputButton,
+  // isOpenCodeInputModal,
   CodeInputModalStyle,
-  setIsOpenCodeInputModal,
+  // setIsOpenCodeInputModal,
 }) => {
   const [collectionPhotocard, setCollectionPhotocard] = useState([]);
   const [activePhotocard, setActivePhotocard] = useState([]);
+  const [isOpenCodeInputModal, setIsOpenCodeInputModal] = useState(false);
 
   const getCollectionAllPhotocard = () => {
     mypageAPI
@@ -48,6 +49,14 @@ const CollectionDetails = ({
     console.log(collectionPhotocard);
   }, [activePhotocard]);
 
+    const handleClickCodeInputButton = () => {
+    setIsOpenCodeInputModal((prev) => !prev);
+  };
+
+  const closeCodeInputButton = () => {
+    setIsOpenCodeInputModal(false);
+  };
+
   return (
     <>
       <s.Wrapper className={String(selectedArtist)}>
@@ -63,6 +72,7 @@ const CollectionDetails = ({
           <CodeInputModal
             albumName={selectedCollection}
             setIsOpenCodeInputModal={setIsOpenCodeInputModal}
+            closeCodeInputButton={closeCodeInputButton}
           />
         </Modal>
 

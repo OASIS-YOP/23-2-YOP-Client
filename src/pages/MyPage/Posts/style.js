@@ -69,6 +69,8 @@ export const PostsWrapper = styled.div`
   height: fit-content;
 
   margin: 25px 40px;
+
+  padding-bottom: 50px;
 `;
 
 export const contextBox = styled.div`
@@ -220,7 +222,7 @@ export const likeWrapper = styled.div`
   width: 50%;
   height: fit-content;
 
-  margin-top: 50%;
+  margin-top: 30%;
 
   font-family: 'Noto Sans KR', sans-serif;
   font-size: 200%;
@@ -248,10 +250,12 @@ export const likeIcon = styled.img`
 `;
 
 export const moreIconWrapper = styled.div`
+  position: relative;
+
   display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
 
   width: 90%;
   height: fit-content;
@@ -260,14 +264,45 @@ export const moreIconWrapper = styled.div`
 `;
 
 export const moreIcon = styled.img`
-  width: 10%;
+  width: 9%;
 
   cursor: pointer;
 `;
 
 export const deleteButton = styled.button`
-  display: inline;
-  width: 100px;
-  height: 30px;
+  display: inline-block;
+  position: relative;
+  right: 40px;
+  top: 0px;
+
+  opacity: 0;
+
+  border: none;
+  border-radius: 20px;
+  border-top-right-radius: 0;
+  background-color: #898989;
+  width: 70px;
+  height: 45px;
   z-index: 999;
+
+  color: white;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+
+  transition: opacity 0.4s ease-in-out;
+
+  &.click {
+    opacity: 1;
+
+    &:hover {
+      cursor: pointer;
+      background-color: lightgray;
+    }
+    &:active {
+      filter: brightness(100%);
+    }
+  }
+
+  
 `;

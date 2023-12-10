@@ -151,7 +151,22 @@ const MyCollectionModal = ({
       <s.ModalTitle>내 컬렉션</s.ModalTitle>
       <s.BodyWrapper>
         {artists.length === 0 ? (
-          <>최애 아티스트를 추가해주세요!</>
+          <div
+            style={{
+              color: 'gray',
+              fontFamily: 'Noto Sans KR',
+              fontWeight: '600',
+              fontSize: '18px',
+              width: '100%',
+              height: '80%',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            최애 아티스트를 추가해주세요!
+          </div>
         ) : (
           <>
             <s.ArtistsTabWrapper>{artists}</s.ArtistsTabWrapper>
@@ -205,7 +220,22 @@ const MyCollectionModal = ({
                     );
                   })
                 ) : (
-                  <>컬렉션을 활성화해주세요!</>
+                  <div
+                    style={{
+                      color: 'gray',
+                      fontFamily: 'Noto Sans KR',
+                      fontWeight: '600',
+                      fontSize: '18px',
+                      width: '100%',
+                      height: '80%',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
+                  >
+                    컬렉션을 활성화해주세요!
+                  </div>
                 )}
               </s.CollectionCardsContainer>
             ) : (

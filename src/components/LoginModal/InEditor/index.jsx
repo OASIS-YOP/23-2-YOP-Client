@@ -29,6 +29,7 @@ export const LoginInEditor = () => {
         localStorage.setItem('atk', data.token);
         setAccessToken(data.token);
         // window.alert('로그인 성공했습니다.');
+        window.location.reload();
         setIsLoggedIn(true);
       } else {
         console.log('로그인 실패');

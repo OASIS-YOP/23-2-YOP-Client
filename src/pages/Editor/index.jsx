@@ -211,12 +211,12 @@ const Editor = () => {
   // 오브젝트 트랜스포머 스타일 설정
   fabric.Object.prototype.set({
     transparentCorners: 'true',
-    borderColor: 'lightgrey', //컨트롤 박스 색깔
-    cornerColor: 'lightgrey',
+    borderColor: 'lightblue', //컨트롤 박스 색깔
+    cornerColor: 'lightblue',
     cornerStyle: 'circle',
     cornerSize: 10,
     perPixelTargetFind: true,
-    borderDashArray: [3, 3],
+    borderDashArray: [5, 5],
   });
 
   ////// 캔버스 관리 ///////

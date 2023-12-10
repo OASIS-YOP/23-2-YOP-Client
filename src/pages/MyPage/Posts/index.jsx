@@ -38,9 +38,19 @@ const Posts = () => {
   };
 
   const handleClickDel = (postId) => {
+   if( window.confirm(
+      '포스트를 삭제하시겠습니까? 삭제된 포스트는 복구할 수 없습니다.',
+    )){
     setIsClickDot(false);
     deleteMyPost(postId);
     getMyPost(selectedArtist);
+
+    window.alert('포스트가 삭제되었습니다.');
+
+    window.location.reload();
+   } else {
+      setIsClickDot(false);
+    }
   };
 
   const deleteMyPost = (postId) => {
@@ -198,14 +208,18 @@ const ArtistPosts = ({
           </s.postInfoWrapper>
           <s.moreIconWrapper>
             <s.moreIcon src={dotdotdot} onClick={handleClickdot} />
+            {/* {isClickDot && ( */}
+              <s.deleteButton
+                className={isClickDot ? 'click' : 'close'}
+                onClick={() => handleClickDel(post.postId)}
+                disabled={!isClickDot}
+                >
+                삭제
+              </s.deleteButton>
+            {/* )} */}
           </s.moreIconWrapper>
         </s.rightContainer>
       </s.PostFrame>
-      {isClickDot && (
-        <s.deleteButton onClick={() => handleClickDel(post.postId)}>
-          삭제
-        </s.deleteButton>
-      )}
     </>
   );
 };

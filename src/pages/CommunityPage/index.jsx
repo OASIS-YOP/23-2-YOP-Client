@@ -161,6 +161,11 @@ const CommunityPage = () => {
     });
   };
 
+
+  useEffect(() => {
+    console.log(memberPost);
+  }, [memberPost]);
+
   const postFavoriteArtist = () => {
     commonAPI.postFavorite(artistId).then((data) => {
       if (data) {
@@ -181,6 +186,7 @@ const CommunityPage = () => {
       }
     });
   };
+
 
   const getIfFavoriteArtist = () => {
     communitypageAPI
@@ -204,6 +210,12 @@ const CommunityPage = () => {
   useEffect(() => {
     fetchData();
   }, [isFavorite]);
+
+  useEffect(() => {
+    console.log(clickedMember);
+    handleClickMember();
+
+  }, [clickedMember]);
 
   return (
     <>
@@ -239,7 +251,25 @@ const CommunityPage = () => {
         </s.ProfileContainer>
         <s.BodyContainer>
           {!memberProfile ? (
-            ''
+            // ''
+            <s.MemberCardsWrapper>
+              {/* {memberProfile?.map((item, index) => (
+                <s.MemberCardContainer key={`member_${index + 1}`}>
+                  <s.MemberNameLabel>{item?.name}</s.MemberNameLabel>
+                  <s.CardImageContainer
+                    onClick={() => {
+                      setClickedMember(item?.name);
+                      console.log(memberPost);
+                      console.log(clickedMember);
+                    }}
+                  >
+                    <s.MemberCardImageWrapper>
+                      <img src={item?.memphoto} alt='memberPhoto' />
+                    </s.MemberCardImageWrapper>
+                  </s.CardImageContainer>
+                </s.MemberCardContainer>
+              ))} */}
+            </s.MemberCardsWrapper>
           ) : (
             <s.MemberCardsWrapper>
               {memberProfile?.map((item, index) => (
@@ -248,7 +278,8 @@ const CommunityPage = () => {
                   <s.CardImageContainer
                     onClick={() => {
                       setClickedMember(item?.name);
-                      handleClickMember();
+                      console.log(memberPost);
+                      console.log(clickedMember);
                     }}
                   >
                     <s.MemberCardImageWrapper>
@@ -261,12 +292,16 @@ const CommunityPage = () => {
           )}
           <s.photoCardContainer>
             <>
-              <s.showAllPostButton onClick={() => setIsClickMember(false)}>
+              <s.showAllPostButton onClick={() => {
+                setIsClickMember(false);
+                setClickedMember(null);
+              }
+              }>
                 전체보기
               </s.showAllPostButton>
             </>
             <s.ContentWrapper>
-              {!isClickMember
+              { clickedMember === null
                 ? allPost.map((item) => (
                     <>
                       <s.CardImageContainer
@@ -281,7 +316,19 @@ const CommunityPage = () => {
                     </>
                   ))
                 : memberPost.length === 0
-                ? ''
+                ? <div
+                    style={{
+                      color: 'gray',
+                      fontSize: '20px',
+                      fontWeight: '600',
+                      width: '100%',
+                      height: '100px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
+                >업로드된 포스트가 없습니다!</div>
                 : memberPost?.map((item) => (
                     <>
                       <s.CardImageContainer

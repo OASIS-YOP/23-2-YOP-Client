@@ -18,6 +18,7 @@ export const Wrapper = styled.div`
 export const StickerTabsWrapper = styled.div`
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: flex-start;
   align-items: center;
 

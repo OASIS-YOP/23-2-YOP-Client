@@ -55,7 +55,10 @@ const Frame = ({
         if(img.name === '라이트퍼플' || '그린' || '라이트퍼플' ){
           img.scaleToHeight(canvasHeight + 2);
           img.scaleToWidth(canvasWidth);
-        } else {
+        } else if ( img.name === '골드') {
+          img.scaleToHeight(canvasHeight + 2);
+        }    
+        else {
           img.scaleToHeight(canvasHeight + 2);
         }
         img.set({

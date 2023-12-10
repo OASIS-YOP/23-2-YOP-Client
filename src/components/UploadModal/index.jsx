@@ -111,11 +111,19 @@ const SelectCollection = ({ closeUploadModal }) => {
         window.alert('포스팅되었습니다.');
         onClickStep1();
         closeUploadModal();
+        window.location.reload();
       } else {
         window.alert('failed');
       }
     });
   };
+
+  useEffect(() => {
+    if (closeUploadModal) {
+      onClickStep1();
+    }
+  }, [closeUploadModal]);
+  
 
   useEffect(() => {
     getMyPolaroidArtistTab();
@@ -255,7 +263,20 @@ const SelectCollection = ({ closeUploadModal }) => {
             </>
           ) : (
             <>
-              <s.NoCollectionWrapper>
+              <s.NoCollectionWrapper
+                style={{
+                  color: 'gray',
+                  fontFamily: 'Noto Sans KR',
+                  fontWeight: '600',
+                  fontSize: '18px',
+                  width: '100%',
+                  height: '80%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
                 <s.NoCollectionText>저장된 도안이 없습니다.</s.NoCollectionText>
               </s.NoCollectionWrapper>
             </>

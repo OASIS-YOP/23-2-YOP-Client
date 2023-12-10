@@ -669,11 +669,64 @@ export const CYo = [
     spec: 'ribbonL',
   }
 ];
+
+export const vintage = [
+  {
+    id: 10,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/홀로그램.png`,
+    spec: '',
+    class: 'ST1',
+  },
+  {
+    id: 12,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/홀로그램2.png`,
+    spec: '',
+    class: 'ST1',
+  },
+  {
+    id: 11,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/고양이.png`,
+    spec: '',
+    class: 'ST1',
+  },
+  {
+    id: 12,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/앵무새.png`,
+    spec: '',
+    class: 'ST1',
+  },
+  {
+    id: 11,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/스프레이.png`,
+    spec: '',
+    class: 'ST1',
+  },
+  {
+    id: 11,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/보라나비.png`,
+    spec: '',
+    class: 'ST1',
+  },
+  {
+    id: 11,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/물.png`,
+    spec: '',
+    class: 'ST1',
+  },
+  {
+    id: 11,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/거품.png`,
+    spec: '',
+    class: 'ST1',
+  },
+
+];
   
 
 
 export const stickerData1 = [
   ////1번째 스티커 리스트
+  
   { 
     id: 1,
     fileUrl: `${process.env.PUBLIC_URL}/images/stickers/GoodVibesST.svg`,

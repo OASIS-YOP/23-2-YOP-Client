@@ -39,3 +39,16 @@
   font-weight: normal;
   src: url('../../../../../fonts/NotoSansKR-VariableFont_wght.ttf') format('truetype');
 }
+
+/* 나눔명조 */
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@800&display=swap'); 
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@700&display=swap'); 
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400&display=swap'); 
+
+/* 선플라워 */
+@import url('https://fonts.googleapis.com/css2?family=Sunflower:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sunflower:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sunflower:wght@300&display=swap');
+
+/* 하이멜로디 */
+@import url('https://fonts.googleapis.com/css2?family=Hi+Melody&display=swap');
