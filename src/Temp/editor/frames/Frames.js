@@ -105,6 +105,12 @@ const Frames = [
         type: 'image',
         fileUrl: `${process.env.PUBLIC_URL}/images/frames/gold.png`,
       },
+      {
+        id: 15,
+        name: '크리스마스',
+        type: 'image',
+        fileUrl: `${process.env.PUBLIC_URL}/images/frames/f_xmas.png`,
+      },
       ]
   },
   {

@@ -110,8 +110,8 @@ export const StickerList = styled.div`
       align-self: center;
       margin: 15px; /* 각 요소 사이에 간격 */
       padding: 10px;
-      width: 150px;
-      height: auto;
+      /* width: 150px;
+      height: auto; */
       
       &:hover {
         cursor: pointer;

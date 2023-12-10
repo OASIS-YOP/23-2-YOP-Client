@@ -277,6 +277,12 @@ const Editor = () => {
     canvas.renderAll();
   };
 
+  useEffect(() => {
+    if (image) {
+      setImageLock(false);
+    }
+  }, [image]);
+
   /////////////// 캔버스에 들어갈 이미지 사이즈 조정
 
   
