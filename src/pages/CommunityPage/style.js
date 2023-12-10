@@ -123,12 +123,10 @@ export const MemberCardContainer = styled.div`
 `;
 
 export const CardImageContainer = styled.div`
-
   display: flex;
   justify-content: center;
   align-items: center;
 
-  
   width: 180px;
   height: 261px;
   /* min-width: 120px; */
@@ -164,7 +162,6 @@ export const MemberCardImageWrapper = styled.div`
 
   width: 180px;
   height: 261px;
-
 `;
 
 export const MemberNameLabel = styled.p`
@@ -172,6 +169,25 @@ export const MemberNameLabel = styled.p`
 
   font-family: 'Noto Sans KR', sans-serif;
   font-weight: 600;
+`;
+
+
+export const showAllPostButton = styled.button`
+  width: 70px;
+  height: 30px;
+  border-radius: 15px;
+  border: none;
+  margin-right: 20px;
+  background-color: #3f70ff;
+  color: white;
+  float: right;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.1s linear;
+  &:hover {
+    filter: brightness(0.9);
+  }
 `;
 
 

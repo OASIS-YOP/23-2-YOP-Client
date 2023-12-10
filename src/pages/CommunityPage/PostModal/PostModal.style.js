@@ -44,15 +44,10 @@ export const PostImageFrame = styled.div`
   /* min-width: 205px;
   min-height: 300px;
   max-width: 280px;
-<<<<<<< HEAD
   max-height: 400px; */
   width: 200px;
   height: 290px;
-=======
   max-height: 400px;
-  width: 60%;
-  height: 22vw;
->>>>>>> 1451086fb2dcb5e554a566ffcd864eaead2c5814
 
   overflow: hidden;
 
@@ -108,7 +103,7 @@ export const tagsWrapper = styled.div`
   margin: 10px 0;
 
   color: #3f70ff;
-/* 
+  /* 
   font-family: 'Noto Sans KR', sans-serif;
   font-size: 19px;
   font-weight: 800; */
@@ -195,8 +190,6 @@ export const contextBox = styled.div`
 
   // border: 1px solid black;
 `;
-
-
 
 export const tag = styled.div`
   display: flex;
