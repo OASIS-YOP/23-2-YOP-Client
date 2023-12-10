@@ -45,6 +45,7 @@ const CollectionDetails = ({
 
   useEffect(() => {
     console.log(activePhotocardId);
+    console.log(collectionPhotocard);
   }, [activePhotocard]);
 
   return (

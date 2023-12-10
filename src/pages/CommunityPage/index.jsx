@@ -8,6 +8,7 @@ import communitypageAPI from '../../api/communitypage/communitypageAPI.js';
 import commonAPI from '../../api/commonAPI.js';
 import Modal from 'react-modal';
 import PostModal from './PostModal/index.jsx';
+import SelectCollection from '../../components/UploadModal/index.jsx';
 
 const CommunityPage = () => {
   const params = useParams();
@@ -29,6 +30,7 @@ const CommunityPage = () => {
   const [isClickStar, setIsClickStar] = useState(false);
 
   const [isOpenPostModal, setIsOpenPostModal] = useState(false);
+  const [isOpenUploadModal, setIsOpenUploadModal] = useState(false);
 
   const fandomName = ['아미', '마이', '유애나', '버니즈'];
 
@@ -65,6 +67,40 @@ const CommunityPage = () => {
       border: '0',
       padding: '0',
     },
+  };
+
+  const UploadModalStyle = {
+    overlay: {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: 'rgba(0,0,0, 0.7)',
+      zIndex: 999,
+    },
+    content: {
+      display: 'flex',
+      justifyContent: 'center',
+      background: 'white',
+      overflow: 'auto',
+      width: 'fit-content',
+      height: 'fit-content',
+      margin: 'auto auto',
+      WebkitOverflowScrolling: 'touch',
+      border: 'none',
+      borderRadius: '15px',
+      outline: 'none',
+      zIndex: 10,
+    },
+  };
+
+  const openUploadModal = () => {
+    setIsOpenUploadModal(true);
+  };
+
+  const closeUploadModal = () => {
+    setIsOpenUploadModal(false);
   };
 
   // const on = () => {
@@ -108,16 +144,20 @@ const CommunityPage = () => {
     isFavorite ? deleteFavoriteArtist() : postFavoriteArtist();
   };
 
-  const handleClickMember = (memberName) => {
+  const handleClickMember = () => {
     if (artistId === 3) return;
-    setClickedMember(memberName);
-    getMemberPost(memberName);
+
+    getMemberPost();
   };
 
-  const getMemberPost = (memberName) => {
-    communitypageAPI.getMemberPost(memberName).then((data) => {
-      setMemberPost(data?.memberPostList);
-      console.log(data);
+  const getMemberPost = () => {
+    communitypageAPI.getMemberPost(decodeURI(clickedMember)).then((data) => {
+      if (data?.memberPostList) {
+        setMemberPost(data?.memberPostList);
+        setIsClickMember(true);
+      } else {
+        console.log('업서이자식아');
+      }
     });
   };
 
@@ -157,6 +197,7 @@ const CommunityPage = () => {
     const postInfo = allPost.filter((item) => item.postId === postId);
     return postInfo[0];
   };
+
   useEffect(() => {
     getIfFavoriteArtist();
   }, []);
@@ -205,7 +246,10 @@ const CommunityPage = () => {
                 <s.MemberCardContainer key={`member_${index + 1}`}>
                   <s.MemberNameLabel>{item?.name}</s.MemberNameLabel>
                   <s.CardImageContainer
-                    onClick={() => handleClickMember(item.name)}
+                    onClick={() => {
+                      setClickedMember(item?.name);
+                      handleClickMember();
+                    }}
                   >
                     <s.MemberCardImageWrapper>
                       <img src={item?.memphoto} alt='memberPhoto' />
@@ -216,6 +260,11 @@ const CommunityPage = () => {
             </s.MemberCardsWrapper>
           )}
           <s.photoCardContainer>
+            <>
+              <s.showAllPostButton onClick={() => setIsClickMember(false)}>
+                전체보기
+              </s.showAllPostButton>
+            </>
             <s.ContentWrapper>
               {!isClickMember
                 ? allPost.map((item) => (
@@ -231,8 +280,9 @@ const CommunityPage = () => {
                       </s.CardImageContainer>
                     </>
                   ))
-                : memberPost &&
-                  memberPost?.map((item) => (
+                : memberPost.length === 0
+                ? ''
+                : memberPost?.map((item) => (
                     <>
                       <s.CardImageContainer
                         onClick={() => {
@@ -252,6 +302,7 @@ const CommunityPage = () => {
           style={postModalStyle}
           isOpen={isOpenPostModal}
           onRequestClose={closePostModal}
+          ariaHideApp={false}
         >
           <PostModal item={getClickedPostInfo(clickedPost)} />
         </Modal>
@@ -266,11 +317,15 @@ const CommunityPage = () => {
         >
           ▲
         </s.ScrollToTopButton>
-        <s.PostingButton
-          
+        <s.PostingButton onClick={openUploadModal}>포스팅</s.PostingButton>
+        <Modal
+          isOpen={isOpenUploadModal}
+          onRequestClose={closeUploadModal}
+          ariaHideApp={false}
+          style={UploadModalStyle}
         >
-          포스팅
-        </s.PostingButton>
+          <SelectCollection closeUploadModal={closeUploadModal} />
+        </Modal>
       </s.Wrapper>
     </>
   );

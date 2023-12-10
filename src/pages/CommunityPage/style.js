@@ -31,7 +31,7 @@ export const ProfileImage = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  
+
   width: 20%;
   height: 80%;
   margin-left: 25px;
@@ -157,6 +157,7 @@ export const CardImageContainer = styled.div`
   }
 `;
 
+<<<<<<< HEAD
 export const MemberCardImageWrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -175,6 +176,26 @@ export const MemberNameLabel = styled.p`
 `;
 
 
+=======
+export const showAllPostButton = styled.button`
+  width: 70px;
+  height: 30px;
+  border-radius: 15px;
+  border: none;
+  margin-right: 20px;
+  background-color: #3f70ff;
+  color: white;
+  float: right;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.1s linear;
+  &:hover {
+    filter: brightness(0.9);
+  }
+`;
+
+>>>>>>> 1451086fb2dcb5e554a566ffcd864eaead2c5814
 export const photoCardContainer = styled.div`
   width: 95%;
   height: 100vh;
@@ -194,7 +215,6 @@ export const ContentWrapper = styled.div`
   width: 85%;
   height: 90%;
 `;
-
 
 export const ScrollToTopButton = styled.button`
   position: fixed;

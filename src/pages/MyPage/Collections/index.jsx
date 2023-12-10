@@ -178,7 +178,11 @@ const Collections = () => {
                   <s.CollectionCardInfo>
                     {albumName}
                     <br />
-                    활성일 : {activeCollectionData.activeDateTime}
+                    활성일 :{' '}
+                    {activeCollectionData.activeDateTime.slice(
+                      0,
+                      activeCollectionData.activeDateTime?.indexOf('T')
+                    )}
                     <br />
                     {/* 수정요망 */}
                     수집률 :{' '}
@@ -206,7 +210,7 @@ const Collections = () => {
             />
             {ismouseOver ? (
               <>
-                 <s.InputCodeWrapper>
+                <s.InputCodeWrapper>
                   <s.AlbumName>{albumName}</s.AlbumName>
                   <s.InputCodeButton
                     onMouseOver={onHandleMouseOver}
@@ -214,7 +218,7 @@ const Collections = () => {
                   >
                     코드 입력
                   </s.InputCodeButton>
-                  </s.InputCodeWrapper>
+                </s.InputCodeWrapper>
                 <Modal
                   isOpen={isOpenCodeInputModal}
                   style={CodeInputModalStyle}

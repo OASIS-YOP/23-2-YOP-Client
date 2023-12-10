@@ -3,7 +3,6 @@ import mypageAPI from '../../api/mypage/mypageAPI';
 import { useEffect, useState } from 'react';
 import { fabric } from 'fabric';
 
-
 const MyCollectionModal = ({
   setIsOpenCollectionModal,
   setIsOpenUploadModal,
@@ -20,10 +19,13 @@ const MyCollectionModal = ({
   const [isCollectionClicked, setIsCollectionClicked] = useState(false);
   const [selectedCollection, setSelectedCollection] = useState('');
 
+  const [myPhotocardQuant, setMyPhotocardQuant] = useState(null);
   const [isMouseOver, setIsMouseOver] = useState(false);
 
   const onHandleMouseOver = (e) => {
     e.preventDefault();
+    console.log(e.target);
+
     setIsMouseOver(true);
   };
   const onHandleMouseOut = (e) => {
@@ -51,6 +53,12 @@ const MyCollectionModal = ({
       console.log(data?.activeCollectionList);
       setActivatedCollection(data?.activeCollectionList);
     });
+  };
+
+  const getActivePhotocardQuant = () => {
+    mypageAPI
+      .getActivePhotocardQuant(decodeURI(selectedCollection))
+      .then((data) => setMyPhotocardQuant(data?.activeCardQuant));
   };
 
   const onClickArtist = (artistId) => {
@@ -128,72 +136,88 @@ const MyCollectionModal = ({
   }, []);
 
   useEffect(() => {
+    // 마우스 오버 시 API 호출
+    if (isMouseOver) {
+      getActivePhotocardQuant(selectedCollection);
+    }
+  }, [isMouseOver, selectedCollection]);
+
+  useEffect(() => {
     if (selectedArtist) getMyActiveCollection();
   }, [selectedArtist]);
+
   return (
     <s.Wrapper>
       <s.ModalTitle>내 컬렉션</s.ModalTitle>
       <s.BodyWrapper>
-        { artists.length === 0 ? (
-          <>
-            최애 아티스트를 추가해주세요!
-          </>
-        ): (
-          <>
-        <s.ArtistsTabWrapper>{artists}</s.ArtistsTabWrapper>
-        {!isCollectionClicked ? (
-          <s.CollectionCardsContainer>
-            {activatedCollection.length !== 0 ? (
-              activatedCollection.map((item) => {
-                return (
-                  <s.CollectionCardWrapper styled={{ cursor: 'pointer' }}>
-                    <s.ActivatedCollectionCardWrapper
-                      onClick={() => onClickCollection(item?.albumName)}
-                      onMouseOut={onHandleMouseOut}
-                      onMouseOver={onHandleMouseOver}
-                    >
-                      <s.CollectionCardImage
-                        src={item?.albumJacket}
-                        alt='collection'
-                      />
-                      {isMouseOver && (
-                        <s.CollectionInfoWrapper>
-                          <s.CollectionCardInfo>
-                            {item?.albumName}
-                            <br />
-                            활성일 : {item?.activeDateTime}
-                            <br />
-                            {/* 수정요망 */}
-                            수집률 :{' '}
-                            {Math.round((1 / item?.photoCardQuant) * 100)}%
-                            <br />
-                            {/* 내가가진포카수 구해서 넣어야함 */}
-                            포카수 : 1/
-                            {item?.photoCardQuant}장
-                          </s.CollectionCardInfo>
-                        </s.CollectionInfoWrapper>
-                      )}
-                    </s.ActivatedCollectionCardWrapper>
-                  </s.CollectionCardWrapper>
-                );
-              })
-            ) : (
-              <>
-                컬렉션을 활성화해주세요!
-              </>
-            )
-            }
-          </s.CollectionCardsContainer>
+        {artists.length === 0 ? (
+          <>최애 아티스트를 추가해주세요!</>
         ) : (
-          <ModalCollectionDetails
-            selectedArtist={selectedArtist}
-            selectedCollection={selectedCollection}
-            onClickPhotocard={onClickPhotocard}
-            setPhotocardId={setPhotocardId}
-          />
+          <>
+            <s.ArtistsTabWrapper>{artists}</s.ArtistsTabWrapper>
+            {!isCollectionClicked ? (
+              <s.CollectionCardsContainer>
+                {activatedCollection.length !== 0 ? (
+                  activatedCollection.map((item) => {
+                    return (
+                      <s.CollectionCardWrapper styled={{ cursor: 'pointer' }}>
+                        <s.ActivatedCollectionCardWrapper
+                          onClick={() => onClickCollection(item?.albumName)}
+                          onMouseOut={(e) => {
+                            onHandleMouseOut(e);
+                          }}
+                          onMouseOver={(e) => {
+                            onHandleMouseOver(e);
+                            setSelectedCollection(item?.albumName);
+                          }}
+                        >
+                          <s.CollectionCardImage
+                            src={item?.albumJacket}
+                            alt='collection'
+                          />
+                          {isMouseOver && (
+                            <s.CollectionInfoWrapper>
+                              <s.CollectionCardInfo>
+                                {item?.albumName}
+                                <br />
+                                활성일 :{' '}
+                                {item?.activeDateTime.slice(
+                                  0,
+                                  item?.activeDateTime?.indexOf('T')
+                                )}
+                                <br />
+                                {/* 수정요망 */}
+                                수집률 :{' '}
+                                {Math.round(
+                                  (myPhotocardQuant / item?.photoCardQuant) *
+                                    100
+                                )}
+                                %
+                                <br />
+                                {/* 내가가진포카수 구해서 넣어야함 */}
+                                포카수 : {myPhotocardQuant}/
+                                {item?.photoCardQuant}장
+                              </s.CollectionCardInfo>
+                            </s.CollectionInfoWrapper>
+                          )}
+                        </s.ActivatedCollectionCardWrapper>
+                      </s.CollectionCardWrapper>
+                    );
+                  })
+                ) : (
+                  <>컬렉션을 활성화해주세요!</>
+                )}
+              </s.CollectionCardsContainer>
+            ) : (
+              <ModalCollectionDetails
+                selectedArtist={selectedArtist}
+                selectedCollection={selectedCollection}
+                onClickPhotocard={onClickPhotocard}
+                setPhotocardId={setPhotocardId}
+              />
+            )}
+          </>
         )}
-        </>
-        )}  
       </s.BodyWrapper>
     </s.Wrapper>
   );
@@ -235,7 +259,6 @@ const ModalCollectionDetails = ({
                   className={String(selectedArtist)}
                   onClick={() => {
                     onClickPhotocard(item?.photocard);
-                    console.log('내가 누른 거 뭐야?',item?.photocard);
                     setPhotocardId(item?.photocardId);
                   }}
                 >
