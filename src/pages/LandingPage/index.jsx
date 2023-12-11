@@ -87,10 +87,10 @@ const LandingPage = () => {
                 onRequestClose={onClickJoin} // 오버레이나 esc를 누르면 핸들러 동작
                 ariaHideApp={false}
               >
-                <Join />
+                <Join onClickJoin={onClickJoin} />
               </Modal>
-              </s.ButtonContainer>
-              <s.ButtonContainerBottom>
+            </s.ButtonContainer>
+            <s.ButtonContainerBottom>
               <s.Button
                 style={{
                   width: 150,
