@@ -9,6 +9,12 @@ export const DesignsWrapper = styled.div`
 
   width: 90%;
   height: fit-content;
+  //드래그 방지
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 `;
 
 export const DesignListWrapper = styled.div`
@@ -46,17 +52,17 @@ export const DesignImageFrame = styled.div`
   background-color: lightgray;
 
   box-shadow: 11px 13px 25px rgba(0, 0, 0, 0.4);
-
   &:hover {
+    transition: all 0.1s linear;
+    transform: scale(1.1);
     > img {
-      filter: brightness(70%) blur(2.5px);
     }
     cursor: pointer;
   }
 
   &:active {
     > img {
-      filter: brightness(110%) blur(2.5px);
+      filter: brightness(0.9);
     }
   }
 `;

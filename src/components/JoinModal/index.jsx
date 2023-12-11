@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import * as s from '../LoginModal/modal.style'; //LoginModal의 style을 함께 씀
 import landingpageAPI from '../../api/landingpage/landingpageAPI';
+import { useNavigate } from 'react-router-dom';
 
-export const Join = () => {
+export const Join = ({ onClickJoin }) => {
   const [user, setUser] = useState({
     nickname: '',
     username: '',
@@ -21,8 +22,9 @@ export const Join = () => {
     landingpageAPI.register(user).then((data) => {
       if (data) {
         window.alert('회원가입이 완료되었습니다.');
+        onClickJoin();
       } else {
-        console.log('회원가입 실패');
+        window.alert('중복된 이메일입니다.');
       }
     });
   };

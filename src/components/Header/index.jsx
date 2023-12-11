@@ -15,12 +15,10 @@ const Header = () => {
 
 
   const getMyProfile = () => {
-    mypageAPI
-      .getMyProfile()
-      .then((data) =>{
-        setMyProfile(data?.userProfileInfo);
-        console.log(data?.userProfileInfo);
-      } );
+    mypageAPI.getMyProfile().then((data) => {
+      setMyProfile(data?.userProfileInfo);
+      console.log(data?.userProfileInfo);
+    });
   };
 
   const onClickLogOut = () => {
@@ -83,6 +81,7 @@ const Header = () => {
             </s.IconWrapper>
             <s.NicknameWrapper onClick={onClickMenu} data-menu-index='5'>
               {myProfile?.nickname}
+              {/* OHNPOL */}
             </s.NicknameWrapper>
           </s.UserWrapper>
         </s.MenuWrapper>
