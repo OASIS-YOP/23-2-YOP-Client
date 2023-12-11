@@ -65,17 +65,16 @@ const DesignsForPosting = () => {
             }}
           >
             <s.DesignImage src={item.polaroid} alt='polaroid' />
-            {isMouseOver && (
+            {/* {isMouseOver && (
               <s.DesignInfoWrapper>
                 <s.DesignCardInfo>
-                  {/* {thisDesign.designCardName}
-                  <br /> */}
+          
                   활성일:
                   <br />
                   {item.saveDateTime?.slice(0, item.saveDateTime?.indexOf('T'))}
                 </s.DesignCardInfo>
               </s.DesignInfoWrapper>
-            )}
+            )} */}
           </s.DesignImageFrame>
         ))}
       </s.DesignListWrapper>

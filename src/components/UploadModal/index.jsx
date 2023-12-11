@@ -184,7 +184,7 @@ const SelectCollection = ({ closeUploadModal, artistId }) => {
                             src={selectedDesign.polaroid}
                             alt='선택된 디자인'
                           />
-                          {isMouseOver && (
+                          {/* {isMouseOver && (
                             <s.SelectedDesignInfoWrapper>
                               <s.SelectedDesignInfo>
                                 {selectedDesign.designCardName}
@@ -192,7 +192,7 @@ const SelectCollection = ({ closeUploadModal, artistId }) => {
                                 {selectedDesign.saveDate}
                               </s.SelectedDesignInfo>
                             </s.SelectedDesignInfoWrapper>
-                          )}
+                          )} */}
                         </s.SelectedDesignWrapper>
                       </s.UploadStepWrapper>
                       <s.PostButton onClick={onClickPost}>올리기</s.PostButton>

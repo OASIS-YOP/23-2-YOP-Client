@@ -1,16 +1,21 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  //드래그 방지
-  -ms-user-select: none;
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  user-select: none;
-
   width: 660px;
   height: 510px;
 
   padding: 23px 23px;
+
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  //드래그 방지
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 `;
 
 export const HeaderLabelWrapper = styled.div`
@@ -187,17 +192,17 @@ export const SelectedDesignWrapper = styled.div`
   border-radius: 20px;
 
   box-shadow: 11px 13px 25px rgba(0, 0, 0, 0.4);
-
-  &:hover {
-    > img {
-      filter: brightness(70%);
-    }
-  }
 `;
 
 export const SelectedDesignImage = styled.img`
   width: 200px;
   height: 290px;
+  //드래그 방지
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 `;
 
 export const SelectedDesignInfoWrapper = styled.div`
