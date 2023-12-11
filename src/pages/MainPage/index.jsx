@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import {useRecoilState} from 'recoil';
+import { LoginState } from '../../recoil/user';
 import { useNavigate } from 'react-router-dom';
 import * as s from './style';
 import Header from '../../components/Header';
@@ -19,34 +21,43 @@ const MainPage = () => {
   const [hot10, setHot10] = useState([]);
   const [now5, setNow5] = useState([]);
   const navigate = useNavigate();
+  const [isLogin, setLogin] = useRecoilState(LoginState);
 
   // const [userId, setUserId] = useState(1);
 
   const getFavArtist = () => {
+    if (isLogin) {
     mainpageAPI.getFavArtist().then((data) => {
       console.log(data);
       setFavArtist(data.favArtistList);
     });
+    }
   };
 
   const getRandomArtist = () => {
+    if (isLogin) {
     mainpageAPI.getRandomArtist().then((data) => {
       console.log(data);
       setRandomArtist(data.randomArtistList);
     });
+    }
   };
 
   const getHot10 = () => {
+    if (isLogin) {
     mainpageAPI.getHot10().then((data) => {
       console.log(data);
       setHot10(data.hot10List);
     });
+    }
   };
   const getNow5 = () => {
+    if (isLogin) {
     mainpageAPI.getNow5().then((data) => {
       console.log(data);
       setNow5(data.now5List);
     });
+    }
   };
 
   useEffect(() => {
@@ -56,6 +67,12 @@ const MainPage = () => {
       })
       .catch((error) => console.error('Error in API calls', error));
   }, []);
+
+  useEffect(() => {
+    if( isLogin === false ) {
+      navigate('/');
+    }
+  }, [isLogin]);
   
 
   return (
