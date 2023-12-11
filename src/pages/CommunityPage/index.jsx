@@ -161,7 +161,6 @@ const CommunityPage = () => {
     });
   };
 
-
   useEffect(() => {
     console.log(memberPost);
   }, [memberPost]);
@@ -186,7 +185,6 @@ const CommunityPage = () => {
       }
     });
   };
-
 
   const getIfFavoriteArtist = () => {
     communitypageAPI
@@ -214,7 +212,6 @@ const CommunityPage = () => {
   useEffect(() => {
     console.log(clickedMember);
     handleClickMember();
-
   }, [clickedMember]);
 
   return (
@@ -250,22 +247,22 @@ const CommunityPage = () => {
           </s.ProfileWrapper>
         </s.ProfileContainer>
         <s.BodyContainer>
-          { Array.isArray(memberProfile) === false ? (
+          {Array.isArray(memberProfile) === false ? (
             // ''
             <s.MemberCardsWrapper>
               <s.MemberCardContainer key={`member`}>
-                  <s.MemberNameLabel>{memberProfile?.name}</s.MemberNameLabel>
-                  <s.CardImageContainer
-                    onClick={() => {
-                      console.log(memberPost);
-                      console.log(clickedMember);
-                    }}
-                  >
-                    <s.MemberCardImageWrapper>
-                      <img src={memberProfile?.memphoto} alt='memberPhoto' />
-                    </s.MemberCardImageWrapper>
-                  </s.CardImageContainer>
-                </s.MemberCardContainer>
+                <s.MemberNameLabel>{memberProfile?.name}</s.MemberNameLabel>
+                <s.CardImageContainer
+                  onClick={() => {
+                    console.log(memberPost);
+                    console.log(clickedMember);
+                  }}
+                >
+                  <s.MemberCardImageWrapper>
+                    <img src={memberProfile?.memphoto} alt='memberPhoto' />
+                  </s.MemberCardImageWrapper>
+                </s.CardImageContainer>
+              </s.MemberCardContainer>
             </s.MemberCardsWrapper>
           ) : (
             <s.MemberCardsWrapper>
@@ -289,56 +286,61 @@ const CommunityPage = () => {
           )}
           <s.photoCardContainer>
             <>
-              <s.showAllPostButton onClick={() => {
-                setIsClickMember(false);
-                setClickedMember(null);
-              }
-              }>
+              <s.showAllPostButton
+                onClick={() => {
+                  setIsClickMember(false);
+                  setClickedMember(null);
+                }}
+              >
                 전체보기
               </s.showAllPostButton>
             </>
             <s.ContentWrapper>
-              { clickedMember === null
-                ? allPost.map((item) => (
-                    <>
-                      <s.CardImageContainer
-                        onClick={() => {
-                          openPostModal();
-                          setClickedPost(item.postId);
-                        }}
-                        key={`allPost_${item.postId}`}
-                      >
-                        <img src={item.polaroid} alt='allPolaroid' />
-                      </s.CardImageContainer>
-                    </>
-                  ))
-                : memberPost.length === 0
-                ? <div
-                    style={{
-                      color: 'gray',
-                      fontSize: '20px',
-                      fontWeight: '600',
-                      width: '100%',
-                      height: '100px',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}
-                >업로드된 포스트가 없습니다!</div>
-                : memberPost?.map((item) => (
-                    <>
-                      <s.CardImageContainer
-                        onClick={() => {
-                          openPostModal();
-                          setClickedPost(item.postId);
-                        }}
-                        key={`memberPost_${item.postId}`}
-                      >
-                        <img src={item.polaroid} alt='Polaroid' />
-                      </s.CardImageContainer>
-                    </>
-                  ))}
+              {clickedMember === null ? (
+                allPost.map((item) => (
+                  <>
+                    <s.CardImageContainer
+                      onClick={() => {
+                        openPostModal();
+                        setClickedPost(item.postId);
+                      }}
+                      key={`allPost_${item.postId}`}
+                    >
+                      <img src={item.polaroid} alt='allPolaroid' />
+                    </s.CardImageContainer>
+                  </>
+                ))
+              ) : memberPost.length === 0 ? (
+                <div
+                  style={{
+                    color: 'gray',
+                    fontSize: '20px',
+                    fontWeight: '600',
+                    width: '100%',
+                    height: '100px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  업로드된 포스트가 없습니다!
+                </div>
+              ) : (
+                memberPost?.map((item) => (
+                  <>
+                    <s.CardImageContainer
+                      onClick={() => {
+                        openPostModal();
+                        setClickedPost(item.postId);
+                      }}
+                      key={`memberPost_${item.postId}`}
+                    >
+                      <img src={item.polaroid} alt='Polaroid' />
+                    </s.CardImageContainer>
+                  </>
+                ))
+              )}
             </s.ContentWrapper>
           </s.photoCardContainer>
         </s.BodyContainer>
@@ -368,7 +370,10 @@ const CommunityPage = () => {
           ariaHideApp={false}
           style={UploadModalStyle}
         >
-          <SelectCollection closeUploadModal={closeUploadModal} />
+          <SelectCollection
+            closeUploadModal={closeUploadModal}
+            artistId={artistId}
+          />
         </Modal>
       </s.Wrapper>
     </>
