@@ -9,6 +9,8 @@ export const ContentsWrapper = styled.div`
 
   width: 90%;
   height: fit-content;
+
+  padding: 50px 0; 
 `;
 
 export const DesignListWrapper = styled.div`

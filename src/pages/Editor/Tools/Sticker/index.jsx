@@ -3,7 +3,7 @@ import * as s from './style';
 import { useEffect, useState } from 'react';
 import { 
   stickerData1, stickerData2, stickerData3, ConfettisBlue, CP, stickerData6, ment, maskingTapes,
-  CSv, CGd, CXmas, CYo, Holograms, vintage
+  CSv, CGd, CXmas, CYo, Vintage, Jewel,
 } from './stickerData';
 // import Konva from 'konva';
 
@@ -16,7 +16,8 @@ const Stickers = ({
 
   const [ stickerTab, setStickerTab ] = useState('컨페티');
 
-  const stickerTabs = ['컨페티', '픽셀', '텍스트', '빈티지', '보석', '마스킹테이프','기타',];
+  const stickerTabsList = ['컨페티', '픽셀', '텍스트', '빈티지', '보석', '마스킹테이프','로고',];
+  const stickerTabs = stickerTabsList.sort();
   const [ colorTab, setColorTab ] = useState('yo');
 
   const colorTabs = [
@@ -57,6 +58,7 @@ const Stickers = ({
     const isRibbonL = spec === "ribbonL";
     const isRibbonM = spec === "ribbonM";
     const isRibbonS = spec === "ribbonS";
+    const isJewel = spec === 'jewel'
 
     // const frame = canvas.getObjects().find((object) => object.class === 'frame');
     // frame이라는 class를 가진 객체를 찾아서 frame에 할당
@@ -84,7 +86,9 @@ const Stickers = ({
       img.scaleToWidth(75);
     } else if(isL) {
       img.scaleToWidth(150);
-    } else{
+    } else if( isJewel ){
+      img.scaleToWidth(50);
+    } else {
       img.scaleToWidth(100);
     }
 
@@ -371,34 +375,7 @@ const Stickers = ({
             )}
           </s.StickerList>
         )}
-        { stickerTab === '홀로그램' && (
-          <s.StickerList>
-            {Holograms.map( (item) => (
-              ( item.spec === 'particlesS' ? (          
-                <img
-                  key={item.id}
-                  src={item.fileUrl} 
-                  onClick={(e) => handleImageClick(e)}
-                  data-spec={item.spec} 
-                  alt='sticker'
-                  width='50px'
-                  height='auto'
-                />
-                ):( <img
-                      key={item.id}
-                      src={item.fileUrl} 
-                      onClick={(e) => handleImageClick(e)}
-                      data-spec={item.spec}
-                      alt='sticker'
-                      height='auto'
-                      width='130px'
-                    />
-                ))
-              )
-            )}
-          </s.StickerList>
-        )}
-        { stickerTab === '기타' && (
+        { stickerTab === '로고' && (
           <s.StickerList>
             {stickerData1.map( (item) => {
           return (
@@ -427,7 +404,7 @@ const Stickers = ({
         )}
         { stickerTab === '빈티지' && (
           <s.StickerList>
-            {vintage.map( (item) => {
+            {Vintage.map( (item) => {
           return (
             (item.spec === 'particlesS' ? (
               <img
@@ -446,6 +423,35 @@ const Stickers = ({
               alt='sticker'
               height='auto'
               width='130px' />
+            ))
+          );
+        }
+        )}
+          </s.StickerList>
+        )}
+        { stickerTab === '보석' && (
+          <s.StickerList>
+            {Jewel.map( (item) => {
+          return (
+            (item.spec === 'particlesS' ? (
+              <img
+                key={item.id}
+                src={item.fileUrl}
+                onClick={(e) => handleImageClick(e)}
+                data-spec={item.spec}
+                alt='sticker'
+                width='60px'
+                height='auto' />
+            ) : (
+              <img
+                key={item.id}
+                src={item.fileUrl}
+                onClick={(e) => handleImageClick(e)}
+                data-spec={item.spec}
+                alt='sticker'
+                height='auto'
+                width='70px'
+              />
             ))
           );
         }

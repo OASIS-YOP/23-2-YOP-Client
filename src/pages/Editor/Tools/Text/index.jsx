@@ -235,16 +235,40 @@ const Text = ({
     }
   };
 
+  const [selectedFontSize, setSelectedFontSize] = useState('35');
+  const TextSize = () => {
+    if (
+      canvas.getActiveObject() instanceof fabric.Text ||
+      canvas.getActiveObject() instanceof fabric.IText
+    ) {
+      let fontSize = '35'; // Default font-weight value
+
+      canvas.getActiveObject().set({
+        fontSize: selectedFontSize,
+      });
+
+      canvas.renderAll();
+      console.log("size",selectedFontSize);
+      console.log(canvas.getActiveObject());
+      console.log(fontSize);
+    }
+  };
+
   // 폰트 변경
   const [selectedFont, setSelectedFont] = useState('(default)Noto Sans KR');
 
-  const fonts = ['MBC1961굴림', '강원모두교육체','에스코어드림', '김정철명조', 'Neo둥근고딕Pro',
+  const fontsList = ['MBC1961굴림', '강원모두교육체','에스코어드림', '김정철명조', 'Neo둥근고딕Pro',
     '나눔명조ExtraBold', '나눔명조Bold', '나눔명조Regular',
     '선플라워Bold', '선플라워Medium', '선플라워Light',
-    '하이멜로디',
+    '하이멜로디', 'Diphylleia',
+    'BagelFatOne', 'Orbit', 'SongMyung',
+    '고운돋움', 'GasoekOne', 'GrandifloraOne',
+    'Stylish',
   ];
 
-  fonts.unshift('(default)Noto Sans KR');
+  const fonts = fontsList.sort();
+
+  fonts.unshift(selectedFont);
 
   const TextFonts = () => {
     if (
@@ -289,8 +313,24 @@ const Text = ({
         fontFamily = 'Sunflower';
         fontWeight = 300;
       } else if ( selectedFont === '하이멜로디' ) {
-        fontFamily = 'HIMelody';
-      } 
+        fontFamily = 'Hi Melody';
+      } else if ( selectedFont === 'Diphylleia' ) {
+        fontFamily = 'Diphylleia';
+      } else if ( selectedFont === 'BagelFatOne' ) {
+        fontFamily = 'Bagel Fat One';
+      } else if ( selectedFont === 'Orbit' ) {
+        fontFamily = 'Orbit';
+      } else if ( selectedFont === 'SongMyung' ) {
+        fontFamily = 'Song Myung';
+      } else if ( selectedFont === '고운돋움' ) {
+        fontFamily = 'Gowun Dodum';
+      } else if ( selectedFont === 'GasoekOne' ) {
+        fontFamily = 'Gasoek One';
+      } else if ( selectedFont === 'GrandifloraOne' ) {
+        fontFamily = 'Grandiflora One';
+      } else if ( selectedFont === 'Stylish' ) {
+        fontFamily = 'Stylish';
+      }
 
       canvas.getActiveObject().set({
         fontFamily,
@@ -303,6 +343,7 @@ const Text = ({
       console.log(fontFamily, fontWeight);
     }
   };
+
 
   return (
     <>
@@ -417,6 +458,39 @@ const Text = ({
               isActive={!isBackImgEmpty}
             >
               글꼴 바꾸기
+            </s.BtnLabel>
+          </s.Btn>
+        </s.BtnWrapper>
+        <s.BtnWrapper>
+          <s.SelectFontSize
+            id='font-size'
+            onChange={(e) => setSelectedFontSize(e.target.value)}
+            defaultValue={selectedFontSize}
+            min='1'
+            max='300'
+            disabled={isBackImgEmpty}
+          >
+            {
+              [...Array(100).keys()].map((i) => (
+                <option key={i} value={i + 1}>
+                  {i + 1}
+                </option>
+              ))
+          }
+          </s.SelectFontSize>
+          <s.Btn 
+            onClick={TextSize}
+            disabled={isBackImgEmpty}
+          >
+            <s.BtnIcon
+              isActive={!isBackImgEmpty}
+            >
+              <FontChangeIcon />
+            </s.BtnIcon>
+            <s.BtnLabel
+              isActive={!isBackImgEmpty}
+            >
+              크기 바꾸기
             </s.BtnLabel>
           </s.Btn>
         </s.BtnWrapper>

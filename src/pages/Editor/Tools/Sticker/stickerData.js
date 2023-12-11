@@ -670,56 +670,305 @@ export const CYo = [
   }
 ];
 
-export const vintage = [
+export const Vintage = [
+  {
+    id: 1,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/vintage/홀로그램.png`,
+    spec: '',
+    class: 'vintage',
+  },
+  {
+    id: 2,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/vintage/홀로그램2.png`,
+    spec: '',
+    class: 'vintage',
+  },
+  {
+    id: 3,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/vintage/고양이.png`,
+    spec: '',
+    class: 'vintage',
+  },
+  {
+    id: 4,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/vintage/앵무새.png`,
+    spec: 'L',
+    class: 'vintage',
+  },
+  {
+    id: 5,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/vintage/스프레이.png`,
+    spec: '',
+    class: 'vintage',
+  },
+  {
+    id: 6,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/vintage/보라나비.png`,
+    spec: '',
+    class: 'vintage',
+  },
+  {
+    id: 7,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/vintage/물.png`,
+    spec: '',
+    class: 'vintage',
+  },
+  {
+    id: 9,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/vintage/거품.png`,
+    spec: '',
+    class: 'vintage',
+  },
   {
     id: 10,
-    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/홀로그램.png`,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/vintage/bf1.png`,
     spec: '',
-    class: 'ST1',
+    class: 'vintage',
+  },
+  {
+    id: 11,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/vintage/ticket.png`,
+    spec: '',
+    class: 'vintage',
   },
   {
     id: 12,
-    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/홀로그램2.png`,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/vintage/tape.png`,
     spec: '',
-    class: 'ST1',
+    class: 'vintage',
   },
   {
-    id: 11,
-    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/고양이.png`,
+    id: 13,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/vintage/cocacola.png`,
     spec: '',
-    class: 'ST1',
+    class: 'vintage',
   },
   {
-    id: 12,
-    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/앵무새.png`,
+    id: 14,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/vintage/camera.png`,
     spec: '',
-    class: 'ST1',
+    class: 'vintage',
   },
   {
-    id: 11,
-    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/스프레이.png`,
+    id: 15,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/vintage/books.png`,
     spec: '',
-    class: 'ST1',
+    class: 'vintage',
   },
   {
-    id: 11,
-    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/보라나비.png`,
+    id: 16,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/vintage/flower.png`,
     spec: '',
-    class: 'ST1',
+    class: 'vintage',
   },
   {
-    id: 11,
-    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/물.png`,
+    id: 17,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/vintage/flower2.png`,
     spec: '',
-    class: 'ST1',
+    class: 'vintage',
   },
   {
-    id: 11,
-    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/거품.png`,
+    id: 18,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/vintage/flower3.png`,
     spec: '',
-    class: 'ST1',
+    class: 'vintage',
   },
+  {
+    id: 19,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/vintage/flower4.png`,
+    spec: '',
+    class: 'vintage',
+  },
+  {
+    id: 20,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/vintage/flower5.png`,
+    spec: '',
+    class: 'vintage',
+  },
+  {
+    id: 21,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/vintage/flower6.png`,
+    spec: '',
+    class: 'vintage',
+  },
+  {
+    id: 22,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/vintage/flower7.png`,
+    spec: '',
+    class: 'vintage',
+  },
+  {
+    id: 23,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/vintage/flower8.png`,
+    spec: '',
+    class: 'vintage',
+  },
+  {
+    id: 24,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/vintage/flower9.png`,
+    spec: '',
+    class: 'vintage',
+  },
+  {
+    id: 25,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/vintage/flower10.png`,
+    spec: '',
+    class: 'vintage',
+  },
+  {
+    id: 26,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/vintage/flower11.png`,
+    spec: '',
+    class: 'vintage',
+  },
+  {
+    id: 27,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/vintage/angel.png`,
+    spec: '',
+    class: 'vintage',
+  },
+  {
+    id: 28,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/vintage/angel2.png`,
+    spec: '',
+    class: 'vintage',
+  },
+  {
+    id: 29,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/vintage/christmas1.png`,
+    spec: '',
+    class: 'vintage',
+  },
+  {
+    id: 30,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/vintage/리스.png`,
+    spec: '',
+    class: 'vintage',
+  },
+  {
+    id: 31,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/vintage/pine.png`,
+    spec: '',
+    class: 'vintage',
+  },
+];
 
+export const Jewel = [
+  {
+    id: 1,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/jewel/보석1.png`,
+    spec: 'jewel',
+    class: 'jewel',
+  },
+  //19까지 쭉 추가
+  {
+    id: 2,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/jewel/보석2.png`,
+    spec: 'jewel',
+    class: 'jewel',
+  },
+  {
+    id: 3,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/jewel/보석3.png`,
+    spec: 'jewel',
+    class: 'jewel',
+  },
+  {
+    id: 4,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/jewel/보석4.png`,
+    spec: 'jewel',
+    class: 'jewel',
+  },
+  {
+    id: 5,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/jewel/보석5.png`,
+    spec: 'jewel',
+    class: 'jewel',
+  },
+  {
+    id: 6,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/jewel/보석6.png`,
+    spec: 'jewel',
+    class: 'jewel',
+  },
+  {
+    id: 7,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/jewel/보석7.png`,
+    spec: 'jewel',
+    class: 'jewel',
+  },
+  {
+    id: 8,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/jewel/보석8.png`,
+    spec: 'jewel',
+    class: 'jewel',
+  },
+  {
+    id: 9,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/jewel/보석9.png`,
+    spec: 'jewel',
+    class: 'jewel',
+  },
+  {
+    id: 10,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/jewel/보석10.png`,
+    spec: 'jewel',
+    class: 'jewel',
+  },
+  {
+    id: 11,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/jewel/보석11.png`,
+    spec: 'jewel',
+    class: 'jewel',
+  },
+  {
+    id: 12,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/jewel/보석12.png`,
+    spec: 'jewel',
+    class: 'jewel',
+  },
+  {
+    id: 13,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/jewel/보석13.png`,
+    spec: 'jewel',
+    class: 'jewel',
+  },
+  {
+    id: 14,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/jewel/보석14.png`,
+    spec: 'jewel',
+    class: 'jewel',
+  },
+  {
+    id: 15,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/jewel/보석15.png`,
+    spec: 'jewel',
+    class: 'jewel',
+  },
+  {
+    id: 16,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/jewel/보석16.png`,
+    spec: 'jewel',
+    class: 'jewel',
+  },
+  {
+    id: 17,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/jewel/보석17.png`,
+    spec: 'jewel',
+    class: 'jewel',
+  },
+  {
+    id: 18,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/jewel/보석18.png`,
+    spec: 'jewel',
+    class: 'jewel',
+  },
+  {
+    id: 19,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/jewel/보석19.png`,
+    spec: 'jewel',
+    class: 'jewel',
+  },
 ];
   
 
@@ -965,12 +1214,22 @@ export const maskingTapes = [
     fileUrl: `${process.env.PUBLIC_URL}/images/stickers/MTChB.png`,
     spec: 'L',
   },
-];
-
-export const Holograms = [
   {
-    id: 1,
-    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/h/h_heart.png`,
+    id: 3,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/masking_tape/m_t1.png`,
+    spec: 'L',
+  },
+  {
+    id: 4,
+    fileUrl: `${process.env.PUBLIC_URL}/images/stickers/masking_tape/m_t2.png`,
     spec: 'L',
   },
 ];
+
+// export const Holograms = [
+//   {
+//     id: 1,
+//     fileUrl: `${process.env.PUBLIC_URL}/images/stickers/h/h_heart.png`,
+//     spec: 'L',
+//   },
+// ];

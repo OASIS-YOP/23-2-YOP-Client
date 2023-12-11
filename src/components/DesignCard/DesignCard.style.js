@@ -11,14 +11,14 @@ export const IndexNumber = styled.div`
   width: 100%;
 
   font-family: 'Noto Sans KR', sans-serif;
-  font-size: 25px;
-  font-weight: 700;
-  margin-bottom: 5px;
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 10px;
 `;
 export const ImageContainer = styled.div`
   flex: 0 0 auto;
   width: 180px;
-  height: 280px;
+  height: 261px;
 
   border-radius: 20px;
   outline: #d7d7d7 1px solid;
@@ -36,6 +36,10 @@ export const ImageContainer = styled.div`
     height: 100%;
 
     object-fit: cover;
+  }
+
+  &:hover {
+      transform: scale(1.05);
   }
 `;
 
@@ -100,14 +104,14 @@ export const tagsWrapper = styled.div`
 
   min-width: 160px;
   max-width: 200px;
-  width: 100%;
+  width: 60%;
 
   margin: 10px 0;
 
   color: #3f70ff;
 
   font-family: 'Noto Sans KR', sans-serif;
-  font-size: 19px;
+  font-size: 17px;
   font-weight: 600;
   &:last-child {
     color: #3563e9;
@@ -124,6 +128,8 @@ export const tag = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  margin-bottom: 3px;
 
   width: fit-content;
 `;

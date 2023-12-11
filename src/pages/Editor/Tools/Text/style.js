@@ -95,6 +95,15 @@ export const SelectFont = styled.select`
 
 `
 
+export const SelectFontSize = styled.select`
+  width: 100px;
+  height: 80%;
+  border: 1px solid #B7C0D8;
+  border-radius: 5px;
+  margin: 0 8px;
+  background-color: white;
+`
+
 export const Margin = styled.div`
   height: 20px;
 `
