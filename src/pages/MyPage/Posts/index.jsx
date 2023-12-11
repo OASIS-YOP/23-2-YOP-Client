@@ -6,13 +6,20 @@ import mypageAPI from '../../../api/mypage/mypageAPI';
 import LikedIcon from '../../../assets/LikedIcon.svg';
 import commonAPI from '../../../api/commonAPI';
 
+import { useRecoilState } from 'recoil';
+import { myProfileState } from '../../../recoil/user';
+import { LoginState } from '../../../recoil/user';
+import { useNavigate } from 'react-router-dom';
+
 const Posts = () => {
   const [postArtistList, setPostArtistList] = useState([]);
   const [selectedArtist, setSelectedArtist] = useState(0);
   const [artistPost, setArtistPost] = useState([]);
   const [isClickDot, setIsClickDot] = useState(false);
+  const [ isLogin, setLogin ] = useRecoilState(LoginState);
 
   const getMyPostArtistTab = () => {
+    if ( isLogin ) {
     mypageAPI.getMyPostArtistTab().then((data) => {
       if (data.postArtistList.length === 0) {
         return;
@@ -21,12 +28,15 @@ const Posts = () => {
         setSelectedArtist(data?.postArtistList[0]?.artistId);
       }
     });
+    }
   };
 
   const getMyPost = () => {
+    if ( isLogin ) {
     mypageAPI.getMyPost(selectedArtist).then((data) => {
       setArtistPost(data?.myPostList);
     });
+    }
   };
 
   const onClickArtist = (artistId) => {
