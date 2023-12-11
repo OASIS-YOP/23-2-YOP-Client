@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: "https://ohnpol.herokuapp.com/api/",
+  baseURL: "https://ohnpol.herokuapp.com/OHNPOL_SERVER/",
   withCredentials: true,
 });
 
