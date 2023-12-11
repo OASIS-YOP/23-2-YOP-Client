@@ -26,7 +26,7 @@ export const Header = styled.div`
   z-index: 999;
 
   width: 100%;
-  height: 60px;
+  height: 65px;
   min-width: 1000px;
   /* padding: 20px; */
 
@@ -89,7 +89,7 @@ export const Menu = styled.button`
   cursor: pointer;
 
   font-weight: 500;
-  font-size: 14px;
+  font-size: 14.5px;
   font-family: 'Noto Sans KR', sans-serif;
 
   background-color: transparent;

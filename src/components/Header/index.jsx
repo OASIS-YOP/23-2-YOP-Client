@@ -3,12 +3,17 @@ import React from 'react';
 import Blogo from '../../assets/Blogo.svg';
 import Avatar from '../../assets/Avatar.svg';
 
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 import { useEffect } from 'react';
 import { myProfileState } from '../../recoil/user';
 import mypageAPI from '../../api/mypage/mypageAPI';
 
+import { LoginState } from '../../recoil/user';
 const Header = () => {
+  const [isLogin, setLogin] = useRecoilState(LoginState);
+  const resetMyProfile = useResetRecoilState(myProfileState);
+
+
   const getMyProfile = () => {
     mypageAPI
       .getMyProfile()
@@ -16,6 +21,12 @@ const Header = () => {
         setMyProfile(data?.userProfileInfo);
         console.log(data?.userProfileInfo);
       } );
+  };
+
+  const onClickLogOut = () => {
+    setLogin(false);
+    resetMyProfile(myProfileState);
+    localStorage.removeItem('atk');
   };
 
   useEffect(() => {
@@ -34,6 +45,7 @@ const Header = () => {
     } else if (menuIndex === '3') {
       window.location.href = '/allartist';
     } else if (menuIndex === '4') {
+      onClickLogOut();
       window.location.href = '/';
     } else if (menuIndex === '5') {
       window.location.href = '/mypage';
@@ -47,11 +59,16 @@ const Header = () => {
           <s.Logo src={Blogo} onClick={onClickMenu} data-menu-index='1' />
         </s.LogoWrapper>
         <s.MenuWrapper>
-          <s.Menu onClick={onClickMenu} data-menu-index='2'>
-            편집기
+          <s.Menu
+            style={{ fontWeight : '700', }}
+            onClick={onClickMenu} data-menu-index='1'>
+            메인페이지
           </s.Menu>
           <s.Menu onClick={onClickMenu} data-menu-index='3'>
             커뮤니티
+          </s.Menu>
+          <s.Menu onClick={onClickMenu} data-menu-index='2'>
+            편집기
           </s.Menu>
           <s.Menu onClick={onClickMenu} data-menu-index='4'>
             로그아웃

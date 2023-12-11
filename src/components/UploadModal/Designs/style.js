@@ -69,7 +69,7 @@ export const DesignImage = styled.img`
   background-color: lightgray;
 
   width: auto;
-  height: 110%;
+  height: 100%;
 `;
 
 export const DesignInfoWrapper = styled.div`

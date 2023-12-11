@@ -1347,7 +1347,7 @@ const Editor = () => {
 
   return (
     <s.Wrapper onClick={closeContextMenu}>
-      {isLogedIn ? <HeaderMember /> : <HeaderNonmember />}
+      {isLogedIn ? <HeaderMember isBackImgEmpty={isBackImgEmpty} /> : <HeaderNonmember isBackImgEmpty={isBackImgEmpty} />}
       <s.EditorWrapper>
         <s.LeftContainer>
           <s.TopMenuWrapper>

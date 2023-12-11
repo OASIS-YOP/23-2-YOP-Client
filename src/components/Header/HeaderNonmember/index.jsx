@@ -11,19 +11,28 @@ import { useRecoilState } from 'recoil';
 import { useEffect, useState } from 'react';
 import { myProfileState } from '../../../recoil/user';
 
-const HeaderNonmember = () => {
+const HeaderNonmember = ( {isBackImgEmpty} ) => {
   const onClickMenu = (e) => {
-    const menuIndex = e.target.dataset.menuIndex;
+    if(isBackImgEmpty) {
+      const menuIndex = e.target.dataset.menuIndex;
+          if (menuIndex === '1') {
+           window.location.href = '/';
+          }
+    } else {
+      if (
+        window.confirm(
+          '변경사항이 저장되지 않습니다. 저장하지 않고 계속 하시겠습니까?'
+        )
+      ) {
+        const menuIndex = e.target.dataset.menuIndex;
         if (menuIndex === '1') {
-         
-        } else if ( menuIndex === '2') {
-          
+          window.location.href = '/';
         }
-    // if (window.confirm('변경사항이 저장되지 않습니다. 저장하지 않고 계속 하시겠습니까?')) {
 
-    // } else {
-    //   return;
-    // }
+      } else {
+          return;
+      }
+    }
   };
 
   const adPhrases = [ 

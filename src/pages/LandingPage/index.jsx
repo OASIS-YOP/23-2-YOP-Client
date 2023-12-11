@@ -5,10 +5,15 @@ import Modal from 'react-modal';
 import Logo from '../../assets/logo.svg';
 import { Login } from '../../components/LoginModal';
 import { Join } from '../../components/JoinModal';
+import { useRecoilState } from 'recoil';
+import { LoginState } from '../../recoil/user';
+import { useEffect } from 'react';
 
 const LandingPage = () => {
   const [isClickedLogin, setIsClickedLogin] = useState(false);
   const [isClickedJoin, setIsClickedJoin] = useState(false);
+
+  const [ isLogin, setLogin ] = useRecoilState(LoginState);
 
   const onClickLogin = () => {
     setIsClickedLogin((prev) => !prev);
@@ -41,6 +46,12 @@ const LandingPage = () => {
       zIndex: 10,
     },
   };
+
+  useEffect(() => {
+    if(isLogin) {
+      window.location.href = '/mainpage';
+    }
+  }, [isLogin]);
 
   return (
     <s.Wrapper>
