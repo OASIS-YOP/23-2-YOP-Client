@@ -12,8 +12,6 @@ import { myProfileState, LoginState } from '../../recoil/user';
 const MyPage = () => {
   const [myProfile, setMyProfile] = useRecoilState(myProfileState);
   const [isLogin, setLogin] = useRecoilState(LoginState);
-
-
   const navigate = useNavigate();
   const currentPathname = window.location.pathname;
 
@@ -31,11 +29,13 @@ const MyPage = () => {
     }
   }, []);
 
-  useEffect(() => {
-    if( isLogin === false ) {
-      navigate('/');
-    }
-  }, [isLogin]);
+
+  // useEffect(() => {
+  //   if( isLogin === false ) {
+  //     navigate('/');
+  //   }
+  // }, [isLogin]);
+
 
   return (
     <>

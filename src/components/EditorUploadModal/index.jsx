@@ -8,9 +8,7 @@ import Modal from 'react-modal';
 import MyCollectionModal from '../MyCollectionModal';
 
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import {
-  isBackImgEmptyState,
-} from '../../recoil/atoms';
+import { isBackImgEmptyState } from '../../recoil/atoms';
 
 import { LoginState } from '../../recoil/user';
 
@@ -81,7 +79,7 @@ const EditorUploadModal = ({
   const handleImageLoad = (file) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
-    console.log('파일',file);
+    console.log('파일', file);
     reader.onload = () => {
       const resultImage = reader.result;
       console.log('resultImage', resultImage);
@@ -120,8 +118,7 @@ const EditorUploadModal = ({
 
           canvas.add(imgFile);
           canvas.sendToBack(imgFile);
-          
-          
+
           setIsBackImgEmpty(false);
 
           canvas.renderAll();
@@ -131,6 +128,7 @@ const EditorUploadModal = ({
           // canvasHistory.recordState(canvas);
         });
       };
+      setPhotocardId(0);
       loadImage();
       setIsOpenUploadModal(false);
     };

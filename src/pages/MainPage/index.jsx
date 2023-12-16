@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import {useRecoilState} from 'recoil';
+import { useRecoilState } from 'recoil';
+
 import { LoginState } from '../../recoil/user';
 import { useNavigate } from 'react-router-dom';
 import * as s from './style';
@@ -69,11 +70,11 @@ const MainPage = () => {
   }, []);
 
   useEffect(() => {
-    if( isLogin === false ) {
-      navigate('/');
-    }
+    // if( isLogin === false ) {
+    //   navigate('/');
+    // }
   }, [isLogin]);
-  
+
 
   return (
     <s.Wrapper>
@@ -84,16 +85,24 @@ const MainPage = () => {
       <s.BannerWrapper>
         {/* <s.BannerContent>프로모션 및 이벤트 배너 슬라이드 공간</s.BannerContent> */}
         <BannerSlider>
-          <Banner src={`${process.env.PUBLIC_URL}/images/banners/newjeans_banner3.jpg`} />
-          <Banner src={`${process.env.PUBLIC_URL}/images/banners/aespa_banner.png`} />
-          <Banner src={`${process.env.PUBLIC_URL}/images/banners/txt_banner.png`} />
-          <Banner src={`${process.env.PUBLIC_URL}/images/banners/jk_banner.jpg`} />
+          <Banner
+            src={`${process.env.PUBLIC_URL}/images/banners/newjeans_banner3.jpg`}
+          />
+          <Banner
+            src={`${process.env.PUBLIC_URL}/images/banners/aespa_banner.png`}
+          />
+          <Banner
+            src={`${process.env.PUBLIC_URL}/images/banners/txt_banner.png`}
+          />
+          <Banner
+            src={`${process.env.PUBLIC_URL}/images/banners/jk_banner.jpg`}
+          />
         </BannerSlider>
       </s.BannerWrapper>
 
       {/* 나의 최애 아티스트 */}
       <s.PageLabel>나의 최애 아티스트</s.PageLabel>
-      {favArtist.length !==0 ? (
+      {favArtist.length !== 0 ? (
         <CardsSlider>
           {favArtist.map((item) => (
             <ArtistCard

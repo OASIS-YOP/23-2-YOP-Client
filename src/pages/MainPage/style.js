@@ -33,18 +33,17 @@ export const BannerContent = styled.div`
   height: auto;
   color: white;
   margin: 0 auto;
-  
+
   min-width: 1000px;
 
   font-family: 'Noto Sans KR', sans-serif;
   font-size: 30px;
   font-weight: 800;
-
 `;
 
 export const PageLabel = styled.p`
   height: fit-content;
-  margin: 40px 20px 15px 20px;
+  margin: 50px 20px 15px 20px;
   padding: 15px;
 
   font-family: 'Noto Sans KR', sans-serif;
@@ -54,7 +53,7 @@ export const PageLabel = styled.p`
   & span {
     float: right;
     margin-right: 50px;
-    
+
     font-family: 'Noto Sans KR', sans-serif;
     font-size: 15px;
     font-weight: 700;
@@ -69,7 +68,7 @@ export const TextIfEmptyArtist = styled.div`
   align-items: center;
 
   width: 90%;
-  height: 30px;
+  height: 200px;
 
   margin: 0 auto;
 
@@ -105,7 +104,6 @@ export const ContentRowBox = styled.div`
   justify-content: space-between;
   width: 100%;
   height: 100%;
-
 `;
 
 export const CollectionBox = styled.div`

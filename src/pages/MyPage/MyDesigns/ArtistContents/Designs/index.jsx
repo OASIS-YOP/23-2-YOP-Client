@@ -71,7 +71,11 @@ const Designs = ({ selectedCollection }) => {
                       </s.DeleteButton>
                       <br />
                       {/* 휴^^ 여기 날짜순으로 또 해야되네요 */}
-                      {item.saveDateTime}
+                      활성일 :
+                      {item.saveDateTime.slice(
+                        0,
+                        item.saveDateTime?.indexOf('T')
+                      )}
                     </s.DesignCardInfo>
                   </s.DesignInfoWrapper>
                 )}

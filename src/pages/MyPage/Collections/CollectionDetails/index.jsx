@@ -37,25 +37,19 @@ const CollectionDetails = ({
     return item.photocardId;
   });
 
-  useEffect(() => {
-    getCollectionAllPhotocard();
-    getCollectionActivePhotocard();
-
-    console.log('컬렉션디테일', selectedCollection);
-  }, []);
-
-  useEffect(() => {
-    console.log(activePhotocardId);
-    console.log(collectionPhotocard);
-  }, [activePhotocard]);
-
-    const handleClickCodeInputButton = () => {
+  const handleClickCodeInputButton = () => {
     setIsOpenCodeInputModal((prev) => !prev);
   };
 
-  const closeCodeInputButton = () => {
+  const closeCodeInputModal = () => {
     setIsOpenCodeInputModal(false);
   };
+
+  useEffect(() => {
+    getCollectionAllPhotocard();
+    getCollectionActivePhotocard();
+    console.log('컬렉션디테일', selectedCollection);
+  }, []);
 
   return (
     <>
@@ -72,99 +66,96 @@ const CollectionDetails = ({
           <CodeInputModal
             albumName={selectedCollection}
             setIsOpenCodeInputModal={setIsOpenCodeInputModal}
-            closeCodeInputButton={closeCodeInputButton}
+            closeCodeInputModal={closeCodeInputModal}
           />
         </Modal>
 
         <s.CollectionName>{selectedCollection}</s.CollectionName>
         <s.ContentsContainer>
-        <s.PhotocardListWrapper>
-          <s.VersionLabel>
-            Ver. A
-          </s.VersionLabel>
-          {collectionPhotocard['verA']?.map((item) => {
-            return (
-              <s.PhotoCardContainer className={selectedArtist}>
-                { item.memberName === '아이유(IU)'
-                  ? '' :
-                  <s.MemberName className={selectedArtist}>                  
-                  {item.memberName}
-                </s.MemberName>
-                }
-                <s.PhotocardImageFrame className={String(selectedArtist)}>
-                  <s.PhotocardImage
-                    key={`photocared_${item.photocardId}`}
-                    src={item.photocard}
-                    alt='photocard'
-                    className={
-                      activePhotocardId?.find((id) => id === item.photocardId)
-                        ? ''
-                        : 'locked'
-                    }
-                  />
-                </s.PhotocardImageFrame>
-              </s.PhotoCardContainer>
-            );
-          })}
-        </s.PhotocardListWrapper>
-        <s.PhotocardListWrapper>
-          <s.VersionLabel>
-            Ver. B
-          </s.VersionLabel>
-          {collectionPhotocard['verB']?.map((item) => {
-            return (
-              <s.PhotoCardContainer className={selectedArtist}>
-                { item.memberName === '아이유(IU)'
-                  ? '' :
-                  <s.MemberName className={selectedArtist}>                  
-                  {item.memberName}
-                </s.MemberName>
-                }
-                <s.PhotocardImageFrame className={String(selectedArtist)}>
-                  <s.PhotocardImage
-                    key={`photocared_${item.photocardId}`}
-                    src={item.photocard}
-                    alt='photocard'
-                    className={
-                      activePhotocardId?.find((id) => id === item.photocardId)
-                        ? ''
-                        : 'locked'
-                    }
-                  />
-                </s.PhotocardImageFrame>
-              </s.PhotoCardContainer>
-            );
-          })}
-        </s.PhotocardListWrapper>
-        <s.PhotocardListWrapper>
-          <s.VersionLabel>
-            Ver. C
-          </s.VersionLabel>
-          {collectionPhotocard['verC']?.map((item) => {
-            return (
-              <s.PhotoCardContainer className={selectedArtist}>
-                { item.memberName === '아이유(IU)'
-                  ? '' :
-                  <s.MemberName className={selectedArtist}>                  
-                  {item.memberName}
-                </s.MemberName>
-                }
-                <s.PhotocardImageFrame className={String(selectedArtist)}>
-                  <s.PhotocardImage
-                    key={`photocared_${item.photocardId}`}
-                    src={item.photocard}
-                    alt='photocard'
-                    className={
-                      activePhotocardId?.find((id) => id === item.photocardId)
-                        ? ''
-                        : 'locked'
-                    }
-                  />
-                </s.PhotocardImageFrame>
-              </s.PhotoCardContainer>
-            );
-          })}
-        </s.PhotocardListWrapper>
+          <s.PhotocardListWrapper>
+            <s.VersionLabel>Ver. A</s.VersionLabel>
+            {collectionPhotocard['verA']?.map((item) => {
+              return (
+                <s.PhotoCardContainer className={selectedArtist}>
+                  {item.memberName === '아이유(IU)' ? (
+                    ''
+                  ) : (
+                    <s.MemberName className={selectedArtist}>
+                      {item.memberName}
+                    </s.MemberName>
+                  )}
+                  <s.PhotocardImageFrame className={String(selectedArtist)}>
+                    <s.PhotocardImage
+                      key={`photocared_${item.photocardId}`}
+                      src={item.photocard}
+                      alt='photocard'
+                      className={
+                        activePhotocardId?.find((id) => id === item.photocardId)
+                          ? ''
+                          : 'locked'
+                      }
+                    />
+                  </s.PhotocardImageFrame>
+                </s.PhotoCardContainer>
+              );
+            })}
+          </s.PhotocardListWrapper>
+          <s.PhotocardListWrapper>
+            <s.VersionLabel>Ver. B</s.VersionLabel>
+            {collectionPhotocard['verB']?.map((item) => {
+              return (
+                <s.PhotoCardContainer className={selectedArtist}>
+                  {item.memberName === '아이유(IU)' ? (
+                    ''
+                  ) : (
+                    <s.MemberName className={selectedArtist}>
+                      {item.memberName}
+                    </s.MemberName>
+                  )}
+                  <s.PhotocardImageFrame className={String(selectedArtist)}>
+                    <s.PhotocardImage
+                      key={`photocared_${item.photocardId}`}
+                      src={item.photocard}
+                      alt='photocard'
+                      className={
+                        activePhotocardId?.find((id) => id === item.photocardId)
+                          ? ''
+                          : 'locked'
+                      }
+                    />
+                  </s.PhotocardImageFrame>
+                </s.PhotoCardContainer>
+              );
+            })}
+          </s.PhotocardListWrapper>
+          <s.PhotocardListWrapper>
+            <s.VersionLabel>Ver. C</s.VersionLabel>
+            {collectionPhotocard['verC']?.map((item) => {
+              return (
+                <s.PhotoCardContainer className={selectedArtist}>
+                  {item.memberName === '아이유(IU)' ? (
+                    ''
+                  ) : (
+                    <s.MemberName className={selectedArtist}>
+                      {item.memberName}
+                    </s.MemberName>
+                  )}
+                  <s.PhotocardImageFrame className={String(selectedArtist)}>
+                    <s.PhotocardImage
+                      key={`photocared_${item.photocardId}`}
+                      src={item.photocard}
+                      alt='photocard'
+                      className={
+                        activePhotocardId?.find((id) => id === item.photocardId)
+                          ? ''
+                          : 'locked'
+                      }
+                    />
+                  </s.PhotocardImageFrame>
+                </s.PhotoCardContainer>
+              );
+            })}
+          </s.PhotocardListWrapper>
         </s.ContentsContainer>
       </s.Wrapper>
     </>
