@@ -18,7 +18,9 @@ const Posts = () => {
   const [isClickDot, setIsClickDot] = useState(false);
   const [isLogin, setLogin] = useRecoilState(LoginState);
 
+
   const getMyPostArtistTab = () => {
+    if ( isLogin ) {
     mypageAPI.getMyPostArtistTab().then((data) => {
       if (data.postArtistList.length === 0) {
         return;
@@ -27,12 +29,15 @@ const Posts = () => {
         setSelectedArtist(data?.postArtistList[0]?.artistId);
       }
     });
+    }
   };
 
   const getMyPost = () => {
+    if ( isLogin ) {
     mypageAPI.getMyPost(selectedArtist).then((data) => {
       setArtistPost(data?.myPostList);
     });
+    }
   };
 
   const onClickArtist = (artistId) => {
