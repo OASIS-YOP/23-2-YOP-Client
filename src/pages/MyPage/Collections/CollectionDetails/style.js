@@ -55,7 +55,6 @@ export const CollectionName = styled.div`
   height: fit-content;
 `;
 
-
 export const ContentsContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -67,8 +66,6 @@ export const ContentsContainer = styled.div`
   height: fit-content;
 
   padding-right: 20px;
-
-
 `;
 
 export const PhotocardListWrapper = styled.div`
@@ -92,7 +89,6 @@ export const PhotocardListWrapper = styled.div`
 
   margin: 0 40px;
   margin-bottom: 40px;
-
 `;
 
 export const VersionLabel = styled.div`
@@ -159,8 +155,6 @@ export const MemberName = styled.div`
   &.방탄소년단 {
     color: white;
   } */
-
- 
 `;
 
 export const PhotocardImageFrame = styled.div`
@@ -182,7 +176,7 @@ export const PhotocardImageFrame = styled.div`
   justify-content: center;
   align-items: center;
 
-    background-color: lightgray;
+  background-color: lightgray;
 
   width: 11vw;
   height: 16vw;
@@ -201,9 +195,6 @@ export const PhotocardImageFrame = styled.div`
   cursor: pointer;
   transition: all 0.1s linear;
 
-  
-  
-
   /* box-shadow: 11px 13px 25px rgba(0, 0, 0, 0.4); */
 `;
 
@@ -215,10 +206,8 @@ export const PhotocardImage = styled.img`
   /* display: flex; */
   /* padding: 0; */
 
-
   width: 100%;
   height: 100%;
-
 
   &.locked {
     filter: blur(8px) brightness(90%);
@@ -230,7 +219,6 @@ export const InputCodeButton = styled.button`
   right: 80px;
   top: 430px;
   margin: auto;
-
 
   display: flex;
   justify-content: center;

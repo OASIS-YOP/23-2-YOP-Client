@@ -1,8 +1,8 @@
 import mypageAPI from '../../api/mypage/mypageAPI';
 import * as s from './CodeInputModal.style';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-const CodeInputModal = ({ albumName, closeCodeInputButton }) => {
+const CodeInputModal = ({ albumName, closeCodeInputModal }) => {
   const [code, setCode] = useState({
     code: '',
   });
@@ -14,10 +14,11 @@ const CodeInputModal = ({ albumName, closeCodeInputButton }) => {
 
   const collectionActivate = () => {
     mypageAPI.collectionActivate(decodeURI(albumName), code).then((data) => {
-      window.alert(data.message);
-      // console.log(data.message);
-      // window.alert('Collection activation failed');
-      closeCodeInputButton();
+      if (data?.message === 'Network Error') {
+        return;
+      } else {
+        window.alert(data.message);
+      }
     });
   };
 
@@ -29,18 +30,25 @@ const CodeInputModal = ({ albumName, closeCodeInputButton }) => {
       // } else {
       //   window.alert('Photocard activation failed');
       // }
-      window.alert(data.message);
-      closeCodeInputButton();
-      // window.location.reload();//
+      if (data?.message) {
+        console.log(data);
+        window.alert(
+          '포카깡 ! ' + data?.message.slice(1, 4) + '번 당첨 짝짝짝!'
+        );
+        window.location.reload();
+      } else {
+        window.alert('다시 시도해주세요.');
+      }
     });
   };
   const handleSubmit = () => {
     // First, execute collectionActivate and wait for it to complete
-    // collectionActivate();/
+    collectionActivate();
 
     // Then, execute photocardActivate and wait for it to complete
     photocardActivate();
   };
+
   return (
     <s.Wrapper>
       <s.ModalText>코드를 입력하세요</s.ModalText>

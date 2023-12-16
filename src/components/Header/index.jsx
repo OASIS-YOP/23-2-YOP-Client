@@ -13,14 +13,11 @@ const Header = () => {
   const [isLogin, setLogin] = useRecoilState(LoginState);
   const resetMyProfile = useResetRecoilState(myProfileState);
 
-
   const getMyProfile = () => {
-    mypageAPI
-      .getMyProfile()
-      .then((data) =>{
-        setMyProfile(data?.userProfileInfo);
-        console.log(data?.userProfileInfo);
-      } );
+    mypageAPI.getMyProfile().then((data) => {
+      setMyProfile(data?.userProfileInfo);
+      console.log(data?.userProfileInfo);
+    });
   };
 
   const onClickLogOut = () => {
@@ -42,6 +39,7 @@ const Header = () => {
       window.location.href = '/mainpage';
     } else if (menuIndex === '2') {
       window.location.href = '/editor';
+      setLogin(true);
     } else if (menuIndex === '3') {
       window.location.href = '/allartist';
     } else if (menuIndex === '4') {
@@ -60,8 +58,10 @@ const Header = () => {
         </s.LogoWrapper>
         <s.MenuWrapper>
           <s.Menu
-            style={{ fontWeight : '700', }}
-            onClick={onClickMenu} data-menu-index='1'>
+            style={{ fontWeight: '700' }}
+            onClick={onClickMenu}
+            data-menu-index='1'
+          >
             메인페이지
           </s.Menu>
           <s.Menu onClick={onClickMenu} data-menu-index='3'>
@@ -83,6 +83,7 @@ const Header = () => {
             </s.IconWrapper>
             <s.NicknameWrapper onClick={onClickMenu} data-menu-index='5'>
               {myProfile?.nickname}
+              {/* OHNPOL */}
             </s.NicknameWrapper>
           </s.UserWrapper>
         </s.MenuWrapper>

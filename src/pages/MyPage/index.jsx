@@ -7,11 +7,11 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import mypageAPI from '../../api/mypage/mypageAPI';
 
 import { useRecoilState } from 'recoil';
-import { myProfileState } from '../../recoil/user';
+import { myProfileState, LoginState } from '../../recoil/user';
 
 const MyPage = () => {
   const [myProfile, setMyProfile] = useRecoilState(myProfileState);
-
+  const [isLogin, setLogin] = useRecoilState(LoginState);
 
   const navigate = useNavigate();
   const currentPathname = window.location.pathname;
@@ -25,6 +25,12 @@ const MyPage = () => {
   useEffect(() => {
     getMyProfile();
   }, []);
+
+  // useEffect(() => {
+  //   if( isLogin === false ) {
+  //     navigate('/');
+  //   }
+  // }, [isLogin]);
 
   return (
     <>

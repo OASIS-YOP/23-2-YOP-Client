@@ -285,34 +285,38 @@ const Editor = () => {
 
   /////////////// 캔버스에 들어갈 이미지 사이즈 조정
 
-  
   ////////////////////////////////////////
 
   ///////// 필터 적용 함수 //////////
   useEffect(() => {
-    if(image){
-    setBrightness(0);
-    setContrast(0);
-    setSaturation(0);
-    setRotation(0);
-    setScale(50);
-    setReverseXToggle(true);
-    setReverseYToggle(true);
-    setApplyGray(false);
-  }
+    if (image) {
+      setBrightness(0);
+      setContrast(0);
+      setSaturation(0);
+      setRotation(0);
+      setScale(50);
+      setReverseXToggle(true);
+      setReverseYToggle(true);
+      setApplyGray(false);
+    }
   }, [image]);
 
-
   const memoizedBrightnessFilter = useMemo(() => {
-    return new fabric.Image.filters.Brightness({ brightness: parseFloat(brightness / 220) });
+    return new fabric.Image.filters.Brightness({
+      brightness: parseFloat(brightness / 220),
+    });
   }, [brightness]);
 
   const memoizedContrastFilter = useMemo(() => {
-    return new fabric.Image.filters.Contrast({ contrast: parseFloat(contrast / 220) });
+    return new fabric.Image.filters.Contrast({
+      contrast: parseFloat(contrast / 220),
+    });
   }, [contrast]);
 
   const memoizedSaturationFilter = useMemo(() => {
-    return new fabric.Image.filters.Saturation({ saturation: parseFloat(saturation / 100) });
+    return new fabric.Image.filters.Saturation({
+      saturation: parseFloat(saturation / 100),
+    });
   }, [saturation]);
 
   const applyFilter = (index, filter) => {
@@ -1347,7 +1351,11 @@ const Editor = () => {
 
   return (
     <s.Wrapper onClick={closeContextMenu}>
-      {isLogedIn ? <HeaderMember isBackImgEmpty={isBackImgEmpty} /> : <HeaderNonmember isBackImgEmpty={isBackImgEmpty} />}
+      {isLogedIn ? (
+        <HeaderMember isLogedIn={isLogedIn} isBackImgEmpty={isBackImgEmpty} />
+      ) : (
+        <HeaderNonmember isBackImgEmpty={isBackImgEmpty} />
+      )}
       <s.EditorWrapper>
         <s.LeftContainer>
           <s.TopMenuWrapper>

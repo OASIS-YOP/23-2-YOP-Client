@@ -32,8 +32,8 @@ const AllArtist = () => {
       <Header />
       <s.HeaderBox></s.HeaderBox>
       <s.PageLabel>나의 최애 아티스트</s.PageLabel>
-      {favArtist.length !==0 ? (
-      <CardsSlider>
+      {favArtist?.length !== 0 ? (
+        <CardsSlider>
           {favArtist.map((item) => (
             <ArtistCard
               key={`favArtist_${item.artistId}`}
@@ -42,7 +42,7 @@ const AllArtist = () => {
               artistId={item.artistId}
             />
           ))}
-      </CardsSlider>
+        </CardsSlider>
       ) : (
         <s.TextIfEmptyArtist>아티스트를 즐겨찾기해보세요!</s.TextIfEmptyArtist>
       )}

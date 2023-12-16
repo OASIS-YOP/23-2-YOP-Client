@@ -6,11 +6,17 @@ import mypageAPI from '../../../api/mypage/mypageAPI';
 import LikedIcon from '../../../assets/LikedIcon.svg';
 import commonAPI from '../../../api/commonAPI';
 
+import { useRecoilState } from 'recoil';
+import { myProfileState } from '../../../recoil/user';
+import { LoginState } from '../../../recoil/user';
+import { useNavigate } from 'react-router-dom';
+
 const Posts = () => {
   const [postArtistList, setPostArtistList] = useState([]);
   const [selectedArtist, setSelectedArtist] = useState(0);
   const [artistPost, setArtistPost] = useState([]);
   const [isClickDot, setIsClickDot] = useState(false);
+  const [isLogin, setLogin] = useRecoilState(LoginState);
 
   const getMyPostArtistTab = () => {
     mypageAPI.getMyPostArtistTab().then((data) => {
@@ -38,17 +44,19 @@ const Posts = () => {
   };
 
   const handleClickDel = (postId) => {
-   if( window.confirm(
-      '포스트를 삭제하시겠습니까? 삭제된 포스트는 복구할 수 없습니다.',
-    )){
-    setIsClickDot(false);
-    deleteMyPost(postId);
-    getMyPost(selectedArtist);
+    if (
+      window.confirm(
+        '포스트를 삭제하시겠습니까? 삭제된 포스트는 복구할 수 없습니다.'
+      )
+    ) {
+      setIsClickDot(false);
+      deleteMyPost(postId);
+      getMyPost(selectedArtist);
 
-    window.alert('포스트가 삭제되었습니다.');
+      window.alert('포스트가 삭제되었습니다.');
 
-    window.location.reload();
-   } else {
+      window.location.reload();
+    } else {
       setIsClickDot(false);
     }
   };
@@ -83,7 +91,7 @@ const Posts = () => {
     <>
       <s.Wrapper>
         <s.ArtistsTabWrapper>
-          <s.ArtistsTab></s.ArtistsTab>  
+          <s.ArtistsTab></s.ArtistsTab>
           {artists}
         </s.ArtistsTabWrapper>
         <s.PostsWrapper>
@@ -182,18 +190,14 @@ const ArtistPosts = ({
           <s.postInfoWrapper>
             <s.nicknameWrapper>{post.nickname}</s.nicknameWrapper>
             <s.tagsWrapper>
+              <s.tag>#{post.enterComp}</s.tag>
+              <s.tag>#{post.groupName}</s.tag>
               <s.tag>
-                #{post.enterComp}
+                {post.groupName === post.memberName
+                  ? ''
+                  : `#${post.memberName}`}
               </s.tag>
-              <s.tag>
-                #{post.groupName}
-              </s.tag>
-              <s.tag>
-                {post.groupName === post.memberName ? '' : `#${post.memberName}`}
-              </s.tag>
-              <s.tag>
-                #{post.albumName}
-              </s.tag>
+              <s.tag>#{post.albumName}</s.tag>
             </s.tagsWrapper>
             <s.dateWrapper>
               {post.postDateTime?.slice(0, post.postDateTime?.indexOf('T'))}
@@ -209,13 +213,13 @@ const ArtistPosts = ({
           <s.moreIconWrapper>
             <s.moreIcon src={dotdotdot} onClick={handleClickdot} />
             {/* {isClickDot && ( */}
-              <s.deleteButton
-                className={isClickDot ? 'click' : 'close'}
-                onClick={() => handleClickDel(post.postId)}
-                disabled={!isClickDot}
-                >
-                삭제
-              </s.deleteButton>
+            <s.deleteButton
+              className={isClickDot ? 'click' : 'close'}
+              onClick={() => handleClickDel(post.postId)}
+              disabled={!isClickDot}
+            >
+              삭제
+            </s.deleteButton>
             {/* )} */}
           </s.moreIconWrapper>
         </s.rightContainer>

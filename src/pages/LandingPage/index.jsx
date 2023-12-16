@@ -13,7 +13,7 @@ const LandingPage = () => {
   const [isClickedLogin, setIsClickedLogin] = useState(false);
   const [isClickedJoin, setIsClickedJoin] = useState(false);
 
-  const [ isLogin, setLogin ] = useRecoilState(LoginState);
+  const [isLogin, setLogin] = useRecoilState(LoginState);
 
   const onClickLogin = () => {
     setIsClickedLogin((prev) => !prev);
@@ -47,11 +47,11 @@ const LandingPage = () => {
     },
   };
 
-  useEffect(() => {
-    if(isLogin) {
-      window.location.href = '/mainpage';
-    }
-  }, [isLogin]);
+  // useEffect(() => {
+  //   if(isLogin) {
+  //     window.location.href = '/mainpage';
+  //   }
+  // }, [isLogin]);
 
   return (
     <s.Wrapper>
@@ -64,10 +64,10 @@ const LandingPage = () => {
         <s.ContentWrapper>
           <s.TextWrapper style={{ color: 'white' }}>
             <h1>랜딩페이지</h1>
-            <p>
+            {/* <p>
               이곳은 랜딩 페이지입니다. 슬라이드 혹은 애니메이션 형식으로
               넘어갑니다.
-            </p>
+            </p> */}
           </s.TextWrapper>
         </s.ContentWrapper>
       </s.LeftContainer>
@@ -98,10 +98,10 @@ const LandingPage = () => {
                 onRequestClose={onClickJoin} // 오버레이나 esc를 누르면 핸들러 동작
                 ariaHideApp={false}
               >
-                <Join />
+                <Join onClickJoin={onClickJoin} />
               </Modal>
-              </s.ButtonContainer>
-              <s.ButtonContainerBottom>
+            </s.ButtonContainer>
+            <s.ButtonContainerBottom>
               <s.Button
                 style={{
                   width: 150,
